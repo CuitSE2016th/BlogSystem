@@ -52,8 +52,11 @@ captures/
 /build
 /captures
 .externalNativeBuild
-/.idea
+
 
 # Else
 *.rp
 *.xlsx
+.idea/
+target/
+
