@@ -59,4 +59,4 @@ captures/
 *.xlsx
 .idea/
 target/
-
+jdbc.properties
