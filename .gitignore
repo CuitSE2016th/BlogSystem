@@ -60,3 +60,4 @@ captures/
 .idea/
 target/
 jdbc.properties
+/web-background/src/test
