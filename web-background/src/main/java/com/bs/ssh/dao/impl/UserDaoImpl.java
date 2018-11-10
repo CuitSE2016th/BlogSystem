@@ -24,6 +24,6 @@ public class UserDaoImpl implements UserDao{
         String hql = "from User where email=? or phone=?";
         List<?> users = template.find(hql, identity, identity);
 
-        return users!=null ? (User) users.get(0) : null;
+        return users.size()>0 ? (User) users.get(0) : null;
     }
 }
