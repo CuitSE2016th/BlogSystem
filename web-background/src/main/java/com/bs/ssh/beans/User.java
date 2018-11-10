@@ -2,7 +2,6 @@ package com.bs.ssh.beans;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.Instant;
 
 /**
  * 用户实体
@@ -21,6 +20,7 @@ public class User {
     private String email;
     private Integer phone;
     private String password;
+    private String salt;
     private String roleID;
     private Date lastLoginTime;
     private Date createTime;
@@ -96,6 +96,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     @Basic
