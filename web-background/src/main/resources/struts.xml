@@ -9,7 +9,10 @@
     <constant name="struts.devMode" value="true" />
     
     <package name="default" namespace="/" extends="struts-default">
-
+        <action name="login" class="com.bs.ssh.action.LoginAction">
+            <result name="success">/login.jsp</result>
+            <result name="error">/unauthorized.jsp</result>
+        </action>
     </package>
 
 </struts>

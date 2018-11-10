@@ -18,7 +18,7 @@ public class User {
     private Date birthday;
     private String sex;
     private String email;
-    private Integer phone;
+    private String phone;
     private String password;
     private String salt;
     private String roleID;
@@ -81,11 +81,11 @@ public class User {
     }
 
     @Basic
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
