@@ -216,6 +216,13 @@
       <version>1.8.4.RELEASE</version>
     </dependency>
 
+    <!--java邮件-->
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4</version>
+    </dependency>
+
   </dependencies>
 
   <build>
