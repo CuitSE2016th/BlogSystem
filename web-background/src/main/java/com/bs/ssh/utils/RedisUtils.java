@@ -74,6 +74,7 @@ public class RedisUtils {
         try {
             ValueOperations<Serializable, Object> operations = template.opsForValue();
             operations.set(key, value);
+
             return true;
         }catch (Exception e){
             logger.error("SAVE FAILED", e);

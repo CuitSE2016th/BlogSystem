@@ -9,17 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Transactional
 @Service
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private UserDao dao;
+    private UserDao userRepository;
 
     @Override
     public String login(String identity, String password) {
-        User user = dao.findUser(identity);
-        if(user == null || !user.getPassword().equals(HashUtils.hashBySha1(password + user.getSalt())))
+        User user = userRepository.findByIdentity(identity);
+        if(!user.getPassword().equals(HashUtils.hashBySha1(password + user.getSalt())))
             return null;
         return user.getId();
     }
