@@ -1,30 +1,34 @@
 package com.bs.ssh.beans;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Timestamp;
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.List;
 
 /**
- * Create By ZZY on 2018/11/9
- */
+ * 用户实体
+ *
+ * @author Egan
+ * @date 2018/11/10 19:34
+ **/
 @Entity
+@Table(name = "user")
 public class User {
-
     private String id;
     private String nickname;
     private String headPortrait;
-    private Timestamp birthday;
+    private Date birthday;
     private String sex;
     private String email;
-    private int phone;
+    private String phone;
     private String password;
-    private Timestamp lastLoginTime;
-    private Timestamp createTime;
+    private String salt;
+    private String roleID;
+    private Date lastLoginTime;
+    private Date createTime;
+    private List<User> following;
+    private List<User> follower;
 
     @Id
-    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -34,7 +38,6 @@ public class User {
     }
 
     @Basic
-    @Column(name = "nickname")
     public String getNickname() {
         return nickname;
     }
@@ -54,18 +57,16 @@ public class User {
     }
 
     @Basic
-    @Column(name = "birthday")
-    public Timestamp getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Timestamp birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
     @Basic
-    @Column(name = "sex")
-    public Object getSex() {
+    public String getSex() {
         return sex;
     }
 
@@ -74,7 +75,6 @@ public class User {
     }
 
     @Basic
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -84,17 +84,15 @@ public class User {
     }
 
     @Basic
-    @Column(name = "phone")
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
     @Basic
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -104,54 +102,69 @@ public class User {
     }
 
     @Basic
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    @Basic
+    @Column(name = "role_id")
+    public String getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
+    }
+
+    @Basic
     @Column(name = "last_login_time")
-    public Timestamp getLastLoginTime() {
+    public Date getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(Timestamp lastLoginTime) {
+    public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
     @Basic
     @Column(name = "create_time")
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public User(String nickname, String headPortrait, Timestamp birthday, String sex,
-                String email, int phone, String password, Timestamp lastLoginTime, Timestamp createTime) {
-        this.nickname = nickname;
-        this.headPortrait = headPortrait;
-        this.birthday = birthday;
-        this.sex = sex;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-        this.lastLoginTime = lastLoginTime;
-        this.createTime = createTime;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "follow",
+            joinColumns = {@JoinColumn(name = "follower_id")},
+            inverseJoinColumns = {@JoinColumn(name = "following_id")}
+    )
+    public List<User> getFollowing() {
+        return following;
     }
 
-    public User() {
+    public void setFollowing(List<User> following) {
+        this.following = following;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", headPortrait='" + headPortrait + '\'' +
-                ", birthday=" + birthday +
-                ", sex=" + sex +
-                ", email='" + email + '\'' +
-                ", phone=" + phone +
-                ", password='" + password + '\'' +
-                ", lastLoginTime=" + lastLoginTime +
-                ", createTime=" + createTime +
-                '}';
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "follow",
+            joinColumns = {@JoinColumn(name = "following_id")},
+            inverseJoinColumns = {@JoinColumn(name = "follower_id")}
+    )
+    public List<User> getFollower() {
+        return follower;
+    }
+
+    public void setFollower(List<User> follower) {
+        this.follower = follower;
     }
 }
