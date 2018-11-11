@@ -1,4 +1,4 @@
-package com.bs.ssh.actions;
+package com.bs.ssh.action;
 
 import com.bs.ssh.beans.ResponseBody;
 import com.bs.ssh.beans.User;
@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Egan
  * @date 2018/11/11 1:03
  **/
-@ParentPackage("default")
-@Namespace("/blog")
+@ParentPackage("json-default")
+@Namespace("/")
 @Results({
         @Result(name = "json",type="json", params={"root","result"})
 })
