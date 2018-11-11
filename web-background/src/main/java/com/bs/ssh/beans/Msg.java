@@ -1,56 +1,54 @@
 package com.bs.ssh.beans;
 
-import java.util.HashMap;
-import java.util.Map;
+/**
+ * HTTP响应体
+ *
+ * @author Egan
+ * @date 2018/11/11 14:18
+ **/
+public class Msg<T> {
 
-public class Msg {
-	
-	private int code;
-	
-	private String msg;
-	
-	private Map<String, Object> extend = new HashMap<String, Object>();
+    private int code;
+    private String message;
+    private T Data;
 
-	public int getCode() {
-		return code;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public String getMsg() {
-		return msg;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public Map<String, Object> getExtend() {
-		return extend;
-	}
+    public T getData() {
+        return Data;
+    }
 
-	public void setExtend(Map<String, Object> extend) {
-		this.extend = extend;
-	}
-	
-	public static Msg success(){
-		Msg result = new Msg();
-		result.setCode(100);
-		result.setMsg("操作成功");
-		return result;
-	}
-	
-	public Msg add(String key, Object value){
-		this.getExtend().put(key, value);
-		return this;
-	}
-	
-	public static Msg fail(){
-		Msg result = new Msg();
-		result.setCode(200);
-		result.setMsg("操作失败");
-		return result;
-	}
+    public void setData(T data) {
+        Data = data;
+    }
+
+    public static Msg success(){
+        Msg message = new Msg<Object>();
+        message.setCode(100);
+        message.setMessage("操作成功");
+        return message;
+    }
+
+    public static Msg fail(){
+        Msg message = new Msg<Object>();
+        message.setCode(200);
+        message.setMessage("操作失败");
+        return message;
+    }
+
+
 }

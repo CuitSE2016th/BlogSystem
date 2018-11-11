@@ -8,10 +8,11 @@
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />
     
-    <package name="default" namespace="/" extends="struts-default">
-        <action name="login" class="com.bs.ssh.action.LoginAction">
-            <result name="success">/login.jsp</result>
-            <result name="error">/unauthorized.jsp</result>
+    <package name="default" namespace="/" extends="json-default,struts-default">
+        <action name="mailCode" class="com.bs.ssh.Actions.MailCodeAction" method="sendEmailCode">
+            <result type="json">
+                <param name="root">message</param>
+            </result>
         </action>
     </package>
 
