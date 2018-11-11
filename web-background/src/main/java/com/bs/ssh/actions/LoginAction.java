@@ -1,4 +1,4 @@
-package com.bs.ssh.action;
+package com.bs.ssh.actions;
 
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.UserService;

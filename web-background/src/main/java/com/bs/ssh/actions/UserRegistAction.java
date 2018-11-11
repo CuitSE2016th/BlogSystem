@@ -1,4 +1,4 @@
-package com.bs.ssh.Actions;
+package com.bs.ssh.actions;
 
 import com.bs.ssh.beans.Msg;
 import com.bs.ssh.common.email163.MailUtil;
