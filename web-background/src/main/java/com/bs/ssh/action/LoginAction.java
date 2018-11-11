@@ -33,7 +33,7 @@ public class LoginAction {
 
         result = new ResponseBody<>();
         result.setCode(200);
-        result.setData(uid==null?"success":"failed");
+        result.setMessage(uid!=null?"success":"failed");
 
         return "json";
     }
