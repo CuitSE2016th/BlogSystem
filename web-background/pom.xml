@@ -50,7 +50,14 @@
       <artifactId>struts2-json-plugin</artifactId>
       <version>2.3.34</version>
     </dependency>
-    <dependency>
+      <dependency>
+          <groupId>org.apache.struts</groupId>
+          <artifactId>struts2-convention-plugin</artifactId>
+          <version>2.3.34</version>
+          <type>jar</type>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
       <groupId>org.apache.struts.xwork</groupId>
       <artifactId>xwork-core</artifactId>
       <version>2.3.34</version>
@@ -111,11 +118,11 @@
     </dependency>
 
     <!--hibernate-->
-      <dependency>
-          <groupId>org.hibernate.javax.persistence</groupId>
-          <artifactId>hibernate-jpa-2.1-api</artifactId>
-          <version>1.0.2.Final</version>
-      </dependency>
+      <!--<dependency>-->
+          <!--<groupId>org.hibernate.javax.persistence</groupId>-->
+          <!--<artifactId>hibernate-jpa-2.1-api</artifactId>-->
+          <!--<version>1.0.2.Final</version>-->
+      <!--</dependency>-->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
@@ -126,12 +133,12 @@
       <artifactId>hibernate-entitymanager</artifactId>
       <version>5.2.16.Final</version>
     </dependency>
-      <dependency>
-          <groupId>org.springframework.data</groupId>
-          <artifactId>spring-data-jpa</artifactId>
-          <version>1.11.11.RELEASE</version>
-          <scope>compile</scope>
-      </dependency>
+      <!--<dependency>-->
+          <!--<groupId>org.springframework.data</groupId>-->
+          <!--<artifactId>spring-data-jpa</artifactId>-->
+          <!--<version>1.11.11.RELEASE</version>-->
+          <!--<scope>compile</scope>-->
+      <!--</dependency>-->
 
     <!--json-->
     <dependency>

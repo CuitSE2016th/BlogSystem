@@ -6,7 +6,7 @@ package com.bs.ssh.beans;
  * @author Egan
  * @date 2018/11/11 14:18
  **/
-public class Result<T> {
+public class ResponseBody<T> {
     private int code;
     private String message;
     private T Data;
