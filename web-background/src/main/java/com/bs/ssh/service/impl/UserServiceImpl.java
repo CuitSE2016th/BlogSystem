@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public String login(String identity, String password) {
         User user = userRepository.findByIdentity(identity);
-        if(!user.getPassword().equals(HashUtils.hashBySha1(password + user.getSalt())))
+        if(user==null||!user.getPassword().equals(HashUtils.hashBySha1(password + user.getSalt())))
             return null;
         return user.getId();
     }
