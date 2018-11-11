@@ -12,19 +12,30 @@ import java.sql.Date;
 @Entity
 @Table(name = "token")
 public class Token {
-    private String userID;
+    private String id;
+    private User user;
     private String value;
     private Date expireTime;
     private Date updateTime;
     private Date createTime;
 
     @Id
-    public String getUserID() {
-        return userID;
+    public String getId() {
+        return id;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Basic

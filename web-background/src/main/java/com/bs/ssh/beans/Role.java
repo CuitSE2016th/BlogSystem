@@ -2,6 +2,7 @@ package com.bs.ssh.beans;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * 角色实体
@@ -15,7 +16,7 @@ public class Role {
     private String id;
     private String name;
     private Date createTime;
-
+    private List<Permission> permissions;
 
     @Id
     public String getId() {
@@ -43,5 +44,20 @@ public class Role {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinTable(
+            name = "role_permission",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")}
+    )
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

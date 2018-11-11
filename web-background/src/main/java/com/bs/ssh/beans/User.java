@@ -2,6 +2,7 @@ package com.bs.ssh.beans;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * 用户实体
@@ -24,6 +25,8 @@ public class User {
     private String roleID;
     private Date lastLoginTime;
     private Date createTime;
+    private List<User> following;
+    private List<User> follower;
 
     @Id
     public String getId() {
@@ -135,5 +138,33 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "follow",
+            joinColumns = {@JoinColumn(name = "follower_id")},
+            inverseJoinColumns = {@JoinColumn(name = "following_id")}
+    )
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<User> following) {
+        this.following = following;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "follow",
+            joinColumns = {@JoinColumn(name = "following_id")},
+            inverseJoinColumns = {@JoinColumn(name = "follower_id")}
+    )
+    public List<User> getFollower() {
+        return follower;
+    }
+
+    public void setFollower(List<User> follower) {
+        this.follower = follower;
     }
 }
