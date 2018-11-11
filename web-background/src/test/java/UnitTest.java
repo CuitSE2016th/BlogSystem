@@ -4,6 +4,7 @@ import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.Token;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.utils.HashUtils;
+import com.bs.ssh.utils.RedisUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class UnitTest {
 
     @PersistenceContext
     EntityManager manager;
+
+    @Autowired
+    RedisUtils redis;
 
 
     @Test
@@ -57,6 +61,16 @@ public class UnitTest {
         User user = (User) users.get(0);
         System.out.println("follower:" + user.getFollower().get(0).getNickname());
         System.out.println("following:" + user.getFollowing().get(0).getNickname());
+    }
+
+    @Test
+    public void redis(){
+        redis.set("test1", "value1");
+        System.out.println(redis.get("test"));
+        System.out.println(redis.exist("test1"));
+        redis.remove("test","test1");
+        System.out.println(redis.exist("test"));
+        System.out.println(redis.exist("test1"));
     }
 
     @Test
