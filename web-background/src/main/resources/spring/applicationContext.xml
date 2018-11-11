@@ -9,10 +9,12 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 		
-	<context:property-placeholder location="classpath:jdbc.properties"/>
+	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+	<context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
 	<context:component-scan base-package="com.bs.ssh"></context:component-scan>
-		
-	
+
+
+
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${driverclass}"></property>
 		<property name="jdbcUrl" value="${jdbcurl}"></property>
@@ -32,11 +34,15 @@
 		</property>
 
 	</bean>
-	
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+ 	</bean>
+
 	<bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	
+
 	<tx:advice id="advice" transaction-manager="hibernateTransactionManager">
 		<tx:attributes>
             <tx:method name="save*" propagation="REQUIRED"/>
