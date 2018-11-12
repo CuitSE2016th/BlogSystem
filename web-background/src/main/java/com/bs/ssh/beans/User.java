@@ -26,7 +26,6 @@ public class User{
     private Long createTime;
     private List<User> followings;
     private List<User> followers;
-    private Token token;
 
     @Id
     public String getId() {
@@ -168,12 +167,4 @@ public class User{
         this.followers = follower;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public Token getToken() {
-        return token;
-    }
-
-    public void setToken(Token token) {
-        this.token = token;
-    }
 }
