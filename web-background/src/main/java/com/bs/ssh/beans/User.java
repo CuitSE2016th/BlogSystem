@@ -12,7 +12,7 @@ import java.util.List;
  **/
 @Entity
 @Table(name = "user")
-public class User {
+public class User{
     private String id;
     private String nickname;
     private String headPortrait;
@@ -25,8 +25,9 @@ public class User {
     private String roleID;
     private Date lastLoginTime;
     private Date createTime;
-    private List<User> following;
-    private List<User> follower;
+    private List<User> followings;
+    private List<User> followers;
+    private Token token;
 
     @Id
     public String getId() {
@@ -147,11 +148,11 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "following_id")}
     )
     public List<User> getFollowing() {
-        return following;
+        return followings;
     }
 
     public void setFollowing(List<User> following) {
-        this.following = following;
+        this.followings = following;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -161,10 +162,19 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "follower_id")}
     )
     public List<User> getFollower() {
-        return follower;
+        return followers;
     }
 
     public void setFollower(List<User> follower) {
-        this.follower = follower;
+        this.followers = follower;
+    }
+
+    @OneToOne
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 }

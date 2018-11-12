@@ -1,4 +1,6 @@
 import com.bs.ssh.common.email163.MailUtil;
+import com.bs.ssh.utils.IDUtils;
+import com.bs.ssh.utils.SHA1Util;
 import org.junit.Test;
 
 /**
@@ -11,7 +13,7 @@ public class test1 {
     public void testEmailSend(){
 
         //MailUtil.codeMail("1007610491@qq.com", "123456");
-        System.out.println(MailUtil.EmailCode(6));
+        System.out.println(IDUtils.UserID());
 
     }
 

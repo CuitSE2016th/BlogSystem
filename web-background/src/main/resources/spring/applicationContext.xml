@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
 		
 	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
 	<context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
-	<context:component-scan base-package="com.bs.ssh"></context:component-scan>
-
+	<context:component-scan base-package="com.bs.ssh"/>
 
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -23,7 +22,7 @@
 		<property name="initialPoolSize" value="${initpoolSize}"></property>
 		<property name="maxPoolSize" value="${maxpoolSize}"></property>
 	</bean>
-	
+
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
@@ -32,8 +31,9 @@
 				<!--<value>classpath:com/ZZY/Shop/user/vo/*.hbm.xml</value>-->
 			</list>
 		</property>
-
 	</bean>
+
+
 
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"/>
@@ -56,7 +56,7 @@
             <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
 		</tx:attributes>
 	</tx:advice>
-	
+
 	<aop:config>
 		<aop:pointcut expression="execution(* com.bs.ssh.*.service.*.*(..))" id="pointCut"/>
 		<aop:advisor advice-ref="advice" pointcut-ref="pointCut"/>

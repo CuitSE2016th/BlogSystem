@@ -3,6 +3,8 @@
 import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.Token;
 import com.bs.ssh.beans.User;
+import com.bs.ssh.dao.UserDao;
+import com.bs.ssh.service.UserService;
 import com.bs.ssh.utils.HashUtils;
 import com.bs.ssh.utils.RedisUtils;
 import org.apache.log4j.LogManager;
@@ -15,6 +17,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -33,9 +36,11 @@ public class UnitTest {
     @Autowired
     RedisUtils redis;
 
+    @Resource
+    private UserDao repository;
 
     @Test
-    public void Token(){
+    public void token(){
 
         String hql = "from Token ";
         List<?> t = template.find(hql);
@@ -56,11 +61,19 @@ public class UnitTest {
     @Test
     public void user(){
         String hql = "from User ";
-        List<?> users = template.find(hql);
 
-        User user = (User) users.get(0);
+        User user = repository.findOne(hql);
+        System.out.println("token:" + user.getToken().getValue());
         System.out.println("follower:" + user.getFollower().get(0).getNickname());
         System.out.println("following:" + user.getFollowing().get(0).getNickname());
+    }
+
+    @Autowired
+    private UserService service;
+
+    @Test
+    public void userService(){
+        logger.fatal(repository.findByIdentity("12345").getNickname());
     }
 
     @Test
