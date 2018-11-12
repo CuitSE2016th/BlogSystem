@@ -1,7 +1,6 @@
 package com.bs.ssh.beans;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 /**
  * 权限类
@@ -19,7 +18,7 @@ import java.sql.Date;
 public class Permission {
     private String id;
     private String name;
-    private Date createDate;
+    private Long createTime;
 
     @Id
     public String getId() {
@@ -39,12 +38,13 @@ public class Permission {
         this.name = name;
     }
 
+    @Basic
     @Column(name = "create_time")
-    public Date getCreateDate() {
-        return createDate;
+    public Long getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(Long createDate) {
+        this.createTime = createDate;
     }
 }

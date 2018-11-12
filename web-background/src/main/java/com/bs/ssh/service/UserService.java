@@ -19,4 +19,7 @@ public interface UserService {
      * @return java.lang.String
      **/
     String login(String identity, String password);
+
+    int registUser(String email, String password);
+
 }

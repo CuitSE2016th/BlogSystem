@@ -1,5 +1,8 @@
 package com.bs.ssh.utils;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
@@ -95,4 +98,23 @@ public class HashUtils {
         }
         return hexStr.toString().toUpperCase();
     }
+
+    /**
+     * 通过shiro工具实现加密
+     * @param password
+     * @param email 把用户邮箱当作盐进行计算
+     * @return
+     */
+    public static String SHA1(String password, String email){
+
+        ByteSource salt = ByteSource.Util.bytes(email);
+
+        SimpleHash simpleHash = new SimpleHash("SHA1", password, salt, 1024);
+
+
+        return simpleHash.toString();
+    }
+
+
+
 }

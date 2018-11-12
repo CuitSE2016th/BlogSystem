@@ -1,16 +1,28 @@
 package com.bs.ssh.action;
 
-import com.bs.ssh.beans.Msg;
+import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.common.email163.EmailCodeMap;
 import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.RegexString;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
 
 /**
  * Create By ZZY on 2018/11/10
  */
-public class MailCodeAction {
+public class MailCodeAction extends ActionSupport {
 
     private String email;
+
+    private JsonBody message = null;
+
+    public JsonBody getMessage() {
+        return message;
+    }
+
+    public void setMessage(JsonBody message) {
+        this.message = message;
+    }
 
     public String getEmail() {
         return email;
@@ -20,10 +32,10 @@ public class MailCodeAction {
         this.email = email;
     }
 
-    public Msg sendEmailCode() {
+    public String sendEmailCode() {
 
         if (RegexString.ExecRegex(email, RegexString.regex_UserEmail)) {
-            return Msg.fail().add("error", "邮箱格式不正确");
+            message = JsonBody.fail();
         }
 
         String emailCode = MailUtil.EmailCode(6);
@@ -31,15 +43,16 @@ public class MailCodeAction {
         int flag = MailUtil.codeMail(email, emailCode);
 
         if (flag == 0) {
-            return Msg.fail().add("error", "验证码发送失败");
+            message = JsonBody.fail();
         }
 
         //将发送记录发送至
         EmailCodeMap.emailCodeMap.put(email, emailCode);
 
-        return Msg.success();
+        ServletActionContext.getRequest().getSession().setAttribute(email, emailCode);
 
+        message = JsonBody.success();
 
+        return SUCCESS;
     }
-
 }

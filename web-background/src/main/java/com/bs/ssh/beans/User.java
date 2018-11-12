@@ -1,14 +1,13 @@
 package com.bs.ssh.beans;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.List;
 
 /**
  * 用户实体
  *
  * @author Egan
- * @date 2018/11/10 19:34
+ * @Long 2018/11/10 19:34
  **/
 @Entity
 @Table(name = "user")
@@ -16,18 +15,17 @@ public class User{
     private String id;
     private String nickname;
     private String headPortrait;
-    private Date birthday;
+    private Long birthday;
     private String sex;
     private String email;
     private String phone;
     private String password;
     private String salt;
     private String roleID;
-    private Date lastLoginTime;
-    private Date createTime;
+    private Long lastLoginTime;
+    private Long createTime;
     private List<User> followings;
     private List<User> followers;
-    private Token token;
 
     @Id
     public String getId() {
@@ -58,11 +56,11 @@ public class User{
     }
 
     @Basic
-    public Date getBirthday() {
+    public Long getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(Long birthday) {
         this.birthday = birthday;
     }
 
@@ -123,21 +121,21 @@ public class User{
 
     @Basic
     @Column(name = "last_login_time")
-    public Date getLastLoginTime() {
+    public Long getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
+    public void setLastLoginTime(Long lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
     @Basic
     @Column(name = "create_time")
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
@@ -169,12 +167,4 @@ public class User{
         this.followers = follower;
     }
 
-    @OneToOne
-    public Token getToken() {
-        return token;
-    }
-
-    public void setToken(Token token) {
-        this.token = token;
-    }
 }

@@ -1,11 +1,13 @@
 
 
+import com.bs.ssh.beans.Permission;
 import com.bs.ssh.beans.Role;
-import com.bs.ssh.beans.Token;
 import com.bs.ssh.beans.User;
+import com.bs.ssh.dao.PermissionDao;
+import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.dao.UserDao;
-import com.bs.ssh.service.UserService;
 import com.bs.ssh.utils.HashUtils;
+import com.bs.ssh.utils.IDUtils;
 import com.bs.ssh.utils.RedisUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.LinkedList;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,43 +40,63 @@ public class UnitTest {
     RedisUtils redis;
 
     @Resource
-    private UserDao repository;
+    private UserDao userDao;
 
-    @Test
-    public void token(){
+    @Resource
+    private RoleDao roleDao;
 
-        String hql = "from Token ";
-        List<?> t = template.find(hql);
+    @Resource
+    private PermissionDao permissionDao;
 
-        Token token = (Token) t.get(0);
-        System.out.println(token.getUser().getNickname());
+
+//    @Test
+    public void initRoleAndPermission(){
+        Role role = new Role();
+        Permission permission = new Permission();
+        List<Permission> permissions = new LinkedList<>();
+
+        role.setId("r001");
+        role.setName("user");
+        role.setCreateTime(System.currentTimeMillis());
+
+        permission.setId("p001");
+        permission.setName("query-blog");
+        permission.setCreateTime(System.currentTimeMillis());
+        permissions.add(permission);
+        role.setPermissions(permissions);
+
+        roleDao.insert(role);
     }
 
     @Test
-    public void roleAndPermission(){
-        String hql = "from Role ";
-        List<?> roles = template.find(hql);
+    public void initUserAndToken(){
+        User user1 = new User();
+        user1.setId(IDUtils.UserID());
+        user1.setNickname("测试者1");
+        user1.setEmail("test1@163.com");
+        user1.setPhone("123456");
+        user1.setSalt(HashUtils.getSalt());
+        user1.setPassword(HashUtils.hashBySha1("123456"+user1.getSalt()));
+        user1.setSex("F");
+        user1.setRoleID("r001");
 
-        Role role = (Role) roles.get(0);
-        System.out.println(role.getPermissions().get(0).getName());
+        user1.setLastLoginTime(System.currentTimeMillis());
+        user1.setCreateTime(System.currentTimeMillis());
+
+
+//        System.out.println(userDao.findOne("from User").getToken().getId());
+//        user1 = userDao.findOne("from User");
+//        user1.setNickname("测试者");
+//        userDao.update(user1);
+//        userDao.delete(user1);
+        userDao.insert(user1);
     }
 
-    @Test
-    public void user(){
-        String hql = "from User ";
-
-        User user = repository.findOne(hql);
-        System.out.println("token:" + user.getToken().getValue());
-        System.out.println("follower:" + user.getFollower().get(0).getNickname());
-        System.out.println("following:" + user.getFollowing().get(0).getNickname());
-    }
-
-    @Autowired
-    private UserService service;
 
     @Test
-    public void userService(){
-        logger.fatal(repository.findByIdentity("12345").getNickname());
+    public void timestamp(){
+        System.out.println(String.valueOf(System.currentTimeMillis()).length());
+        System.out.println(String.valueOf(System.currentTimeMillis()));
     }
 
     @Test
@@ -89,8 +112,8 @@ public class UnitTest {
     @Test
     public void hash(){
         String salt = HashUtils.getSalt();
-        System.out.println("Salt:                  " + salt);
-        System.out.println("Token:                 " + HashUtils.getToken());
+        System.out.println("盐:                  " + salt);
+        System.out.println("令牌:                 " + HashUtils.getToken());
         System.out.println("Sha1ForPassword:       " + HashUtils.hashBySha1("123456Abcdefgo"));
         System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.hashBySha1("123456Abcdefgo" + salt));
     }
