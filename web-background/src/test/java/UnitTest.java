@@ -2,11 +2,9 @@
 
 import com.bs.ssh.beans.Permission;
 import com.bs.ssh.beans.Role;
-import com.bs.ssh.beans.Token;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.PermissionDao;
 import com.bs.ssh.dao.RoleDao;
-import com.bs.ssh.dao.TokenDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.utils.HashUtils;
 import com.bs.ssh.utils.IDUtils;
@@ -50,8 +48,6 @@ public class UnitTest {
     @Resource
     private PermissionDao permissionDao;
 
-    @Resource
-    private TokenDao tokenDao;
 
 //    @Test
     public void initRoleAndPermission(){
@@ -84,20 +80,14 @@ public class UnitTest {
         user1.setSex("F");
         user1.setRoleID("r001");
 
-        Token token = new Token();
-        token.setId("t001");
-        token.setValue(HashUtils.getToken());
-        token.setCreateTime(System.currentTimeMillis());
-        token.setExpireTime(System.currentTimeMillis());
-        token.setUpdateTime(System.currentTimeMillis());
-        user1.setToken(token);
-        token.setUser(user1);
-
         user1.setLastLoginTime(System.currentTimeMillis());
         user1.setCreateTime(System.currentTimeMillis());
 
+
 //        System.out.println(userDao.findOne("from User").getToken().getId());
 //        user1 = userDao.findOne("from User");
+//        user1.setNickname("测试者");
+//        userDao.update(user1);
 //        userDao.delete(user1);
         userDao.insert(user1);
     }
@@ -122,8 +112,8 @@ public class UnitTest {
     @Test
     public void hash(){
         String salt = HashUtils.getSalt();
-        System.out.println("Salt:                  " + salt);
-        System.out.println("Token:                 " + HashUtils.getToken());
+        System.out.println("盐:                  " + salt);
+        System.out.println("令牌:                 " + HashUtils.getToken());
         System.out.println("Sha1ForPassword:       " + HashUtils.hashBySha1("123456Abcdefgo"));
         System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.hashBySha1("123456Abcdefgo" + salt));
     }
