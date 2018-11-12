@@ -1,6 +1,6 @@
 package com.bs.ssh.action;
 
-import com.bs.ssh.beans.Msg;
+import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.common.email163.EmailCodeMap;
 import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.RegexString;
@@ -14,13 +14,13 @@ public class MailCodeAction extends ActionSupport {
 
     private String email;
 
-    private Msg message = null;
+    private JsonBody message = null;
 
-    public Msg getMessage() {
+    public JsonBody getMessage() {
         return message;
     }
 
-    public void setMessage(Msg message) {
+    public void setMessage(JsonBody message) {
         this.message = message;
     }
 
@@ -35,7 +35,7 @@ public class MailCodeAction extends ActionSupport {
     public String sendEmailCode() {
 
         if (RegexString.ExecRegex(email, RegexString.regex_UserEmail)) {
-            message = Msg.fail();
+            message = JsonBody.fail();
         }
 
         String emailCode = MailUtil.EmailCode(6);
@@ -43,7 +43,7 @@ public class MailCodeAction extends ActionSupport {
         int flag = MailUtil.codeMail(email, emailCode);
 
         if (flag == 0) {
-            message = Msg.fail();
+            message = JsonBody.fail();
         }
 
         //将发送记录发送至
@@ -51,7 +51,7 @@ public class MailCodeAction extends ActionSupport {
 
         ServletActionContext.getRequest().getSession().setAttribute(email, emailCode);
 
-        message = Msg.success();
+        message = JsonBody.success();
 
         return SUCCESS;
     }

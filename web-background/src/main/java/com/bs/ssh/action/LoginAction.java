@@ -1,11 +1,9 @@
 package com.bs.ssh.action;
 
+import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.UserService;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.convention.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -26,14 +24,14 @@ public class LoginAction {
 
     private User user;
 
-    /*private ResponseBody<String> result;
+    private JsonBody<String> result;
 
     @Action("login")
     public String execute() {
         String identity = user.getPhone() != null ? user.getPhone() : user.getEmail();
         String uid = userService.login(identity, user.getPassword());
 
-        result = new ResponseBody<>();
+        result = new JsonBody<>();
         result.setCode(200);
         result.setMessage(uid != null ? "success" : "failed");
 
@@ -48,11 +46,11 @@ public class LoginAction {
         this.user = user;
     }
 
-    public ResponseBody<String> getResult() {
+    public JsonBody<String> getResult() {
         return result;
     }
 
-    public void setResult(ResponseBody<String> result) {
+    public void setResult(JsonBody<String> result) {
         this.result = result;
-    }*/
+    }
 }

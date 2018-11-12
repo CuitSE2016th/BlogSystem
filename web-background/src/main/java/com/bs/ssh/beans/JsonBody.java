@@ -6,7 +6,7 @@ package com.bs.ssh.beans;
  * @author Egan
  * @date 2018/11/11 14:18
  **/
-public class Msg<T> {
+public class JsonBody<T> {
 
     private int code;
     private String message;
@@ -36,15 +36,15 @@ public class Msg<T> {
         Data = data;
     }
 
-    public static Msg success(){
-        Msg message = new Msg<Object>();
+    public static JsonBody success(){
+        JsonBody message = new JsonBody<Object>();
         message.setCode(100);
         message.setMessage("操作成功");
         return message;
     }
 
-    public static Msg fail(){
-        Msg message = new Msg<Object>();
+    public static JsonBody fail(){
+        JsonBody message = new JsonBody<Object>();
         message.setCode(200);
         message.setMessage("操作失败");
         return message;
