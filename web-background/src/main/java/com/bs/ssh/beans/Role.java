@@ -15,7 +15,7 @@ import java.util.List;
 public class Role {
     private String id;
     private String name;
-    private Date createTime;
+    private Long createTime;
     private List<Permission> permissions;
 
     @Id
@@ -38,11 +38,12 @@ public class Role {
 
     @Basic
     @Column(name = "create_time")
-    public Date getCreateTime() {
+
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
