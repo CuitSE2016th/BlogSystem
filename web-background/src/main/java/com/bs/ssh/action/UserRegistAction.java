@@ -1,7 +1,6 @@
 package com.bs.ssh.action;
 
-import com.bs.ssh.beans.Msg;
-import com.bs.ssh.common.email163.MailUtil;
+import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.service.impl.UserServiceImpl;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
@@ -19,16 +18,16 @@ public class UserRegistAction extends ActionSupport {
     @Autowired
     private UserServiceImpl userService;
 
-    private Msg message = null;
+    private JsonBody message = null;
     private String email;
     private String password;
     private String emailCode;
 
-    public Msg getMessage() {
+    public JsonBody getMessage() {
         return message;
     }
 
-    public void setMessage(Msg message) {
+    public void setMessage(JsonBody message) {
         this.message = message;
     }
 
@@ -62,7 +61,7 @@ public class UserRegistAction extends ActionSupport {
          * 验证邮箱数据是否合法
          */
         if (!ExecRegex(email, RegexString.regex_UserEmail)) {
-            message = Msg.fail();
+            message = JsonBody.fail();
             return SUCCESS;
         }
 
@@ -70,20 +69,20 @@ public class UserRegistAction extends ActionSupport {
          * 验证密码是否合法
          */
         if (!ExecRegex(password, RegexString.regex_UserPassword)) {
-            message = Msg.fail();
+            message = JsonBody.fail();
             return SUCCESS;
         }
 
         //在后台得到我们发送给前端的数据
         String emailCode_after = (String) ServletActionContext.getRequest().getSession().getAttribute(email);
         if (emailCode_after == null || "".equals(emailCode_after)){
-            message = Msg.fail();
+            message = JsonBody.fail();
             return SUCCESS;
         }
 
         //比较前后端验证码是否相同
         if(!emailCode_after.equals(emailCode)){
-            message = Msg.fail();
+            message = JsonBody.fail();
             return SUCCESS;
         }
 
@@ -92,7 +91,7 @@ public class UserRegistAction extends ActionSupport {
 
 
 
-        message = Msg.success();
+        message = JsonBody.success();
 
         return SUCCESS;
     }
