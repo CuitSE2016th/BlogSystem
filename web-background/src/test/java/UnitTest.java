@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,23 +69,22 @@ public class UnitTest {
         roleDao.insert(role);
     }
 
-    @Test
+//    @Test
     public void initUserAndToken(){
         User user1 = new User();
         user1.setId(IDUtils.UserID());
-        user1.setNickname("测试者1");
-        user1.setEmail("test1@163.com");
-        user1.setPhone("123456");
+        user1.setNickname("tester3");
+        user1.setEmail("test3@163.com");
+        user1.setPhone("1234563");
         user1.setSalt(HashUtils.getSalt());
-        user1.setPassword(HashUtils.hashBySha1("123456"+user1.getSalt()));
-        user1.setSex("F");
+        user1.setPassword(HashUtils.hashBySha256("123456"+user1.getSalt()));
+        user1.setSex("M");
         user1.setRoleID("r001");
 
         user1.setLastLoginTime(System.currentTimeMillis());
         user1.setCreateTime(System.currentTimeMillis());
 
 
-//        System.out.println(userDao.findOne("from User").getToken().getId());
 //        user1 = userDao.findOne("from User");
 //        user1.setNickname("测试者");
 //        userDao.update(user1);
@@ -92,6 +92,20 @@ public class UnitTest {
         userDao.insert(user1);
     }
 
+    @Test
+    public void follow(){
+        List<User> users = new LinkedList<>();
+        userDao.findAll("from User").forEach(users::add);
+
+        User user3 = users.get(1);
+        User user2 = users.get(2);
+        List<User> user3Following = new LinkedList<>();
+        user3Following.add(user2);
+        user3.setFollowers(user3Following);
+
+        userDao.update(user3);
+
+    }
 
     @Test
     public void timestamp(){
@@ -114,7 +128,7 @@ public class UnitTest {
         String salt = HashUtils.getSalt();
         System.out.println("盐:                  " + salt);
         System.out.println("令牌:                 " + HashUtils.getToken());
-        System.out.println("Sha1ForPassword:       " + HashUtils.hashBySha1("123456Abcdefgo"));
-        System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.hashBySha1("123456Abcdefgo" + salt));
+        System.out.println("Sha1ForPassword:       " + HashUtils.hashBySha256("123456Abcdefgo").length());
+        System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.hashBySha256("123456Abcdefgo" + salt));
     }
 }

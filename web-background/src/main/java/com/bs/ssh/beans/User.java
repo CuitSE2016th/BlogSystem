@@ -27,6 +27,7 @@ public class User{
     private List<User> followings;
     private List<User> followers;
 
+
     @Id
     public String getId() {
         return id;
@@ -139,31 +140,26 @@ public class User{
         this.createTime = createTime;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "follow",
-            joinColumns = {@JoinColumn(name = "follower_id")},
-            inverseJoinColumns = {@JoinColumn(name = "following_id")}
-    )
-    public List<User> getFollowing() {
+    @ManyToMany(mappedBy = "followers")
+    public List<User> getFollowings() {
         return followings;
     }
 
-    public void setFollowing(List<User> following) {
+    public void setFollowings(List<User> following) {
         this.followings = following;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "follow",
             joinColumns = {@JoinColumn(name = "following_id")},
             inverseJoinColumns = {@JoinColumn(name = "follower_id")}
     )
-    public List<User> getFollower() {
+    public List<User> getFollowers() {
         return followers;
     }
 
-    public void setFollower(List<User> follower) {
+    public void setFollowers(List<User> follower) {
         this.followers = follower;
     }
 
