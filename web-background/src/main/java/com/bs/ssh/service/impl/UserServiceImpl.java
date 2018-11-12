@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+
 
 @Transactional
 @Service
@@ -34,18 +36,24 @@ public class UserServiceImpl implements UserService{
         User user = new User();
         user.setEmail(email);
 
+        //获得盐值
+        String salt = HashUtils.getSalt();
+        user.setSalt(salt);
+
         //通过SHA1盐值加密
-        String sha1Password = SHA1Util.SHA1(password, email);
+        String sha1Password = SHA1Util.SHA1(password, salt);
         user.setPassword(sha1Password);
 
         //获取用户的ID
         String userID = IDUtils.UserID();
-
         user.setId(userID);
 
+        user.setCreateTime(new Date(System.currentTimeMillis()));
+        user.setLastLoginTime(new Date(System.currentTimeMillis()));
 
+        int flag = userRepository.saveUser(user);
 
-        return 0;
+        return flag;
     }
 
 

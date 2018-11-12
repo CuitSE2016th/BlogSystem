@@ -5,6 +5,10 @@
 
 <struts>
 
+
+    <!--测试的时候使用-->
+    <constant name="struts.action.excludePattern" value="/index.jsp"></constant>
+
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />
 
