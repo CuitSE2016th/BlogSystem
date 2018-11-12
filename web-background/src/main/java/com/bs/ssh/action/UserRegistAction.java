@@ -1,10 +1,12 @@
-package com.bs.ssh.Actions;
+package com.bs.ssh.action;
 
 import com.bs.ssh.beans.Msg;
 import com.bs.ssh.common.email163.MailUtil;
+import com.bs.ssh.service.impl.UserServiceImpl;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +15,9 @@ import java.util.regex.Pattern;
  * Create By ZZY on 2018/11/9
  */
 public class UserRegistAction extends ActionSupport {
+
+    @Autowired
+    private UserServiceImpl userService;
 
     private Msg message = null;
     private String email;
@@ -83,7 +88,7 @@ public class UserRegistAction extends ActionSupport {
         }
 
 
-
+        int flag = userService.registUser(email, password);
 
 
 
