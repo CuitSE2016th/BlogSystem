@@ -9,9 +9,10 @@
     	<property name="show_sql">true</property>
     	<property name="hibernate.hbm2ddl.auto">update</property>
     	<property name="hibernate.format_sql">true</property>
+		<property name="connection.autocommit">true</property>
 		<mapping class="com.bs.ssh.beans.Permission"/>
 		<mapping class="com.bs.ssh.beans.Role"/>
-		<mapping class="com.bs.ssh.beans.Token"/>
 		<mapping class="com.bs.ssh.beans.User"/>
+
     </session-factory>
 </hibernate-configuration>
