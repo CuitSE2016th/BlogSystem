@@ -6,10 +6,18 @@ import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 
 /**
  * Create By ZZY on 2018/11/10
  */
+@ParentPackage("json-default")
+@Results({
+        @Result(name = "success", type = "json", params = {"root", "message"})
+})
 public class MailCodeAction extends ActionSupport {
 
     private String email;
@@ -32,6 +40,7 @@ public class MailCodeAction extends ActionSupport {
         this.email = email;
     }
 
+    @Action("mailCode")
     public String sendEmailCode() {
 
         if (RegexString.ExecRegex(email, RegexString.regex_UserEmail)) {

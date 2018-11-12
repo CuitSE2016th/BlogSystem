@@ -5,6 +5,10 @@ import com.bs.ssh.service.impl.UserServiceImpl;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.regex.Matcher;
@@ -13,6 +17,10 @@ import java.util.regex.Pattern;
 /**
  * Create By ZZY on 2018/11/9
  */
+@ParentPackage("json-default")
+@Results({
+        @Result(name = "success", type = "json", params = {"root", "message"})
+})
 public class UserRegistAction extends ActionSupport {
 
     @Autowired
@@ -55,6 +63,7 @@ public class UserRegistAction extends ActionSupport {
         this.emailCode = emailCode;
     }
 
+    @Action(value = "userRegist")
     public String userRegist() {
 
         /**
@@ -89,7 +98,10 @@ public class UserRegistAction extends ActionSupport {
 
         int flag = userService.registUser(email, password);
 
-
+        if(flag == 0){
+            message = JsonBody.fail();
+            return SUCCESS;
+        }
 
         message = JsonBody.success();
 
@@ -103,6 +115,11 @@ public class UserRegistAction extends ActionSupport {
         System.out.println(matcher.matches());
         return matcher.matches();
     }
+
+//    @Action(value = "index", results = {@Result(location = "/index.jsp")})
+//    public String index(){
+//        return SUCCESS;
+//    }
 
 
 }

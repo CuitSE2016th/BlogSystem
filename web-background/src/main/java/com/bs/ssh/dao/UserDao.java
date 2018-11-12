@@ -12,4 +12,6 @@ import com.bs.ssh.beans.User;
 public interface UserDao extends BaseDao<User> {
 
     User findByIdentity(String identity);
+
+    int saveUser(User user);
 }
