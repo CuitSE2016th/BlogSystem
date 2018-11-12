@@ -39,6 +39,8 @@ public class UnitTest {
     @Resource
     private UserDao repository;
 
+    @Autowired
+    private UserService userService;
     @Test
     public void token(){
 

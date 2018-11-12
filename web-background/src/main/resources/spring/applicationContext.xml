@@ -39,8 +39,8 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
  	</bean>
 
-	<bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"></property>
+	<bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
 	<tx:advice id="advice" transaction-manager="hibernateTransactionManager">
@@ -53,9 +53,12 @@
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="list*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
 		</tx:attributes>
 	</tx:advice>
+
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager"/>
 
 	<aop:config>
 		<aop:pointcut expression="execution(* com.bs.ssh.*.service.*.*(..))" id="pointCut"/>
