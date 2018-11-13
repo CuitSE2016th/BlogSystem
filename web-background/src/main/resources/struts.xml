@@ -7,7 +7,7 @@
 
 
     <!--测试的时候使用-->
-    <constant name="struts.action.excludePattern" value="/index.jsp"></constant>
+    <constant name="struts.action.excludePattern" value="/index.jsp,/login.jsp,/unauthorized.jsp"/>
 
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />
@@ -49,9 +49,10 @@
         </interceptors>
     </package>
 
-    <!--<constant name="struts.convention.package.locators" value="action,action,struts,struts2"/>-->
+    <!--<constant name="struts.convention.package.locators" value="com.bs.ssh.action.user,action,action,struts,struts2"/>-->
     <constant name="struts.action.extension" value="" />
     <constant name="struts.ui.theme" value="simple" />
     <constant name="struts.i18n.encoding" value="UTF-8" />
     <constant name="struts.multipart.maxSize" value="1073741824"/>
+    <constant name="struts.convention.action.packages" value="com.bs.ssh.action.user" />
 </struts>

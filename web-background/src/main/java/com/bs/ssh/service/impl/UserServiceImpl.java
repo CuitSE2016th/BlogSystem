@@ -4,11 +4,8 @@ import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
-import com.bs.ssh.utils.HashUtils;
+import com.bs.ssh.utils.*;
 
-import com.bs.ssh.utils.IDUtils;
-import com.bs.ssh.utils.RedisUtils;
-import com.bs.ssh.utils.RegexString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,7 +27,7 @@ public class UserServiceImpl implements UserService{
     public JsonBody<String> login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
         JsonBody<String> body = new JsonBody<>();
-        if(user==null||!user.getPassword().equals(HashUtils.hashBySha256(password + user.getSalt()))){
+        if(user==null||!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))){
             body.setCode(HttpStatus.UNAUTHORIZED.value());
             body.setMessage("登录失败");
         }else {
@@ -38,7 +35,7 @@ public class UserServiceImpl implements UserService{
             body.setMessage("登录成功");
             //保存token到redis服务器
             String token = HashUtils.getToken();
-            RedisUtils.set(token, user);
+            RedisUtils.set(token, JsonUtil.toJsonExposed(user));
             body.setData(token);
         }
         return body;

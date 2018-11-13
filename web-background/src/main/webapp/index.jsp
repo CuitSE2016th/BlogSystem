@@ -5,7 +5,7 @@
 
 <form action="/userRegist" method="post">
     邮箱：<input type="text" name="emailOrPhone"><br>
-    验证码：<input type="text" name="emailOrPhoneCode"><a href="/code?emailOrPhone=18382418120">获取邮箱验证码</a><br>
+    验证码：<input type="text" name="emailOrPhoneCode"><a href="/code?emailOrPhone=13881705154">获取邮箱验证码</a><br>
     密码：<input type="password" name="password"><br>
     <input type="submit">
 </form>

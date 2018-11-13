@@ -6,7 +6,9 @@ import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.utils.HashUtils;
 import com.bs.ssh.utils.IDUtils;
+import com.bs.ssh.utils.JsonUtil;
 import com.bs.ssh.utils.RedisUtils;
+import com.google.gson.Gson;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -123,5 +125,11 @@ public class UnitTest {
         System.out.println("盐:                  " + salt);
         System.out.println("令牌:                 " + HashUtils.getToken());
         System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.sha256("123456Abcdefgo", salt));
+    }
+
+    @Test
+    public void gson(){
+        User user = userDao.findByIdentity("13881705154");
+        System.out.println(JsonUtil.toJsonExposed(user));
     }
 }
