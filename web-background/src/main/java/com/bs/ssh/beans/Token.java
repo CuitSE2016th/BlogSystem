@@ -1,13 +1,12 @@
 package com.bs.ssh.beans;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 /**
  * 令牌实体
  *
  * @author Egan
- * @date 2018/11/10 19:43
+ * @Long 2018/11/10 19:43
  **/
 @Entity
 @Table(name = "token")
@@ -15,9 +14,9 @@ public class Token {
     private String id;
     private User user;
     private String value;
-    private Date expireTime;
-    private Date updateTime;
-    private Date createTime;
+    private Long expireTime;
+    private Long updateTime;
+    private Long createTime;
 
     @Id
     public String getId() {
@@ -28,8 +27,8 @@ public class Token {
         this.id = id;
     }
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "token", optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     public User getUser() {
         return user;
     }
@@ -49,31 +48,31 @@ public class Token {
 
     @Basic
     @Column(name = "expire_time")
-    public Date getExpireTime() {
+    public Long getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Date expireTime) {
+    public void setExpireTime(Long expireTime) {
         this.expireTime = expireTime;
     }
 
     @Basic
     @Column(name = "update_time")
-    public Date getUpdateTime() {
+    public Long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
 
     @Basic
     @Column(name = "create_time")
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 }

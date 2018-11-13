@@ -26,7 +26,6 @@ public class RegexString {
     public static boolean ExecRegex(String args, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(args);
-        System.out.println(matcher.matches());
         return matcher.matches();
     }
 

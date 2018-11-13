@@ -1,12 +1,15 @@
 package com.bs.ssh.dao;
 
-import java.io.Serializable;
 import java.util.Iterator;
 
 public interface BaseDao<T> {
-    abstract <S extends T> S save(S entity);
+     <S extends T> S insert(S entity);
 
-    <S extends T> Iterable<S> save(Iterable<S> entities);
+    <S extends T> Iterable<S> insert(Iterable<S> entities);
+
+    <S extends T> S update(S entity);
+
+    <S extends T> Iterable<S> update(Iterable<S> entities);
 
     T findOne(String hql, Object ...values);
 

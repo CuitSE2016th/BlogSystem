@@ -27,9 +27,9 @@ public class UserRegistAction extends ActionSupport {
     private UserServiceImpl userService;
 
     private JsonBody message = null;
-    private String email;
+    private String emailOrPhone;
     private String password;
-    private String emailCode;
+    private String emailOrPhoneCode;
 
     public JsonBody getMessage() {
         return message;
@@ -37,14 +37,6 @@ public class UserRegistAction extends ActionSupport {
 
     public void setMessage(JsonBody message) {
         this.message = message;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -55,21 +47,28 @@ public class UserRegistAction extends ActionSupport {
         this.password = password;
     }
 
-    public String getEmailCode() {
-        return emailCode;
+    public String getEmailOrPhone() {
+        return emailOrPhone;
     }
 
-    public void setEmailCode(String emailCode) {
-        this.emailCode = emailCode;
+    public void setEmailOrPhone(String emailOrPhone) {
+        this.emailOrPhone = emailOrPhone;
+    }
+
+    public String getEmailOrPhoneCode() {
+        return emailOrPhoneCode;
+    }
+
+    public void setEmailOrPhoneCode(String emailOrPhoneCode) {
+        this.emailOrPhoneCode = emailOrPhoneCode;
     }
 
     @Action(value = "userRegist")
     public String userRegist() {
 
-        /**
-         * 验证邮箱数据是否合法
-         */
-        if (!ExecRegex(email, RegexString.regex_UserEmail)) {
+        //如果验证是否为邮箱或者密码
+        if(!RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail) &&
+                !RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)){
             message = JsonBody.fail();
             return SUCCESS;
         }
@@ -83,20 +82,21 @@ public class UserRegistAction extends ActionSupport {
         }
 
         //在后台得到我们发送给前端的数据
-        String emailCode_after = (String) ServletActionContext.getRequest().getSession().getAttribute(email);
-        if (emailCode_after == null || "".equals(emailCode_after)){
+        String Code_after = (String) ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone);
+
+        if (Code_after == null || "".equals(Code_after)){
             message = JsonBody.fail();
             return SUCCESS;
         }
 
         //比较前后端验证码是否相同
-        if(!emailCode_after.equals(emailCode)){
+        if(!Code_after.equals(emailOrPhoneCode)){
             message = JsonBody.fail();
             return SUCCESS;
         }
 
 
-        int flag = userService.registUser(email, password);
+        int flag = userService.registUser(emailOrPhone, password);
 
         if(flag == 0){
             message = JsonBody.fail();
@@ -116,10 +116,6 @@ public class UserRegistAction extends ActionSupport {
         return matcher.matches();
     }
 
-//    @Action(value = "index", results = {@Result(location = "/index.jsp")})
-//    public String index(){
-//        return SUCCESS;
-//    }
 
 
 }
