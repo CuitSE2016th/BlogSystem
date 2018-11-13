@@ -107,7 +107,6 @@ public class HashUtils {
      */
     public static String sha256(String password, String salt){
 
-        ByteSource saltBytes = ByteSource.Util.bytes(salt);
 
         SimpleHash simpleHash = new SimpleHash("SHA-256", password, salt, 1024);
 
