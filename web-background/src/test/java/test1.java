@@ -2,7 +2,6 @@ import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.DateUtils;
 import com.bs.ssh.utils.IDUtils;
 import com.bs.ssh.utils.RegexString;
-import com.bs.ssh.utils.SHA1Util;
 import org.junit.Test;
 
 import java.sql.Date;
