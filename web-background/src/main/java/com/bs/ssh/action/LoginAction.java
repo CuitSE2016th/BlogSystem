@@ -3,6 +3,10 @@ package com.bs.ssh.action;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.UserService;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
 import org.apache.struts2.convention.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,40 +20,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Results({
         @Result(name = "json", type = "json", params = {"root", "result"})
 })
-public class LoginAction {
+public class LoginAction extends BaseAction{
 
     @Autowired
     private UserService userService;
 
-    private User user;
-
-    private JsonBody<String> result;
+    private JsonBody<String> result = new JsonBody<>();
 
     @Action("login")
+    @Validations(
+            requiredStrings = {
+                    @RequiredStringValidator(fieldName = "identity", message = "phone\\email is required."),
+                    @RequiredStringValidator(fieldName = "password", message = "password is required.")
+            }
+    )
+    @InputConfig(methodName = "verify")
     public String execute() {
-        String identity = user.getPhone() != null ? user.getPhone() : user.getEmail();
-        String uid = userService.login(identity, user.getPassword());
 
-        result = new JsonBody<>();
+        String uid = userService.login(identity, password);
+
         result.setCode(200);
-        result.setMessage(uid != null ? "success" : "failed");
+        result.setMessage(uid != null ? "login success" : "login failed");
 
         return "json";
     }
 
-    public User getUser() {
-        return user;
+    private String identity;
+    private String password;
+
+    public String getIdentity() {
+        return identity;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
-    public JsonBody<String> getResult() {
-        return result;
+    public String getPassword() {
+        return password;
     }
 
-    public void setResult(JsonBody<String> result) {
-        this.result = result;
+    public void setPassword(String password) {
+        this.password = password;
     }
+
 }

@@ -1,5 +1,7 @@
 import com.bs.ssh.common.email163.MailUtil;
+import com.bs.ssh.utils.DateUtils;
 import com.bs.ssh.utils.IDUtils;
+import com.bs.ssh.utils.RegexString;
 import com.bs.ssh.utils.SHA1Util;
 import org.junit.Test;
 
@@ -15,7 +17,7 @@ public class test1 {
     public void testEmailSend(){
 
         //MailUtil.codeMail("1007610491@qq.com", "123456");
-        System.out.println(new Date(System.currentTimeMillis()));
+        System.out.println(RegexString.ExecRegex("1007610491qq.com", RegexString.regex_UserEmail));
 
     }
 

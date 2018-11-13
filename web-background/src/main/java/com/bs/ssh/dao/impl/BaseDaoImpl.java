@@ -4,12 +4,14 @@ import com.bs.ssh.dao.BaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
+@Transactional
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
     private HibernateTemplate template;
@@ -25,14 +27,26 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    public <S extends T> S save(S entity) {
+    public <S extends T> S insert(S entity) {
         template.save(entity);
         return entity;
     }
 
     @Override
-    public <S extends T> Iterable<S> save(Iterable<S> entities) {
+    public <S extends T> Iterable<S> insert(Iterable<S> entities) {
         template.save(entities);
+        return entities;
+    }
+
+    @Override
+    public <S extends T> S update(S entity) {
+        template.update(entity);
+        return entity;
+    }
+
+    @Override
+    public <S extends T> Iterable<S> update(Iterable<S> entities) {
+        template.update(entities);
         return entities;
     }
 
