@@ -1,10 +1,14 @@
-package com.bs.ssh.action.user;
+package com.bs.ssh.action;
 
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.service.impl.UserServiceImpl;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.regex.Matcher;
@@ -13,15 +17,19 @@ import java.util.regex.Pattern;
 /**
  * Create By ZZY on 2018/11/9
  */
+@ParentPackage("json-default")
+@Results({
+        @Result(name = "success", type = "json", params = {"root", "message"})
+})
 public class UserRegistAction extends ActionSupport {
 
     @Autowired
     private UserServiceImpl userService;
 
     private JsonBody message = null;
-    private String email;
+    private String emailOrPhone;
     private String password;
-    private String emailCode;
+    private String emailOrPhoneCode;
 
     public JsonBody getMessage() {
         return message;
@@ -29,14 +37,6 @@ public class UserRegistAction extends ActionSupport {
 
     public void setMessage(JsonBody message) {
         this.message = message;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -47,21 +47,30 @@ public class UserRegistAction extends ActionSupport {
         this.password = password;
     }
 
-    public String getEmailCode() {
-        return emailCode;
+    public String getEmailOrPhone() {
+        return emailOrPhone;
     }
 
-    public void setEmailCode(String emailCode) {
-        this.emailCode = emailCode;
+    public void setEmailOrPhone(String emailOrPhone) {
+        this.emailOrPhone = emailOrPhone;
     }
 
+    public String getEmailOrPhoneCode() {
+        return emailOrPhoneCode;
+    }
+
+    public void setEmailOrPhoneCode(String emailOrPhoneCode) {
+        this.emailOrPhoneCode = emailOrPhoneCode;
+    }
+
+    @Action(value = "userRegist")
     public String userRegist() {
 
-        /**
-         * 验证邮箱数据是否合法
-         */
-        if (!ExecRegex(email, RegexString.regex_UserEmail)) {
+        //如果验证是否为邮箱或者密码
+        if(!RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail) &&
+                !RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)){
             message = JsonBody.fail();
+            message.setMessage("前端数据出错");
             return SUCCESS;
         }
 
@@ -70,28 +79,37 @@ public class UserRegistAction extends ActionSupport {
          */
         if (!ExecRegex(password, RegexString.regex_UserPassword)) {
             message = JsonBody.fail();
+            message.setMessage("密码不合规格");
             return SUCCESS;
         }
 
         //在后台得到我们发送给前端的数据
-        String emailCode_after = (String) ServletActionContext.getRequest().getSession().getAttribute(email);
-        if (emailCode_after == null || "".equals(emailCode_after)){
+        String Code_after = (String) ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone);
+
+        if (Code_after == null || "".equals(Code_after)){
             message = JsonBody.fail();
+            message.setMessage("不能得到验证码");
             return SUCCESS;
         }
 
         //比较前后端验证码是否相同
-        if(!emailCode_after.equals(emailCode)){
+        if(!Code_after.equals(emailOrPhoneCode)){
             message = JsonBody.fail();
+            message.setMessage("验证码出错");
             return SUCCESS;
         }
 
 
-        int flag = userService.registUser(email, password);
+        int flag = userService.registUser(emailOrPhone, password);
 
+        if(flag == 0){
+            message = JsonBody.fail();
+            ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhone);
+            message.setMessage("数据保存出错");
+            return SUCCESS;
+        }
 
-
-
+        ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhone);
         message = JsonBody.success();
 
         return SUCCESS;
@@ -104,6 +122,7 @@ public class UserRegistAction extends ActionSupport {
         System.out.println(matcher.matches());
         return matcher.matches();
     }
+
 
 
 }

@@ -19,4 +19,6 @@ public interface UserDao extends BaseDao<User> {
      * @return 用户信息
      */
     User getUserInfoById(String id);
+
+    int saveUser(User user);
 }

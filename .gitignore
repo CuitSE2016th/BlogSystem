@@ -61,4 +61,3 @@ captures/
 target/
 jdbc.properties
 redis.properties
-#/web-background/src/test

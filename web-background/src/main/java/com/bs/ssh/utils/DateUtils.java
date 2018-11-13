@@ -10,7 +10,13 @@ import java.util.logging.SimpleFormatter;
  */
 public class DateUtils {
 
+    public static long DateAddSomeDay(int dayNum){
+        Calendar calendar = Calendar.getInstance();
 
+        calendar.add(Calendar.DAY_OF_MONTH, dayNum);
+
+        return calendar.getTimeInMillis();
+    }
 
     public static Date DateToStr(String dateStr){
 
