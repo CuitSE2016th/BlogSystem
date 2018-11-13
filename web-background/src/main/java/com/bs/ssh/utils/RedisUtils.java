@@ -23,7 +23,12 @@ public class RedisUtils {
 
     private static Logger logger = LogManager.getLogger(RedisUtils.class);
 
-    private RedisTemplate<Serializable, Object> template;
+    private static RedisTemplate<Serializable, Object> template;
+
+    @Autowired
+    public RedisUtils(RedisTemplate<Serializable, Object> template){
+        RedisUtils.template = template;
+    }
 
     /**
      * 批量删除键
@@ -32,9 +37,9 @@ public class RedisUtils {
      * @param keys
      * @return void
      **/
-    public void remove(String... keys){
+    public static void remove(String... keys){
         for (String key:keys)
-            this.remove(key);
+            remove(key);
     }
 
     /**
@@ -44,8 +49,8 @@ public class RedisUtils {
      * @param key
      * @return void
      **/
-    public void remove(String key){
-        if(this.exist(key))
+    public static void remove(String key){
+        if(exist(key))
             template.delete(key);
     }
 
@@ -57,7 +62,7 @@ public class RedisUtils {
      * @param key
      * @return java.lang.Object
      **/
-    public Object get(String key){
+    public static Object get(String key){
         ValueOperations<Serializable, Object> operations = template.opsForValue();
         return operations.get(key);
     }
@@ -70,7 +75,7 @@ public class RedisUtils {
 	 * @param value
      * @return boolean
      **/
-    public boolean set(Serializable key, Object value){
+    public static boolean set(Serializable key, Object value){
         try {
             ValueOperations<Serializable, Object> operations = template.opsForValue();
             operations.set(key, value);
@@ -89,7 +94,7 @@ public class RedisUtils {
      * @param key
      * @return boolean
      **/
-    public boolean exist(String key){
+    public static boolean exist(String key){
         return template.hasKey(key);
     }
 
@@ -100,7 +105,7 @@ public class RedisUtils {
      * @param keys
      * @return void
      **/
-    public void delete(Collection<Serializable> keys) {
+    public static void delete(Collection<Serializable> keys) {
         template.delete(keys);
     }
 
@@ -111,7 +116,7 @@ public class RedisUtils {
      * @param time
      * @param timeUnit
      */
-    public void expireKey(String key, long time, TimeUnit timeUnit) {
+    public static void expireKey(String key, long time, TimeUnit timeUnit) {
         template.expire(key, time, timeUnit);
     }
 
@@ -121,7 +126,7 @@ public class RedisUtils {
      * @param key
      * @param date
      */
-    public void expireKeyAt(String key, Date date) {
+    public static void expireKeyAt(String key, Date date) {
         template.expireAt(key, date);
     }
 
@@ -132,7 +137,7 @@ public class RedisUtils {
      * @param timeUnit
      * @return
      */
-    public long getKeyExpire(String key, TimeUnit timeUnit) {
+    public static long getKeyExpire(String key, TimeUnit timeUnit) {
         return template.getExpire(key, timeUnit);
     }
 
@@ -141,15 +146,12 @@ public class RedisUtils {
      *
      * @param key
      */
-    public void persistKey(String key) {
+    public static void persistKey(String key) {
         template.persist(key);
     }
 
-    public RedisTemplate<Serializable, Object> getTemplate() {
+    public static RedisTemplate<Serializable, Object> getTemplate() {
         return template;
     }
 
-    public void setTemplate(RedisTemplate<Serializable, Object> template) {
-        this.template = template;
-    }
 }
