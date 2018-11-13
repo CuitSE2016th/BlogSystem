@@ -6,14 +6,14 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="shiroEacheManager"/>
         <!--<property name="sessionMode" value="native"/>-->
-        <property name="realm" ref="myRealm"/>
+        <property name="realm" ref="authRealm"/>
         <!-- <property name="rememberMeManager.cookie.maxAge" value="10000"></property>-->
     </bean>
 
     <bean id="shiroEacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
     </bean>
-    <bean id="myRealm" class="com.bs.ssh.common.shiro.MyRealm">
+    <bean id="authRealm" class="com.bs.ssh.common.shiro.AuthRealm">
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
                 <property name="hashAlgorithmName" value="MD5"></property>

@@ -32,6 +32,5 @@
     </bean>
 
     <bean id="redisUtil" class="com.bs.ssh.utils.RedisUtils">
-        <property name="template" ref="redisTemplate" />
     </bean>
 </beans>
