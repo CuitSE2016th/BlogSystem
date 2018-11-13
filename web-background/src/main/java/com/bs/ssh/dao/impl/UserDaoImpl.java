@@ -17,4 +17,9 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     public User findByIdentity(String identity) {
         return this.findOne("FROM User WHERE phone=? or email=?", identity, identity);
     }
+
+    @Override
+    public User getUserInfoById(String id) {
+        return null;
+    }
 }

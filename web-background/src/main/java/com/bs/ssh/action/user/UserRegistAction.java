@@ -1,4 +1,4 @@
-package com.bs.ssh.action;
+package com.bs.ssh.action.user;
 
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.service.impl.UserServiceImpl;
@@ -88,6 +88,7 @@ public class UserRegistAction extends ActionSupport {
 
 
         int flag = userService.registUser(email, password);
+
 
 
 

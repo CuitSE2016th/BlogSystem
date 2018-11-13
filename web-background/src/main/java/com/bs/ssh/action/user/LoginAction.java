@@ -1,5 +1,6 @@
-package com.bs.ssh.action;
+package com.bs.ssh.action.user;
 
+import com.bs.ssh.action.BaseAction;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.UserService;
@@ -20,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Results({
         @Result(name = "json", type = "json", params = {"root", "result"})
 })
-public class LoginAction extends BaseAction{
+public class LoginAction extends BaseAction {
 
     @Autowired
     private UserService userService;
