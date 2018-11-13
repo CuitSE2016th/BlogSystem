@@ -48,6 +48,9 @@
                 /static/** = anon
                 /login.jsp = anon
                 /logout = anon
+                /code = anon
+                /userRegist = anon
+                /index.jsp = anon
                 /** = anon
             </value>
         </property>

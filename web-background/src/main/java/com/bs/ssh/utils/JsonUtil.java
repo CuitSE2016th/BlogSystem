@@ -1,8 +1,11 @@
 package com.bs.ssh.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import java.io.IOException;
@@ -15,6 +18,9 @@ import java.io.PrintWriter;
  */
 
 public class JsonUtil {
+
+    private static Logger logger = LogManager.getLogger(JsonUtil.class);
+
     /**
      *
      * @param jsonData 符合JSON语法规则的字符串
@@ -26,7 +32,7 @@ public class JsonUtil {
         try {
             return new Gson().fromJson(jsonData, token.getType());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("parse failure", e);
             return null;
         }
     }
@@ -35,7 +41,18 @@ public class JsonUtil {
         try {
             return new Gson().toJson(object);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("conversion failed", e);
+            return null;
+        }
+    }
+
+    public static <T> String toJsonExposed(T object){
+        try {
+            return new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create().toJson(object);
+        } catch (Exception e) {
+            logger.error("conversion failed", e);
             return null;
         }
     }

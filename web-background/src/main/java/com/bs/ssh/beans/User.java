@@ -1,5 +1,7 @@
 package com.bs.ssh.beans;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,17 +15,17 @@ import java.util.List;
 @Table(name = "user")
 public class User{
     private String id;
-    private String nickname;
-    private String headPortrait;
-    private Long birthday;
-    private String sex;
-    private String email;
-    private String phone;
-    private String password;
+    @Expose private String nickname;
+    @Expose private String headPortrait;
+    @Expose private Long birthday;
+    @Expose private String sex;
+    @Expose private String email;
+    @Expose private String phone;
+    @Expose private String password;
     private String salt;
-    private String roleID;
-    private Long lastLoginTime;
-    private Long createTime;
+    @Expose private String roleID;
+    @Expose private Long lastLoginTime;
+    @Expose private Long createTime;
     private List<User> followings;
     private List<User> followers;
 
