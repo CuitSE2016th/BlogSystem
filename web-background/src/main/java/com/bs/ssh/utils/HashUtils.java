@@ -102,15 +102,14 @@ public class HashUtils {
     /**
      * 通过shiro工具实现加密
      * @param password
-     * @param p_salt 把用户邮箱当作盐进行计算
+     * @param salt 盐
      * @return
      */
-    public static String SHA1(String password, String p_salt){
+    public static String sha256(String password, String salt){
 
-        ByteSource salt = ByteSource.Util.bytes(p_salt);
+        ByteSource saltBytes = ByteSource.Util.bytes(salt);
 
-        SimpleHash simpleHash = new SimpleHash("SHA1", password, salt, 1024);
-
+        SimpleHash simpleHash = new SimpleHash("SHA-256", password, salt, 1024);
 
         return simpleHash.toString();
     }

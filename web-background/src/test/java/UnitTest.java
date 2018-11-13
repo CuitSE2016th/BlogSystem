@@ -88,7 +88,7 @@ public class UnitTest {
         userDao.insert(user1);
     }
 
-    @Test
+//    @Test
     public void follow() {
 //        List<User> users = new LinkedList<>();
 //        userDao.findAll("from User").forEach(users::add);
@@ -124,7 +124,6 @@ public class UnitTest {
         String salt = HashUtils.getSalt();
         System.out.println("盐:                  " + salt);
         System.out.println("令牌:                 " + HashUtils.getToken());
-        System.out.println("Sha1ForPassword:       " + HashUtils.hashBySha256("123456Abcdefgo").length());
-        System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.hashBySha256("123456Abcdefgo" + salt));
+        System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.sha256("123456Abcdefgo", salt));
     }
 }
