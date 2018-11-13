@@ -1,5 +1,6 @@
 package com.bs.ssh.service;
 
+import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.User;
 
 /**
@@ -16,9 +17,9 @@ public interface UserService {
      * @date 2018/11/10 22:10
      * @param identity 邮箱地址或手机号码
 	 * @param password 密码
-     * @return java.lang.String
+     * @return 登录结果
      **/
-    String login(String identity, String password);
+    JsonBody<String> login(String identity, String password);
 
     int registUser(String email, String password);
 

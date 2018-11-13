@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import org.apache.struts2.convention.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 /**
  * 登录动作
@@ -36,10 +37,9 @@ public class LoginAction extends BaseAction{
     @Override
     public String execute() {
 
-        String uid = userService.login(identity, password);
+        JsonBody<String> jsonBody = userService.login(identity, password);
 
-        result.setCode(200);
-        result.setMessage(uid != null ? "登录成功" : "登录失败");
+        result = jsonBody;
 
         return "json";
     }

@@ -1,13 +1,16 @@
 package com.bs.ssh.service.impl;
 
+import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
 import com.bs.ssh.utils.HashUtils;
 
 import com.bs.ssh.utils.IDUtils;
+import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,16 +19,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserServiceImpl implements UserService{
 
+    private final UserDao userDao;
+
     @Autowired
-    private UserDao userDao;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
-    public String login(String identity, String password) {
+    public JsonBody<String> login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
+        JsonBody<String> body = new JsonBody<>();
         if(user==null||!user.getPassword().equals(HashUtils.hashBySha256(password + user.getSalt()))){
-            return null;
+            body.setCode(HttpStatus.UNAUTHORIZED.value());
+            body.setMessage("登录失败");
+        }else {
+            body.setCode(HttpStatus.OK.value());
+            body.setMessage("登录成功");
+            //保存token到redis服务器
+            String token = HashUtils.getToken();
+            RedisUtils.set(token, user);
+            body.setData(token);
         }
-        return user.getId();
+        return body;
     }
 
     @Override
