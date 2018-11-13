@@ -1,6 +1,5 @@
 package com.bs.ssh.service.impl;
 
-import com.bs.ssh.beans.Token;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public String login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
-        if(user==null||!user.getPassword().equals(HashUtils.hashBySha1(password + user.getSalt()))){
+        if(user==null||!user.getPassword().equals(HashUtils.hashBySha256(password + user.getSalt()))){
             return null;
         }
         return user.getId();
@@ -60,17 +59,6 @@ public class UserServiceImpl implements UserService{
 
         user.setCreateTime(System.currentTimeMillis());
         user.setLastLoginTime(System.currentTimeMillis());
-
-        //构建Token
-        Token token = new Token();
-        token.setId(IDUtils.UserTokenID());
-        token.setValue(HashUtils.getToken());
-        token.setExpireTime(DateUtils.DateAddSomeDay(7));
-        token.setCreateTime(System.currentTimeMillis());
-        token.setUpdateTime(System.currentTimeMillis());
-        token.setUser(user);
-
-        user.setToken(token);
 
         int flag = userDao.saveUser(user);
 

@@ -70,6 +70,7 @@ public class UserRegistAction extends ActionSupport {
         if(!RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail) &&
                 !RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)){
             message = JsonBody.fail();
+            message.setMessage("前端数据出错");
             return SUCCESS;
         }
 
@@ -78,6 +79,7 @@ public class UserRegistAction extends ActionSupport {
          */
         if (!ExecRegex(password, RegexString.regex_UserPassword)) {
             message = JsonBody.fail();
+            message.setMessage("密码不合规格");
             return SUCCESS;
         }
 
@@ -86,12 +88,14 @@ public class UserRegistAction extends ActionSupport {
 
         if (Code_after == null || "".equals(Code_after)){
             message = JsonBody.fail();
+            message.setMessage("不能得到验证码");
             return SUCCESS;
         }
 
         //比较前后端验证码是否相同
         if(!Code_after.equals(emailOrPhoneCode)){
             message = JsonBody.fail();
+            message.setMessage("验证码出错");
             return SUCCESS;
         }
 
@@ -100,9 +104,12 @@ public class UserRegistAction extends ActionSupport {
 
         if(flag == 0){
             message = JsonBody.fail();
+            ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhone);
+            message.setMessage("数据保存出错");
             return SUCCESS;
         }
 
+        ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhone);
         message = JsonBody.success();
 
         return SUCCESS;

@@ -12,7 +12,6 @@
 		<property name="connection.autocommit">true</property>
 		<mapping class="com.bs.ssh.beans.Permission"/>
 		<mapping class="com.bs.ssh.beans.Role"/>
-		<mapping class="com.bs.ssh.beans.Token"/>
 		<mapping class="com.bs.ssh.beans.User"/>
 
     </session-factory>

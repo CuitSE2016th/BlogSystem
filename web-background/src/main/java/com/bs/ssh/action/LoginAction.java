@@ -25,22 +25,21 @@ public class LoginAction extends BaseAction{
     @Autowired
     private UserService userService;
 
-    private JsonBody<String> result = new JsonBody<>();
-
     @Action("login")
     @Validations(
             requiredStrings = {
-                    @RequiredStringValidator(fieldName = "identity", message = "phone\\email is required."),
-                    @RequiredStringValidator(fieldName = "password", message = "password is required.")
+                    @RequiredStringValidator(fieldName = "identity", message = "邮箱或手机号不能为空"),
+                    @RequiredStringValidator(fieldName = "password", message = "密码不能为空")
             }
     )
     @InputConfig(methodName = "verify")
+    @Override
     public String execute() {
 
         String uid = userService.login(identity, password);
 
         result.setCode(200);
-        result.setMessage(uid != null ? "login success" : "login failed");
+        result.setMessage(uid != null ? "登录成功" : "登录失败");
 
         return "json";
     }
