@@ -33,9 +33,6 @@ public class UnitTest {
     @PersistenceContext
     EntityManager manager;
 
-    @Autowired
-    RedisUtils redis;
-
     @Resource
     private UserDao userDao;
 
@@ -111,17 +108,18 @@ public class UnitTest {
 
     @Test
     public void redis() {
-        redis.set("test1", "value1");
-        System.out.println(redis.get("test"));
-        System.out.println(redis.exist("test1"));
-        redis.remove("test", "test1");
-        System.out.println(redis.exist("test"));
-        System.out.println(redis.exist("test1"));
+        RedisUtils.set("test1", "value1");
+        System.out.println(RedisUtils.get("test"));
+        System.out.println(RedisUtils.exist("test1"));
+        RedisUtils.remove("test", "test1");
+        System.out.println(RedisUtils.exist("test"));
+        System.out.println(RedisUtils.exist("test1"));
     }
 
     @Test
     public void hash() {
-        String salt = HashUtils.getSalt();
+        String string = "7617a069207d110efd2c507b304f885e5597ce82a121acf1032ce2a52c793ab8";
+        String salt = "A4F0BDFCB77E4B369DEBD4E5BAE9C66FDD551A16A3281C2829787D28B2218310";
         System.out.println("盐:                  " + salt);
         System.out.println("令牌:                 " + HashUtils.getToken());
         System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.sha256("123456Abcdefgo", salt));
