@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     @Autowired
     public BaseDaoImpl(HibernateTemplate template) {
         this.template = template;
+    }
+
+
+    public HibernateTemplate getTemplate() {
+        return template;
     }
 
     @Override

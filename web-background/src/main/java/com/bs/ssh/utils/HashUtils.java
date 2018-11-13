@@ -16,7 +16,7 @@ import java.util.UUID;
 public class HashUtils {
 
     public static String getSalt() {
-        return hashBySha1(Long.toString(System.currentTimeMillis()));
+        return hashBySha256(Long.toString(System.currentTimeMillis()));
     }
 
     public static String getToken() {
@@ -56,8 +56,8 @@ public class HashUtils {
      * @param input 加密原文
      * @return 散列后的 16 进制字符串
      */
-    public static String hashBySha1(String input) {
-        return hashBySha1(input.getBytes());
+    public static String hashBySha256(String input) {
+        return hashBySha256(input.getBytes());
     }
 
     /**
@@ -66,9 +66,9 @@ public class HashUtils {
      * @param bytes byte 数组
      * @return 散列后的 16 进制字符串
      */
-    public static String hashBySha1(byte[] bytes) {
+    public static String hashBySha256(byte[] bytes) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA1");
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
             digest.update(bytes);
             return bytesToHex(digest.digest());
         } catch (NoSuchAlgorithmException e) {
@@ -102,15 +102,14 @@ public class HashUtils {
     /**
      * 通过shiro工具实现加密
      * @param password
-     * @param email 把用户邮箱当作盐进行计算
+     * @param salt 盐
      * @return
      */
-    public static String SHA1(String password, String email){
+    public static String sha256(String password, String salt){
 
-        ByteSource salt = ByteSource.Util.bytes(email);
+        ByteSource saltBytes = ByteSource.Util.bytes(salt);
 
-        SimpleHash simpleHash = new SimpleHash("SHA1", password, salt, 1024);
-
+        SimpleHash simpleHash = new SimpleHash("SHA-256", password, salt, 1024);
 
         return simpleHash.toString();
     }
