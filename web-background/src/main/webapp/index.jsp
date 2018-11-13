@@ -4,8 +4,8 @@
 <h2>Hello World!</h2>
 
 <form action="/userRegist" method="post">
-    邮箱：<input type="text" name="email"><br>
-    验证码：<input type="text" name="emailCode"><a href="/mailCode?email=1007610491@qq.com">获取邮箱验证码</a><br>
+    邮箱：<input type="text" name="emailOrPhone"><br>
+    验证码：<input type="text" name="emailOrPhoneCode"><a href="/code?emailOrPhone=18382418120">获取邮箱验证码</a><br>
     密码：<input type="password" name="password"><br>
     <input type="submit">
 </form>

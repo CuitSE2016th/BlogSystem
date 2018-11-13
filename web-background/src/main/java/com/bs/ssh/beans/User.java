@@ -26,7 +26,7 @@ public class User{
     private Long createTime;
     private List<User> followings;
     private List<User> followers;
-    private Token token;
+
 
     @Id
     public String getId() {
@@ -140,40 +140,27 @@ public class User{
         this.createTime = createTime;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "follow",
-            joinColumns = {@JoinColumn(name = "follower_id")},
-            inverseJoinColumns = {@JoinColumn(name = "following_id")}
-    )
-    public List<User> getFollowing() {
+    @ManyToMany(mappedBy = "followers")
+    public List<User> getFollowings() {
         return followings;
     }
 
-    public void setFollowing(List<User> following) {
+    public void setFollowings(List<User> following) {
         this.followings = following;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "follow",
             joinColumns = {@JoinColumn(name = "following_id")},
             inverseJoinColumns = {@JoinColumn(name = "follower_id")}
     )
-    public List<User> getFollower() {
+    public List<User> getFollowers() {
         return followers;
     }
 
-    public void setFollower(List<User> follower) {
+    public void setFollowers(List<User> follower) {
         this.followers = follower;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public Token getToken() {
-        return token;
-    }
-
-    public void setToken(Token token) {
-        this.token = token;
-    }
 }
