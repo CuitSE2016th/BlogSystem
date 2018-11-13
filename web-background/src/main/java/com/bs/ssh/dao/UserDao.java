@@ -12,4 +12,11 @@ import com.bs.ssh.beans.User;
 public interface UserDao extends BaseDao<User> {
 
     User findByIdentity(String identity);
+
+    /**
+     *
+     * @param id 用户唯一识别码
+     * @return 用户信息
+     */
+    User getUserInfoById(String id);
 }
