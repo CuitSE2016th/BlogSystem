@@ -23,6 +23,11 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     }
 
     @Override
+    public User getUserInfoById(String id) {
+        return null;
+    }
+
+    @Override
     public int saveUser(User user) {
 
         Session session = this.getTemplate().getSessionFactory().getCurrentSession();
