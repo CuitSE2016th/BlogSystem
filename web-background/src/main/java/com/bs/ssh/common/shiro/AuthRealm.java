@@ -5,7 +5,10 @@ import com.bs.ssh.service.ShiroService;
 import com.bs.ssh.utils.RedisUtils;
 import com.google.gson.Gson;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthenticatingRealm;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author Egan
  * @date 2018/11/13 20:37
  **/
-public class AuthRealm extends AuthenticatingRealm {
+public class AuthRealm extends AuthorizingRealm {
 
     private int TIME_OUT_DAY = 7;
 
@@ -35,10 +38,7 @@ public class AuthRealm extends AuthenticatingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String accessToken = (String) token.getCredentials();
 
-        long now = System.currentTimeMillis();
-        // redis中不存在token或者已过期则到数据库中查询
-        if (!RedisUtils.exist(accessToken)) {
-
+        if (RedisUtils.exist(accessToken)) {
             User user = new Gson().fromJson(RedisUtils.get(accessToken).toString(), User.class);
             RedisUtils.expireKey(accessToken, TIME_OUT_DAY, TimeUnit.DAYS);
             return new SimpleAuthenticationInfo(user, accessToken, getName());
@@ -50,4 +50,14 @@ public class AuthRealm extends AuthenticatingRealm {
 
 
     }
+
+    /**
+     * 授权
+     **/
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        return null;
+    }
+
+
 }

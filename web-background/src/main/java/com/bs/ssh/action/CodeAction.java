@@ -4,7 +4,6 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.common.alibaba.AliSmsUtil;
-import com.bs.ssh.common.email163.EmailCodeMap;
 import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
@@ -81,6 +80,10 @@ public class CodeAction extends ActionSupport {
         }else{
             message = JsonBody.fail();
             return SUCCESS;
+        }
+
+        if(ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone) != null){
+            ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhoneCode);
         }
 
         ServletActionContext.getRequest().getSession().setAttribute(emailOrPhone, emailOrPhoneCode);
