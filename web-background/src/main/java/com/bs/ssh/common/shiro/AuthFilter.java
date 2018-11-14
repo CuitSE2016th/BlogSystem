@@ -50,7 +50,7 @@ public class AuthFilter extends AuthenticatingFilter {
             response.setContentType("application/json;charset=utf-8");
             JsonBody<String> r = new JsonBody<String>();
             r.setCode(HttpStatus.SC_UNAUTHORIZED);
-            r.setMessage("令牌无效");
+            r.setMessage("需要令牌");
             String json = new Gson().toJson(r);
             httpResponse.getWriter().print(json);
 

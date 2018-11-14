@@ -13,6 +13,8 @@ public class BaseAction extends ActionSupport{
 
     protected JsonBody<String> result = new JsonBody<>();
 
+    protected final String JSON = "json";
+
     /**
      * 通用验证方法，减少工作量
      *
@@ -23,7 +25,7 @@ public class BaseAction extends ActionSupport{
     public String verify(){
         result.setCode(405);
         result.setMessage(this.getFieldErrors().values().iterator().next().get(0));
-        return "json";
+        return JSON;
     }
 
     public JsonBody<String> getResult() {
