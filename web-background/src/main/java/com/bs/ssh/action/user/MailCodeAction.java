@@ -1,7 +1,6 @@
 package com.bs.ssh.action.user;
 
 import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.common.email163.EmailCodeMap;
 import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
