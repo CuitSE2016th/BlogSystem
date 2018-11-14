@@ -76,4 +76,17 @@ public class UserServiceImpl implements UserService{
         return flag;
     }
 
+    @Override
+    public int isExistEmail(String emailOrPhone) {
+
+        User user = userDao.selectOneByEmail(emailOrPhone);
+        return user != null ? 1:0;
+    }
+
+    @Override
+    public int isExistPhone(String emailOrPhone) {
+        User user = userDao.selectOneByPhone(emailOrPhone);
+        return user != null ? 1:0;
+    }
+
 }

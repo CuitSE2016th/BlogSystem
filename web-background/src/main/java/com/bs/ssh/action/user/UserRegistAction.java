@@ -66,11 +66,32 @@ public class UserRegistAction extends ActionSupport {
     @Action(value = "userRegist")
     public String userRegist() {
 
+        if (emailOrPhone == null) {
+            message = JsonBody.fail();
+            message.setMessage("数据为空");
+            return SUCCESS;
+        }
+
         //如果验证是否为邮箱或者密码
-        if(!RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail) &&
-                !RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)){
+        if (!RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail) &&
+                !RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)) {
             message = JsonBody.fail();
             message.setMessage("前端数据出错");
+            return SUCCESS;
+        }
+
+        //check email or phone wether exist
+
+        int flag = 0;
+        if (ExecRegex(emailOrPhone, RegexString.regex_UserEmail)) {
+            flag = userService.isExistEmail(emailOrPhone);
+        } else {
+            flag = userService.isExistPhone(emailOrPhone);
+        }
+
+        if (flag == 1) {
+            message = JsonBody.fail();
+            message.setMessage("账号已经存在");
             return SUCCESS;
         }
 
@@ -86,23 +107,23 @@ public class UserRegistAction extends ActionSupport {
         //在后台得到我们发送给前端的数据
         String Code_after = (String) ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone);
 
-        if (Code_after == null || "".equals(Code_after)){
+        if (Code_after == null || "".equals(Code_after)) {
             message = JsonBody.fail();
             message.setMessage("不能得到验证码");
             return SUCCESS;
         }
 
         //比较前后端验证码是否相同
-        if(!Code_after.equals(emailOrPhoneCode)){
+        if (!Code_after.equals(emailOrPhoneCode)) {
             message = JsonBody.fail();
             message.setMessage("验证码出错");
             return SUCCESS;
         }
 
 
-        int flag = userService.registUser(emailOrPhone, password);
+        int flag_save = userService.registUser(emailOrPhone, password);
 
-        if(flag == 0){
+        if (flag_save == 0) {
             message = JsonBody.fail();
             ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhone);
             message.setMessage("数据保存出错");
@@ -123,6 +144,42 @@ public class UserRegistAction extends ActionSupport {
         return matcher.matches();
     }
 
+    @Action("isExist")
+    public String emailOrPhoneIsExist() {
 
+        if (emailOrPhone == null) {
+            message = JsonBody.fail();
+            message.setMessage("数据为空");
+            return SUCCESS;
+        }
+
+        //如果验证是否为邮箱或者密码
+        if (!RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail) &&
+                !RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)) {
+            message = JsonBody.fail();
+            message.setMessage("前端数据出错");
+            return SUCCESS;
+        }
+
+        int flag = 0;
+
+        if (ExecRegex(emailOrPhone, RegexString.regex_UserEmail)) {
+            flag = userService.isExistEmail(emailOrPhone);
+        } else {
+            flag = userService.isExistPhone(emailOrPhone);
+        }
+
+        if (flag == 1) {
+            message = JsonBody.fail();
+            message.setMessage("账号已经存在");
+            return SUCCESS;
+        } else {
+            message = JsonBody.success();
+            message.setMessage("账号可以使用");
+            return SUCCESS;
+        }
+
+
+    }
 
 }
