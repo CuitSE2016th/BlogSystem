@@ -38,11 +38,9 @@ public class LoginAction extends BaseAction {
     @Override
     public String execute() {
 
-        JsonBody<String> jsonBody = userService.login(identity, password);
+        result = userService.login(identity, password);
 
-        result = jsonBody;
-
-        return "json";
+        return JSON;
     }
 
     private String identity;

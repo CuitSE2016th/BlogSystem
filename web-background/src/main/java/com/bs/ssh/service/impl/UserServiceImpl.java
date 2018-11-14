@@ -6,6 +6,8 @@ import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
 import com.bs.ssh.utils.*;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
