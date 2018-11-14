@@ -14,12 +14,12 @@
         <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
     </bean>
     <bean id="authRealm" class="com.bs.ssh.common.shiro.AuthRealm">
-        <property name="credentialsMatcher">
-            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-                <property name="hashAlgorithmName" value="MD5"></property>
-                <property name="hashIterations" value="1024"></property>
-            </bean>
-        </property>
+        <!--<property name="credentialsMatcher">-->
+            <!--<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+                <!--<property name="hashAlgorithmName" value="MD5"></property>-->
+                <!--<property name="hashIterations" value="1024"></property>-->
+            <!--</bean>-->
+        <!--</property>-->
     </bean>
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
@@ -36,21 +36,27 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
+    <bean id="filter" class="com.bs.ssh.common.shiro.AuthFilter"/>
+
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login.jsp"/>
         <property name="successUrl" value="/index.jsp"/>
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <property name="filters">
+            <map>
+                <entry key="auth" value-ref="filter"/>
+            </map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 /error.jsp = anon
                 /login/captcha = anon
                 /static/** = anon
-                /login.jsp = anon
-                /logout = anon
-                /code = anon
-                /userRegist = anon
-                /index.jsp = anon
+                <!--/logout = anon-->
+                <!--/code = anon-->
+                <!--/userRegist = anon-->
+                <!--/index.jsp = anon-->
                 /** = anon
             </value>
         </property>
