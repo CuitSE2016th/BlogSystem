@@ -21,4 +21,8 @@ public interface UserDao extends BaseDao<User> {
     User getUserInfoById(String id);
 
     int saveUser(User user);
+
+    User selectOneByEmail(String emailOrPhone);
+
+    User selectOneByPhone(String emailOrPhone);
 }

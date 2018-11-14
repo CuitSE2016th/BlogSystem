@@ -23,4 +23,7 @@ public interface UserService {
 
     int registUser(String email, String password);
 
+    int isExistEmail(String emailOrPhone);
+
+    int isExistPhone(String emailOrPhone);
 }
