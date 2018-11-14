@@ -66,9 +66,10 @@ public class UserRegistAction extends ActionSupport {
     @Action(value = "userRegist")
     public String userRegist() {
 
-        if (emailOrPhone == null) {
+        if (emailOrPhone == null || emailOrPhoneCode == null || password == null ||
+        "".equals(emailOrPhone.trim()) || "".equals(emailOrPhoneCode.trim()) || "".equals(password.trim())){
             message = JsonBody.fail();
-            message.setMessage("数据为空");
+            message.setMessage("前段数据出错");
             return SUCCESS;
         }
 
