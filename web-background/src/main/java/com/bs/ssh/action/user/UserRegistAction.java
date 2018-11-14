@@ -1,4 +1,4 @@
-package com.bs.ssh.action;
+package com.bs.ssh.action.user;
 
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.service.impl.UserServiceImpl;
