@@ -2,6 +2,7 @@ package com.bs.ssh.action.user;
 
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.service.impl.UserServiceImpl;
+import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
@@ -81,6 +82,13 @@ public class UserRegistAction extends ActionSupport {
             return SUCCESS;
         }
 
+        //对于邮箱后缀进行处理
+        if(RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail)){
+            String[] split = emailOrPhone.split("@");
+            String email_suffer_upper = split[1].toLowerCase();
+            emailOrPhone = split[0] + "@" + email_suffer_upper;
+        }
+
         //check email or phone wether exist
 
         int flag = 0;
@@ -107,6 +115,8 @@ public class UserRegistAction extends ActionSupport {
 
         //在后台得到我们发送给前端的数据
         String Code_after = (String) ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone);
+
+        String reidsCode = (String) RedisUtils.get(emailOrPhone);
 
         if (Code_after == null || "".equals(Code_after)) {
             message = JsonBody.fail();
