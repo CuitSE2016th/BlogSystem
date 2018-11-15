@@ -31,6 +31,8 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.lfork.blogsystem.BaseActivity"/>
         </activity>
+        <activity android:name=".regist.RegistActivity">
+        </activity>
     </application>
 
 </manifest>
