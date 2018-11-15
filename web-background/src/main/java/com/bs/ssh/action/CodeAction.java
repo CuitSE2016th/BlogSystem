@@ -87,7 +87,7 @@ public class CodeAction extends ActionSupport {
         }
 
         ServletActionContext.getRequest().getSession().setAttribute(emailOrPhone, emailOrPhoneCode);
-
+        System.out.println(ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone));
         message = JsonBody.success();
         return SUCCESS;
     }

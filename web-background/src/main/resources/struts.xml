@@ -7,7 +7,7 @@
 
 
     <!--测试的时候使用-->
-    <constant name="struts.action.excludePattern" value="/index.jsp,/login.jsp,/unauthorized.jsp"/>
+    <constant name="struts.action.excludePattern" value="/index.jsp,/login.jsp,/unauthorized.jsp,/favicon.ico"/>
 
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />
