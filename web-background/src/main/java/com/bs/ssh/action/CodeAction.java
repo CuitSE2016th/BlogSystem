@@ -5,6 +5,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.common.alibaba.AliSmsUtil;
 import com.bs.ssh.common.email163.MailUtil;
+import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
@@ -12,6 +13,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * Create By ZZY on 2018/11/10
@@ -64,6 +67,11 @@ public class CodeAction extends ActionSupport {
                 return SUCCESS;
             }
 
+            //对于邮箱后缀进行处理
+            String[] split = emailOrPhone.split("@");
+            String email_suffer_upper = split[1].toLowerCase();
+            emailOrPhone = split[0] + "@" + email_suffer_upper;
+
             //如果是手机号则发送手机号验证码
         }else if(RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)){
 
@@ -82,12 +90,18 @@ public class CodeAction extends ActionSupport {
             return SUCCESS;
         }
 
+        if(RedisUtils.get(emailOrPhone) != null){
+            RedisUtils.remove(emailOrPhone);
+        }
+
         if(ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone) != null){
             ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhoneCode);
         }
 
         ServletActionContext.getRequest().getSession().setAttribute(emailOrPhone, emailOrPhoneCode);
-        System.out.println(ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone));
+        RedisUtils.set(emailOrPhone, emailOrPhoneCode);
+
+
         message = JsonBody.success();
         return SUCCESS;
     }
