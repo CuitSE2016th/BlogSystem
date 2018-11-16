@@ -114,9 +114,7 @@ public class UserRegistAction extends ActionSupport {
         }
 
         //在后台得到我们发送给前端的数据
-        String Code_after = (String) ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone);
-
-        String reidsCode = (String) RedisUtils.get(emailOrPhone);
+        String Code_after = (String) RedisUtils.get(emailOrPhone);
 
         if (Code_after == null || "".equals(Code_after)) {
             message = JsonBody.fail();
