@@ -6,5 +6,5 @@ package com.lfork.blogsystem.data.common
 interface DataCallback<T> {
     fun succeed(data:T)
 
-    fun failed(log:String)
+    fun failed(code:Int,log:String)
 }

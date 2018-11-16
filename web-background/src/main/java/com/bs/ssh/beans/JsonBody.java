@@ -1,5 +1,7 @@
 package com.bs.ssh.beans;
 
+import com.bs.ssh.utils.Constants;
+
 /**
  * HTTP响应体
  *
@@ -36,16 +38,19 @@ public class JsonBody<T> {
         Data = data;
     }
 
+
+
+
     public static JsonBody success(){
         JsonBody message = new JsonBody<Object>();
-        message.setCode(100);
+        message.setCode(Constants.RESPONSE_SUCCEED);
         message.setMessage("操作成功");
         return message;
     }
 
     public static JsonBody fail(){
         JsonBody message = new JsonBody<Object>();
-        message.setCode(200);
+        message.setCode(Constants.RESPONSE_FAILED);
         message.setMessage("操作失败");
         return message;
     }
