@@ -16,6 +16,8 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Create By ZZY on 2018/11/10
  */
@@ -94,13 +96,9 @@ public class CodeAction extends ActionSupport {
             RedisUtils.remove(emailOrPhone);
         }
 
-        if(ServletActionContext.getRequest().getSession().getAttribute(emailOrPhone) != null){
-            ServletActionContext.getRequest().getSession().removeAttribute(emailOrPhoneCode);
-        }
-
-        ServletActionContext.getRequest().getSession().setAttribute(emailOrPhone, emailOrPhoneCode);
         RedisUtils.set(emailOrPhone, emailOrPhoneCode);
 
+        RedisUtils.expireKey(emailOrPhone, 15, TimeUnit.MINUTES);
 
         message = JsonBody.success();
         return SUCCESS;
