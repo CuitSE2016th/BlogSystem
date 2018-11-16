@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.base;
+package com.lfork.blogsystem.data.common.network;
 
 /**
  * Created by 98620 on 2018/4/7.
@@ -9,7 +9,7 @@ public class Config {
 
     public static String BaseURL = "http://www.lfork.top/blog/";
 
-    public static String Local = "http://localhost:8080";
+    public static String Local = "http://www.lfork.top/blog/";
 
     public static String ServerImagePathRoot = "http://www.lfork.top/image/";
 

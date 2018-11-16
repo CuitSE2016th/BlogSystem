@@ -21,11 +21,11 @@ interface UserApi {
      * @return 指定请求数据的Call对象
      */
     @FormUrlEncoded
-    @POST("blog/user_login")
+    @POST("blog/login")
     fun login(
-        @Field("emailOrPhone") account: String,
+        @Field("identity") account: String,
         @Field("password") password: String
-    ): Call<Result<User>>
+    ): Call<Result<String>>
 
 
     /**
@@ -48,7 +48,7 @@ interface UserApi {
      */
     @FormUrlEncoded
     @POST("blog/code")
-    fun getVerifyCode(
+    fun getVerificationCode(
         @Field("emailOrPhone") account: String
     ): Call<Result<String>>
 

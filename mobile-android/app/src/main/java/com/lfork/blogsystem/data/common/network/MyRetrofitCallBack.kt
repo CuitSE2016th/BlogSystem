@@ -13,12 +13,12 @@ import retrofit2.Response
  */
 class MyRetrofitCallBack<T>(private val generalCallback: DataCallback<T>) : Callback<Result<T>> {
     override fun onFailure(call: Call<Result<T>>, t: Throwable) {
-        println("enene??1.3")
-        generalCallback.failed("error：服务器异常、或者是没有网络连接")
+        println("enene??network_security_config.3")
+        generalCallback.failed("error：" +t.message)
     }
 
     override fun onResponse(call: Call<Result<T>>, response: Response<Result<T>>) {
-        println("enene??1.2")
+        println("enene??network_security_config.2")
         Result.deal(response.body() as Result<T>, generalCallback)
     }
 }

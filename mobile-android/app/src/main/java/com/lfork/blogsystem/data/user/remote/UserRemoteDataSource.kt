@@ -13,7 +13,7 @@ class UserRemoteDataSource:UserDataSource{
 
     private val api: UserApi = UserApi.create()
 
-    override fun login(account: String, password: String, callback: DataCallback<User>) {
+    override fun login(account: String, password: String, callback: DataCallback<String>) {
         api.login(account, password).enqueue(MyRetrofitCallBack(callback))
     }
 
@@ -21,12 +21,11 @@ class UserRemoteDataSource:UserDataSource{
         api.register(account, verifyCode, password).enqueue(MyRetrofitCallBack(callback))
     }
 
-    override fun getVerifyCode(account: String, callback: DataCallback<String>) {
-        api.getVerifyCode(account).enqueue(MyRetrofitCallBack(callback))
+    override fun getVerificationCode(account: String, callback: DataCallback<String>) {
+        api.getVerificationCode(account).enqueue(MyRetrofitCallBack(callback))
     }
 
     fun getUserInfo(callback: DataCallback<List<User>>){
-        println("enene??1.1")
         api.getUserInfo().enqueue(MyRetrofitCallBack(callback))
     }
 

@@ -8,7 +8,7 @@ import com.lfork.blogsystem.data.user.remote.UserRemoteDataSource
  * Created by 98620 on 2018/11/15.
  */
 object UserDataRepository : UserDataSource {
-    val remoteDataSource = UserRemoteDataSource()
+    private val remoteDataSource = UserRemoteDataSource()
 
     var userCache: User? = null
 
@@ -16,7 +16,7 @@ object UserDataRepository : UserDataSource {
 
     var followers: List<User>? = null
 
-    override fun login(account: String, password: String, callback: DataCallback<User>) {
+    override fun login(account: String, password: String, callback: DataCallback<String>) {
         remoteDataSource.login(account, password, callback)
     }
 
@@ -24,8 +24,8 @@ object UserDataRepository : UserDataSource {
         remoteDataSource.register(account, password, verifyCode, callback)
     }
 
-    override fun getVerifyCode(account: String, callback: DataCallback<String>) {
-        remoteDataSource.getVerifyCode(account, callback)
+    override fun getVerificationCode(account: String, callback: DataCallback<String>) {
+        remoteDataSource.getVerificationCode(account, callback)
     }
 
     fun getUserInfo(callback: DataCallback<List<User>>){
