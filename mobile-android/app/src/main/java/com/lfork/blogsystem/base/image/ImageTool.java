@@ -11,7 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 /**
- * Created by 98620 on 2018/1/21.
+ * Created by 98620 on 2018/network_security_config/21.
  */
 
 public class ImageTool {
@@ -27,7 +27,7 @@ public class ImageTool {
         if (source == null) {
             return null;
         }
-        //(1)
+        //(network_security_config)
         RenderScript renderScript =  RenderScript.create(context);
 
         Log.i(TAG,"scale size:"+ source.getWidth()+"*"+ source.getHeight());

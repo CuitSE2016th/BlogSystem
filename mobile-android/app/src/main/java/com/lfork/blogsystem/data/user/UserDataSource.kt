@@ -11,7 +11,7 @@ interface UserDataSource {
     /**
      * @param account Phone or Email
      */
-    fun login(account: String, password: String, callback: DataCallback<User>)
+    fun login(account: String, password: String, callback: DataCallback<String>)
 
 //    fun logout()
 
@@ -26,6 +26,6 @@ interface UserDataSource {
     /**
      * 需要做好限60秒一次的限制
      */
-    fun getVerifyCode(account: String, callback: DataCallback<String>)
+    fun getVerificationCode(account: String, callback: DataCallback<String>)
 
 }

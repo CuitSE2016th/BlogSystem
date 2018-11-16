@@ -13,5 +13,4 @@ class User {
     var roleID: String? = null
     var lastLoginTime: Long? = null
     var createTime: Long? = null
-
 }
