@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import com.lfork.blogsystem.data.common.DataCallback;
+import com.lfork.blogsystem.utils.Config;
+
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -157,7 +159,7 @@ public class HttpService {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                callback.failed(e.getMessage());
+                callback.failed(Result.RESPONSE_UNKNOWN_ERROR,e.getMessage());
 
             }
 

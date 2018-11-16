@@ -25,6 +25,7 @@ import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.content.Intent
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.base.BlogApplication
 import com.lfork.blogsystem.data.common.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.main.MainActivity
@@ -42,7 +43,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private var mAuthTask: UserDataRepository? = null
+    private var mRegisterTask: UserDataRepository? = null
 
     private var mVerificationCodeTask: UserDataRepository? = null
 
@@ -121,7 +122,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * errors are presented and no actual login attempt is made.
      */
     private fun attemptRegister() {
-        if (mAuthTask != null) {
+        if (mRegisterTask != null) {
             return
         }
 
@@ -191,16 +192,17 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true)
-            mAuthTask = UserDataRepository
-            mAuthTask?.login(accountStr, passwordStr, object : DataCallback<String> {
+            mRegisterTask = UserDataRepository
+            mRegisterTask?.register(accountStr, passwordStr, verificationCodeStr, object : DataCallback<String> {
                 override fun succeed(data: String) {
                     ToastUtil.showLong(applicationContext, "注册成功")
-                    MainActivity.startMainActivity(this@RegisterActivity)
                     finish()
                 }
 
-                override fun failed(log: String) {
+                override fun failed(code: Int,log: String) {
                     ToastUtil.showLong(applicationContext, log)
+                    mRegisterTask = null
+                    showProgress(false)
                 }
             })
         }
@@ -211,16 +213,31 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             return
         }
 
+        BlogApplication.executeThreadWithThreadPool {
+            val countDownSeconds = 60
+            for (i in 1..countDownSeconds) {
+                Thread.sleep(1000)
+                runOnUiThread {
+                    get_verification_code_button.text = "Get Again($i)"
+                }
+            }
+            runOnUiThread {
+                get_verification_code_button.text = getText(R.string.action_get_verification_code)
+            }
+            mVerificationCodeTask = null
+
+        }
+
         val accountStr = account.text.toString()
 
         mVerificationCodeTask = UserDataRepository
         mVerificationCodeTask?.getVerificationCode(accountStr, object : DataCallback<String> {
             override fun succeed(data: String) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                ToastUtil.showLong(this@RegisterActivity, data)
             }
 
-            override fun failed(log: String) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            override fun failed(code: Int, log: String) {
+                ToastUtil.showLong(this@RegisterActivity, log)
             }
         })
     }
@@ -330,7 +347,6 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
 
     companion object {
-
         /**
          * Id to identity READ_CONTACTS permission request.
          */

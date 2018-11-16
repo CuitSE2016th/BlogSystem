@@ -4,21 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
-//import org.litepal.LitePal;
+
+import com.lfork.blogsystem.base.thread.MyThreadFactory;
+import com.lfork.blogsystem.utils.Config;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
  * @author 98620
- * @date 2018/3/19
+ * @date 2018/11/16
  */
 
-public class BlogSystemApplication extends Application implements MyApplication {
+public class BlogApplication extends Application implements MyApplication {
 
     public final static String APP_SHARED_PREF = "application_shared_pref";
 
@@ -50,7 +51,7 @@ public class BlogSystemApplication extends Application implements MyApplication 
     }
 
     public static void setContext(Context context) {
-        BlogSystemApplication.context = context;
+        BlogApplication.context = context;
     }
 
 
@@ -59,13 +60,8 @@ public class BlogSystemApplication extends Application implements MyApplication 
      */
     @Override
     public void initThreadPool() {
-//        executorService = new ThreadPoolExecutor(
-//                Config.BASE_THREAD_POOL_SIZE,
-//                Config.BASE_THREAD_POOL_SIZE * 2,
-//                0L,
-//                TimeUnit.MICROSECONDS,
-//                new LinkedBlockingDeque<>(),
-//                Executors.defaultThreadFactory());
+        ThreadFactory namedThreadFactory = new MyThreadFactory("UI辅助线程池");
+        executorService = new ThreadPoolExecutor(Config.BASE_THREAD_POOL_SIZE, Config.BASE_THREAD_POOL_SIZE * 2, 0L, TimeUnit.MICROSECONDS, new LinkedBlockingDeque<Runnable>(), namedThreadFactory);
     }
 
     public static ExecutorService getAppFixedThreadPool() {
@@ -76,7 +72,7 @@ public class BlogSystemApplication extends Application implements MyApplication 
         return executorService;
     }
 
-    public static void executeThreadInDefaultThreadPool(Runnable r) {
+    public static void executeThreadWithThreadPool(Runnable r) {
         executorService.execute(r);
     }
 }

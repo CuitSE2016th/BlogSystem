@@ -24,7 +24,7 @@ class URLTest {
                 Log.d("getUserInfoTest","enene??2" + data.toString())
             }
 
-            override fun failed(log: String) {
+            override fun failed(code: Int,log: String) {
                 Log.d("getUserInfoTest","enene??3")
             }
         })
