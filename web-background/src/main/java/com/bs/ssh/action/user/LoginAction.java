@@ -4,8 +4,10 @@ import com.bs.ssh.action.BaseAction;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.UserService;
+import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
+import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import org.apache.struts2.convention.annotation.*;
@@ -32,6 +34,18 @@ public class LoginAction extends BaseAction {
             requiredStrings = {
                     @RequiredStringValidator(fieldName = "identity", message = "邮箱或手机号不能为空"),
                     @RequiredStringValidator(fieldName = "password", message = "密码不能为空")
+            },
+            regexFields = {
+                    @RegexFieldValidator(
+                            fieldName = "identity",
+                            regexExpression = RegexString.EMAIL_OR_PHONE,
+                            message = "邮箱或手机号不合法"
+                    ),
+                    @RegexFieldValidator(
+                            fieldName = "password",
+                            regexExpression = RegexString.regex_UserPassword,
+                            message = "密码不合法"
+                    )
             }
     )
     @InputConfig(methodName = "verify")
