@@ -69,12 +69,12 @@ public class AuthFilter extends AuthenticatingFilter {
             Throwable throwable = e.getCause() == null ? e : e.getCause();
             JsonBody<String> r = new JsonBody<String>();
             r.setCode(HttpStatus.SC_UNAUTHORIZED);
-            r.setMessage("登录失败");
+            r.setMessage("令牌无效");
             r.setData(throwable.getMessage());
             String json = new Gson().toJson(r);
             httpResponse.getWriter().print(json);
         } catch (IOException e1) {
-            log.info("登录失败");
+            log.warn("令牌无效", e1);
         }
 
         return false;

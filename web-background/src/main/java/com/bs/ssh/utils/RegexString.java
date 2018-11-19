@@ -22,6 +22,9 @@ public class RegexString {
 
     public static final String regex_UserPassword = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
 
+    public static final String EMAIL_OR_PHONE =
+            "^(\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14})$|(0?(13|14|15|18)[0-9]{9})$";
+
     // 传入要验证的字段，以及需要的正则表达式， 进行字段的验证
     public static boolean ExecRegex(String args, String regex) {
         Pattern pattern = Pattern.compile(regex);
