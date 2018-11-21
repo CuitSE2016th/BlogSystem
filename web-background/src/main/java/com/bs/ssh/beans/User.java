@@ -33,7 +33,6 @@ public class User{
     //用户收藏的文章
     private List<Article> starArticles;
 
-
     @Id
     public String getId() {
         return id;
@@ -197,4 +196,7 @@ public class User{
     public void setStarArticles(List<Article> starArticles) {
         this.starArticles = starArticles;
     }
+
+
+
 }

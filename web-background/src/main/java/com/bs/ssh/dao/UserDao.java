@@ -2,6 +2,8 @@ package com.bs.ssh.dao;
 
 import com.bs.ssh.beans.User;
 
+import java.util.List;
+
 
 /**
  * 用户仓库
@@ -25,4 +27,8 @@ public interface UserDao extends BaseDao<User> {
     User selectOneByEmail(String emailOrPhone);
 
     User selectOneByPhone(String emailOrPhone);
+
+    int getUserCount();
+
+    List<User> getAllUser();
 }
