@@ -1,13 +1,12 @@
 package com.bs.ssh.service.impl;
 
 import com.bs.ssh.beans.JsonBody;
+import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
 import com.bs.ssh.utils.*;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -66,7 +65,9 @@ public class UserServiceImpl implements UserService{
         String userID = IDUtils.UserID();
         user.setId(userID);
 
-        user.setRoleID("r001");
+        Role role = new Role();
+        role.setId("r001");
+        user.setRole(role);
 
         user.setCreateTime(System.currentTimeMillis());
         user.setLastLoginTime(System.currentTimeMillis());
