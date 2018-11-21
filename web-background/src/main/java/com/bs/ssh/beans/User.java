@@ -23,7 +23,7 @@ public class User{
     @Expose private String phone;
     @Expose private String password;
     private String salt;
-    @Expose private String roleID;
+    @Expose private Role role;
     @Expose private Long lastLoginTime;
     @Expose private Long createTime;
     private List<User> followings;
@@ -115,14 +115,14 @@ public class User{
         this.salt = salt;
     }
 
-    @Basic
-    @Column(name = "role_id")
-    public String getRoleID() {
-        return roleID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    public Role getRoleID() {
+        return role;
     }
 
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
+    public void setRoleID(Role role) {
+        this.role = role;
     }
 
     @Basic
