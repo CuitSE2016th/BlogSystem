@@ -77,7 +77,6 @@ public class UnitTest {
         user1.setSalt(HashUtils.getSalt());
         user1.setPassword(HashUtils.hashBySha256("123456" + user1.getSalt()));
         user1.setSex("M");
-        user1.setRoleID("r001");
 
         user1.setLastLoginTime(System.currentTimeMillis());
         user1.setCreateTime(System.currentTimeMillis());
