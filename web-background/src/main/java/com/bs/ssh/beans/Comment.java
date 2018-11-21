@@ -25,7 +25,7 @@ public class Comment {
         this.id = id;
     }
 
-    @Basic(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     public User getAuthor() {
         return author;

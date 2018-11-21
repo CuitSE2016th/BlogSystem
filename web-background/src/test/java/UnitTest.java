@@ -1,6 +1,8 @@
+import com.bs.ssh.beans.Article;
 import com.bs.ssh.beans.Permission;
 import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.User;
+import com.bs.ssh.dao.BaseDao;
 import com.bs.ssh.dao.PermissionDao;
 import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.dao.UserDao;
@@ -21,6 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,28 +90,52 @@ public class UnitTest {
         userDao.insert(user1);
     }
 
-//    @Test
+    @Test
     public void follow() {
-//        List<User> users = new LinkedList<>();
-//        userDao.findAll("from User").forEach(users::add);
-//
-//        User user3 = users.get(1);
-//        User user2 = users.get(2);
-//        List<User> user3Following = new LinkedList<>();
-//        user3Following.add(user2);
-//        user3.setFollowers(user3Following);
-//
-//        userDao.update(user3);
+        List<User> users = new LinkedList<>();
+        userDao.findAll("from User").forEach(users::add);
+
+        User user3 = users.get(1);
+        User user2 = users.get(2);
+        List<User> user3Following = new LinkedList<>();
+        user3Following.add(user2);
+        user3.setFollowers(user3Following);
+
+        userDao.update(user3);
 
     }
 
+    @Resource
+    private BaseDao<Article> articleBaseDao;
     @Test
+    public void article(){
+        User user = userDao.findByIdentity("13881705154");
+        Article article = new Article();
+        article.setId("a001");
+        article.setAuthor(user);
+        article.setContent("hello, there is a new article.");
+        article.setCreateTime(System.currentTimeMillis());
+        articleBaseDao.insert(article);
+    }
+
+    @Test
+    public void starAndLike(){
+        User user = userDao.findByIdentity("13881705154");
+        Article article = articleBaseDao.findOne("from Article");
+        List<Article> articles = new ArrayList<>();
+        articles.add(article);
+        user.setStarArticles(articles);
+        user.setLikeArticles(articles);
+        userDao.update(user);
+    }
+
+//    @Test
     public void timestamp() {
         System.out.println(String.valueOf(System.currentTimeMillis()).length());
         System.out.println(String.valueOf(System.currentTimeMillis()));
     }
 
-    @Test
+//    @Test
     public void redis() {
         RedisUtils.set("test1", "value1");
         System.out.println(RedisUtils.get("test"));
@@ -118,7 +145,7 @@ public class UnitTest {
         System.out.println(RedisUtils.exist("test1"));
     }
 
-    @Test
+//    @Test
     public void hash() {
         String string = "7617a069207d110efd2c507b304f885e5597ce82a121acf1032ce2a52c793ab8";
         String salt = "A4F0BDFCB77E4B369DEBD4E5BAE9C66FDD551A16A3281C2829787D28B2218310";
@@ -127,7 +154,7 @@ public class UnitTest {
         System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.sha256("123456Abcdefgo", salt));
     }
 
-    @Test
+//    @Test
     public void gson(){
         User user = userDao.findByIdentity("13881705154");
         System.out.println(JsonUtil.toJsonExposed(user));

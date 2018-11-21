@@ -28,6 +28,10 @@ public class User{
     @Expose private Long createTime;
     private List<User> followings;
     private List<User> followers;
+    //用户点赞的文章
+    private List<Article> likeArticles;
+    //用户收藏的文章
+    private List<Article> starArticles;
 
 
     @Id
@@ -165,4 +169,32 @@ public class User{
         this.followers = follower;
     }
 
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "like",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "article_id")}
+    )
+    public List<Article> getLikeArticles() {
+        return likeArticles;
+    }
+
+    public void setLikeArticles(List<Article> likeArticles) {
+        this.likeArticles = likeArticles;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "star",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "article_id")}
+    )
+    public List<Article> getStarArticles() {
+        return starArticles;
+    }
+
+    public void setStarArticles(List<Article> starArticles) {
+        this.starArticles = starArticles;
+    }
 }

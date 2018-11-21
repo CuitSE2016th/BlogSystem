@@ -1,6 +1,7 @@
 package com.bs.ssh.beans;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 文章实体
@@ -16,6 +17,14 @@ public class Article {
     private String content;
     private User author;
     private Long createTime;
+    /**
+     * 为本文章点赞的用户
+     **/
+    private List<User> liker;
+    /**
+     * 收藏本文章的用户
+     **/
+    private List<User> collectors;
 
     @Id
     public String getId() {
@@ -52,5 +61,23 @@ public class Article {
 
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    @ManyToMany(mappedBy = "likeArticles")
+    public List<User> getLiker() {
+        return liker;
+    }
+
+    public void setLiker(List<User> likers) {
+        this.liker = likers;
+    }
+
+    @ManyToMany(mappedBy = "starArticles")
+    public List<User> getCollectors() {
+        return collectors;
+    }
+
+    public void setCollectors(List<User> collectors) {
+        this.collectors = collectors;
     }
 }
