@@ -1,6 +1,7 @@
 package com.bs.ssh.service;
 
 import com.bs.ssh.beans.JsonBody;
+import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 
 /**
@@ -26,4 +27,6 @@ public interface UserService {
     int isExistEmail(String emailOrPhone);
 
     int isExistPhone(String emailOrPhone);
+
+    PageBean<User> getAllUserToPageBean(int pn, int pageSize);
 }

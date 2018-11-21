@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Repository
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
@@ -53,6 +54,28 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     public User selectOneByPhone(String emailOrPhone) {
 
         return this.findOne("from User where phone = ?", emailOrPhone);
+    }
+
+    @Override
+    public int getUserCount() {
+
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+
+        Query query = currentSession.createQuery("select count(*) from User");
+
+        int count = (int) query.uniqueResult();
+
+        return count;
+    }
+
+    @Override
+    public List<User> getAllUser() {
+
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+
+        List<User> from_user = currentSession.createQuery("from User").list();
+
+        return from_user;
     }
 
 }

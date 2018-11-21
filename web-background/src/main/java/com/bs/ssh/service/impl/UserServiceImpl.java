@@ -1,6 +1,7 @@
 package com.bs.ssh.service.impl;
 
 import com.bs.ssh.beans.JsonBody;
+import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Transactional
@@ -87,6 +90,37 @@ public class UserServiceImpl implements UserService{
     public int isExistPhone(String emailOrPhone) {
         User user = userDao.selectOneByPhone(emailOrPhone);
         return user != null ? 1:0;
+    }
+
+    @Override
+    public PageBean<User> getAllUserToPageBean(int pn, int pageSize) {
+
+        //构造返回的对象
+        PageBean<User> users = new PageBean<>();
+        users.setPageSize(pageSize);
+
+        //查询总记录数
+        int recordCount = userDao.getUserCount();
+
+        //判断当前页是否大于最大页数
+        if (pn > recordCount / pageSize){
+            pn = recordCount / pageSize;
+        }
+
+        users.setRecordCount(recordCount);
+        users.setCurrentPage(pn);
+
+        List<User> userList = userDao.getAllUser();
+
+
+
+
+
+
+
+
+
+        return null;
     }
 
 }
