@@ -2,6 +2,7 @@ package com.bs.ssh.service.impl;
 
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.PageBean;
+import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
@@ -69,7 +70,11 @@ public class UserServiceImpl implements UserService{
         String userID = IDUtils.UserID();
         user.setId(userID);
 
-        user.setRoleID("r001");
+        /* 此处是后面修改的*/
+        Role role = new Role();
+        role.setId("r001");
+
+        user.setRoleID(role);
 
         user.setCreateTime(System.currentTimeMillis());
         user.setLastLoginTime(System.currentTimeMillis());
@@ -102,6 +107,10 @@ public class UserServiceImpl implements UserService{
         //查询总记录数
         int recordCount = userDao.getUserCount();
 
+        if(recordCount == 0){
+            return null;
+        }
+
         //判断当前页是否大于最大页数
         if (pn > recordCount / pageSize){
             pn = recordCount / pageSize;
@@ -111,16 +120,12 @@ public class UserServiceImpl implements UserService{
         users.setCurrentPage(pn);
 
         List<User> userList = userDao.getAllUser();
+        if(userList.size() == 0 || userList == null){
+            return null;
+        }
+        users.setResult(userList);
 
-
-
-
-
-
-
-
-
-        return null;
+        return users;
     }
 
 }

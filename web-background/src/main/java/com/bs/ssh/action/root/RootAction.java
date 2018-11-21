@@ -5,6 +5,7 @@ import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.impl.UserServiceImpl;
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -32,7 +33,8 @@ public class RootAction extends BaseAction {
     private static final int pageSize = 15;
 
 
-    public String getAllUserToPage(){
+    @Action(value = "getUsersToPageByPageNo")
+    public String getUsersToPageByPageNo(){
 
         int pn;
 
@@ -50,10 +52,15 @@ public class RootAction extends BaseAction {
 
         PageBean<User> users = userService.getAllUserToPageBean(pn, pageSize);
 
+        if(users == null){
+            result = JsonBody.fail();
+            result.setMessage("数据查询失败");
+            return SUCCESS;
+        }
 
-
-
-        return null;
+        result = JsonBody.success();
+        result.setData(users);
+        return SUCCESS;
     }
 
 
