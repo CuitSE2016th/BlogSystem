@@ -57,9 +57,10 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut expression="execution(* com.bs.ssh.*.service.*.*(..))" id="pointCut"/>
+        <aop:pointcut expression="execution(* com.bs.ssh.service.root.impl..*.*(..))" id="pointCut"/>
         <aop:advisor advice-ref="advice" pointcut-ref="pointCut"/>
     </aop:config>
+
     <aop:aspectj-autoproxy  proxy-target-class="true"/>
 
     <tx:annotation-driven transaction-manager="hibernateTransactionManager"></tx:annotation-driven>

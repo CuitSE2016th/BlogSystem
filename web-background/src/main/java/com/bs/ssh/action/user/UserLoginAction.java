@@ -1,13 +1,17 @@
 package com.bs.ssh.action.user;
 
 import com.bs.ssh.action.BaseAction;
-import com.bs.ssh.service.user.UserService;
+import com.bs.ssh.service.UserService;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
-import org.apache.struts2.convention.annotation.*;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -50,6 +54,7 @@ public class UserLoginAction extends BaseAction {
     public String execute() {
 
         result = userService.login(identity, password);
+
 
         return JSON;
     }

@@ -16,8 +16,8 @@ public class test1 {
     public void testEmailSend(){
 
         //MailUtil.codeMail("1007610491@qq.com", "123456");
-        System.out.println(RegexString.ExecRegex("1007610491qq.com", RegexString.regex_UserEmail));
-
+        //System.out.println(RegexString.ExecRegex("1007610491qq.com", RegexString.regex_UserEmail));
+        Integer.parseInt("11a");
     }
 
 }
