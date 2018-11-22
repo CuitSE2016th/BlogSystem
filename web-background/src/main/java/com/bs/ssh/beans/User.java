@@ -161,6 +161,7 @@ public class User{
             joinColumns = {@JoinColumn(name = "following_id")},
             inverseJoinColumns = {@JoinColumn(name = "follower_id")}
     )
+    @OrderColumn(name = "id")
     public List<User> getFollowers() {
         return followers;
     }
@@ -176,6 +177,7 @@ public class User{
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "article_id")}
     )
+//    @OrderColumn(name = "id")
     public List<Article> getLikeArticles() {
         return likeArticles;
     }
@@ -190,6 +192,7 @@ public class User{
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "article_id")}
     )
+//    @OrderColumn(name = "id")
     public List<Article> getStarArticles() {
         return starArticles;
     }

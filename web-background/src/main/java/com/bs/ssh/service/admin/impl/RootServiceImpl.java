@@ -45,10 +45,6 @@ public class RootServiceImpl implements RootService {
         String userID = IDUtils.UserID();
         user.setId(userID);
 
-        Role role = new Role();
-        role.setId("r001");
-        user.setRole(role);
-
         user.setCreateTime(System.currentTimeMillis());
         user.setLastLoginTime(System.currentTimeMillis());
 
