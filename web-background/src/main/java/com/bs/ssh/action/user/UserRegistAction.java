@@ -1,7 +1,8 @@
 package com.bs.ssh.action.user;
 
 import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.service.admin.impl.RootServiceImpl;
+import com.bs.ssh.service.root.impl.RootServiceImpl;
+import com.bs.ssh.service.user.impl.UserServiceImpl;
 import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
@@ -25,7 +26,7 @@ import java.util.regex.Pattern;
 public class UserRegistAction extends ActionSupport {
 
     @Autowired
-    private RootServiceImpl rootService;
+    private UserServiceImpl userService;
 
     private JsonBody message = null;
     private String emailOrPhone;
@@ -93,9 +94,9 @@ public class UserRegistAction extends ActionSupport {
 
         int flag = 0;
         if (ExecRegex(emailOrPhone, RegexString.regex_UserEmail)) {
-            flag = rootService.isExistEmail(emailOrPhone);
+            flag = userService.isExistEmail(emailOrPhone);
         } else {
-            flag = rootService.isExistPhone(emailOrPhone);
+            flag = userService.isExistPhone(emailOrPhone);
         }
 
         if (flag == 1) {
@@ -130,7 +131,7 @@ public class UserRegistAction extends ActionSupport {
         }
 
 
-        int flag_save = rootService.registUser(emailOrPhone, password);
+        int flag_save = userService.registUser(emailOrPhone, password);
 
         if (flag_save == 0) {
             message = JsonBody.fail();
@@ -173,9 +174,9 @@ public class UserRegistAction extends ActionSupport {
         int flag = 0;
 
         if (ExecRegex(emailOrPhone, RegexString.regex_UserEmail)) {
-            flag = rootService.isExistEmail(emailOrPhone);
+            flag = userService.isExistEmail(emailOrPhone);
         } else {
-            flag = rootService.isExistPhone(emailOrPhone);
+            flag = userService.isExistPhone(emailOrPhone);
         }
 
         if (flag == 1) {
