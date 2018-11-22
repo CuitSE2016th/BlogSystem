@@ -16,16 +16,17 @@ import javax.persistence.*;
 )
 @Table(name = "permission")
 public class Permission {
-    private String id;
+    private Integer id;
     private String name;
     private Long createTime;
 
     @Id
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

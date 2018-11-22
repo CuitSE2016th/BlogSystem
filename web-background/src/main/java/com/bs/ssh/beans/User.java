@@ -23,11 +23,15 @@ public class User{
     @Expose private String phone;
     @Expose private String password;
     private String salt;
-    @Expose private String roleID;
+    @Expose private Role role;
     @Expose private Long lastLoginTime;
     @Expose private Long createTime;
     private List<User> followings;
     private List<User> followers;
+    //用户点赞的文章
+    private List<Article> likeArticles;
+    //用户收藏的文章
+    private List<Article> starArticles;
 
 
     @Id
@@ -112,14 +116,14 @@ public class User{
         this.salt = salt;
     }
 
-    @Basic
-    @Column(name = "role_id")
-    public String getRoleID() {
-        return roleID;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id")
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Basic
@@ -157,6 +161,7 @@ public class User{
             joinColumns = {@JoinColumn(name = "following_id")},
             inverseJoinColumns = {@JoinColumn(name = "follower_id")}
     )
+    @OrderColumn(name = "id")
     public List<User> getFollowers() {
         return followers;
     }
@@ -165,4 +170,34 @@ public class User{
         this.followers = follower;
     }
 
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "`like`",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "article_id")}
+    )
+//    @OrderColumn(name = "id")
+    public List<Article> getLikeArticles() {
+        return likeArticles;
+    }
+
+    public void setLikeArticles(List<Article> likeArticles) {
+        this.likeArticles = likeArticles;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "star",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "article_id")}
+    )
+//    @OrderColumn(name = "id")
+    public List<Article> getStarArticles() {
+        return starArticles;
+    }
+
+    public void setStarArticles(List<Article> starArticles) {
+        this.starArticles = starArticles;
+    }
 }
