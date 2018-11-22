@@ -1,10 +1,9 @@
-package com.bs.ssh.service.impl;
+package com.bs.ssh.service.root.impl;
 
 import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
-import com.bs.ssh.service.RootService;
+import com.bs.ssh.service.root.RootService;
 import com.bs.ssh.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,8 @@ import java.util.List;
  * Create By ZZY on 2018/11/22
  */
 @Service
-public class RootServiceImpl implements RootService{
+@Transactional
+public class RootServiceImpl implements RootService {
 
     @Autowired
     private UserDao userDao;
@@ -58,6 +58,12 @@ public class RootServiceImpl implements RootService{
     @Override
     public User getUserByIdentity(String identity) {
         return userDao.findByIdentity(identity);
+    }
+
+    @Override
+    public int updateUserTypeByUserID(String userID, String type) {
+
+        return userDao.updateUserRoleID(userID, type);
     }
 
 }

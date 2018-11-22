@@ -79,4 +79,16 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         return from_user;
     }
 
+    @Override
+    public int updateUserRoleID(String userID, String type) {
+
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+        Query query = currentSession.createQuery("update User set role.id = ? where id = ?");
+        query.setParameter(0, type);
+        query.setParameter(1, userID);
+        int i = query.executeUpdate();
+
+        return i;
+    }
+
 }

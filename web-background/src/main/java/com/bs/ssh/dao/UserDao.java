@@ -31,4 +31,9 @@ public interface UserDao extends BaseDao<User> {
     int getUserCount();
 
     List<User> getAllUser(int pn, int pageSize);
+
+
+    int updateUserRoleID(String userID, String type);
+
+
 }
