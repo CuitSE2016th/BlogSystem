@@ -172,7 +172,7 @@ public class User{
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "liking",
+            name = "`like`",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "article_id")}
     )

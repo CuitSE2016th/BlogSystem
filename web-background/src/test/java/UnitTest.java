@@ -118,15 +118,17 @@ public class UnitTest {
         articleBaseDao.insert(article);
     }
 
-//    @Test
+    @Test
+    @Transactional
     public void starAndLike(){
         User user = userDao.findByIdentity("13881705154");
-        Article article = articleBaseDao.findOne("from Article");
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        user.setStarArticles(articles);
-        user.setLikeArticles(articles);
-        userDao.update(user);
+        System.out.println(user.getLikeArticles().get(0).getContent());
+//        Article article = articleBaseDao.findOne("from Article");
+//        List<Article> articles = new ArrayList<>();
+//        articles.add(article);
+//        user.setStarArticles(articles);
+//        user.setLikeArticles(articles);
+//        userDao.update(user);
     }
 
     @Resource
