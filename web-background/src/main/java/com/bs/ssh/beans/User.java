@@ -116,7 +116,7 @@ public class User{
         this.salt = salt;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     public Role getRole() {
         return role;
