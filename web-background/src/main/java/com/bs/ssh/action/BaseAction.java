@@ -1,6 +1,7 @@
 package com.bs.ssh.action;
 
 import com.bs.ssh.beans.JsonBody;
+import com.bs.ssh.utils.Constants;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -23,7 +24,7 @@ public class BaseAction extends ActionSupport{
      * @return java.lang.String
      **/
     public String verify(){
-        result.setCode(405);
+        result.setCode(Constants.RESPONSE_FAILED);
         result.setMessage(this.getFieldErrors().values().iterator().next().get(0));
         return JSON;
     }

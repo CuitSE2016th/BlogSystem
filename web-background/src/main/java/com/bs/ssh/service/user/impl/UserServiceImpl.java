@@ -1,26 +1,24 @@
-package com.bs.ssh.service.impl;
+package com.bs.ssh.service.user.impl;
 
 import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.UserService;
-import com.bs.ssh.utils.*;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+import com.bs.ssh.utils.Constants;
+import com.bs.ssh.utils.HashUtils;
+import com.bs.ssh.utils.IDUtils;
+import com.bs.ssh.utils.JsonUtil;
+import com.bs.ssh.utils.RedisUtils;
+import com.bs.ssh.utils.RegexString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Transactional
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
@@ -33,11 +31,14 @@ public class UserServiceImpl implements UserService{
     public JsonBody<Object> login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
         JsonBody<Object> body = new JsonBody<>();
-        if(user==null||!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))){
-            body.setCode(HttpStatus.UNAUTHORIZED.value());
-            body.setMessage("登录失败");
+        if(user==null ){
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("用户不存在");
+        } else if(!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))){
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("用户名或密码不正确");
         }else {
-            body.setCode(HttpStatus.OK.value());
+            body.setCode(Constants.RESPONSE_SUCCEED);
             body.setMessage("登录成功");
             //保存token到redis服务器
             String token = HashUtils.getToken();
@@ -48,14 +49,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int registUser(String emailOrPhone, String password) {
-
+    public int registUser(String email, String password) {
         User user = new User();
 
-        if (RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail)){
-            user.setEmail(emailOrPhone);
+        if (RegexString.ExecRegex(email, RegexString.regex_UserEmail)){
+            user.setEmail(email);
         }else{
-            user.setPhone(emailOrPhone);
+            user.setPhone(email);
         }
 
         //获得盐值
@@ -70,10 +70,8 @@ public class UserServiceImpl implements UserService{
         String userID = IDUtils.UserID();
         user.setId(userID);
 
-        /* 此处是后面修改的*/
         Role role = new Role();
         role.setId("r001");
-
         user.setRole(role);
 
         user.setCreateTime(System.currentTimeMillis());
@@ -86,7 +84,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int isExistEmail(String emailOrPhone) {
-
         User user = userDao.selectOneByEmail(emailOrPhone);
         return user != null ? 1:0;
     }

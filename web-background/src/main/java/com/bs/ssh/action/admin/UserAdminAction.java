@@ -1,10 +1,9 @@
-package com.bs.ssh.action.root;
+package com.bs.ssh.action.admin;
 
 import com.bs.ssh.action.BaseAction;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
-import com.bs.ssh.service.root.impl.RootServiceImpl;
+import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -16,45 +15,23 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Create By ZZY on 2018/11/21
  */
 @ParentPackage("json-default")
-@Namespace("/root")
+@Namespace("/admin")
 @Results({
         @Result(name = "success", type = "json", params = {"root", "result"})
 })
-public class RootAction extends BaseAction {
+public class UserAdminAction extends BaseAction {
 
     @Autowired
-    private RootServiceImpl rootService;
+    private UserAdminServiceImpl userAdminService;
 
     //需要查询的页数
     private String pageNo;
 
-    //前端发送的查询条件
-    private String identity;
-
     //暂时指定每一页的数据数量
     private static final int pageSize = 15;
 
-    //前段传到后台的用户类型
-    private String type;
-
-    //前端传来的数据字符串
+    //前端传入的用户ID
     private String userID;
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getUserID() {
         return userID;
@@ -89,7 +66,7 @@ public class RootAction extends BaseAction {
             pn = 1;
         }
 
-        PageBean users = rootService.getAllUserToPageBean(pn, pageSize);
+        PageBean users = userAdminService.getAllUserToPageBean(pn, pageSize);
 
         if(users == null){
             result = JsonBody.fail();
@@ -102,49 +79,31 @@ public class RootAction extends BaseAction {
         return SUCCESS;
     }
 
-    /*
-    * 通过条件查询指定用户
-    * */
-    @Action("getUserByIdentity")
-    public String getUserByIdentity(){
-        if (identity == null){
-            result = JsonBody.success();
-            result.setMessage("查询全部数据");
-            result.setData(rootService.getAllUserToPageBean(1, pageSize));
-            return SUCCESS;
-        }
-        User user = rootService.getUserByIdentity(identity);
-        if (user == null){
-            result = JsonBody.fail();
-            result.setMessage("查询结果为空");
-            return SUCCESS;
-        }
-        result = JsonBody.success();
-        result.setData(user);
-        return SUCCESS;
-    }
+    @Action("deleteUserByUserID")
+    public String deleteUserByUserID(){
 
-    @Action("updateUserTypeByUserID")
-    public String updateUserTypeByUserID(){
-
-        if(userID == null || type == null){
+        if (userID == null){
             result = JsonBody.fail();
-            result.setMessage("前端数据出错");
+            result.setMessage("前端消息出错！");
             return SUCCESS;
         }
 
-        int flag = rootService.updateUserTypeByUserID(userID, type);
+        int flag = userAdminService.deleteUserByUserID(userID);
 
-        if (flag == 0){
-            result = JsonBody.fail();
-            result.setMessage("数据更新出错");
+        if(flag == 0){
+            result =JsonBody.fail();
+            result.setMessage("删除失败！");
+
             return SUCCESS;
         }
 
         result = JsonBody.success();
-        return SUCCESS;
 
+        return SUCCESS;
     }
+
+
+
 
 
 }
