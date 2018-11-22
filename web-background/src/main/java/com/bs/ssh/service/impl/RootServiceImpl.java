@@ -7,12 +7,14 @@ import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.RootService;
 import com.bs.ssh.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Create By ZZY on 2018/11/22
  */
+@Service
 public class RootServiceImpl implements RootService{
 
     @Autowired

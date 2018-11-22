@@ -33,6 +33,7 @@ public class User{
     //用户收藏的文章
     private List<Article> starArticles;
 
+
     @Id
     public String getId() {
         return id;
@@ -115,17 +116,13 @@ public class User{
         this.salt = salt;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void setRoleID(Role role) {
         this.role = role;
     }
 
@@ -200,7 +197,4 @@ public class User{
     public void setStarArticles(List<Article> starArticles) {
         this.starArticles = starArticles;
     }
-
-
-
 }

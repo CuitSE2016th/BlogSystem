@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -89,7 +90,7 @@ public class UnitTest {
         userDao.insert(user1);
     }
 
-    @Test
+//    @Test
     public void follow() {
         List<User> users = new LinkedList<>();
         userDao.findAll("from User").forEach(users::add);
@@ -106,7 +107,7 @@ public class UnitTest {
 
     @Resource
     private BaseDao<Article> articleBaseDao;
-    @Test
+//    @Test
     public void article(){
         User user = userDao.findByIdentity("13881705154");
         Article article = new Article();
@@ -117,7 +118,7 @@ public class UnitTest {
         articleBaseDao.insert(article);
     }
 
-    @Test
+//    @Test
     public void starAndLike(){
         User user = userDao.findByIdentity("13881705154");
         Article article = articleBaseDao.findOne("from Article");
@@ -126,6 +127,16 @@ public class UnitTest {
         user.setStarArticles(articles);
         user.setLikeArticles(articles);
         userDao.update(user);
+    }
+
+    @Resource
+    private BaseDao<User> userBaseDao;
+//    @Test
+    @Transactional
+    public void entity(){
+        User user = userBaseDao.findOne("from User");
+//        logger.fatal(user.getRole().getName());
+        logger.fatal(JsonUtil.toJsonExposed(user));
     }
 
 //    @Test
@@ -153,9 +164,12 @@ public class UnitTest {
         System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.sha256("123456Abcdefgo", salt));
     }
 
-//    @Test
+    @Test
+    @Transactional
     public void gson(){
         User user = userDao.findByIdentity("13881705154");
+        Role role = user.getRole();
+        System.out.println(role.getName());
         System.out.println(JsonUtil.toJsonExposed(user));
     }
 }

@@ -1,5 +1,6 @@
 package com.bs.ssh.utils;
 
+import com.bs.ssh.common.config.HibernateProxyTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -39,7 +40,10 @@ public class JsonUtil {
 
     public static <T> String toJson(T object){
         try {
-            return new Gson().toJson(object);
+            return new GsonBuilder()
+                    .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
+                    .create()
+                    .toJson(object);
         } catch (Exception e) {
             logger.error("conversion failed", e);
             return null;
@@ -48,10 +52,10 @@ public class JsonUtil {
 
     public static <T> String toJsonExposed(T object){
         try {
-            String json = new GsonBuilder()
+            return new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .create().toJson(object).replaceAll("\"", "");
-            return json;
+                    .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
+                    .create().toJson(object);
         } catch (Exception e) {
             logger.error("conversion failed", e);
             return null;

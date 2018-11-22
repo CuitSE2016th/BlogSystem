@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService{
         Role role = new Role();
         role.setId("r001");
 
-        user.setRoleID(role);
+        user.setRole(role);
 
         user.setCreateTime(System.currentTimeMillis());
         user.setLastLoginTime(System.currentTimeMillis());
