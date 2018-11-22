@@ -28,11 +28,14 @@ public class UserServiceImpl implements UserService{
     public JsonBody<String> login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
         JsonBody<String> body = new JsonBody<>();
-        if(user==null||!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))){
-            body.setCode(HttpStatus.UNAUTHORIZED.value());
-            body.setMessage("登录失败");
+        if(user==null ){
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("用户不存在");
+        } else if(!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))){
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("用户名或密码不正确");
         }else {
-            body.setCode(HttpStatus.OK.value());
+            body.setCode(Constants.RESPONSE_SUCCEED);
             body.setMessage("登录成功");
             //保存token到redis服务器
             String token = HashUtils.getToken();
