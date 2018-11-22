@@ -39,6 +39,8 @@ public class UserServiceImpl implements UserService {
             String token = HashUtils.getToken();
             RedisUtils.set(token, JsonUtil.toJsonExposed(user));
             body.setData(token);
+            user.setLastLoginTime(System.currentTimeMillis());
+            userDao.update(user);
         }
         return body;
     }
