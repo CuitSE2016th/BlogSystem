@@ -117,8 +117,12 @@ public class User{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    public Role getRoleID() {
+    public Role getRole() {
         return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public void setRoleID(Role role) {

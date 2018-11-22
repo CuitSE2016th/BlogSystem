@@ -1,6 +1,5 @@
 package com.bs.ssh.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PageBean<T> {
@@ -24,12 +23,12 @@ public class PageBean<T> {
 	private int beforePage;
 
 	//记录集合
-	private List<T> result = new ArrayList<T>();
+	private String result;
 
-	public List getResult() {
+	public String getResult() {
 		return result;
 	}
-	public void setResult(List result) {
+	public void setResult(String result) {
 		this.result = result;
 	}
 	public int getPageSize() {

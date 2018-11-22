@@ -63,17 +63,18 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
         Query query = currentSession.createQuery("select count(*) from User");
 
-        int count = (int) query.uniqueResult();
+        long count = (long) query.uniqueResult();
 
-        return count;
+
+        return new Long(count).intValue();
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<User> getAllUser(int pn, int pageSize) {
 
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
 
-        List<User> from_user = currentSession.createQuery("from User").list();
+        List<User> from_user = currentSession.createQuery("from User").setFirstResult((pn-1) * pageSize + 1).setMaxResults(pageSize).list();
 
         return from_user;
     }
