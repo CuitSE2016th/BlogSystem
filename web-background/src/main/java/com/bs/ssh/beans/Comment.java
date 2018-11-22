@@ -11,17 +11,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "comment")
 public class Comment {
-    private String id;
+    private Integer id;
     private User author;
     private String content;
     private Long createTime;
 
     @Id
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

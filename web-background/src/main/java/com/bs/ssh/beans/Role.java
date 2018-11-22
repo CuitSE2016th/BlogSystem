@@ -15,17 +15,18 @@ import java.util.List;
 @Entity
 @Table(name = "role")
 public class Role {
-    private String id;
+    private Integer id;
     @Expose private String name;
     private Long createTime;
     private List<Permission> permissions;
 
     @Id
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,6 +57,7 @@ public class Role {
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")}
     )
+    @OrderColumn(name = "id")
     public List<Permission> getPermissions() {
         return permissions;
     }
