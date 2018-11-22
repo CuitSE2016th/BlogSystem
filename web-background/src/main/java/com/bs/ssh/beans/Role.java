@@ -1,5 +1,7 @@
 package com.bs.ssh.beans;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 @Table(name = "role")
 public class Role {
     private String id;
-    private String name;
+    @Expose private String name;
     private Long createTime;
     private List<Permission> permissions;
 
