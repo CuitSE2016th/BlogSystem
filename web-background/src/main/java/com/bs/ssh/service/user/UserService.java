@@ -1,7 +1,6 @@
-package com.bs.ssh.service;
+package com.bs.ssh.service.user;
 
 import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.User;
 
 /**
  * 用户服务
@@ -21,9 +20,4 @@ public interface UserService {
      **/
     JsonBody<String> login(String identity, String password);
 
-    int registUser(String email, String password);
-
-    int isExistEmail(String emailOrPhone);
-
-    int isExistPhone(String emailOrPhone);
 }
