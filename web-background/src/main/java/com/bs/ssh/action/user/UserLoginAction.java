@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2018/11/11 1:03
  **/
 @ParentPackage("json-default")
-@Namespace("user")
+@Namespace("/user")
 @Results({
         @Result(name = "json", type = "json", params = {"root", "result"})
 })
