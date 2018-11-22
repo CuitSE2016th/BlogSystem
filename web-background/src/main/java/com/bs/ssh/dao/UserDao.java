@@ -30,5 +30,5 @@ public interface UserDao extends BaseDao<User> {
 
     int getUserCount();
 
-    List<User> getAllUser();
+    List<User> getAllUser(int pn, int pageSize);
 }

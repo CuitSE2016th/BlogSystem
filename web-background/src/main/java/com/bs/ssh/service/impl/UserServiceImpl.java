@@ -30,9 +30,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public JsonBody<String> login(String identity, String password) {
+    public JsonBody<Object> login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
-        JsonBody<String> body = new JsonBody<>();
+        JsonBody<Object> body = new JsonBody<>();
         if(user==null||!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))){
             body.setCode(HttpStatus.UNAUTHORIZED.value());
             body.setMessage("登录失败");
@@ -97,35 +97,5 @@ public class UserServiceImpl implements UserService{
         return user != null ? 1:0;
     }
 
-    @Override
-    public PageBean<User> getAllUserToPageBean(int pn, int pageSize) {
-
-        //构造返回的对象
-        PageBean<User> users = new PageBean<>();
-        users.setPageSize(pageSize);
-
-        //查询总记录数
-        int recordCount = userDao.getUserCount();
-
-        if(recordCount == 0){
-            return null;
-        }
-
-        //判断当前页是否大于最大页数
-        if (pn > recordCount / pageSize){
-            pn = recordCount / pageSize;
-        }
-
-        users.setRecordCount(recordCount);
-        users.setCurrentPage(pn);
-
-        List<User> userList = userDao.getAllUser();
-        if(userList.size() == 0 || userList == null){
-            return null;
-        }
-        users.setResult(userList);
-
-        return users;
-    }
 
 }

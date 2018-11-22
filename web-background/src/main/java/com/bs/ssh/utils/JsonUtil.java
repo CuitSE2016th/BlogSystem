@@ -48,9 +48,10 @@ public class JsonUtil {
 
     public static <T> String toJsonExposed(T object){
         try {
-            return new GsonBuilder()
+            String json = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .create().toJson(object);
+                    .create().toJson(object).replaceAll("\"", "");
+            return json;
         } catch (Exception e) {
             logger.error("conversion failed", e);
             return null;
