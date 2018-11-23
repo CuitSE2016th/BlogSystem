@@ -69,8 +69,8 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    public void deleteAll(Iterator<T> entities) {
-        template.delete(entities);
+    public void deleteAll(Iterable<T> entities) {
+        entities.forEach(e->template.delete(e));
     }
 
 

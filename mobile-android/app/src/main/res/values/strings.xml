@@ -24,6 +24,7 @@
     <string name="title_home">Home</string>
     <string name="title_following">Following</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_my">My</string>
     <string name="title_activity_register">Register</string>
 
 </resources>

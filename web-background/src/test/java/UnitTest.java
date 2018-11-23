@@ -49,23 +49,49 @@ public class UnitTest {
     private PermissionDao permissionDao;
 
 
-    //    @Test
+//        @Test
     public void initRoleAndPermission() {
         Role role = new Role();
         Permission permission = new Permission();
         List<Permission> permissions = new LinkedList<>();
 
-        role.setId("r001");
         role.setName("user");
         role.setCreateTime(System.currentTimeMillis());
 
-        permission.setId("p001");
         permission.setName("query-blog");
         permission.setCreateTime(System.currentTimeMillis());
         permissions.add(permission);
         role.setPermissions(permissions);
 
         roleDao.insert(role);
+    }
+
+//        @Test
+    public void follow() {
+        List<User> users = new LinkedList<>();
+        userDao.findAll("from User").forEach(users::add);
+
+        User user3 = users.get(1);
+        User user2 = users.get(2);
+        List<User> user3Following = new LinkedList<>();
+        user3Following.add(user2);
+        user3.setFollowers(user3Following);
+
+        userDao.update(user3);
+
+    }
+
+    @Resource
+    private BaseDao<Article> articleBaseDao;
+//        @Test
+    public void article(){
+        User user = userDao.findByIdentity("13881705154");
+        Article article = new Article();
+        article.setAuthor(user);
+        article.setContent("hello, there is a new article.");
+        article.setStatus(0);
+        article.setCreateTime(System.currentTimeMillis());
+        articleBaseDao.insert(article);
     }
 
     //    @Test
@@ -90,45 +116,21 @@ public class UnitTest {
         userDao.insert(user1);
     }
 
-//    @Test
-    public void follow() {
-        List<User> users = new LinkedList<>();
-        userDao.findAll("from User").forEach(users::add);
 
-        User user3 = users.get(1);
-        User user2 = users.get(2);
-        List<User> user3Following = new LinkedList<>();
-        user3Following.add(user2);
-        user3.setFollowers(user3Following);
-
-        userDao.update(user3);
-
-    }
-
-    @Resource
-    private BaseDao<Article> articleBaseDao;
-//    @Test
-    public void article(){
-        User user = userDao.findByIdentity("13881705154");
-        Article article = new Article();
-        article.setId("a001");
-        article.setAuthor(user);
-        article.setContent("hello, there is a new article.");
-        article.setCreateTime(System.currentTimeMillis());
-        articleBaseDao.insert(article);
-    }
 
     @Test
     @Transactional
     public void starAndLike(){
         User user = userDao.findByIdentity("13881705154");
-        System.out.println(user.getLikeArticles().get(0).getContent());
-//        Article article = articleBaseDao.findOne("from Article");
-//        List<Article> articles = new ArrayList<>();
-//        articles.add(article);
-//        user.setStarArticles(articles);
-//        user.setLikeArticles(articles);
-//        userDao.update(user);
+        System.out.println(user.getId());
+//        System.out.println(user.getLikeArticles().get(0).getContent());
+        Article article = articleBaseDao.findOne("from Article");
+        System.out.println(article.getContent());
+        List<Article> articles = new ArrayList<>();
+        articles.add(article);
+        user.setStarArticles(articles);
+        user.setLikeArticles(articles);
+        userDao.update(user);
     }
 
     @Resource
@@ -166,12 +168,17 @@ public class UnitTest {
         System.out.println("Sha1ForPasswordAndSalt:" + HashUtils.sha256("123456Abcdefgo", salt));
     }
 
-    @Test
+//    @Test
     @Transactional
     public void gson(){
         User user = userDao.findByIdentity("13881705154");
         Role role = user.getRole();
         System.out.println(role.getName());
         System.out.println(JsonUtil.toJsonExposed(user));
+    }
+
+//    @Test
+    public void clear(){
+        articleBaseDao.deleteAll(articleBaseDao.findAll("from Article"));
     }
 }
