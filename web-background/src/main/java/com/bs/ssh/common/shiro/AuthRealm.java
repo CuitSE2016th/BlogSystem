@@ -1,12 +1,10 @@
 package com.bs.ssh.common.shiro;
 
 import com.bs.ssh.beans.User;
-import com.bs.ssh.service.ShiroService;
 import com.bs.ssh.utils.RedisUtils;
 import com.google.gson.Gson;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.realm.AuthenticatingRealm;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
