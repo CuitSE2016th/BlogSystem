@@ -4,7 +4,6 @@ import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.AdminDao;
 import com.bs.ssh.dao.UserDao;
-import com.bs.ssh.dao.impl.AdminDaoImpl;
 import com.bs.ssh.service.admin.UserAdminService;
 import com.bs.ssh.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +61,10 @@ public class UserAdminServiceImpl implements UserAdminService{
     public int deleteUserByUserID(String userID) {
 
         return adminDao.deleteUserByUserID(userID);
+    }
+
+    @Override
+    public User getUserByUserID(String identity) {
+        return userDao.findByIdentityExcludeAdmin(identity);
     }
 }

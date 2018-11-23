@@ -3,6 +3,7 @@ package com.bs.ssh.action.admin;
 import com.bs.ssh.action.BaseAction;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.PageBean;
+import com.bs.ssh.beans.User;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -30,6 +31,9 @@ public class UserAdminAction extends BaseAction {
     //暂时指定每一页的数据数量
     private static final int pageSize = 15;
 
+    //前端传入的数据信息{邮箱或者电话}
+    private String identity;
+
     //前端传入的用户ID
     private String userID;
 
@@ -47,6 +51,14 @@ public class UserAdminAction extends BaseAction {
 
     public void setPageNo(String pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
     @Action("getUsersToPageByPageNo")
@@ -101,6 +113,37 @@ public class UserAdminAction extends BaseAction {
 
         return SUCCESS;
     }
+
+    @Action("getUserByUserID")
+    public String getUserByUserID(){
+
+        if(identity == null){
+            result = JsonBody.fail();
+            result.setMessage("前端数据出错！");
+            return SUCCESS;
+        }
+
+        User user = userAdminService.getUserByUserID(identity);
+
+        if(user == null){
+            result = JsonBody.fail();
+            result.setMessage("数据查询出错！");
+            return SUCCESS;
+        }
+
+        result = JsonBody.success();
+        result.setData(user);
+        return SUCCESS;
+
+    }
+
+
+
+
+
+
+
+
 
 
 
