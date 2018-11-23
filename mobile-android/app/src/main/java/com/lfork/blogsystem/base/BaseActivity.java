@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 /**
- * Created by 98620 on 2018/3/19.
+ *
+ * @author 98620
+ * @date 2018/3/19
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
