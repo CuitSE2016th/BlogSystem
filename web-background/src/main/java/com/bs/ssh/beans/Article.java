@@ -13,9 +13,10 @@ import java.util.List;
 @Table(name = "article")
 public class Article {
 
-    private String id;
+    private Integer id;
     private String content;
     private User author;
+    private Integer status;
     private Long createTime;
     /**
      * 为本文章点赞的用户
@@ -27,11 +28,12 @@ public class Article {
     private List<User> collectors;
 
     @Id
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,6 +54,14 @@ public class Article {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Column(name = "create_time")

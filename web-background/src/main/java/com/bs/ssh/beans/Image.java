@@ -11,16 +11,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "image")
 public class Image {
-    private String id;
+    private Integer id;
     private String url;
     private Long createTime;
 
     @Id
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
