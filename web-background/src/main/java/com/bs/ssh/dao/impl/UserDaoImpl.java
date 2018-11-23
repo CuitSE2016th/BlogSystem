@@ -91,4 +91,13 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         return i;
     }
 
+    @Override
+    public User findByIdentityExcludeAdmin(String identity) {
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+        User o = (User) currentSession.createQuery("from User where role.id = 1 and (email = ? or phone = ?)")
+                .setParameter(0, identity)
+                .setParameter(0, identity).uniqueResult();
+        return o;
+    }
+
 }
