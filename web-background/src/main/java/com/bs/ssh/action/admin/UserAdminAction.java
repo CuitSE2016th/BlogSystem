@@ -5,6 +5,7 @@ import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
+import com.bs.ssh.utils.JsonUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -87,7 +88,7 @@ public class UserAdminAction extends BaseAction {
         }
 
         result = JsonBody.success();
-        result.setData(users);
+        result.setData(JsonUtils.toJsonExposed(users));
         return SUCCESS;
     }
 
@@ -132,7 +133,7 @@ public class UserAdminAction extends BaseAction {
         }
 
         result = JsonBody.success();
-        result.setData(user);
+        result.setData(JsonUtils.toJsonExposed(user));
         return SUCCESS;
 
     }

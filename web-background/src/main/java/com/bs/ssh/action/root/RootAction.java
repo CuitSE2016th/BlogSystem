@@ -5,6 +5,7 @@ import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.service.root.impl.RootServiceImpl;
+import com.bs.ssh.utils.JsonUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -98,7 +99,7 @@ public class RootAction extends BaseAction {
         }
 
         result = JsonBody.success();
-        result.setData(users);
+        result.setData(JsonUtils.toJsonExposed(users));
         return SUCCESS;
     }
 
@@ -110,7 +111,8 @@ public class RootAction extends BaseAction {
         if (identity == null){
             result = JsonBody.success();
             result.setMessage("查询全部数据");
-            result.setData(rootService.getAllUserToPageBean(1, pageSize));
+            result.setData(JsonUtils.toJsonExposed(
+                    rootService.getAllUserToPageBean(1, pageSize)));
             return SUCCESS;
         }
         User user = rootService.getUserByIdentity(identity);
@@ -120,7 +122,7 @@ public class RootAction extends BaseAction {
             return SUCCESS;
         }
         result = JsonBody.success();
-        result.setData(user);
+        result.setData(JsonUtils.toJsonExposed(user));
         return SUCCESS;
     }
 
