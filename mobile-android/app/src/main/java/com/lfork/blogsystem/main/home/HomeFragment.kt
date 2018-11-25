@@ -11,9 +11,6 @@ import com.lfork.blogsystem.R
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
 
     private lateinit var viewModel: HomeViewModel
 

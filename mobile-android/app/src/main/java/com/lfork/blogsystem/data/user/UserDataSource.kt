@@ -17,7 +17,7 @@ interface UserDataSource {
 
     fun register(account: String, password: String, verifyCode: String, callback: DataCallback<String>)
 
-//    fun getUserInfo()
+//    fun getCurrentUserInfo()
 
 //    fun getFlowingListInfo()
 

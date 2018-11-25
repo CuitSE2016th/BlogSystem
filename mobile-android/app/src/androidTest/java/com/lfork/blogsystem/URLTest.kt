@@ -18,16 +18,16 @@ class URLTest {
     @Test
     fun getUserInfo() {
 
-        Log.d("getUserInfoTest","enene??network_security_config")
-        UserDataRepository.getUserInfo(object :DataCallback<List<User>>{
-            override fun succeed(data: List<User>) {
-                Log.d("getUserInfoTest","enene??2" + data.toString())
-            }
-
-            override fun failed(code: Int,log: String) {
-                Log.d("getUserInfoTest","enene??3")
-            }
-        })
+//        Log.d("getUserInfoTest","enene??network_security_config")
+//        UserDataRepository.getCurrentUserInfo(object :DataCallback<List<User>>{
+//            override fun succeed(data: List<User>) {
+//                Log.d("getUserInfoTest","enene??2" + data.toString())
+//            }
+//
+//            override fun failed(code: Int,log: String) {
+//                Log.d("getUserInfoTest","enene??3")
+//            }
+//        })
     }
 
 //    @Test
