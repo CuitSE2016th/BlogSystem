@@ -20,14 +20,21 @@ public class Role {
     private Long createTime;
     private List<Permission> permissions;
 
+    //默认角色为普通用户
+    public Role() {
+        this.id = 1;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    //user.setRole(new Role().setId(1));
+    public Role setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     @Basic

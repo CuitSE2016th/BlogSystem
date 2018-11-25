@@ -36,4 +36,5 @@ public interface UserDao extends BaseDao<User> {
     int updateUserRoleID(String userID, String type);
 
 
+    User findByIdentityExcludeAdmin(String identity);
 }
