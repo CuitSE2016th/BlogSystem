@@ -59,7 +59,7 @@ interface UserApi {
 //     * @return .
 //     */
 //    @GET("blog/user_info")
-//    fun getUserInfo(@Query("studentId") userId: String): Call<Result<User>>
+//    fun getCurrentUserInfo(@Query("studentId") userId: String): Call<Result<User>>
 //
 //
 //    /**
@@ -79,7 +79,7 @@ interface UserApi {
 //
 //    /**
 //     * @param studentId .
-//     * @param username .
+//     * @param nickname .
 //     * @param schoolId .
 //     * @param dec .
 //     * @param email .
@@ -90,7 +90,7 @@ interface UserApi {
 //    @POST("blog/user_save")
 //    fun updateUserInfo(
 //        @Field("studentId") studentId: Int,
-//        @Field("userName") username: String,
+//        @Field("userName") nickname: String,
 //        @Field("userSchool.id") schoolId: String,
 //        @Field("userDesc") dec: String,
 //        @Field("userEmail") email: String,
@@ -104,8 +104,8 @@ interface UserApi {
      * @param userId .
      * @return .
      */
-    @GET("getUserInfo")
-    fun getUserInfo(): Call<Result<List<User>>>
+    @GET("getCurrentUserInfo")
+    fun getUserInfo(): Call<Result<User>>
 
     companion object {
         fun create(): UserApi {

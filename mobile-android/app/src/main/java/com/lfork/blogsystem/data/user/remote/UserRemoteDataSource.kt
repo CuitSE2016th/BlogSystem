@@ -25,7 +25,7 @@ class UserRemoteDataSource:UserDataSource{
         api.getVerificationCode(account).enqueue(MyRetrofitCallBack(callback))
     }
 
-    fun getUserInfo(callback: DataCallback<List<User>>){
+    fun getCurrentUserInfo(callback: DataCallback<User>){
         api.getUserInfo().enqueue(MyRetrofitCallBack(callback))
     }
 
