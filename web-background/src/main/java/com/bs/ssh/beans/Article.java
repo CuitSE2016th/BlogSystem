@@ -1,5 +1,7 @@
 package com.bs.ssh.beans;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,11 +15,11 @@ import java.util.List;
 @Table(name = "article")
 public class Article {
 
-    private Integer id;
-    private String content;
-    private User author;
-    private Integer status;
-    private Long createTime;
+    @Expose private Integer id;
+    @Expose private String content;
+    @Expose private User author;
+    @Expose private Integer status;
+    @Expose private Long createTime;
     /**
      * 为本文章点赞的用户
      **/

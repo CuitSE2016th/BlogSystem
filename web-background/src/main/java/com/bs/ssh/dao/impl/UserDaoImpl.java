@@ -74,7 +74,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
 
-        List<User> from_user = currentSession.createQuery("from User").setFirstResult((pn-1) * pageSize + 1).setMaxResults(pageSize).list();
+        List<User> from_user = currentSession.createQuery("from User").setFirstResult((pn-1) * pageSize).setMaxResults(pageSize).list();
 
         return from_user;
     }
@@ -96,7 +96,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
         User o = (User) currentSession.createQuery("from User where role.id = 1 and (email = ? or phone = ?)")
                 .setParameter(0, identity)
-                .setParameter(0, identity).uniqueResult();
+                .setParameter(1, identity).uniqueResult();
         return o;
     }
 
