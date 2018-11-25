@@ -94,16 +94,18 @@ public class UnitTest {
         articleBaseDao.insert(article);
     }
 
-    //    @Test
+        @Test
     public void initUserAndToken() {
         User user1 = new User();
         user1.setId(IDUtils.UserID());
-        user1.setNickname("tester3");
-        user1.setEmail("test3@163.com");
-        user1.setPhone("1234563");
+        user1.setNickname("egan");
+        user1.setEmail("18876124435");
         user1.setSalt(HashUtils.getSalt());
         user1.setPassword(HashUtils.hashBySha256("123456" + user1.getSalt()));
         user1.setSex("M");
+        Role role = new Role();
+        role.setId(1);
+        user1.setRole(role);
 
         user1.setLastLoginTime(System.currentTimeMillis());
         user1.setCreateTime(System.currentTimeMillis());
@@ -116,25 +118,24 @@ public class UnitTest {
         userDao.insert(user1);
     }
 
-
-
-    @Test
-    @Transactional
+//    @Test
     public void starAndLike(){
         User user = userDao.findByIdentity("13881705154");
-        System.out.println(user.getId());
-//        System.out.println(user.getLikeArticles().get(0).getContent());
+        System.out.println("uid:" + user.getId());
+        user.setNickname("eganchen");
+
         Article article = articleBaseDao.findOne("from Article");
         System.out.println(article.getContent());
         List<Article> articles = new ArrayList<>();
         articles.add(article);
         user.setStarArticles(articles);
         user.setLikeArticles(articles);
+        System.out.println(user.getLikeArticles().get(0).getContent());
         userDao.update(user);
     }
 
     @Resource
-    private BaseDao<User> userBaseDao;
+    private UserDao userBaseDao;
 //    @Test
     @Transactional
     public void entity(){
@@ -179,6 +180,8 @@ public class UnitTest {
 
 //    @Test
     public void clear(){
-        articleBaseDao.deleteAll(articleBaseDao.findAll("from Article"));
+        User user = userDao.findByIdentity("13881705154");
+        user.setNickname("egan");
+        userDao.update(user);
     }
 }

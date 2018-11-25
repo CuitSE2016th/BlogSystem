@@ -116,7 +116,7 @@ public class User{
         this.salt = salt;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     public Role getRole() {
         return role;
@@ -171,7 +171,7 @@ public class User{
     }
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "`like`",
             joinColumns = {@JoinColumn(name = "user_id")},
