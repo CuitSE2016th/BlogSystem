@@ -92,4 +92,17 @@ public class PageBean<T> {
 	public void setBeforePage(int beforePage) {
 		this.beforePage = beforePage;
 	}
+
+	@Override
+	public String toString() {
+		return "PageBean{" +
+				"pageSize=" + pageSize +
+				", currentPage=" + currentPage +
+				", pageCount=" + pageCount +
+				", recordCount=" + recordCount +
+				", nextPage=" + nextPage +
+				", beforePage=" + beforePage +
+				", result='" + result + '\'' +
+				'}';
+	}
 }

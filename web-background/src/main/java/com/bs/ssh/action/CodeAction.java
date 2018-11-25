@@ -5,6 +5,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.bs.ssh.beans.JsonBody;
 import com.bs.ssh.common.alibaba.AliSmsUtil;
 import com.bs.ssh.common.email163.MailUtil;
+import com.bs.ssh.service.user.impl.UserServiceImpl;
 import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
@@ -31,6 +32,9 @@ public class CodeAction extends ActionSupport {
 
     private JsonBody message = null;
 
+    @Autowired
+    private UserServiceImpl userService;
+
     public JsonBody getMessage() {
         return message;
     }
@@ -53,6 +57,20 @@ public class CodeAction extends ActionSupport {
         if(!RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail) &&
                 !RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserPhone)){
             message = JsonBody.fail();
+            return SUCCESS;
+        }
+
+        int v_flag = 0;
+
+        if (RegexString.ExecRegex(emailOrPhone, RegexString.regex_UserEmail)) {
+            v_flag = userService.isExistEmail(emailOrPhone);
+        } else {
+            v_flag = userService.isExistPhone(emailOrPhone);
+        }
+
+        if (v_flag == 1) {
+            message = JsonBody.fail();
+            message.setMessage("账号已经存在,请直接进行登录");
             return SUCCESS;
         }
 

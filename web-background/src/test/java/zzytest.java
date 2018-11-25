@@ -1,6 +1,8 @@
+import com.bs.ssh.beans.Article;
 import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;
+import com.bs.ssh.service.admin.impl.ArticleAdminServiceImpl;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import com.bs.ssh.service.root.impl.RootServiceImpl;
 import org.junit.Test;
@@ -31,12 +33,15 @@ public class zzytest {
     @Autowired
     private UserAdminServiceImpl userAdminService;
 
+    @Autowired
+    private ArticleAdminServiceImpl articleAdminService;
+
     @Test
     public void test1(){
 
         PageBean allUserToPageBean = rootService.getAllUserToPageBean(1, 15);
         System.out.println("------------------------------------");
-        System.out.println(allUserToPageBean.getResult());
+        System.out.println(allUserToPageBean);
         System.out.println("------------------------------------");
 
     }
@@ -70,6 +75,56 @@ public class zzytest {
         System.out.println("------------------------------------");
 
     }
+
+    @Test
+    public void testgetUserByUserID(){
+
+        String  userByUserID= userAdminService.getUserByUserID("test2@163.com");
+        System.out.println("------------------------------------");
+        System.out.println(userByUserID);
+        System.out.println("------------------------------------");
+
+    }
+
+    @Test
+    public void testArticleGet(){
+
+        int articleByArticleID = articleAdminService.setArticleStatus("1", 400);
+        System.out.println("------------------------------------");
+        System.out.println(articleByArticleID);
+        System.out.println("------------------------------------");
+
+    }
+
+    @Test
+    public void testArticlePage(){
+
+        PageBean page = articleAdminService.getArticlesForPage(1, 15);
+        System.out.println("------------------------------------");
+        System.out.println(page);
+        System.out.println("------------------------------------");
+
+    }
+
+    @Test
+    public void testWhile(){
+
+       int i = 100;
+       while(i > 0){
+           if(i == 98){
+               System.out.println("tiaochu");
+               break;
+           }else{
+               System.out.println("-----");
+           }
+           i--;
+       }
+       i = 1000;
+
+    }
+
+
+
 
 
 

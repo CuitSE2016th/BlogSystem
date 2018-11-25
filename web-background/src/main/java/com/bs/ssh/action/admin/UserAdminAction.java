@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Create By ZZY on 2018/11/21
  */
 @ParentPackage("json-default")
-@Namespace("/admin")
+@Namespace("/useradmin")
 @Results({
         @Result(name = "success", type = "json", params = {"root", "result"})
 })
@@ -123,7 +123,7 @@ public class UserAdminAction extends BaseAction {
             return SUCCESS;
         }
 
-        User user = userAdminService.getUserByUserID(identity);
+        String user = userAdminService.getUserByUserID(identity);
 
         if(user == null){
             result = JsonBody.fail();
