@@ -20,11 +20,21 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_login">Sign In</string>
     <string name="title_home">Home</string>
+    <string name="title_explore">Explore</string>
     <string name="title_following">Following</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_my">My</string>
     <string name="title_activity_register">Register</string>
+    <string name="click_to_sign_in">Click to sign in</string>
+    <string name="view_or_edit_personal_information">View or edit personal information</string>
+    <string name="following_test">100 \nfollowing</string>
+    <string name="followers_test">500 \nfollowers</string>
+    <string name="word_count_test">9000 \nword count</string>
+    <string name="my_articles">My Articles</string>
+    <string name="stars">Stars</string>
+    <string name="settings">Settings</string>
+    <string name="help_and_feedback"><![CDATA[Help & Feedback]]></string>
 
 </resources>
