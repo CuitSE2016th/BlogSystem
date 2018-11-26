@@ -7,12 +7,14 @@ import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.admin.UserAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * Create By ZZY on 2018/11/22
  */
+@Transactional
 @Service
 public class UserAdminServiceImpl implements UserAdminService{
 
@@ -32,12 +34,9 @@ public class UserAdminServiceImpl implements UserAdminService{
         //查询总记录数
         int recordCount = userDao.getUserCount();
 
-        if(recordCount == 0){
-            return null;
-        }
-
         //判断当前页是否大于最大页数
-        if (pn > recordCount / pageSize){
+
+        if (pn > Math.ceil(recordCount / pageSize)){
             pn = recordCount / pageSize;
         }
 
@@ -47,7 +46,7 @@ public class UserAdminServiceImpl implements UserAdminService{
 
         List<User> userList = userDao.getAllUser(pn, pageSize);
 
-        if(userList.size() == 0 || userList == null){
+        if(userList == null){
             return null;
         }
 
@@ -63,7 +62,12 @@ public class UserAdminServiceImpl implements UserAdminService{
     }
 
     @Override
-    public User getUserByUserID(String identity) {
-        return userDao.findByIdentityExcludeAdmin(identity);
+    public String getUserByUserID(String identity) {
+        User byIdentityExcludeAdmin = userDao.findByIdentityExcludeAdmin(identity);
+        if(byIdentityExcludeAdmin == null){
+            return null;
+        }
+
+        return JsonUtil.toJsonExposed(byIdentityExcludeAdmin);
     }
 }

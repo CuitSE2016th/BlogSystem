@@ -1,11 +1,10 @@
-package com.lfork.blogsystem.regist
+package com.lfork.blogsystem.register
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
 import android.content.pm.PackageManager
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.app.LoaderManager.LoaderCallbacks
 import android.content.CursorLoader
 import android.content.Loader
@@ -24,13 +23,15 @@ import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.base.BlogApplication
+import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.data.common.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
-import com.lfork.blogsystem.main.MainActivity
 import com.lfork.blogsystem.utils.StringValidation.isPhoneValid
 import com.lfork.blogsystem.utils.ToastUtil
+import com.lfork.blogsystem.utils.setupActionBar
 
 import kotlinx.android.synthetic.main.register_act.*
 
@@ -105,16 +106,6 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
     }
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private fun setupActionBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -334,6 +325,13 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         )
 
         account.setAdapter(adapter)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     object ProfileQuery {

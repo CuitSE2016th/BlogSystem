@@ -11,7 +11,7 @@
 //
 //public abstract class UserViewModel extends BaseViewModel {
 //
-//    public final ObservableField<String> username = new ObservableField<>();
+//    public final ObservableField<String> nickname = new ObservableField<>();
 //
 //    public final ObservableField<String> description = new ObservableField<>("");
 //

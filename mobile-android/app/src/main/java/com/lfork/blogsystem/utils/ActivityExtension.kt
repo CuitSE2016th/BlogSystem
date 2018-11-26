@@ -1,0 +1,33 @@
+package com.lfork.blogsystem.utils
+
+import android.app.Activity
+import android.content.Intent
+import android.support.v7.app.ActionBar
+import android.support.v7.app.AppCompatActivity
+import java.util.*
+
+/**
+ *
+ * Created by 98620 on 2018/11/25.
+ */
+
+
+fun AppCompatActivity.setupActionBar() {
+    val actionBar = supportActionBar
+    Objects.requireNonNull<ActionBar>(actionBar).setDisplayShowTitleEnabled(true)
+//    actionBar!!.title = title
+    // 决定左上角图标的右侧是否有向左的小箭头, true
+    actionBar!!.setDisplayHomeAsUpEnabled(true)
+    // 有小箭头，并且图标可以点击
+    actionBar.setDisplayShowHomeEnabled(false)
+}
+
+
+/**
+ * 内联函数的类型参数能够被实化。
+ * 简单的启动一个activity
+ */
+inline fun <reified T : Activity> Activity.startActivity() {
+    val intent = Intent(this, T::class.java)
+    startActivity(intent)
+}

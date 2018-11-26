@@ -14,26 +14,29 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.lfork.blogsystem.BaseActivity
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.data.common.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.main.MainActivity
-import com.lfork.blogsystem.regist.RegisterActivity
+import com.lfork.blogsystem.register.RegisterActivity
 import com.lfork.blogsystem.utils.StringValidation.*
 import com.lfork.blogsystem.utils.ToastUtil
+import com.lfork.blogsystem.utils.setupActionBar
+import com.lfork.blogsystem.utils.startActivity
 import kotlinx.android.synthetic.main.login_act.*
 import java.util.*
 
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : BaseActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -41,6 +44,7 @@ class LoginActivity : BaseActivity(), LoaderCallbacks<Cursor> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_act)
+        setupActionBar()
         // Set up the login form.
         populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
@@ -254,6 +258,14 @@ class LoginActivity : BaseActivity(), LoaderCallbacks<Cursor> {
 
         account.setAdapter(adapter)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     object ProfileQuery {
         val PROJECTION = arrayOf(
