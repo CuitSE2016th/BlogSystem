@@ -5,13 +5,15 @@ import android.os.Looper;
 import android.widget.Toast;
 
 /**
- * Created by 98620 on 2018/4/14.
+ *
+ * @author 98620
+ * @date 2018/4/14
  */
 
 
 public class ToastUtil {
 
-    public final static String MAIN_THREAD = "main";
+    private final static String MAIN_THREAD = "main";
 
     public static void showLong(Context context, String content) {
         if (!MAIN_THREAD.equals(Thread.currentThread().getName())) {

@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.base;
+package com.lfork.blogsystem;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -19,9 +19,11 @@ import java.util.concurrent.TimeUnit;
  * @date 2018/11/16
  */
 
-public class BlogApplication extends Application implements MyApplication {
+public class BlogApplication extends Application {
 
     public final static String APP_SHARED_PREF = "application_shared_pref";
+
+    public static String token = "null";
 
     private static ExecutorService executorService;
 
@@ -41,9 +43,7 @@ public class BlogApplication extends Application implements MyApplication {
         initThreadPool();
     }
 
-    @Override
     public void initDataBase() {
-//        LitePal.initialize(context);
     }
 
     public static Context getContext() {
@@ -54,11 +54,6 @@ public class BlogApplication extends Application implements MyApplication {
         BlogApplication.context = context;
     }
 
-
-    /**
-     *
-     */
-    @Override
     public void initThreadPool() {
         ThreadFactory namedThreadFactory = new MyThreadFactory("UI辅助线程池");
         executorService = new ThreadPoolExecutor(Config.BASE_THREAD_POOL_SIZE, Config.BASE_THREAD_POOL_SIZE * 2, 0L, TimeUnit.MICROSECONDS, new LinkedBlockingDeque<Runnable>(), namedThreadFactory);
