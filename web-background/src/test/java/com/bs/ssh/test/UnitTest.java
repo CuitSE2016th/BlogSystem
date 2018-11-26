@@ -1,25 +1,19 @@
-import com.bs.ssh.beans.Article;
-import com.bs.ssh.beans.Permission;
+package com.bs.ssh.test;
+
+import com.bs.ssh.beans.PageBean;
+import com.bs.ssh.beans.PageRequest;
 import com.bs.ssh.beans.Role;
 import com.bs.ssh.beans.User;
-import com.bs.ssh.dao.BaseDao;
-import com.bs.ssh.dao.PermissionDao;
-import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.dao.impl.BaseDaoImpl;
+import com.bs.ssh.service.user.UserArticleService;
 import com.bs.ssh.utils.HashUtils;
-import com.bs.ssh.utils.IDUtils;
-import com.bs.ssh.utils.JsonUtil;
 import com.bs.ssh.utils.RedisUtils;
-import com.google.gson.Gson;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -46,16 +40,35 @@ public class UnitTest {
     @Resource
     BaseDaoImpl<Role> roleBaseDao ;
 
-    @Test
-    @Transactional
-    public void page(){
-        Pageable pageable = new PageRequest(0, 3);
+    @Autowired
+    UserArticleService articleService;
 
-        System.out.println(JsonUtil.toJsonExposed(
-                userBaseDao.findAll(pageable, "from User where sex=?", "M")
-        ));
+//    @Test
+    @Transactional
+    public PageBean page(){
+//        Pageable pageable = new PageRequest(0, 3);
+
+        PageRequest request = new PageRequest();
+        request.setPageSize(2);
+        request.setPageNumber(1);
+        PageBean pageBean = articleService.getAllArticle(request);
+        return pageBean;
+//        System.out.println(pageBean.getResult());
+//        System.out.println(JsonUtils.toJsonExposed(
+//                pageBean
+//        ));
     }
 
+
+//    @Test
+    @Transactional
+    public void articlePage(){
+//        System.out.println(
+//                JsonUtils.toJsonExposed(
+//                        articleService.getAllArticle(new PageRequest(0, 2)).getContent()
+//                )
+//        );
+    }
 
 //    @Test
     public void timestamp() {
@@ -65,12 +78,12 @@ public class UnitTest {
 
 //    @Test
     public void redis() {
-        RedisUtils.set("test1", "value1");
+        RedisUtils.set("com.bs.ssh.test.test1", "value1");
         System.out.println(RedisUtils.get("test"));
-        System.out.println(RedisUtils.exist("test1"));
-        RedisUtils.remove("test", "test1");
+        System.out.println(RedisUtils.exist("com.bs.ssh.test.test1"));
+        RedisUtils.remove("test", "com.bs.ssh.test.test1");
         System.out.println(RedisUtils.exist("test"));
-        System.out.println(RedisUtils.exist("test1"));
+        System.out.println(RedisUtils.exist("com.bs.ssh.test.test1"));
     }
 
 //    @Test
@@ -86,9 +99,6 @@ public class UnitTest {
     @Transactional
     public void gson(){
         User user = userDao.findByIdentity("13881705154");
-        Role role = user.getRole();
-        System.out.println(role.getName());
-        System.out.println(JsonUtil.toJsonExposed(user));
     }
 
 

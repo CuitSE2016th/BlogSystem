@@ -1,3 +1,5 @@
+package com.bs.ssh.test;
+
 import com.bs.ssh.beans.PageBean;
 import com.bs.ssh.beans.User;
 import com.bs.ssh.dao.UserDao;

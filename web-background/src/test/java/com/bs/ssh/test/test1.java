@@ -1,3 +1,5 @@
+package com.bs.ssh.test;
+
 import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.DateUtils;
 import com.bs.ssh.utils.IDUtils;
