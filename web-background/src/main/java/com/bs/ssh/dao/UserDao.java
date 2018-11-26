@@ -1,6 +1,6 @@
 package com.bs.ssh.dao;
 
-import com.bs.ssh.beans.User;
+import com.bs.ssh.entity.User;
 
 import java.util.List;
 

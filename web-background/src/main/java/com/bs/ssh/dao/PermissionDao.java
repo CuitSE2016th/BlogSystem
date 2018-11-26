@@ -1,6 +1,6 @@
 package com.bs.ssh.dao;
 
-import com.bs.ssh.beans.Permission;
+import com.bs.ssh.entity.Permission;
 
 /**
  * 权限仓库

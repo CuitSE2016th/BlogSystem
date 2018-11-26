@@ -1,4 +1,4 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
 
 import javax.persistence.*;
 

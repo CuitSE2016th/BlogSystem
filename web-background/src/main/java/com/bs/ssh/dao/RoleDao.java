@@ -1,6 +1,6 @@
 package com.bs.ssh.dao;
 
-import com.bs.ssh.beans.Role;
+import com.bs.ssh.entity.Role;
 
 /**
  * 角色仓库
