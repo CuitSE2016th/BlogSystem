@@ -2,19 +2,16 @@ package com.bs.ssh.action;
 
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
-import com.bs.ssh.beans.JsonBody;
+import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.common.alibaba.AliSmsUtil;
 import com.bs.ssh.common.email163.MailUtil;
 import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.concurrent.TimeUnit;
 

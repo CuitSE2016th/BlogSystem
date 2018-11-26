@@ -1,11 +1,10 @@
 package com.bs.ssh.action.admin;
 
 import com.bs.ssh.action.BaseAction;
-import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
+import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
-import com.bs.ssh.utils.JsonUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -88,7 +87,7 @@ public class UserAdminAction extends BaseAction {
         }
 
         result = JsonBody.success();
-        result.setData(JsonUtils.toJsonExposed(users));
+        result.setData(users);
         return SUCCESS;
     }
 
@@ -104,7 +103,7 @@ public class UserAdminAction extends BaseAction {
         int flag = userAdminService.deleteUserByUserID(userID);
 
         if(flag == 0){
-            result =JsonBody.fail();
+            result = JsonBody.fail();
             result.setMessage("删除失败！");
 
             return SUCCESS;
@@ -133,7 +132,7 @@ public class UserAdminAction extends BaseAction {
         }
 
         result = JsonBody.success();
-        result.setData(JsonUtils.toJsonExposed(user));
+        result.setData(user);
         return SUCCESS;
 
     }

@@ -1,6 +1,6 @@
 package com.bs.ssh.test;
 
-import com.bs.ssh.beans.*;
+import com.bs.ssh.entity.*;
 import com.bs.ssh.dao.BaseDao;
 import com.bs.ssh.dao.PermissionDao;
 import com.bs.ssh.dao.RoleDao;
@@ -62,6 +62,7 @@ public class UserTest {
     BaseDao<Follow> followDao;
     @Test
     @Transactional
+    @Rollback(false)
     public void follow() {
 //        List<User> users = new LinkedList<>();
 //        PageRequest request = new PageRequest();

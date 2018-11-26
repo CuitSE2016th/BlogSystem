@@ -36,6 +36,7 @@
 
     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="checkWriteOperations" value="false"/>
     </bean>
 
     <bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
@@ -57,7 +58,7 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut expression="execution(* com.bs.ssh.service.root.impl..*.*(..))" id="pointCut"/>
+        <aop:pointcut expression="execution(* com.bs.ssh.service.root.impl.*.*(..))" id="pointCut"/>
         <aop:advisor advice-ref="advice" pointcut-ref="pointCut"/>
     </aop:config>
 

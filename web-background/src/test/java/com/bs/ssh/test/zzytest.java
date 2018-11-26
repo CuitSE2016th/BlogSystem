@@ -1,7 +1,7 @@
 package com.bs.ssh.test;
 
-import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
+import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import com.bs.ssh.service.root.impl.RootServiceImpl;

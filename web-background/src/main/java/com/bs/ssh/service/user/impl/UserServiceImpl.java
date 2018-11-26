@@ -1,15 +1,12 @@
 package com.bs.ssh.service.user.impl;
 
-import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.Role;
-import com.bs.ssh.beans.User;
+import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.user.UserService;
 import com.bs.ssh.utils.Constants;
 import com.bs.ssh.utils.HashUtils;
 import com.bs.ssh.utils.IDUtils;
-import com.bs.ssh.utils.JsonUtils;
-import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +25,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JsonBody<String> login(String identity, String password) {
+    public JsonBody<Object> login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
-        JsonBody<String> body = new JsonBody<>();
+        JsonBody<Object> body = new JsonBody<>();
         if(user==null ){
             body.setCode(Constants.RESPONSE_FAILED);
             body.setMessage("用户不存在");
@@ -42,7 +39,6 @@ public class UserServiceImpl implements UserService {
             body.setMessage("登录成功");
             //保存token到redis服务器
             String token = HashUtils.getToken();
-            RedisUtils.set(token, JsonUtils.toJsonExposed(user));
             body.setData(token);
             user.setLastLoginTime(System.currentTimeMillis());
             userDao.update(user);
@@ -72,8 +68,7 @@ public class UserServiceImpl implements UserService {
         String userID = IDUtils.UserID();
         user.setId(userID);
 
-        Role role = new Role();
-        user.setRole(role.setId(1));
+        user.setRoleId(1);
 
         user.setCreateTime(System.currentTimeMillis());
         user.setLastLoginTime(System.currentTimeMillis());
