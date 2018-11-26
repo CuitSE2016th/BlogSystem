@@ -3,17 +3,17 @@ package com.bs.ssh.beans;
 import javax.persistence.*;
 
 /**
- * 文章评论实体
- * 
+ * 文章收藏实体
+ *
  * @author Egan
- * @date 2018/11/21 19:41
+ * @date 2018/11/26 8:51
  **/
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name = "star")
+public class Star {
     private Integer id;
-    private Integer author;
-    private String content;
+    private Integer userId;
+    private Integer articleId;
     private Long createTime;
 
     @Id
@@ -26,21 +26,22 @@ public class Comment {
         this.id = id;
     }
 
-    @Column(name = "author_id")
-    public Integer getAuthor() {
-        return author;
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAuthor(Integer author) {
-        this.author = author;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getContent() {
-        return content;
+    @Column(name = "article_id")
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     @Column(name = "create_time")

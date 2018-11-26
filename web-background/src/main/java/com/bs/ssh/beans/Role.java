@@ -18,7 +18,6 @@ public class Role {
     private Integer id;
     @Expose private String name;
     private Long createTime;
-    private List<Permission> permissions;
 
     //默认角色为普通用户
     public Role() {
@@ -57,19 +56,4 @@ public class Role {
         this.createTime = createTime;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JoinTable(
-            name = "role_permission",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "permission_id")}
-    )
-    @OrderColumn(name = "id")
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
-    }
 }

@@ -1,6 +1,6 @@
 package com.bs.ssh.beans;
 
-import java.util.List;
+import com.google.gson.annotations.Expose;
 
 public class PageBean<T> {
 
@@ -11,10 +11,10 @@ public class PageBean<T> {
 	private int currentPage;
 
 	//总页数
-	private int pageCount;
+	@Expose private int pageCount;
 
 	//记录数
-	private int recordCount;
+	@Expose private int recordCount;
 
 	//下一页
 	private int nextPage;
@@ -23,12 +23,22 @@ public class PageBean<T> {
 	private int beforePage;
 
 	//记录集合
-	private String result;
+	@Expose private T result;
 
-	public String getResult() {
+	public PageBean() {
+	}
+
+	public PageBean(PageRequest request, int recordCount, T result) {
+		this.setCurrentPage(request.getPageNumber());
+		this.setPageSize(request.getPageSize());
+		this.setRecordCount(recordCount);
+		this.setResult(result);
+	}
+
+	public T getResult() {
 		return result;
 	}
-	public void setResult(String result) {
+	public void setResult(T result) {
 		this.result = result;
 	}
 	public int getPageSize() {
