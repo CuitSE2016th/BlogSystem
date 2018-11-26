@@ -1,9 +1,8 @@
 package com.bs.ssh.action.user;
 
 import com.bs.ssh.action.BaseAction;
-import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.User;
-import com.bs.ssh.utils.JsonUtils;
+import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.entity.User;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -35,7 +34,7 @@ class UserInfoGetAction extends BaseAction {
         result.setCode(100);
         result.setMessage("Success");
 
-        JsonUtils.returnJson(result);
+//        JsonUtils.returnJson(result);
 
         return super.execute();
 

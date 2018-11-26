@@ -1,11 +1,10 @@
 package com.bs.ssh.service.admin.impl;
 
-import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
+import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.AdminDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.admin.UserAdminService;
-import com.bs.ssh.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +51,7 @@ public class UserAdminServiceImpl implements UserAdminService{
             return null;
         }
 
-        users.setResult(JsonUtils.toJsonExposed(userList));
+        users.setResult(userList);
 
         return users;
     }
