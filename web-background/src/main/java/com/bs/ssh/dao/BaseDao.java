@@ -1,6 +1,7 @@
 package com.bs.ssh.dao;
 
-import org.springframework.data.domain.Pageable;
+
+import com.bs.ssh.bean.PageRequest;
 
 import java.util.List;
 
@@ -15,7 +16,9 @@ public interface BaseDao<T> {
 
     T findOne(String hql, Object ...values);
 
-    List<T> findAll(Pageable page, String hql, Object ...values);
+    List<T> findAll(PageRequest page, String hql, Object ...values);
+
+    Integer count(String entityName);
 
     void delete(T entity);
 

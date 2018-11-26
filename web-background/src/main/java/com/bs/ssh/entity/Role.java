@@ -1,20 +1,26 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
+
+import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 
 /**
- * 文章评论实体
- * 
+ * 角色实体
+ *
  * @author Egan
- * @date 2018/11/21 19:41
+ * @date 2018/11/10 19:41
  **/
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name = "role")
+public class Role {
     private Integer id;
-    private Integer author;
-    private String content;
+    @Expose private String name;
     private Long createTime;
+
+    //默认角色为普通用户
+    public Role() {
+        this.id = 1;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,28 +28,23 @@ public class Comment {
         return id;
     }
 
+    //user.setRole(new Role().setId(1));
     public void setId(Integer id) {
         this.id = id;
     }
 
-    @Column(name = "author_id")
-    public Integer getAuthor() {
-        return author;
+    @Basic
+    public String getName() {
+        return name;
     }
 
-    public void setAuthor(Integer author) {
-        this.author = author;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
+    @Basic
     @Column(name = "create_time")
+
     public Long getCreateTime() {
         return createTime;
     }
@@ -51,4 +52,5 @@ public class Comment {
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
+
 }

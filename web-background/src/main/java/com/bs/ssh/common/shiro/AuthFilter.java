@@ -1,6 +1,6 @@
 package com.bs.ssh.common.shiro;
 
-import com.bs.ssh.beans.JsonBody;
+import com.bs.ssh.bean.JsonBody;
 import com.google.gson.Gson;
 import org.apache.http.HttpStatus;
 import org.apache.shiro.authc.AuthenticationException;

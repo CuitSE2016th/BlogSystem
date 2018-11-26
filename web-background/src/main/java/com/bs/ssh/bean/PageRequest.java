@@ -1,6 +1,4 @@
-package com.bs.ssh.beans;
-
-import com.opensymphony.xwork2.validator.annotations.DateRangeFieldValidator;
+package com.bs.ssh.bean;
 
 /**
  * 分页请求

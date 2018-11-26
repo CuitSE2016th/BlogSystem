@@ -1,6 +1,7 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 文章收藏实体
@@ -10,31 +11,23 @@ import javax.persistence.*;
  **/
 @Entity
 @Table(name = "star")
-public class Star {
-    private Integer id;
-    private Integer userId;
+public class Star implements Serializable{
+    private String userId;
     private Integer articleId;
     private Long createTime;
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Column(name = "user_id")
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
+    @Id
     @Column(name = "article_id")
     public Integer getArticleId() {
         return articleId;

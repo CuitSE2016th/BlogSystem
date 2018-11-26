@@ -1,9 +1,8 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
 
 import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * 文章实体
@@ -17,7 +16,7 @@ public class Article {
 
     private Integer id;
     private String content;
-    private Integer authorId;
+    private String authorId;
     private Integer status;
     private Long createTime;
 
@@ -42,11 +41,11 @@ public class Article {
     }
 
     @Column(name = "author_id")
-    public Integer getAuthorId() {
+    public String getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer authorId) {
+    public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
 

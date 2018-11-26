@@ -1,19 +1,19 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
 
 import javax.persistence.*;
 
 /**
- * 文章点赞实体
- *
+ * 文章评论实体
+ * 
  * @author Egan
- * @date 2018/11/26 8:49
+ * @date 2018/11/21 19:41
  **/
 @Entity
-@Table(name = "like")
-public class Like {
+@Table(name = "comment")
+public class Comment {
     private Integer id;
-    private Integer userId;
-    private Integer articleId;
+    private Integer author;
+    private String content;
     private Long createTime;
 
     @Id
@@ -26,22 +26,21 @@ public class Like {
         this.id = id;
     }
 
-    @Column(name = "user_id")
-    public Integer getUserId() {
-        return userId;
+    @Column(name = "author_id")
+    public Integer getAuthor() {
+        return author;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setAuthor(Integer author) {
+        this.author = author;
     }
 
-    @Column(name = "article_id")
-    public Integer getArticleId() {
-        return articleId;
+    public String getContent() {
+        return content;
     }
 
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Column(name = "create_time")
