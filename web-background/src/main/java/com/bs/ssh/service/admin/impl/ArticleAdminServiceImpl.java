@@ -1,10 +1,10 @@
 package com.bs.ssh.service.admin.impl;
 
-import com.bs.ssh.beans.Article;
-import com.bs.ssh.beans.PageBean;
+import com.bs.ssh.entity.Article;
+import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.dao.ArticleDao;
 import com.bs.ssh.service.admin.ArticleAdminService;
-import com.bs.ssh.utils.JsonUtil;
+import com.bs.ssh.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class ArticleAdminServiceImpl implements ArticleAdminService{
             return null;
         }
 
-        return JsonUtil.toJsonExposed(one);
+        return JsonUtils.toJsonExposed(one);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ArticleAdminServiceImpl implements ArticleAdminService{
         }
 
         pageBean.setRecordCount(articles.size());
-        pageBean.setResult(JsonUtil.toJsonExposed(articles));
+        pageBean.setResult(articles);
         pageBean.setCurrentPage(pn);
 
         return pageBean;

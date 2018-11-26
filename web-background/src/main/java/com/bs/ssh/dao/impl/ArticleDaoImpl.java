@@ -1,6 +1,6 @@
 package com.bs.ssh.dao.impl;
 
-import com.bs.ssh.beans.Article;
+import com.bs.ssh.entity.Article;
 import com.bs.ssh.dao.ArticleDao;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate5.HibernateTemplate;
