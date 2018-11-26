@@ -1,9 +1,9 @@
 package com.bs.ssh.action.admin;
 
 import com.bs.ssh.action.BaseAction;
-import com.bs.ssh.beans.Article;
-import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.PageBean;
+import com.bs.ssh.entity.Article;
+import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.service.admin.impl.ArticleAdminServiceImpl;
 import com.bs.ssh.utils.Constants;
 import com.bs.ssh.utils.RegexString;

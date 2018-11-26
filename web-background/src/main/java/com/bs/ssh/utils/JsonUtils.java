@@ -29,44 +29,44 @@ public class JsonUtils {
      *        泛型会被擦除, 所以Token需要单独传参数
      * @return fromJson会自动根据JSONData的内容转化为POJO 或者是List
      */
-//    public static <T> T parseJson(String jsonData, TypeToken<?> token) {
-//        try {
-//            return new Gson().fromJson(jsonData, token.getType());
-//        } catch (Exception e) {
-//            logger.error("parse failure", e);
-//            return null;
-//        }
-//    }
-//
-//    public static <T> String toJson(T object){
-//        try {
-//            return new GsonBuilder()
-//                    .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
-//                    .create()
-//                    .toJson(object);
-//        } catch (Exception e) {
-//            logger.error("conversion failed", e);
-//            return null;
-//        }
-//    }
-//
-//    public static <T> String toJsonExposed(T object){
-//        try {
-//            return new GsonBuilder()
-//                    .excludeFieldsWithoutExposeAnnotation()
-//                    .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
-//                    .create().toJson(object);
-//        } catch (Exception e) {
-//            logger.error("conversion failed", e);
-//            return null;
-//        }
-//    }
-//
-//    public static  <T> void returnJson(T data) throws IOException {
-//        PrintWriter out= ServletActionContext.getResponse().getWriter();
-//        out.print(toJson(data));
-//        out.flush();
-//        out.close();
-//    }
+    public static <T> T parseJson(String jsonData, TypeToken<?> token) {
+        try {
+            return new Gson().fromJson(jsonData, token.getType());
+        } catch (Exception e) {
+            logger.error("parse failure", e);
+            return null;
+        }
+    }
+
+    public static <T> String toJson(T object){
+        try {
+            return new GsonBuilder()
+                    .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
+                    .create()
+                    .toJson(object);
+        } catch (Exception e) {
+            logger.error("conversion failed", e);
+            return null;
+        }
+    }
+
+    public static <T> String toJsonExposed(T object){
+        try {
+            return new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY)
+                    .create().toJson(object);
+        } catch (Exception e) {
+            logger.error("conversion failed", e);
+            return null;
+        }
+    }
+
+    public static  <T> void returnJson(T data) throws IOException {
+        PrintWriter out= ServletActionContext.getResponse().getWriter();
+        out.print(toJson(data));
+        out.flush();
+        out.close();
+    }
 
 }
