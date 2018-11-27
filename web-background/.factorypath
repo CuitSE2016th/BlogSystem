@@ -2,7 +2,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/struts/struts2-core/2.3.34/struts2-core-2.3.34.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/freemarker/freemarker/2.3.22/freemarker-2.3.22.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/ognl/ognl/3.0.21/ognl-3.0.21.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/javassist/javassist/3.11.0.GA/javassist-3.11.0.GA.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/struts/struts2-spring-plugin/2.3.34/struts2-spring-plugin-2.3.34.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-lang3/3.2/commons-lang3-3.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/struts/struts2-json-plugin/2.3.34/struts2-json-plugin-2.3.34.jar" enabled="true" runInBatchMode="false"/>
