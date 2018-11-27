@@ -3,7 +3,7 @@ package com.bs.ssh.action.user
 import com.bs.ssh.action.BaseAction
 import com.bs.ssh.entity.User
 import com.bs.ssh.service.user.UserService
-import com.bs.ssh.utils.JsonUtils
+import com.bs.ssh.utils.JsonUtil
 
 import org.apache.struts2.convention.annotation.Action
 import org.apache.struts2.convention.annotation.ParentPackage
@@ -34,7 +34,7 @@ class UserInfoUpdateAction : BaseAction() {
     override fun execute(): String {
         val tempUser = User(nickname, headPortrait, sex)
         val result = userService?.updateUserInfo(tempUser, identity, token)
-        JsonUtils.returnJson(result)
+        JsonUtil.returnJson(result)
         return super.execute()
     }
 }
