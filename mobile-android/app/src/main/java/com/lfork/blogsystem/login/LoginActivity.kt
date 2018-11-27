@@ -29,6 +29,7 @@ import com.lfork.blogsystem.register.RegisterActivity
 import com.lfork.blogsystem.utils.StringValidation.*
 import com.lfork.blogsystem.utils.ToastUtil
 import com.lfork.blogsystem.utils.setupActionBar
+import com.lfork.blogsystem.utils.setupToolBar
 import com.lfork.blogsystem.utils.startActivity
 import kotlinx.android.synthetic.main.login_act.*
 import java.util.*
@@ -44,7 +45,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_act)
-        setupActionBar()
+
+        setupToolBar(toolbar, resources.getString(R.string.title_activity_login))
         // Set up the login form.
         populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
