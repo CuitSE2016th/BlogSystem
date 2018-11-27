@@ -137,4 +137,13 @@ public class User{
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
+
+    public User() {
+    }
+
+    public User(String nickname, String headPortrait, String sex) {
+        this.nickname = nickname;
+        this.headPortrait = headPortrait;
+        this.sex = sex;
+    }
 }

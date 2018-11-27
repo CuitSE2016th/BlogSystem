@@ -8,6 +8,8 @@ import com.bs.ssh.utils.Constants;
 import com.bs.ssh.utils.HashUtils;
 import com.bs.ssh.utils.IDUtils;
 import com.bs.ssh.utils.RegexString;
+import com.bs.ssh.utils.StringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,13 +30,13 @@ public class UserServiceImpl implements UserService {
     public JsonBody<Object> login(String identity, String password) {
         User user = userDao.findByIdentity(identity);
         JsonBody<Object> body = new JsonBody<>();
-        if(user==null ){
+        if (user == null) {
             body.setCode(Constants.RESPONSE_FAILED);
             body.setMessage("用户不存在");
-        } else if(!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))){
+        } else if (!user.getPassword().equals(HashUtils.sha256(password, user.getSalt()))) {
             body.setCode(Constants.RESPONSE_FAILED);
             body.setMessage("用户名或密码不正确");
-        }else {
+        } else {
             body.setCode(Constants.RESPONSE_SUCCEED);
             body.setMessage("登录成功");
             //保存token到redis服务器
@@ -47,12 +49,59 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public JsonBody<User> getUserInfo(String identity, String token) {
+        User user = userDao.findByIdentity(identity);
+        JsonBody<User> body = new JsonBody<>();
+        if (user == null) {
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("用户不存在");
+        } else if (!isTokenValid(token)) {
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("Token 出错");
+        } else {
+            body.setCode(Constants.RESPONSE_SUCCEED);
+            body.setMessage("SUCCESS");
+            body.setData(user);
+        }
+        return body;
+    }
+
+    @Override
+    public JsonBody<User> updateUserInfo(User tempUser, String identity, String token) {
+        User user = userDao.findByIdentity(identity);
+        JsonBody<User> body = new JsonBody<>();
+        if (!isTokenValid(token)) {
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("token is error");
+        } else if (user == null) {
+            body.setCode(Constants.RESPONSE_FAILED);
+            body.setMessage("The user does not exist.");
+        } else {
+            if (StringUtils.isNotBlank(tempUser.getNickname())) {
+                user.setNickname(tempUser.getNickname());
+            }
+
+            if (StringUtils.isNotBlank(tempUser.getSex())) {
+                user.setSex(tempUser.getSex());
+            }
+
+            if (StringUtils.isNotBlank(tempUser.getHeadPortrait())) {
+                user.setHeadPortrait(tempUser.getHeadPortrait());
+            }
+            userDao.insert(user);
+            body.setCode(Constants.RESPONSE_SUCCEED);
+            body.setData(user);
+        }
+        return body;
+    }
+
+    @Override
     public int registUser(String email, String password) {
         User user = new User();
 
-        if (RegexString.ExecRegex(email, RegexString.regex_UserEmail)){
+        if (RegexString.ExecRegex(email, RegexString.regex_UserEmail)) {
             user.setEmail(email);
-        }else{
+        } else {
             user.setPhone(email);
         }
 
@@ -81,13 +130,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public int isExistEmail(String emailOrPhone) {
         User user = userDao.selectOneByEmail(emailOrPhone);
-        return user != null ? 1:0;
+        return user != null ? 1 : 0;
     }
 
     @Override
     public int isExistPhone(String emailOrPhone) {
         User user = userDao.selectOneByPhone(emailOrPhone);
-        return user != null ? 1:0;
+        return user != null ? 1 : 0;
+    }
+
+    @Override
+    public boolean isTokenValid(String token) {
+        return token != null;
     }
 
 
