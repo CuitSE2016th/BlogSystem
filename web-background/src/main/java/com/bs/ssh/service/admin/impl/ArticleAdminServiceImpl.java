@@ -4,7 +4,7 @@ import com.bs.ssh.entity.Article;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.dao.ArticleDao;
 import com.bs.ssh.service.admin.ArticleAdminService;
-import com.bs.ssh.utils.JsonUtils;
+import com.bs.ssh.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class ArticleAdminServiceImpl implements ArticleAdminService{
             return null;
         }
 
-        return JsonUtils.toJsonExposed(one);
+        return JsonUtil.toJsonExposed(one);
     }
 
     @Override
