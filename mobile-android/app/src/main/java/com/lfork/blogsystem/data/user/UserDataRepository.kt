@@ -26,6 +26,7 @@ object UserDataRepository : UserDataSource {
         remoteDataSource.login(account, password, object : DataCallback<String> {
             override fun succeed(data: String) {
                 BlogApplication.token = data
+                isSignIn = true
                 userCache = User()
                 if(StringValidation.isEmailValid(account)){
                     userCache!!.email = account
@@ -68,6 +69,5 @@ object UserDataRepository : UserDataSource {
 
 //        remoteDataSource.getCurrentUserInfo(callback)
     }
-
 
 }

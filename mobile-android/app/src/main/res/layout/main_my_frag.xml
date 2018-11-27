@@ -100,6 +100,7 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
+                    android:id="@+id/item_my_articles"
                     android:layout_height="50dp">
 
                     <TextView
@@ -144,6 +145,7 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
+                    android:id="@+id/item_star_like"
                     android:layout_height="50dp">
 
                     <TextView
@@ -152,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginStart="24dp"
-                        android:text="@string/stars"
+                        android:text="@string/stars_likes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -188,10 +190,11 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
+                    android:id="@+id/item_settings"
                     android:layout_height="50dp">
 
                     <TextView
-                        android:id="@+id/btn_help_feedback"
+                        android:id="@+id/btn_settings"
                         style="@style/title_h1"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
@@ -202,7 +205,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/help_feedback_tips"
+                        android:id="@+id/settings_tips"
                         style="@style/sub_title_h1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -233,10 +236,11 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
+                    android:id="@+id/item_help_feedback"
                     android:layout_height="50dp">
 
                     <TextView
-                        android:id="@+id/btn_settings"
+                        android:id="@+id/btn_help_feedback"
                         style="@style/title_h1"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
@@ -247,7 +251,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/settings_tips"
+                        android:id="@+id/help_feedback_tips"
                         style="@style/sub_title_h1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
