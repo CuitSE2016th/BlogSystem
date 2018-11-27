@@ -1,8 +1,7 @@
 package com.bs.ssh.dao.impl;
 
-import com.bs.ssh.beans.User;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.AdminDao;
-import com.bs.ssh.dao.UserDao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;

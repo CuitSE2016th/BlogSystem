@@ -1,10 +1,8 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
 
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.List;
 
 /**
  * 角色实体
@@ -18,7 +16,6 @@ public class Role {
     private Integer id;
     @Expose private String name;
     private Long createTime;
-    private List<Permission> permissions;
 
     //默认角色为普通用户
     public Role() {
@@ -32,9 +29,8 @@ public class Role {
     }
 
     //user.setRole(new Role().setId(1));
-    public Role setId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
-        return this;
     }
 
     @Basic
@@ -57,19 +53,4 @@ public class Role {
         this.createTime = createTime;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JoinTable(
-            name = "role_permission",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "permission_id")}
-    )
-    @OrderColumn(name = "id")
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
-    }
 }

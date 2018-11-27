@@ -1,7 +1,7 @@
 package com.bs.ssh.action.user;
 
 import com.bs.ssh.action.BaseAction;
-import com.bs.ssh.service.UserService;
+import com.bs.ssh.service.user.UserService;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;

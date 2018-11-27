@@ -1,6 +1,6 @@
 package com.bs.ssh.dao.impl;
 
-import com.bs.ssh.beans.User;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -74,7 +74,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
 
-        List<User> from_user = currentSession.createQuery("from User").setFirstResult((pn-1) * pageSize + 1).setMaxResults(pageSize).list();
+        List<User> from_user = currentSession.createQuery("from User").setFirstResult((pn-1) * pageSize).setMaxResults(pageSize).list();
 
         return from_user;
     }
@@ -83,7 +83,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     public int updateUserRoleID(String userID, String type) {
 
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
-        Query query = currentSession.createQuery("update User set role.id = ? where id = ?");
+        Query query = currentSession.createQuery("update User set roleId = ? where id = ?");
         query.setParameter(0, type);
         query.setParameter(1, userID);
         int i = query.executeUpdate();
@@ -94,9 +94,9 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     @Override
     public User findByIdentityExcludeAdmin(String identity) {
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
-        User o = (User) currentSession.createQuery("from User where role.id = 1 and (email = ? or phone = ?)")
+        User o = (User) currentSession.createQuery("from User where roleId = 1 and (email = ? or phone = ?)")
                 .setParameter(0, identity)
-                .setParameter(0, identity).uniqueResult();
+                .setParameter(1, identity).uniqueResult();
         return o;
     }
 

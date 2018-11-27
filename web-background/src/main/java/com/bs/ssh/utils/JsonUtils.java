@@ -18,9 +18,9 @@ import java.io.PrintWriter;
  * @date 2018/2/1
  */
 
-public class JsonUtil {
+public class JsonUtils {
 
-    private static Logger logger = LogManager.getLogger(JsonUtil.class);
+    private static Logger logger = LogManager.getLogger(JsonUtils.class);
 
     /**
      *

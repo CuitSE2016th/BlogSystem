@@ -1,4 +1,4 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.bean;
 
 import com.bs.ssh.utils.Constants;
 
@@ -39,17 +39,15 @@ public class JsonBody<T> {
     }
 
 
-
-
     public static JsonBody success(){
-        JsonBody message = new JsonBody<Object>();
+        JsonBody message = new JsonBody<>();
         message.setCode(Constants.RESPONSE_SUCCEED);
         message.setMessage("操作成功");
         return message;
     }
 
     public static JsonBody fail(){
-        JsonBody message = new JsonBody<Object>();
+        JsonBody message = new JsonBody<>();
         message.setCode(Constants.RESPONSE_FAILED);
         message.setMessage("操作失败");
         return message;

@@ -1,6 +1,10 @@
-import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
+package com.bs.ssh.test;
+
+import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.entity.User;
+
 import com.bs.ssh.dao.UserDao;
+import com.bs.ssh.service.admin.impl.ArticleAdminServiceImpl;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import com.bs.ssh.service.root.impl.RootServiceImpl;
 import org.junit.Test;
@@ -31,12 +35,15 @@ public class zzytest {
     @Autowired
     private UserAdminServiceImpl userAdminService;
 
+    @Autowired
+    private ArticleAdminServiceImpl articleAdminService;
+
     @Test
     public void test1(){
 
         PageBean allUserToPageBean = rootService.getAllUserToPageBean(1, 15);
         System.out.println("------------------------------------");
-        System.out.println(allUserToPageBean.getResult());
+        System.out.println(allUserToPageBean);
         System.out.println("------------------------------------");
 
     }

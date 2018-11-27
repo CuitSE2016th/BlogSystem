@@ -4,17 +4,20 @@
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-    
+		<!--<property name="hibernate.enable_lazy_load_no_trans">true</property>-->
     	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
     	<property name="show_sql">true</property>
     	<property name="hibernate.hbm2ddl.auto">update</property>
     	<property name="hibernate.format_sql">true</property>
 		<property name="connection.autocommit">true</property>
-		<mapping class="com.bs.ssh.beans.Permission"/>
-		<mapping class="com.bs.ssh.beans.Role"/>
-		<mapping class="com.bs.ssh.beans.User"/>
-		<mapping class="com.bs.ssh.beans.Article"/>
-		<mapping class="com.bs.ssh.beans.Image"/>
-		<mapping class="com.bs.ssh.beans.Comment"/>
+		<mapping class="com.bs.ssh.entity.Permission"/>
+		<mapping class="com.bs.ssh.entity.Role"/>
+		<mapping class="com.bs.ssh.entity.User"/>
+		<mapping class="com.bs.ssh.entity.Article"/>
+		<mapping class="com.bs.ssh.entity.Image"/>
+		<mapping class="com.bs.ssh.entity.Comment"/>
+		<mapping class="com.bs.ssh.entity.Follow"/>
+		<mapping class="com.bs.ssh.entity.Like"/>
+		<mapping class="com.bs.ssh.entity.Star"/>
     </session-factory>
 </hibernate-configuration>

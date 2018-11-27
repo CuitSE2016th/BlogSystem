@@ -1,8 +1,6 @@
-package com.bs.ssh.service;
+package com.bs.ssh.service.user;
 
-import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
+import com.bs.ssh.bean.JsonBody;
 
 /**
  * 用户服务
