@@ -8,7 +8,7 @@
                                              tools:context=".userinfo.UserInfoFragment">
 
     <TextView
-            android:id="@+id/username_or_signin"
+            android:id="@+id/username_or_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -17,12 +17,12 @@
             android:text="@={viewmodel.nickname}"
             android:textColor="@color/colorPrimary"
             android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"/>
+            app:layout_constraintBottom_toBottomOf="@+id/user_portrait"
+            app:layout_constraintStart_toEndOf="@+id/user_portrait"
+            app:layout_constraintTop_toTopOf="@+id/user_portrait"/>
 
     <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/user_portrait"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/view_or_edit_personal_information"
-            app:layout_constraintStart_toStartOf="@+id/username_or_signin"
-            app:layout_constraintTop_toBottomOf="@+id/username_or_signin" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/username_or_sign_in"
+            app:layout_constraintTop_toBottomOf="@+id/username_or_sign_in" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"/>
 
     <TextView
@@ -54,8 +54,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="@string/following_test"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/user_portrait"
+            app:layout_constraintTop_toBottomOf="@+id/user_portrait"
             tools:text="100\nfollowing"/>
 
     <TextView

@@ -42,18 +42,20 @@ class FollowActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragId: Int) {
         when (fragId) {
-            FOLLOWER_FRAG -> {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FollowerFragment.newInstance())
-                        .commitNow()
-                setupToolBar(resources.getString(R.string.title_follower));
-            }
             FOLLOWING_FRAG ->{
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.container, FollowingFragment.newInstance())
                         .commitNow()
                 setupToolBar(resources.getString(R.string.title_following));
             }
+
+            FOLLOWER_FRAG -> {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, FollowerFragment.newInstance())
+                        .commitNow()
+                setupToolBar(resources.getString(R.string.title_follower));
+            }
+
             else -> finish()
         }
 

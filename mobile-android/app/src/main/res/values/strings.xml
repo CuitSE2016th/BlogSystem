@@ -201,5 +201,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="username">username</string>
+    <string name="followed">Followed</string>
 
 </resources>

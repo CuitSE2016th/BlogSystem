@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +25,8 @@ class FollowerFragment : Fragment() {
     ): View {
 
         val root = inflater.inflate(R.layout.follower_frag, container, false)
-
-
+        root.recycle_followers.layoutManager = LinearLayoutManager(context)
+        root.recycle_followers.adapter = FollowAdapter()
         return root
     }
 

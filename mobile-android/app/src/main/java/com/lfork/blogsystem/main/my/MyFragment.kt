@@ -7,9 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
 
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.databinding.MainMyFragBinding
 import com.lfork.blogsystem.follow.FollowActivity
 import com.lfork.blogsystem.follow.FollowActivity.Companion.startFollowActivity
@@ -58,7 +58,9 @@ class MyFragment : Fragment(), MyNavigator, View.OnClickListener {
     }
 
     private fun registerListener(view: View) {
-        view.username_or_signin.setOnClickListener(this)
+        view.username_or_sign_in.setOnClickListener(this)
+        view.user_portrait.setOnClickListener(this)
+        view.user_info_tips.setOnClickListener(this)
         view.followers.setOnClickListener(this)
         view.following.setOnClickListener(this)
 
@@ -93,15 +95,17 @@ class MyFragment : Fragment(), MyNavigator, View.OnClickListener {
 
         Log.d("onClick", v.toString())
         when (id) {
-            R.id.username_or_signin -> {
-                if (UserDataRepository.isSignIn) {
+            R.id.username_or_sign_in,R.id.user_portrait,R.id.user_info_tips -> {
+                if (isSignIn) {
                     mainActivity.startActivity<UserInfoActivity>()
                 } else {
                     mainActivity.startActivity<LoginActivity>()
                 }
             }
-            R.id.followers -> startFollowActivity(context!!, FollowActivity.FOLLOWER_FRAG)
+
             R.id.following -> startFollowActivity(context!!, FollowActivity.FOLLOWING_FRAG)
+            R.id.followers -> startFollowActivity(context!!, FollowActivity.FOLLOWER_FRAG)
+
 
             R.id.item_my_articles->mainActivity.startActivity<MyArticlesActivity>()
             R.id.item_star_like->mainActivity.startActivity<StarLikeActivity>()
