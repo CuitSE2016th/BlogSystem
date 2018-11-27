@@ -85,8 +85,8 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(account, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok,
-                            { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) })
+                .setAction(android.R.string.ok,
+                    { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) })
         } else {
             requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
@@ -97,8 +97,8 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * Callback received when a permissions request has been completed.
      */
     override fun onRequestPermissionsResult(
-            requestCode: Int, permissions: Array<String>,
-            grantResults: IntArray
+        requestCode: Int, permissions: Array<String>,
+        grantResults: IntArray
     ) {
         if (requestCode == REQUEST_READ_CONTACTS) {
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -191,7 +191,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                     finish()
                 }
 
-                override fun failed(code: Int,log: String) {
+                override fun failed(code: Int, log: String) {
                     ToastUtil.showLong(applicationContext, log)
                     mRegisterTask = null
                     showProgress(false)
@@ -205,7 +205,8 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             return
         }
 
-        BlogApplication.executeThreadWithThreadPool {
+
+        BlogApplication.executeThreadWithThreadPool(Runnable {
             val countDownSeconds = 60
             for (i in 1..countDownSeconds) {
                 Thread.sleep(1000)
@@ -217,8 +218,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 get_verification_code_button.text = getText(R.string.action_get_verification_code)
             }
             mVerificationCodeTask = null
-
-        }
+        })
 
         val accountStr = account.text.toString()
 
@@ -257,23 +257,23 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
             login_form.visibility = if (show) View.GONE else View.VISIBLE
             login_form.animate()
-                    .setDuration(shortAnimTime)
-                    .alpha((if (show) 0 else 1).toFloat())
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            login_form.visibility = if (show) View.GONE else View.VISIBLE
-                        }
-                    })
+                .setDuration(shortAnimTime)
+                .alpha((if (show) 0 else 1).toFloat())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        login_form.visibility = if (show) View.GONE else View.VISIBLE
+                    }
+                })
 
             login_progress.visibility = if (show) View.VISIBLE else View.GONE
             login_progress.animate()
-                    .setDuration(shortAnimTime)
-                    .alpha((if (show) 1 else 0).toFloat())
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            login_progress.visibility = if (show) View.VISIBLE else View.GONE
-                        }
-                    })
+                .setDuration(shortAnimTime)
+                .alpha((if (show) 1 else 0).toFloat())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        login_progress.visibility = if (show) View.VISIBLE else View.GONE
+                    }
+                })
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
@@ -284,22 +284,22 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     override fun onCreateLoader(i: Int, bundle: Bundle?): Loader<Cursor> {
         return CursorLoader(
-                this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(
-                        ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY
-                ), ProfileQuery.PROJECTION,
+            this,
+            // Retrieve data rows for the device user's 'profile' contact.
+            Uri.withAppendedPath(
+                ContactsContract.Profile.CONTENT_URI,
+                ContactsContract.Contacts.Data.CONTENT_DIRECTORY
+            ), ProfileQuery.PROJECTION,
 
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE + " = ?", arrayOf(
+            // Select only email addresses.
+            ContactsContract.Contacts.Data.MIMETYPE + " = ?", arrayOf(
                 ContactsContract.CommonDataKinds.Email
-                        .CONTENT_ITEM_TYPE
-        ),
+                    .CONTENT_ITEM_TYPE
+            ),
 
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC"
+            // Show primary email addresses first. Note that there won't be
+            // a primary email address if the user hasn't specified one.
+            ContactsContract.Contacts.Data.IS_PRIMARY + " DESC"
         )
     }
 
@@ -321,8 +321,8 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     private fun addEmailsToAutoComplete(emailAddressCollection: List<String>) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         val adapter = ArrayAdapter(
-                this@RegisterActivity,
-                android.R.layout.simple_dropdown_item_1line, emailAddressCollection
+            this@RegisterActivity,
+            android.R.layout.simple_dropdown_item_1line, emailAddressCollection
         )
 
         account.setAdapter(adapter)
@@ -337,8 +337,8 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     object ProfileQuery {
         val PROJECTION = arrayOf(
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY
+            ContactsContract.CommonDataKinds.Email.ADDRESS,
+            ContactsContract.CommonDataKinds.Email.IS_PRIMARY
         )
         val ADDRESS = 0
         val IS_PRIMARY = 1

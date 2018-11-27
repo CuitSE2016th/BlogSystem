@@ -12,28 +12,30 @@ import com.lfork.blogsystem.utils.StringValidation
 object UserDataRepository : UserDataSource {
     private val remoteDataSource = UserRemoteDataSource()
 
-    var isSignIn = false
+//    var isSignIn = false
 
-    var userCache: User? = null
+    var userCache: User = User()
 
     var followings: List<User>? = null
 
     var followers: List<User>? = null
 
-    var userCacheIsDirty = true;
+    private var userCacheIsDirty = true
 
     override fun login(account: String, password: String, callback: DataCallback<String>) {
         remoteDataSource.login(account, password, object : DataCallback<String> {
             override fun succeed(data: String) {
                 BlogApplication.token = data
-                isSignIn = true
-                userCache = User()
+
                 if(StringValidation.isEmailValid(account)){
-                    userCache!!.email = account
+                    userCache.email = account
+                    BlogApplication.saveEmail(account)
                 } else {
-                    userCache!!.phone = account
+                    userCache.phone = account
+                    BlogApplication.saveEmail(account)
                 }
 
+                BlogApplication.saveToken(data)
                 callback.succeed(data)
             }
 
@@ -54,13 +56,13 @@ object UserDataRepository : UserDataSource {
     fun getCurrentUserInfo(callback: DataCallback<User>) {
 
         if (!userCacheIsDirty) {
-            callback.succeed(userCache!!)
+            callback.succeed(userCache)
             return
         }
 
 
-        if (userCache != null) {
-            callback.succeed(userCache!!)
+        if (true) {
+            callback.succeed(userCache)
             userCacheIsDirty = false
         } else {
             callback.failed(-1, "用户未登录")
@@ -68,6 +70,10 @@ object UserDataRepository : UserDataSource {
 
 
 //        remoteDataSource.getCurrentUserInfo(callback)
+    }
+
+    fun refreshUserInfor(){
+        userCacheIsDirty = true
     }
 
 }

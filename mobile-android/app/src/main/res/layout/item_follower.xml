@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/user_portrait"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_person_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/username"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_portrait"
+        app:layout_constraintStart_toEndOf="@+id/user_portrait"
+        app:layout_constraintTop_toTopOf="@+id/user_portrait" />
+
+    <TextView
+        android:id="@+id/user_info_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:singleLine="true"
+        android:layout_marginTop="8dp"
+        android:text="@string/view_or_edit_personal_information"
+        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/following"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="24dp"-->
+        <!--android:text="@string/following_test"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/user_portrait"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/user_portrait"-->
+        <!--tools:text="100\nfollowing" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/followers"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="24dp"-->
+        <!--android:text="@string/followers_test"-->
+        <!--app:layout_constraintBaseline_toBaselineOf="@+id/following"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/following"-->
+        <!--tools:text="500\nfollowers" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/words_count"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="24dp"-->
+        <!--android:text="@string/word_count_test"-->
+        <!--app:layout_constraintBaseline_toBaselineOf="@+id/followers"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/followers"-->
+        <!--tools:text="9000\nword count" />-->
+
+</android.support.constraint.ConstraintLayout>

@@ -13,24 +13,13 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         tools:context=".main.my.MyFragment">
 
-        <TextView
-            android:id="@+id/username_or_signin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="32dp"
-            tools:text="@string/click_to_sign_in"
-            android:text="@={viewmodel.nickname}"
-            android:textColor="@color/colorPrimary"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/user_portrait"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
@@ -40,14 +29,28 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/user_info_tips"
+            android:id="@+id/username_or_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="32dp"
+            tools:text="@string/click_to_sign_in"
+            android:text="@={viewmodel.nickname}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="@+id/user_portrait"
+            app:layout_constraintStart_toEndOf="@+id/user_portrait"
+            app:layout_constraintTop_toTopOf="@+id/user_portrait" />
+
+        <TextView
+            android:id="@+id/user_info_tips"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/view_or_edit_personal_information"
-            app:layout_constraintStart_toStartOf="@+id/username_or_signin"
-            app:layout_constraintTop_toBottomOf="@+id/username_or_signin" />
+            app:layout_constraintEnd_toEndOf="@+id/username_or_sign_in"
+            app:layout_constraintStart_toStartOf="@+id/username_or_sign_in"
+            app:layout_constraintTop_toBottomOf="@+id/username_or_sign_in" />
 
         <TextView
             android:id="@+id/following"
@@ -56,8 +59,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="@string/following_test"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/user_portrait"
+            app:layout_constraintTop_toBottomOf="@+id/user_portrait"
             tools:text="100\nfollowing" />
 
         <TextView
