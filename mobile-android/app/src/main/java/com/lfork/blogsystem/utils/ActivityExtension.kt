@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import java.util.*
 
 /**
@@ -20,6 +21,12 @@ fun AppCompatActivity.setupActionBar() {
     actionBar!!.setDisplayHomeAsUpEnabled(true)
     // 有小箭头，并且图标可以点击
     actionBar.setDisplayShowHomeEnabled(false)
+}
+
+fun AppCompatActivity.setupToolBar(toolbar:Toolbar) {
+    setSupportActionBar(toolbar)
+    val actionBar = supportActionBar
+    actionBar?.setDisplayHomeAsUpEnabled(true)  //设置返回按钮，需要在监听里面实现返回功能   onOptionsItemSelected(MenuItem item)
 }
 
 

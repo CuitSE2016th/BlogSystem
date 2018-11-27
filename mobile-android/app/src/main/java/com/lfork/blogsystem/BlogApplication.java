@@ -23,7 +23,7 @@ public class BlogApplication extends Application {
 
     public final static String APP_SHARED_PREF = "application_shared_pref";
 
-    public static String token = "null";
+    public static String token = null;
 
     private static ExecutorService executorService;
 
@@ -60,10 +60,6 @@ public class BlogApplication extends Application {
     }
 
     public static ExecutorService getAppFixedThreadPool() {
-        return executorService;
-    }
-
-    public static ExecutorService getDefaultThreadPool() {
         return executorService;
     }
 
