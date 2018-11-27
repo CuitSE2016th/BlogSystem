@@ -31,7 +31,7 @@ import com.lfork.blogsystem.data.common.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.utils.StringValidation.isPhoneValid
 import com.lfork.blogsystem.utils.ToastUtil
-import com.lfork.blogsystem.utils.setupActionBar
+import com.lfork.blogsystem.utils.setupToolBar
 
 import kotlinx.android.synthetic.main.register_act.*
 
@@ -51,7 +51,8 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.register_act)
-        setupActionBar()
+
+        setupToolBar(toolbar, resources.getString(R.string.title_activity_register))
         // Set up the login form.
         populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->

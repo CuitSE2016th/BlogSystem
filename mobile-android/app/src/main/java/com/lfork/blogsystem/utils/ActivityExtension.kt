@@ -23,10 +23,11 @@ fun AppCompatActivity.setupActionBar() {
     actionBar.setDisplayShowHomeEnabled(false)
 }
 
-fun AppCompatActivity.setupToolBar(toolbar:Toolbar) {
+fun AppCompatActivity.setupToolBar(toolbar:Toolbar, title:String) {
     setSupportActionBar(toolbar)
     val actionBar = supportActionBar
     actionBar?.setDisplayHomeAsUpEnabled(true)  //设置返回按钮，需要在监听里面实现返回功能   onOptionsItemSelected(MenuItem item)
+    actionBar?.title = title
 }
 
 
