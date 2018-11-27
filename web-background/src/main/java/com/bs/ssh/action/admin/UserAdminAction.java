@@ -1,9 +1,9 @@
 package com.bs.ssh.action.admin;
 
 import com.bs.ssh.action.BaseAction;
-import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
+import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Create By ZZY on 2018/11/21
  */
 @ParentPackage("json-default")
-@Namespace("/admin")
+@Namespace("/useradmin")
 @Results({
         @Result(name = "success", type = "json", params = {"root", "result"})
 })
@@ -103,7 +103,7 @@ public class UserAdminAction extends BaseAction {
         int flag = userAdminService.deleteUserByUserID(userID);
 
         if(flag == 0){
-            result =JsonBody.fail();
+            result = JsonBody.fail();
             result.setMessage("删除失败！");
 
             return SUCCESS;
@@ -123,7 +123,7 @@ public class UserAdminAction extends BaseAction {
             return SUCCESS;
         }
 
-        User user = userAdminService.getUserByUserID(identity);
+        String user = userAdminService.getUserByUserID(identity);
 
         if(user == null){
             result = JsonBody.fail();

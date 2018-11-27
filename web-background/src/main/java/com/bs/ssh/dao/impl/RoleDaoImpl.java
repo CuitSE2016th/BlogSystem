@@ -1,6 +1,6 @@
 package com.bs.ssh.dao.impl;
 
-import com.bs.ssh.beans.Role;
+import com.bs.ssh.entity.Role;
 import com.bs.ssh.dao.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;

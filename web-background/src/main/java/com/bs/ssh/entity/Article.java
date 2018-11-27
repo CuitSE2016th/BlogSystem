@@ -1,7 +1,8 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
+
+import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * 文章实体
@@ -15,20 +16,13 @@ public class Article {
 
     private Integer id;
     private String content;
-    private User author;
+    private String authorId;
     private Integer status;
     private Long createTime;
-    /**
-     * 为本文章点赞的用户
-     **/
-    private List<User> liker;
-    /**
-     * 收藏本文章的用户
-     **/
-    private List<User> collectors;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JSON(serialize = false)
     public Integer getId() {
         return id;
     }
@@ -46,14 +40,13 @@ public class Article {
         this.content = content;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id")
-    public User getAuthor() {
-        return author;
+    @Column(name = "author_id")
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public Integer getStatus() {
@@ -73,21 +66,4 @@ public class Article {
         this.createTime = createTime;
     }
 
-    @ManyToMany(mappedBy = "likeArticles")
-    public List<User> getLiker() {
-        return liker;
-    }
-
-    public void setLiker(List<User> likers) {
-        this.liker = likers;
-    }
-
-    @ManyToMany(mappedBy = "starArticles")
-    public List<User> getCollectors() {
-        return collectors;
-    }
-
-    public void setCollectors(List<User> collectors) {
-        this.collectors = collectors;
-    }
 }

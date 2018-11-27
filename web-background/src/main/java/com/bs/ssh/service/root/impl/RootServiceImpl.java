@@ -1,10 +1,9 @@
 package com.bs.ssh.service.root.impl;
 
-import com.bs.ssh.beans.PageBean;
-import com.bs.ssh.beans.User;
+import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.root.RootService;
-import com.bs.ssh.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,7 @@ import java.util.List;
  * Create By ZZY on 2018/11/22
  */
 @Service
-@Transactional
+//@Transactional
 public class RootServiceImpl implements RootService {
 
     @Autowired
@@ -50,7 +49,7 @@ public class RootServiceImpl implements RootService {
             return null;
         }
 
-        users.setResult(JsonUtil.toJsonExposed(userList));
+        users.setResult(userList);
 
         return users;
     }

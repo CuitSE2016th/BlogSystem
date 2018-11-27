@@ -1,4 +1,4 @@
-package com.bs.ssh.beans;
+package com.bs.ssh.entity;
 
 import javax.persistence.*;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "comment")
 public class Comment {
     private Integer id;
-    private User author;
+    private Integer author;
     private String content;
     private Long createTime;
 
@@ -26,13 +26,12 @@ public class Comment {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id")
-    public User getAuthor() {
+    @Column(name = "author_id")
+    public Integer getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(Integer author) {
         this.author = author;
     }
 

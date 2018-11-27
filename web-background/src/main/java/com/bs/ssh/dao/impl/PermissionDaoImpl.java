@@ -1,6 +1,6 @@
 package com.bs.ssh.dao.impl;
 
-import com.bs.ssh.beans.Permission;
+import com.bs.ssh.entity.Permission;
 import com.bs.ssh.dao.PermissionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;

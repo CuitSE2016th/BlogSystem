@@ -1,7 +1,6 @@
 package com.bs.ssh.action.user;
 
-import com.bs.ssh.beans.JsonBody;
-import com.bs.ssh.service.root.impl.RootServiceImpl;
+import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.service.user.impl.UserServiceImpl;
 import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
