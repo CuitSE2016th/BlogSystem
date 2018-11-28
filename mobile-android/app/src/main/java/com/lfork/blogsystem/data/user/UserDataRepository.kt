@@ -1,7 +1,7 @@
 package com.lfork.blogsystem.data.user
 
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.data.common.DataCallback
+import com.lfork.blogsystem.data.common.network.DataCallback
 import com.lfork.blogsystem.data.user.remote.UserRemoteDataSource
 import com.lfork.blogsystem.utils.StringValidation
 
@@ -10,9 +10,9 @@ import com.lfork.blogsystem.utils.StringValidation
  * Created by 98620 on 2018/11/15.
  */
 object UserDataRepository : UserDataSource {
+
     private val remoteDataSource = UserRemoteDataSource()
 
-//    var isSignIn = false
 
     var userCache: User = User()
 
@@ -22,19 +22,18 @@ object UserDataRepository : UserDataSource {
 
     private var userCacheIsDirty = true
 
+
     override fun login(account: String, password: String, callback: DataCallback<String>) {
         remoteDataSource.login(account, password, object : DataCallback<String> {
             override fun succeed(data: String) {
-                BlogApplication.token = data
 
-                if(StringValidation.isEmailValid(account)){
+                if (StringValidation.isEmailValid(account)) {
                     userCache.email = account
-                    BlogApplication.saveEmail(account)
                 } else {
                     userCache.phone = account
-                    BlogApplication.saveEmail(account)
                 }
-
+                BlogApplication.isSignIn = true
+                updateCoreUserInfo()
                 BlogApplication.saveToken(data)
                 callback.succeed(data)
             }
@@ -53,27 +52,53 @@ object UserDataRepository : UserDataSource {
         remoteDataSource.getVerificationCode(account, callback)
     }
 
-    fun getCurrentUserInfo(callback: DataCallback<User>) {
 
-        if (!userCacheIsDirty) {
-            callback.succeed(userCache)
-            return
-        }
-
-
-        if (true) {
-            callback.succeed(userCache)
-            userCacheIsDirty = false
-        } else {
-            callback.failed(-1, "用户未登录")
-        }
-
-
-//        remoteDataSource.getCurrentUserInfo(callback)
-    }
-
-    fun refreshUserInfor(){
+    fun refreshUserInfor() {
         userCacheIsDirty = true
     }
 
+    override fun getUserInfo(account: String, callback: DataCallback<User>) {
+        if (account == userCache.phone || account == userCache.email) {
+            if (!userCacheIsDirty) {
+                callback.succeed(userCache)
+                return
+            } else {
+                remoteDataSource.getUserInfo(account, object : DataCallback<User> {
+                    override fun succeed(data: User) {
+                        userCache = data
+                        updateCoreUserInfo()
+                        userCacheIsDirty = false
+                        callback.succeed(data)
+                    }
+
+                    override fun failed(code: Int, log: String) {
+                        callback.failed(code, log)
+                    }
+                })
+            }
+        } else {
+            remoteDataSource.getUserInfo(account, callback)
+        }
+    }
+
+    fun initBasicUserInfo(email: String?, phone: String?, nickname: String?) {
+        userCache.email = email
+        userCache.phone = phone
+        userCache.nickname = nickname
+    }
+
+    private fun updateCoreUserInfo() {
+        if (userCache.email != null) {
+            BlogApplication.saveEmail(userCache.email!!)
+        }
+
+        if (userCache.phone != null) {
+            BlogApplication.savePhone(userCache.phone!!)
+        }
+
+        if (userCache.nickname != null) {
+            BlogApplication.saveNickname(userCache.nickname!!)
+        }
+
+    }
 }
