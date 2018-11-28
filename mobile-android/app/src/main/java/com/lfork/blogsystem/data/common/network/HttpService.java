@@ -8,13 +8,14 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import com.lfork.blogsystem.data.common.DataCallback;
 import com.lfork.blogsystem.utils.Config;
 
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.lfork.blogsystem.data.common.network.ConstantsKt.RESPONSE_UNKNOWN_ERROR;
 
 /**
  * Created by 98620 on 2018/3/24.
@@ -159,7 +160,7 @@ public class HttpService {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                callback.failed(Result.RESPONSE_UNKNOWN_ERROR,e.getMessage());
+                callback.failed(RESPONSE_UNKNOWN_ERROR,e.getMessage());
 
             }
 

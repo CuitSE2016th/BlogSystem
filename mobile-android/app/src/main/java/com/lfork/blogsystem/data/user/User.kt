@@ -1,11 +1,9 @@
 package com.lfork.blogsystem.data.user
 
-class User {
+data class User(var nickname: String?, var headPortrait: String?, var sex: String? = null) {
+    constructor() : this(null, null, null)
     var id: String? = null
-    var nickname: String? = null
-    var headPortrait: String? = null
     var birthday: Long? = null
-    var sex: String? = null
     var email: String? = null
     var phone: String? = null
     var password: String? = null
@@ -14,5 +12,13 @@ class User {
     var lastLoginTime: Long? = null
     var createTime: Long? = null
 
+
+    fun getAccount():String{
+        if (email != null) {
+            return email!!
+        } else{
+            return phone!!
+        }
+    }
 
 }

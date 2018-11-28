@@ -1,6 +1,6 @@
 package com.lfork.blogsystem.data.user
 
-import com.lfork.blogsystem.data.common.DataCallback
+import com.lfork.blogsystem.data.common.network.DataCallback
 
 /**
  *
@@ -17,7 +17,7 @@ interface UserDataSource {
 
     fun register(account: String, password: String, verifyCode: String, callback: DataCallback<String>)
 
-//    fun getCurrentUserInfo()
+    fun getUserInfo(account: String, callback: DataCallback<User>)
 
 //    fun getFlowingListInfo()
 
