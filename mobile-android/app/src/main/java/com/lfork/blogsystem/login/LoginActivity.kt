@@ -21,14 +21,15 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.data.common.DataCallback
+import com.lfork.blogsystem.base.communication.LiveDataBus
+import com.lfork.blogsystem.data.common.network.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.main.MainActivity
 import com.lfork.blogsystem.register.RegisterActivity
 import com.lfork.blogsystem.utils.StringValidation.*
 import com.lfork.blogsystem.utils.ToastUtil
-import com.lfork.blogsystem.utils.setupActionBar
 import com.lfork.blogsystem.utils.setupToolBar
 import com.lfork.blogsystem.utils.startActivity
 import kotlinx.android.synthetic.main.login_act.*
@@ -162,10 +163,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             mAuthTask = UserDataRepository
             mAuthTask?.login(accountStr, passwordStr, object : DataCallback<String> {
                 override fun succeed(data: String) {
+
+                    LiveDataBus.get().with("login_succeed").value = "登录成功";
                     ToastUtil.showLong(applicationContext, "登录成功")
-                    finish()
+
                     startActivity<MainActivity>()
 
+                    finish()
                 }
 
                 override fun failed(code: Int, log: String) {

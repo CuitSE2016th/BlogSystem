@@ -12,7 +12,6 @@ import com.lfork.blogsystem.utils.Config
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.LinkedBlockingDeque
-import java.util.concurrent.ThreadFactory
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
@@ -28,7 +27,7 @@ class BlogApplication : Application() {
         context = applicationContext
         initDataBase()
         initThreadPool()
-        initBasicUserInfo();
+        initUserInfo();
     }
 
     private fun initDataBase() {}
@@ -36,23 +35,23 @@ class BlogApplication : Application() {
     private fun initThreadPool() {
         val namedThreadFactory = MyThreadFactory("UI辅助线程池")
         appFixedThreadPool = ThreadPoolExecutor(
-            Config.BASE_THREAD_POOL_SIZE,
-            Config.BASE_THREAD_POOL_SIZE * 2,
-            0L,
-            TimeUnit.MICROSECONDS,
-            LinkedBlockingDeque(),
-            namedThreadFactory
+                Config.BASE_THREAD_POOL_SIZE,
+                Config.BASE_THREAD_POOL_SIZE * 2,
+                0L,
+                TimeUnit.MICROSECONDS,
+                LinkedBlockingDeque(),
+                namedThreadFactory
         )
     }
 
-    private fun initBasicUserInfo() {
+    private fun initUserInfo() {
         sp = context!!.getSharedPreferences("user_info", Context.MODE_PRIVATE)
-        val user = UserDataRepository.userCache
-        user.email = sp.getString("email", null)
-        user.phone = sp.getString("phone", null)
+        UserDataRepository.initBasicUserInfo(
+                sp.getString("email", null),
+                sp.getString("phone", null),
+                sp.getString("username", null))
         token = sp.getString("token", null)
-
-        if (token!= null){
+        if (token != null) {
             isSignIn = true
         }
     }
@@ -82,6 +81,12 @@ class BlogApplication : Application() {
 
         lateinit var sp: SharedPreferences
 
+        fun saveNickname(nickname: String) {
+            val editor = sp.edit()
+            editor.putString("username", nickname)
+            editor.apply()
+        }
+
 
         fun saveEmail(email: String) {
             val editor = sp.edit()
@@ -98,6 +103,7 @@ class BlogApplication : Application() {
 
 
         fun saveToken(token: String) {
+            this.token = token
             val sp = context!!.getSharedPreferences("user_info", Context.MODE_PRIVATE)
             val editor = sp.edit()
             editor.putString("token", token)

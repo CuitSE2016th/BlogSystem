@@ -1,10 +1,6 @@
 package com.lfork.blogsystem
 
 import android.support.test.runner.AndroidJUnit4
-import android.util.Log
-import com.lfork.blogsystem.data.common.DataCallback
-import com.lfork.blogsystem.data.user.User
-import com.lfork.blogsystem.data.user.UserDataRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 

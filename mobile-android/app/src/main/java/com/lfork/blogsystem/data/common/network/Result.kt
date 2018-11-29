@@ -1,6 +1,6 @@
 package com.lfork.blogsystem.data.common.network
 
-import com.lfork.blogsystem.data.common.DataCallback
+import com.google.gson.annotations.SerializedName
 
 
 /**
@@ -14,14 +14,10 @@ class Result<T> {
 
     var message: String? = null
 
+    @SerializedName("Data", alternate = ["data"])
     var data: T? = null
 
     companion object {
-        private const val RESPONSE_SUCCEED = 200
-
-        private const val RESPONSE_FAILED = 100
-
-        const val RESPONSE_UNKNOWN_ERROR = -1
 
         /**
          * 操作成功 就一个code 比如就是100， 操作失败的话就返回各种code
@@ -36,7 +32,7 @@ class Result<T> {
                     callback.failed(result.code, result.message?:"unknown error")
                 }
             } else {
-                callback.failed(-1, "unknown error")
+                callback.failed(RESPONSE_UNKNOWN_ERROR, "unknown error")
             }
         }
     }

@@ -21,10 +21,10 @@ interface UserApi {
      * @return 指定请求数据的Call对象
      */
     @FormUrlEncoded
-    @POST("blog/login")
+    @POST("user/login")
     fun login(
-        @Field("identity") account: String,
-        @Field("password") password: String
+            @Field("identity") account: String,
+            @Field("password") password: String
     ): Call<Result<String>>
 
 
@@ -34,11 +34,11 @@ interface UserApi {
      * @return 指定请求数据的Call对象
      */
     @FormUrlEncoded
-    @POST("blog/userRegist")
+    @POST("userRegist")
     fun register(
-        @Field("emailOrPhone") account: String,
-        @Field("emailOrPhoneCode") verifyCode: String,
-        @Field("password") password: String
+            @Field("emailOrPhone") account: String,
+            @Field("emailOrPhoneCode") verifyCode: String,
+            @Field("password") password: String
     ): Call<Result<String>>
 
     /**
@@ -47,9 +47,9 @@ interface UserApi {
      * @return 指定请求数据的Call对象
      */
     @FormUrlEncoded
-    @POST("blog/code")
+    @POST("code")
     fun getVerificationCode(
-        @Field("emailOrPhone") account: String
+            @Field("emailOrPhone") account: String
     ): Call<Result<String>>
 
 //    /**
@@ -79,7 +79,7 @@ interface UserApi {
 //
 //    /**
 //     * @param studentId .
-//     * @param nickname .
+//     * @param username .
 //     * @param schoolId .
 //     * @param dec .
 //     * @param email .
@@ -90,7 +90,7 @@ interface UserApi {
 //    @POST("blog/user_save")
 //    fun updateUserInfo(
 //        @Field("studentId") studentId: Int,
-//        @Field("userName") nickname: String,
+//        @Field("userName") username: String,
 //        @Field("userSchool.id") schoolId: String,
 //        @Field("userDesc") dec: String,
 //        @Field("userEmail") email: String,
@@ -104,8 +104,11 @@ interface UserApi {
      * @param userId .
      * @return .
      */
-    @GET("getCurrentUserInfo")
-    fun getUserInfo(): Call<Result<User>>
+    @GET("getUserInfo")
+    fun getUserInfo(
+            @Query("identity") account: String,
+            @Query("token") token: String
+    ): Call<Result<User>>
 
     companion object {
         fun create(): UserApi {
