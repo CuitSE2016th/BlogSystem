@@ -27,7 +27,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.data.common.DataCallback
+import com.lfork.blogsystem.data.common.network.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.utils.StringValidation.isPhoneValid
 import com.lfork.blogsystem.utils.ToastUtil

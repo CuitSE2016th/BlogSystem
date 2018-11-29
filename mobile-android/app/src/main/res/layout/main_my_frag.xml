@@ -28,27 +28,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.lfork.blogsystem.base.widget.MarqueeTextView
             android:id="@+id/username_or_sign_in"
-            android:layout_width="wrap_content"
+            style="@style/text_marquee"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            tools:text="@string/click_to_sign_in"
-            android:text="@={viewmodel.nickname}"
+            android:text="@={viewmodel.username}"
             android:textColor="@color/colorPrimary"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="@+id/user_portrait"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/user_portrait"
-            app:layout_constraintTop_toTopOf="@+id/user_portrait" />
+            app:layout_constraintTop_toTopOf="@+id/user_portrait"
+            tools:text="asd" />
 
         <TextView
             android:id="@+id/user_info_tips"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:singleLine="true"
             android:text="@string/view_or_edit_personal_information"
-            app:layout_constraintEnd_toEndOf="@+id/username_or_sign_in"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/username_or_sign_in"
             app:layout_constraintTop_toBottomOf="@+id/username_or_sign_in" />
 

@@ -1,16 +1,15 @@
 package com.lfork.blogsystem.main.my
 
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableField
-import android.provider.ContactsContract
-import com.lfork.blogsystem.data.common.DataCallback
+import android.util.Log
+import com.lfork.blogsystem.BlogApplication
+import com.lfork.blogsystem.data.common.network.DataCallback
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
-import com.lfork.blogsystem.utils.ToastUtil
 
 class MyViewModel : ViewModel() {
-    val nickname = ObservableField<String>("aaaaa")
+    val username = ObservableField<String>("")
 
     val followingCount = ObservableField<String>("")
 
@@ -21,8 +20,20 @@ class MyViewModel : ViewModel() {
 
     var navigator: MyNavigator? = null
 
-    fun init(nickname: String) {
-        this.nickname.set(nickname)
+    fun start(nickname: String) {
+        this.username.set(nickname)
+        initBasicInfo()
+    }
+
+    fun initBasicInfo() {
+        if (BlogApplication.isSignIn) {
+            val data = UserDataRepository.userCache
+            when {
+                data.nickname != null -> username.set(data.nickname)
+                data.email != null -> username.set(data.email)
+                data.phone != null -> username.set(data.phone)
+            }
+        }
     }
 
     fun registerNavigator(navigator: MyNavigator) {
@@ -34,23 +45,18 @@ class MyViewModel : ViewModel() {
     }
 
     fun refreshData() {
-        Thread {
-            UserDataRepository.getCurrentUserInfo(object : DataCallback<User> {
-                override fun succeed(data: User) {
-                    if (data.nickname != null) {
-                        nickname.set(data.nickname)
-                    } else if (data.email != null) {
-                        nickname.set(data.email)
-                    } else if (data.phone != null) {
-                        nickname.set(data.phone)
+        if (BlogApplication.isSignIn) {
+            Thread {
+                UserDataRepository.getUserInfo(UserDataRepository.userCache.getAccount(), object : DataCallback<User> {
+                    override fun succeed(data: User) {
+                        initBasicInfo()
                     }
-                }
 
-                override fun failed(code: Int, log: String) {
-                    navigator?.showTips(log)
-                }
-            })
-        }.start()
-
+                    override fun failed(code: Int, log: String) {
+                        navigator?.showTips(log)
+                    }
+                })
+            }.start()
+        }
     }
 }
