@@ -1,6 +1,7 @@
 package com.bs.ssh.action.user;
 
 import com.bs.ssh.action.BaseAction;
+import com.bs.ssh.action.BasePageAction;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.service.user.UserArticleService;
@@ -15,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Results({
         @Result(name = "json", type = "json", params = {"root", "result"})
 })
-public class ArticleAction extends BaseAction {
+public class ArticleAction extends BasePageAction {
 
     @Autowired
     UserArticleService articleService;
@@ -34,29 +35,6 @@ public class ArticleAction extends BaseAction {
         return JSON;
     }
 
-    private PageRequest pageRequest = new PageRequest();
 
-    private int pn;
-    private int ps;
-
-    @IntRangeFieldValidator(message = "页号不合法", min = "1")
-    public int getPn() {
-        return pn;
-    }
-
-    public void setPn(int pn) {
-        pageRequest.setPageNumber(pn);
-        this.pn = pn;
-    }
-
-    @IntRangeFieldValidator(message = "单页记录数不合法", min = "1", max = "50")
-    public int getPs() {
-        return ps;
-    }
-
-    public void setPs(int ps) {
-        pageRequest.setPageSize(ps);
-        this.ps = ps;
-    }
 
 }
