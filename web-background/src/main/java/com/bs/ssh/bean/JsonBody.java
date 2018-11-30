@@ -12,7 +12,7 @@ public class JsonBody<T> {
 
     private int code;
     private String message;
-    private T Data;
+    private T data;
 
     public int getCode() {
         return code;
@@ -31,11 +31,11 @@ public class JsonBody<T> {
     }
 
     public T getData() {
-        return Data;
+        return data;
     }
 
     public void setData(T data) {
-        Data = data;
+        this.data = data;
     }
 
 

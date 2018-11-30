@@ -19,7 +19,6 @@ import java.io.FileOutputStream
 @ParentPackage("default")
 class ImageUploadAction :BaseAction(){
 
-
     //封装文件标题请求参数的属性
     var title: String? = null
     //封装上传文件域的属性
