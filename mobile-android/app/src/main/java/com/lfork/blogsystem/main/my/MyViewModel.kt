@@ -1,24 +1,13 @@
 package com.lfork.blogsystem.main.my
 
-import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableField
-import android.util.Log
 import com.lfork.blogsystem.BlogApplication
+import com.lfork.blogsystem.base.viewmodel.UserViewModel
 import com.lfork.blogsystem.data.common.network.DataCallback
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
 
-class MyViewModel : ViewModel() {
-    val username = ObservableField<String>("")
+class MyViewModel : UserViewModel() {
 
-    val followingCount = ObservableField<String>("")
-
-    val followersCount = ObservableField<String>("")
-
-    val wordCount = ObservableField<String>("")
-
-
-    var navigator: MyNavigator? = null
 
     fun start(nickname: String) {
         this.username.set(nickname)
@@ -33,21 +22,16 @@ class MyViewModel : ViewModel() {
                 data.email != null -> username.set(data.email)
                 data.phone != null -> username.set(data.phone)
             }
+            portraitUrl.set(data.headPortrait)
         }
     }
 
-    fun registerNavigator(navigator: MyNavigator) {
-        this.navigator = navigator
-    }
-
-    fun unregisterNavigator() {
-        this.navigator = null
-    }
 
     fun refreshData() {
         if (BlogApplication.isSignIn) {
-            Thread {
-                UserDataRepository.getUserInfo(UserDataRepository.userCache.getAccount(), object : DataCallback<User> {
+            UserDataRepository.getUserInfo(
+                UserDataRepository.userCache.getAccount(),
+                object : DataCallback<User> {
                     override fun succeed(data: User) {
                         initBasicInfo()
                     }
@@ -56,7 +40,6 @@ class MyViewModel : ViewModel() {
                         navigator?.showTips(log)
                     }
                 })
-            }.start()
         }
     }
 }

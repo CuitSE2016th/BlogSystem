@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.base;
+package com.lfork.blogsystem.base.viewmodel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;

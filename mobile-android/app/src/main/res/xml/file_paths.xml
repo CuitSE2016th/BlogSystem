@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!--这个路径只能写Pictures 主要给Matisse选择图片用-->
+    <external-path
+        path="Pictures"
+        name="files_root" />
+</paths>
