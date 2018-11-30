@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.base.bindingadapter;
+package com.lfork.blogsystem.base.databinding;
 
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
@@ -12,23 +12,27 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.lfork.blogsystem.R;
 
 /**
  * Created by 98620 on 2018/4/7.
- *
+ * <p>
  * 对不同的图片加载方式的封装
  */
 
 public class ImageBinding {
-    @BindingAdapter({"setImageNoCache"})
-    public static void setImageNoCache(ImageView view, String imageUrl) {
-        RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
+
+
+    @BindingAdapter(value = {"imageUrlNoCache", "placeDrawableId"}, requireAll = true)
+//{"setImageNoCache"}
+    public static void setImageNoCache(ImageView view, String imageUrl, int placeDrawableId) {
+        RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true).placeholder(placeDrawableId);
         Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
     }
 
-    public static void setImageNoCache(ImageView view,Object path) {
+    public static void setImageNoCache(ImageView view, Object path) {
         RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
-        Glide.with(view.getContext()).load( path).apply(options).into(view);
+        Glide.with(view.getContext()).load(path).apply(options).into(view);
     }
 
     @BindingAdapter({"setImageWithDiskCache"})
@@ -67,8 +71,6 @@ public class ImageBinding {
             }
         });
     }
-
-
 
 
 }

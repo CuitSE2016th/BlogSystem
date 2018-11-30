@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.lfork.blogsystem.main.my.MyViewModel" />
     </data>
 
@@ -17,28 +17,28 @@
         tools:context=".main.my.MyFragment">
 
 
-
         <ImageView
             android:id="@+id/user_portrait"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:src="@drawable/ic_person_black_24dp"
+            tools:src="@drawable/ic_person_black_24dp"
+            app:imageUrlNoCache="@{viewModel.portraitUrl}"
+            app:placeDrawableId="@{viewModel.placeDrawableId}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.lfork.blogsystem.base.widget.MarqueeTextView
             android:id="@+id/username_or_sign_in"
-            style="@style/text_marquee"
+            style="@style/username_marquee_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:text="@={viewmodel.username}"
-            android:textColor="@color/colorPrimary"
-            android:textSize="36sp"
+            android:text="@={viewModel.username}"
+
             app:layout_constraintBottom_toBottomOf="@+id/user_portrait"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

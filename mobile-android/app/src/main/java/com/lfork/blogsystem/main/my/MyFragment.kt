@@ -2,18 +2,16 @@ package com.lfork.blogsystem.main.my
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
 
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.base.communication.LiveDataBus
+import com.lfork.blogsystem.base.viewmodel.Navigator
 import com.lfork.blogsystem.databinding.MainMyFragBinding
 import com.lfork.blogsystem.follow.FollowActivity
 import com.lfork.blogsystem.follow.FollowActivity.Companion.startFollowActivity
@@ -28,12 +26,12 @@ import com.lfork.blogsystem.utils.ToastUtil
 import com.lfork.blogsystem.utils.startActivity
 import kotlinx.android.synthetic.main.main_my_frag.view.*
 
-class MyFragment : Fragment(), MyNavigator, View.OnClickListener {
+class MyFragment : Fragment(), Navigator, View.OnClickListener {
 
 
     private lateinit var mainActivity: MainActivity
 
-    private lateinit var viewDataBinding: MainMyFragBinding
+    private lateinit var binding: MainMyFragBinding
 
     private lateinit var viewModel: MyViewModel
 
@@ -52,13 +50,13 @@ class MyFragment : Fragment(), MyNavigator, View.OnClickListener {
             viewModel.registerNavigator(this)
             viewModel.start(resources.getString(R.string.click_to_sign_in))
 
-            viewDataBinding = MainMyFragBinding.bind(root!!)
-            viewDataBinding.viewmodel = viewModel
+            binding = MainMyFragBinding.bind(root!!)
+            binding.viewModel = viewModel
 
             registerBtnListener(root!!)
             registerLoginSucceedListener()
         }
-        return viewDataBinding.root
+        return root
     }
 
     private fun registerBtnListener(view: View) {
@@ -128,7 +126,7 @@ class MyFragment : Fragment(), MyNavigator, View.OnClickListener {
     }
 
     override fun showTips(msg: String?) {
-        activity?.runOnUiThread { ToastUtil.showShort(context, msg) }
+        ToastUtil.showShort(context, msg)
     }
 
 
