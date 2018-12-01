@@ -2,11 +2,13 @@ package com.bs.ssh.action.user
 
 import com.bs.ssh.action.BaseAction
 import com.bs.ssh.bean.JsonBody
+import com.bs.ssh.service.user.UserService
 import com.bs.ssh.utils.Constants
 import org.apache.struts2.convention.annotation.ParentPackage
 import org.apache.struts2.ServletActionContext
 import org.apache.struts2.convention.annotation.Action
 import org.apache.struts2.convention.annotation.Namespace
+import org.springframework.beans.factory.annotation.Autowired
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -38,32 +40,15 @@ class UserPortraitUploadAction : BaseAction() {
         get() = ServletActionContext.getServletContext()
                 .getRealPath(Constants.FILE_IMAGE_RELATIVE_PATH)
 
+    @Autowired
+    private val userService: UserService? = null
 
     @Action(value = "uploadPortrait",
             results = [org.apache.struts2.convention.annotation.Result(name = "success", location = "updateUserInfo", type = "chain")]
     )
     override fun execute(): String {
         println("打印测试 , $picContentType , $picFileName , $savePath")
-
-        //以服务器的文件保存地址和原文件名建立上传文件输出流
-        val path = File(savePath)
-
-        if (!path.exists()) {
-            path.mkdir()
-        }
-
-        val fos = FileOutputStream(savePath
-                + File.separator + picFileName)
-        val fis = FileInputStream(pic)
-        val buffer = ByteArray(1024)
-        var len = fis.read(buffer)
-        while ((len) > 0) {
-            fos.write(buffer, 0, len)
-            len = fis.read(buffer)
-        }
-        fos.close()
-
-        headPortrait = Constants.FILE_IMAGE_RELATIVE_PATH + "/" + picFileName
+        headPortrait =  userService?.updateUserPortrait(pic, savePath, picFileName, identity)
         return super.execute()
     }
 
