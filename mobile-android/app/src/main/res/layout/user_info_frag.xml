@@ -18,15 +18,16 @@
             tools:context=".userinfo.UserInfoFragment">
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_portrait"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                app:imageUrl="@{viewModel.portraitUrl}"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:imageUrl="@{viewModel.portraitUrl}"
                 app:placeDrawableId="@{viewModel.placeDrawableId}"
                 tools:src="@drawable/ic_person_black_24dp" />
 

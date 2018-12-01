@@ -38,7 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Change Portrait" />
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_portrait"
                     android:layout_width="63dp"
                     android:layout_height="55dp"
