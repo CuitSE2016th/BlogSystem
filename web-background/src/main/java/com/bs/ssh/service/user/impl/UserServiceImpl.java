@@ -10,9 +10,15 @@ import com.bs.ssh.utils.IDUtils;
 import com.bs.ssh.utils.RegexString;
 import com.bs.ssh.utils.StringUtils;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 @Transactional
@@ -86,13 +92,63 @@ public class UserServiceImpl implements UserService {
             }
 
             if (StringUtils.isNotBlank(tempUser.getHeadPortrait())) {
+
+                //删掉旧头像
+
                 user.setHeadPortrait(tempUser.getHeadPortrait());
             }
+
+
             userDao.insert(user);
             body.setCode(Constants.RESPONSE_SUCCEED);
             body.setData(user);
         }
         return body;
+    }
+
+    @Override
+    public String updateUserPortrait(File pic, String savePath, String picFileName, String identity) throws IOException {
+
+
+        //如果原来有图片的话需要删掉
+        User user = userDao.findByIdentity(identity);
+        if (user == null){
+            return null;
+        }
+
+        System.out.println("文件删除测试1" + user.getHeadPortrait());
+        if(user.getHeadPortrait() != null) {
+            File oldAvatarFile = new File( ServletActionContext.getServletContext()
+                    .getRealPath(user.getHeadPortrait()));
+
+            System.out.println("文件删除测试2" +  oldAvatarFile.getPath());
+
+            System.out.println("文件删除测试3" +   oldAvatarFile.delete());
+
+        }
+
+        //以服务器的文件保存地址和原文件名建立上传文件输出流
+        File path = new File(savePath);
+
+        if (!path.exists()) {
+            path.mkdir();
+        }
+
+        picFileName = user.getId() + System.currentTimeMillis() + picFileName.substring(picFileName.indexOf('.'));
+
+        FileOutputStream fos =new  FileOutputStream(savePath
+                + File.separator + picFileName);
+        FileInputStream fis = new  FileInputStream(pic);
+        byte[] buffer = new byte[1024];
+
+        int len = fis.read(buffer);
+        while ((len) > 0) {
+            fos.write(buffer, 0, len);
+            len = fis.read(buffer);
+        }
+        fos.close();
+
+        return Constants.FILE_IMAGE_RELATIVE_PATH + "/" + picFileName;
     }
 
     @Override

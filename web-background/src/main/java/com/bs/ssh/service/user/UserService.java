@@ -3,6 +3,9 @@ package com.bs.ssh.service.user;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.entity.User;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * 用户服务
  *
@@ -35,6 +38,8 @@ public interface UserService {
      * @return 操作结果
      */
     JsonBody<User> updateUserInfo(User user, String identity, String token);
+
+    String updateUserPortrait(File pic, String savePath, String picFileName, String identity) throws IOException;
 
     int registUser(String email, String password);
 
