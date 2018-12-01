@@ -1,9 +1,10 @@
 package com.lfork.blogsystem.data.user
 
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.data.common.network.DataCallback
+import com.lfork.blogsystem.base.network.DataCallback
 import com.lfork.blogsystem.data.user.remote.UserRemoteDataSource
 import com.lfork.blogsystem.utils.StringValidation
+import java.io.File
 
 /**
  *
@@ -33,7 +34,7 @@ object UserDataRepository : UserDataSource {
                     userCache.phone = account
                 }
                 BlogApplication.isSignIn = true
-                updateCoreUserInfo()
+                updateCoreUserInfo(null)
                 BlogApplication.saveToken(data)
                 callback.succeed(data)
             }
@@ -44,7 +45,12 @@ object UserDataRepository : UserDataSource {
         })
     }
 
-    override fun register(account: String, password: String, verifyCode: String, callback: DataCallback<String>) {
+    override fun register(
+        account: String,
+        password: String,
+        verifyCode: String,
+        callback: DataCallback<String>
+    ) {
         remoteDataSource.register(account, password, verifyCode, callback)
     }
 
@@ -53,21 +59,17 @@ object UserDataRepository : UserDataSource {
     }
 
 
-    fun refreshUserInfor() {
-        userCacheIsDirty = true
-    }
-
-    override fun getUserInfo(account: String, callback: DataCallback<User>) {
+    override fun getUserInfo(account: String, token: String, callback: DataCallback<User>) {
         if (account == userCache.phone || account == userCache.email) {
             if (!userCacheIsDirty) {
                 callback.succeed(userCache)
                 return
             } else {
-                remoteDataSource.getUserInfo(account, object : DataCallback<User> {
+                remoteDataSource.getUserInfo(account, token, object : DataCallback<User> {
                     override fun succeed(data: User) {
-                        userCache = data
-                        updateCoreUserInfo()
-                        userCacheIsDirty = false
+
+                        updateCoreUserInfo(data)
+
                         callback.succeed(data)
                     }
 
@@ -77,9 +79,49 @@ object UserDataRepository : UserDataSource {
                 })
             }
         } else {
-            remoteDataSource.getUserInfo(account, callback)
+            remoteDataSource.getUserInfo(account, token, callback)
         }
     }
+
+    override fun updateUserInfo(
+        newUser: User,
+        account: String,
+        token: String,
+        callback: DataCallback<User>
+    ) {
+       remoteDataSource.updateUserInfo(newUser, account, token, object :DataCallback<User>{
+           override fun succeed(data: User) {
+               updateCoreUserInfo(data)
+           }
+
+           override fun failed(code: Int, log: String) {
+               callback.failed(code, log)
+           }
+       })
+    }
+
+    override fun updateUserPortrait(
+        pic: File,
+        account: String,
+        token: String,
+        callback: DataCallback<User>
+    ) {
+       remoteDataSource.updateUserPortrait(pic, account, token,object :DataCallback<User>{
+           override fun succeed(data: User) {
+               updateCoreUserInfo(data)
+           }
+
+           override fun failed(code: Int, log: String) {
+               callback.failed(code, log)
+           }
+       })
+    }
+
+
+    fun refreshUserInfor() {
+        userCacheIsDirty = true
+    }
+
 
     fun initBasicUserInfo(email: String?, phone: String?, nickname: String?) {
         userCache.email = email
@@ -87,7 +129,13 @@ object UserDataRepository : UserDataSource {
         userCache.nickname = nickname
     }
 
-    private fun updateCoreUserInfo() {
+    private fun updateCoreUserInfo(data:User?) {
+
+        if(data != null) {
+            userCache = data
+            userCacheIsDirty = false
+        }
+
         if (userCache.email != null) {
             BlogApplication.saveEmail(userCache.email!!)
         }
@@ -101,4 +149,6 @@ object UserDataRepository : UserDataSource {
         }
 
     }
+
+
 }

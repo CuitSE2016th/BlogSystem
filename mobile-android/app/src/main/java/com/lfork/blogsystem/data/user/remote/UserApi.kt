@@ -1,7 +1,7 @@
 package com.lfork.blogsystem.data.user.remote
 
-import com.lfork.blogsystem.data.common.network.HttpService
-import com.lfork.blogsystem.data.common.network.Result
+import com.lfork.blogsystem.base.network.HttpService
+import com.lfork.blogsystem.base.network.Result
 import com.lfork.blogsystem.data.user.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -23,8 +23,8 @@ interface UserApi {
     @FormUrlEncoded
     @POST("user/login")
     fun login(
-            @Field("identity") account: String,
-            @Field("password") password: String
+        @Field("identity") account: String,
+        @Field("password") password: String
     ): Call<Result<String>>
 
 
@@ -34,11 +34,11 @@ interface UserApi {
      * @return 指定请求数据的Call对象
      */
     @FormUrlEncoded
-    @POST("userRegist")
+    @POST("/user/register")
     fun register(
-            @Field("emailOrPhone") account: String,
-            @Field("emailOrPhoneCode") verifyCode: String,
-            @Field("password") password: String
+        @Field("emailOrPhone") account: String,
+        @Field("emailOrPhoneCode") verifyCode: String,
+        @Field("password") password: String
     ): Call<Result<String>>
 
     /**
@@ -49,53 +49,35 @@ interface UserApi {
     @FormUrlEncoded
     @POST("code")
     fun getVerificationCode(
-            @Field("emailOrPhone") account: String
+        @Field("emailOrPhone") account: String
     ): Call<Result<String>>
 
-//    /**
-//     * 根据Id获取用户的完整信息
-//     *
-//     * @param userId .
-//     * @return .
-//     */
-//    @GET("blog/user_info")
-//    fun getCurrentUserInfo(@Query("studentId") userId: String): Call<Result<User>>
+
 //
-//
-//    /**
-//     * 更新用户头像 单文件上传实例
-//     * Part的普通键值对需要用RequestBody来写
-//     * RequestBody.create(null, studentId)
-//     * @param fileBody  .
-//     * @param studentId .
-//     * @return .
-//     */
-//    @Multipart
-//    @POST("blog/user_imageUpload")
-//    fun updatePortrait(
-//        @Part fileBody: MultipartBody.Part,
-//        @Part("studentId") studentId: RequestBody
-//    ): Call<Result<String>>
-//
-//    /**
-//     * @param studentId .
-//     * @param username .
-//     * @param schoolId .
-//     * @param dec .
-//     * @param email .
-//     * @param phone .
-//     * @return .
-//     */
-//    @FormUrlEncoded
-//    @POST("blog/user_save")
-//    fun updateUserInfo(
-//        @Field("studentId") studentId: Int,
-//        @Field("userName") username: String,
-//        @Field("userSchool.id") schoolId: String,
-//        @Field("userDesc") dec: String,
-//        @Field("userEmail") email: String,
-//        @Field("userPhone") phone: String
-//    ): Call<Result<User>>
+    /**
+     * 更新用户头像 单文件上传实例
+     * Part的普通键值对需要用RequestBody来写
+     * RequestBody.create(null, studentId)
+     * @param fileBody  .
+     * @param studentId .
+     * @return .
+     */
+    @Multipart
+    @POST("user/uploadPortrait")
+    fun uploadPortrait(
+        @Part("identity") identity: RequestBody,
+        @Part("token") token: RequestBody,
+        @Part fileBody: MultipartBody.Part
+    ): Call<Result<User>>
+
+    @FormUrlEncoded
+    @POST("user/updateUserInfo")
+    fun updateUserInfo(
+        @Field("identity") identity: String,
+        @Field("token") token: String,
+        @Field("nickname") nickname: String,
+        @Field("sex") sex: String?
+    ): Call<Result<User>>
 
 
     /**
@@ -104,10 +86,10 @@ interface UserApi {
      * @param userId .
      * @return .
      */
-    @GET("getUserInfo")
+    @GET("user/getUserInfo")
     fun getUserInfo(
-            @Query("identity") account: String,
-            @Query("token") token: String
+        @Query("identity") account: String,
+        @Query("token") token: String
     ): Call<Result<User>>
 
     companion object {

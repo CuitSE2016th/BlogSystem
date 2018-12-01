@@ -21,10 +21,9 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.base.communication.LiveDataBus
-import com.lfork.blogsystem.data.common.network.DataCallback
+import com.lfork.blogsystem.base.network.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.main.MainActivity
 import com.lfork.blogsystem.register.RegisterActivity

@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.data.common.network;
+package com.lfork.blogsystem.base.network;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import com.lfork.blogsystem.utils.Config;
+import com.lfork.blogsystem.base.Config;
 
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.lfork.blogsystem.data.common.network.ConstantsKt.RESPONSE_UNKNOWN_ERROR;
+import static com.lfork.blogsystem.base.network.ConstantsKt.RESPONSE_UNKNOWN_ERROR;
 
 /**
  * Created by 98620 on 2018/3/24.
@@ -103,7 +103,7 @@ public class HttpService {
                     retrofitInstance = new Retrofit.Builder()
                             //配置OkHttp客户端 主要是设置日志
                             .callFactory(client2)
-                            .baseUrl(Config.Local)
+                            .baseUrl(Config.ServerPath)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                 }
@@ -198,7 +198,7 @@ public class HttpService {
                     retrofitInstance = new Retrofit.Builder()
                             //配置OkHttp客户端 主要是设置日志
                             .callFactory(client2)
-                            .baseUrl(Config.Local)
+                            .baseUrl(Config.ServerPath)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                 }

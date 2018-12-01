@@ -23,10 +23,21 @@ import com.lfork.blogsystem.R;
 public class ImageBinding {
 
 
-    @BindingAdapter(value = {"imageUrlNoCache", "placeDrawableId"}, requireAll = true)
-//{"setImageNoCache"}
+    @BindingAdapter(value = {"imageUrl", "placeDrawableId"})
+    public static void setImage(ImageView view, String imageUrl, int placeDrawableId) {
+        RequestOptions options = RequestOptions.placeholderOf(placeDrawableId);
+        Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
+    }
+
+    @BindingAdapter(value = {"imageUrlNoCache", "placeDrawableId"})
     public static void setImageNoCache(ImageView view, String imageUrl, int placeDrawableId) {
         RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true).placeholder(placeDrawableId);
+        Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
+    }
+
+    @BindingAdapter({"setImageNoCache"})
+    public static void setImageNoCache(ImageView view, String imageUrl) {
+        RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
         Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
     }
 

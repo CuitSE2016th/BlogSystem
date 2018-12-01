@@ -3,15 +3,15 @@ package com.lfork.blogsystem.base.viewmodel
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.util.Log
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.base.viewmodel.Navigator
-import com.lfork.blogsystem.data.common.network.DataCallback
+import com.lfork.blogsystem.base.network.DataCallback
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
 
-abstract class UserViewModel : ViewModel() {
+abstract class UserViewModel(var account: String?) : ViewModel() {
+
+    constructor() : this(null)
 
     val portraitUrl = ObservableField<String>("")
 
@@ -25,20 +25,22 @@ abstract class UserViewModel : ViewModel() {
 
     val placeDrawableId = ObservableInt(R.drawable.ic_person_black_24dp)
 
+    var navigator: Navigator? = null
 
-    var navigator:Navigator?=null
-
-    fun registerNavigator(navigator:Navigator){
+    fun registerNavigator(navigator: Navigator) {
         this.navigator = navigator
     }
 
-    fun unregisterNavigator(){
+    fun unregisterNavigator() {
         navigator = null
     }
 
     fun refreshUserInfo() {
+        if (account == null)
+            account = UserDataRepository.userCache.getAccount()
+
         UserDataRepository.getUserInfo(
-            UserDataRepository.userCache.getAccount(),
+            account!!, BlogApplication.token!!,
             object : DataCallback<User> {
                 override fun succeed(data: User) {
                     when {
@@ -46,7 +48,7 @@ abstract class UserViewModel : ViewModel() {
                         data.email != null -> username.set(data.email)
                         data.phone != null -> username.set(data.phone)
                     }
-                    portraitUrl.set(data.headPortrait)
+                    portraitUrl.set(data.getRealPortraitUrl())
                 }
 
                 override fun failed(code: Int, log: String) {
