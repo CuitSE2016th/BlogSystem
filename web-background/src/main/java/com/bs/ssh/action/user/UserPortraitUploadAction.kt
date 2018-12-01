@@ -1,26 +1,32 @@
-package com.bs.ssh.action
+package com.bs.ssh.action.user
 
+import com.bs.ssh.action.BaseAction
 import com.bs.ssh.bean.JsonBody
 import com.bs.ssh.utils.Constants
-import com.bs.ssh.utils.JsonUtil
 import org.apache.struts2.convention.annotation.ParentPackage
 import org.apache.struts2.ServletActionContext
+import org.apache.struts2.convention.annotation.Action
+import org.apache.struts2.convention.annotation.Namespace
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-
-
 
 
 /**
  *
  * Created by 98620 on 2018/11/27.
  */
+@Namespace("/user")
 @ParentPackage("default")
-class ImageUploadAction :BaseAction(){
+//@Results(org.apache.struts2.convention.annotation.Result(name = "json", type = "json", params = arrayOf("root", "result")))
+class UserPortraitUploadAction : BaseAction() {
 
-    //封装文件标题请求参数的属性
-    var title: String? = null
+    var identity: String? = null
+
+    var token: String? = null
+
+    var headPortrait: String? = null
+
     //封装上传文件域的属性
     var pic: File? = null
     //封装上传文件类型的属性
@@ -28,20 +34,22 @@ class ImageUploadAction :BaseAction(){
     //封装上传文件名的属性
     var picFileName: String? = null
     //直接在struts.xml文件中配置的属性
-    var savePath: String? = null
+    private var savePath: String? = null
         //返回上传文件的保存位置
         get() = ServletActionContext.getServletContext()
                 .getRealPath(Constants.FILE_IMAGE_RELATIVE_PATH)
 
 
-    @org.apache.struts2.convention.annotation.Action("imageUpload")
+    @Action(value = "uploadPortrait",
+            results = [org.apache.struts2.convention.annotation.Result(name = "success", location = "updateUserInfo", type = "chain")]
+    )
     override fun execute(): String {
-        println("打印测试$title , $picContentType , $picFileName , $savePath")
+        println("打印测试 , $picContentType , $picFileName , $savePath")
 
         //以服务器的文件保存地址和原文件名建立上传文件输出流
-        val  path =  File(savePath)
+        val path = File(savePath)
 
-        if(!path.exists()){
+        if (!path.exists()) {
             path.mkdir()
         }
 
@@ -56,12 +64,7 @@ class ImageUploadAction :BaseAction(){
         }
         fos.close()
 
-        //TODO 文件存储成功后还需要保存到数据库里面去
-
-        val result = JsonBody<String>()
-        result.code = Constants.RESPONSE_SUCCEED
-        result.data = Constants.FILE_IMAGE_RELATIVE_PATH + File.separator + picFileName
-        JsonUtil.returnJson(result)
+        headPortrait = Constants.FILE_IMAGE_RELATIVE_PATH + File.separator + picFileName
         return super.execute()
     }
 
