@@ -2,7 +2,7 @@ package com.lfork.blogsystem.main.my
 
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.base.viewmodel.UserViewModel
-import com.lfork.blogsystem.data.common.network.DataCallback
+import com.lfork.blogsystem.base.network.DataCallback
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
 
@@ -22,7 +22,7 @@ class MyViewModel : UserViewModel() {
                 data.email != null -> username.set(data.email)
                 data.phone != null -> username.set(data.phone)
             }
-            portraitUrl.set(data.headPortrait)
+            portraitUrl.set(data.getRealPortraitUrl())
         }
     }
 
@@ -30,7 +30,7 @@ class MyViewModel : UserViewModel() {
     fun refreshData() {
         if (BlogApplication.isSignIn) {
             UserDataRepository.getUserInfo(
-                UserDataRepository.userCache.getAccount(),
+                UserDataRepository.userCache.getAccount(),BlogApplication.token!!,
                 object : DataCallback<User> {
                     override fun succeed(data: User) {
                         initBasicInfo()

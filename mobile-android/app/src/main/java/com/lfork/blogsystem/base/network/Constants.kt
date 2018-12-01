@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.data.common.network
+package com.lfork.blogsystem.base.network
 
 /**
  *

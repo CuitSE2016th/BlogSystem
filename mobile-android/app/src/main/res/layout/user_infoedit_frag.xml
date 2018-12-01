@@ -43,11 +43,11 @@
                     android:layout_width="63dp"
                     android:layout_height="55dp"
                     android:layout_marginEnd="32dp"
-                    app:imageUrlNoCache="@{viewModel.portraitUrl}"
+                    app:imageUrl="@{viewModel.portraitUrl}"
+                    app:placeDrawableId="@{viewModel.placeDrawableId}"
                     app:layout_constraintBottom_toBottomOf="@+id/tips1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tips1"
-                    app:placeDrawableId="@{viewModel.placeDrawableId}"
                     tools:src="@drawable/ic_person_black_24dp" />
 
                 <View

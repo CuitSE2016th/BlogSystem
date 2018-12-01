@@ -16,7 +16,6 @@ import android.content.Intent
 import android.text.TextUtils
 import android.widget.EditText
 import kotlinx.android.synthetic.main.user_infoedit_frag.view.*
-import android.net.Uri
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.utils.PermissionManager.isGrantedCameraPermission
 import com.lfork.blogsystem.utils.PermissionManager.isGrantedStoragePermission
@@ -26,7 +25,6 @@ import com.yalantis.ucrop.UCrop
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.user_infoedit_frag.*
 import java.io.File
-import android.support.v4.content.ContextCompat
 import com.lfork.blogsystem.base.image.ImageTool
 import com.lfork.blogsystem.base.image.ImageTool.cutPicture
 
@@ -161,7 +159,6 @@ class UserInfoEditFragment : Fragment(), Navigator {
 
             } else {
                 viewModel.username.set(newName)
-
                 viewModel.updateUserInfo()
             }
         }
@@ -173,7 +170,7 @@ class UserInfoEditFragment : Fragment(), Navigator {
     }
 
 
-    //选图片
+    //图片本地处理：选图片，然后再activity result里面调用剪切图片的函数
     private fun selectPicture() {
         if (!isGrantedStoragePermission(context!!)) {
             requestStoragePermission(REQUEST_CODE_STORAGE_PERMISSION)
@@ -187,6 +184,7 @@ class UserInfoEditFragment : Fragment(), Navigator {
         ImageTool.selectPicture(activity!!, REQUEST_CODE_CHOOSE)
     }
 
+    //上传图片
     private fun uploadPortrait(pic: File?) {
 
         if (pic == null) {
@@ -194,16 +192,8 @@ class UserInfoEditFragment : Fragment(), Navigator {
         }
 
         ImageBinding.setImageNoCache(user_portrait, pic)
-        //调用上传图片的接口
-        viewModel.uploadPortrait()
-
-        //得到真实的URL地址
-        //调用修改用户信息的接口
-        //显示新头像
-
-        //如果成功 那么就
-        viewModel.updateUserInfo()
+        //调用上传图片的接口 得到图片URL地址 清除本地缓存信息 //显示新头像
+        viewModel.uploadPortrait(pic)
     }
-
 
 }
