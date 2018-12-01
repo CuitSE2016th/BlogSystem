@@ -5,12 +5,14 @@ import com.bs.ssh.service.user.UserService
 import com.bs.ssh.utils.JsonUtil
 
 import org.apache.struts2.convention.annotation.Action
+import org.apache.struts2.convention.annotation.Namespace
 import org.apache.struts2.convention.annotation.ParentPackage
 import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * Created by 98620 on 2018/11/12.
  */
+@Namespace("/user")
 @ParentPackage("default")
 internal class UserInfoGetAction : BaseAction() {
 

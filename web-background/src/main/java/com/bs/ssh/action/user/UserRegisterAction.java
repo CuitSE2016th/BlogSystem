@@ -7,6 +7,7 @@ import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -19,10 +20,11 @@ import java.util.regex.Pattern;
  * Create By ZZY on 2018/11/9
  */
 @ParentPackage("json-default")
+@Namespace("/user")
 @Results({
         @Result(name = "success", type = "json", params = {"root", "message"})
 })
-public class UserRegistAction extends ActionSupport {
+public class UserRegisterAction extends ActionSupport {
 
     @Autowired
     private UserServiceImpl userService;
@@ -64,7 +66,7 @@ public class UserRegistAction extends ActionSupport {
         this.emailOrPhoneCode = emailOrPhoneCode;
     }
 
-    @Action(value = "userRegist")
+    @Action(value = "register")
     public String userRegist() {
 
         if (emailOrPhone == null || emailOrPhoneCode == null || password == null ||

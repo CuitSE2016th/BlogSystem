@@ -9,10 +9,11 @@
 </head>
 <body>
 <h1>文件上传实例 </h1>
-<form method="post" action="/blog/imageUpload" enctype="multipart/form-data">
+<form method="post" action="/blog/user/uploadPortrait" enctype="multipart/form-data">
     选择一个文件:
-    <input type="file" name="pic" accept="image/*" title="测试title"/>
-    <br/><br/>
+    <input type="file" name="pic" accept="image/*" /><br/>
+    手机号：<input type="text" name="identity"><br>
+    token：<input type="text" name="token" value="asdsad"><br>
     <input type="submit" value="上传"/>
 </form>
 </body>
