@@ -18,7 +18,6 @@ import java.io.FileOutputStream
  */
 @Namespace("/user")
 @ParentPackage("default")
-//@Results(org.apache.struts2.convention.annotation.Result(name = "json", type = "json", params = arrayOf("root", "result")))
 class UserPortraitUploadAction : BaseAction() {
 
     var identity: String? = null
@@ -64,7 +63,7 @@ class UserPortraitUploadAction : BaseAction() {
         }
         fos.close()
 
-        headPortrait = Constants.FILE_IMAGE_RELATIVE_PATH + File.separator + picFileName
+        headPortrait = Constants.FILE_IMAGE_RELATIVE_PATH + "/" + picFileName
         return super.execute()
     }
 
