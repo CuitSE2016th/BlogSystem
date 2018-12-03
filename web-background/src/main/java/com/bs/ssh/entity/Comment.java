@@ -12,9 +12,28 @@ import javax.persistence.*;
 @Table(name = "comment")
 public class Comment {
     private Integer id;
-    private Integer author;
+    private Integer articleId;
+    private Integer parentId;
+    private String authorId;
     private String content;
+    private boolean isDeleted;
     private Long createTime;
+
+    public Comment() { }
+
+    public Comment(Integer articleId, String authorId, String content, Long createTime) {
+        this.articleId = articleId;
+        this.authorId = authorId;
+        this.content = content;
+        this.createTime = createTime;
+    }
+
+    public Comment(String authorId, Integer parentId, String content, Long createTime) {
+        this.parentId = parentId;
+        this.authorId = authorId;
+        this.content = content;
+        this.createTime = createTime;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +45,31 @@ public class Comment {
         this.id = id;
     }
 
-    @Column(name = "author_id")
-    public Integer getAuthor() {
-        return author;
+    @Column(name = "article_id")
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setAuthor(Integer author) {
-        this.author = author;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
+    }
+
+    @Column(name = "parent_id")
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    @Column(name = "author_id")
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getContent() {
@@ -41,6 +78,15 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Column(name = "is_deleted")
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Column(name = "create_time")

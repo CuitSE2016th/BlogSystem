@@ -11,6 +11,7 @@ import com.bs.ssh.utils.HashUtils;
 import com.bs.ssh.utils.RedisUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -76,7 +77,7 @@ public class UnitTest {
         System.out.println(String.valueOf(System.currentTimeMillis()));
     }
 
-//    @Test
+    @Test
     public void redis() {
         RedisUtils.set("com.bs.ssh.test.test1", "value1");
         System.out.println(RedisUtils.get("test"));
