@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @date 2018/11/26 8:49
  **/
 @Entity
-@Table(name = "like")
+@Table(name = "`like`")
 public class Like implements Serializable{
     private String userId;
     private Integer articleId;
@@ -44,5 +44,19 @@ public class Like implements Serializable{
 
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public int hashCode() {
+        return articleId.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Like){
+            Like key = (Like) obj;
+            return articleId.equals(key.getArticleId()) && userId.equals(key.getUserId());
+        }
+        return false;
     }
 }
