@@ -18,10 +18,12 @@ public interface BaseDao<T> {
 
     List<T> findAll(PageRequest page, String hql, Object ...values);
 
+    List<T> findAll(String hql, Object ...values);
+
     Integer count(String entityName);
 
     void delete(T entity);
 
-    void deleteAll(Iterable<T> entities);
+    void deleteAll(List<T> entities);
 
 }
