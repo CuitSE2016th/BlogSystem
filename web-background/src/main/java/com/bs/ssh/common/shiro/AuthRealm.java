@@ -1,24 +1,29 @@
 package com.bs.ssh.common.shiro;
 
+import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.utils.RedisUtils;
 import com.google.gson.Gson;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 验证范围
+ * 验证域
  *
  * @author Egan
  * @date 2018/11/13 20:37
  **/
 public class AuthRealm extends AuthorizingRealm {
 
-    private int TIME_OUT_DAY = 7;
+    private final static int TIME_OUT_DAY = 7;
+
+    @Resource private RoleDao roleDao;
 
     /**
      * token 类型支持
@@ -45,16 +50,21 @@ public class AuthRealm extends AuthorizingRealm {
             return null;
         }
 
-
-
     }
 
     /**
      * 授权
      **/
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection)
+    {
+        User user = (User) principalCollection.getPrimaryPrincipal();
+
+
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.setRoles(roleDao.findRoleName(user.getRoleId()));
+
+        return info;
     }
 
 
