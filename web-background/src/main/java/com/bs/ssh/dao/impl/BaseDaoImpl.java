@@ -72,6 +72,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
+    public List<T> findAll(String hql, Object... values) {
+        return (List<T>) template.find(hql, values);
+    }
+
+    @Override
     public Integer count(String entityName) {
         return template.execute(session ->
                 ((Long) session.createQuery("select count(*) from " + entityName)
@@ -84,7 +89,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    public void deleteAll(Iterable<T> entities) {
+    public void deleteAll(List<T> entities) {
         entities.forEach(e->template.delete(e));
     }
 
