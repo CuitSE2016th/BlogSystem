@@ -45,7 +45,7 @@ public class ArticleAdminServiceImpl implements ArticleAdminService{
         PageBean pageBean = new PageBean();
         pageBean.setPageSize(15);
 
-        List<Article> articles = articleDao.getArticlesInclude500(pn, pageSize);
+        List<Article> articles = articleDao.getArticlesInAdmin(pn, pageSize);
 
         if(articles == null){
             return null;

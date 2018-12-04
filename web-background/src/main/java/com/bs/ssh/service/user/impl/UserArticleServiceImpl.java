@@ -2,11 +2,13 @@ package com.bs.ssh.service.user.impl;
 
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
+import com.bs.ssh.dao.ArticleDao;
 import com.bs.ssh.entity.*;
 
 import com.bs.ssh.dao.BaseDao;
 import com.bs.ssh.exception.NoSuchEntityException;
 import com.bs.ssh.service.user.UserArticleService;
+import com.bs.ssh.utils.Constants;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,20 +25,42 @@ import java.util.List;
 @Service
 public class UserArticleServiceImpl implements UserArticleService{
 
-    @Resource private BaseDao<Article> articleDao;
+    @Resource private ArticleDao articleDao;
     @Resource private BaseDao<Star> starDao;
     @Resource private BaseDao<Like> likeDao;
 
     @Override
     public PageBean getAllArticle(PageRequest pageRequest) {
 
-        List<Article> results = articleDao.findAll(pageRequest, "from Article");
+        List<Article> results = articleDao.findAll(pageRequest, "from Article where status="+ Constants.AUDIT_COMPLETE);
 
         return new PageBean<>(
                 pageRequest,
                 articleDao.count("Article"),
                 results);
 
+    }
+
+    @Override
+    public void publishArticle(String userId, String title, String content) {
+        Article article = new Article();
+        article.setAuthorId(userId);
+        article.setTitle(title);
+        article.setContent(content);
+        article.setCreateTime(System.currentTimeMillis());
+        article.setStatus(Constants.AUDIT_COMPLETE);
+
+        articleDao.insert(article);
+
+    }
+
+    @Override
+    public void deleteArticle(String userId, Integer articleId) {
+        Article article = articleDao.findArticle(userId, articleId);
+        if(article == null)
+            throw new NoSuchEntityException("文章不存在");
+        article.setStatus(Constants.DELETED_ARTICLE);
+        articleDao.update(article);
     }
 
     @Override

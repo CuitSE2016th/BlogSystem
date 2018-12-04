@@ -23,4 +23,9 @@ public class Constants {
 
     //审核通过
     public final static int AUDIT_COMPLETE = 600;
+
+    /**
+     * 文章已被删除
+     **/
+    public final static int DELETED_ARTICLE = 404;
 }

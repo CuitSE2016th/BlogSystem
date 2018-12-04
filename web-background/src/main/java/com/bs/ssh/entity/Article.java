@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class Article {
 
     private Integer id;
+    private String title;
     private String content;
     private String authorId;
     private Integer status;
@@ -31,7 +32,14 @@ public class Article {
         this.id = id;
     }
 
-    @Basic
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getContent() {
         return content;
     }

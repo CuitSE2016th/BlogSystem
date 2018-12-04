@@ -2,6 +2,7 @@ package com.bs.ssh.dao.impl;
 
 import com.bs.ssh.entity.Article;
 import com.bs.ssh.dao.ArticleDao;
+import com.bs.ssh.utils.Constants;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -28,14 +29,28 @@ public class ArticleDaoImpl extends BaseDaoImpl<Article> implements ArticleDao{
     }
 
     @Override
-    public List<Article> getArticlesInclude500(int pn, int pageSize) {
+    public List<Article> getArticlesInAdmin(int pn, int pageSize) {
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
 
-        List<Article> list = currentSession.createQuery("from Article where status = 500")
+        List<Article> list = currentSession.createQuery("from Article where status = " + Constants.AUDIT_IN_ADMIN)
                 .setFirstResult((pn-1) * pageSize)
                 .setMaxResults(pageSize).list();
 
         return list;
+    }
+
+    @Override
+    public boolean isArticleExisted(Integer articleId) {
+
+        return this.findOne(
+                "from Article where id=? and status=" + Constants.AUDIT_COMPLETE, articleId)
+                != null;
+
+    }
+
+    @Override
+    public Article findArticle(String userId, Integer articleId) {
+        return this.findOne("from Article where authorId=? and id=? and status=" + Constants.AUDIT_COMPLETE, userId, articleId);
     }
 
     @Override
