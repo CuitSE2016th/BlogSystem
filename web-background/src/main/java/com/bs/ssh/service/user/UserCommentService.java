@@ -2,6 +2,7 @@ package com.bs.ssh.service.user;
 
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
+import com.bs.ssh.entity.Comment;
 
 /**
  * 评论服务
@@ -12,13 +13,22 @@ import com.bs.ssh.bean.PageRequest;
 public interface UserCommentService {
 
     /**
-     * 获得一页评论
+     * 获取一篇文章的一页评论
      *
-     * @date 2018/12/3 23:15
-     * @param request 分页请求
-     * @return java.util.List<com.bs.ssh.entity.Article>
+     * @date 2018/12/4 17:59
+     * @param request 
+	 * @param articleId   
+     * @return com.bs.ssh.bean.PageBean 
+     **/  
+    PageBean findAllComment(PageRequest request, Integer articleId);
+
+    /**
+     * 查看特定评论
+     *
+     * @author Egan
+     * @date 2018/12/4 17:04
      **/
-    PageBean findAllComment(PageRequest request);
+    Comment findOneComment(Integer commentId);
 
     /**
      * 添加评论
