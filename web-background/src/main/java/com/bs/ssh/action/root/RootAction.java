@@ -182,6 +182,12 @@ public class RootAction extends BaseAction {
             return SUCCESS;
         }
 
+        if(role != 1 || role != 2 || role != 3){
+            result = JsonBody.fail();
+            result.setMessage("前端角色数据非法");
+            return SUCCESS;
+        }
+
         int flag = rootService.updateUserTypeByUserID(userID, type);
 
         if (flag == 0){
