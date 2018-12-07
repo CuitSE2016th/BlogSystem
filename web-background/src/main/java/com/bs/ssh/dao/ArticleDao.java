@@ -17,4 +17,6 @@ public interface ArticleDao extends BaseDao<Article>{
     Article findArticle(String userId, Integer articleId);
 
     int getArticlesCount();
+
+    Article findOneByArticleID(int parseInt);
 }

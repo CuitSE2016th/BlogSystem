@@ -123,7 +123,7 @@ public class UserAdminAction extends BaseAction {
             return SUCCESS;
         }
 
-        String user = userAdminService.getUserByUserID(identity);
+        User user = userAdminService.getUserByUserID(identity);
 
         if(user == null){
             result = JsonBody.fail();

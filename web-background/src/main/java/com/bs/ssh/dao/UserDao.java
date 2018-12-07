@@ -1,5 +1,6 @@
 package com.bs.ssh.dao;
 
+import com.bs.ssh.bean.UserPlus;
 import com.bs.ssh.entity.User;
 
 import java.util.List;
@@ -30,11 +31,15 @@ public interface UserDao extends BaseDao<User> {
 
     int getUserCount();
 
-    List<User> getAllUser(int pn, int pageSize);
+    List getAllUser(int pn, int pageSize);
 
 
     int updateUserRoleID(String userID, String type);
 
 
     User findByIdentityExcludeAdmin(String identity);
+
+    List<UserPlus> getAllUserExcludeAdmin(int pn, int pageSize);
+
+    List getAllUserByRoleID(int pn, int pageSize, int roleID);
 }

@@ -61,5 +61,12 @@ public class ArticleDaoImpl extends BaseDaoImpl<Article> implements ArticleDao{
         return new Long(count).intValue();
     }
 
+    @Override
+    public Article findOneByArticleID(int parseInt) {
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+        Article o = (Article) currentSession.createQuery("from Article where id = ?").setParameter(0, parseInt).uniqueResult();
+        return o;
+    }
+
 
 }

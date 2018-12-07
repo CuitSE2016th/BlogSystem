@@ -71,7 +71,13 @@ public class ArticleAdminAction extends BaseAction {
             return SUCCESS;
         }
 
-        String article = articleAdminService.getArticleByArticleID(articleID);
+        Article article = articleAdminService.getArticleByArticleID(articleID);
+
+        if(article == null){
+            result = JsonBody.fail();
+            result.setMessage("数据查询为空");
+            return SUCCESS;
+        }
 
         result = JsonBody.success();
         result.setData(article);
@@ -89,8 +95,7 @@ public class ArticleAdminAction extends BaseAction {
 
         int articleStatus = Integer.parseInt(status);
 
-        if(articleStatus != Constants.AUDIT_IN && articleStatus != Constants.AUDIT_IN_COMPUTER &&
-                articleStatus != Constants.AUDIT_IN_ADMIN && articleStatus != Constants.AUDIT_COMPLETE){
+        if(articleStatus != Constants.AUDIT_COMPLETE && articleStatus != Constants.AUDIT_FAILE){
             result = JsonBody.fail();
             result.setMessage("状态码数据出错！");
             return SUCCESS;
@@ -113,11 +118,15 @@ public class ArticleAdminAction extends BaseAction {
         }
 
         int pn = Integer.parseInt(pageNo);
+
         if(pn < 0){
             pn = 1;
         }
 
         PageBean page = articleAdminService.getArticlesForPage(pn, pageSize);
+
+        result = JsonBody.success();
+        result.setData(page);
 
         return SUCCESS;
     }

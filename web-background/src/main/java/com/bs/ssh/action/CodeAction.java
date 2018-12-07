@@ -9,10 +9,14 @@ import com.bs.ssh.service.user.impl.UserServiceImpl;
 import com.bs.ssh.utils.RedisUtils;
 import com.bs.ssh.utils.RegexString;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.TimeUnit;
@@ -21,10 +25,13 @@ import java.util.concurrent.TimeUnit;
  * Create By ZZY on 2018/11/10
  */
 @ParentPackage("json-default")
+@Namespace("/user")
 @Results({
         @Result(name = "success", type = "json", params = {"root", "message"})
 })
 public class CodeAction extends ActionSupport {
+
+    private static final Logger logger = LogManager.getLogger(CodeAction.class);
 
     private String emailOrPhone;
 
@@ -108,13 +115,19 @@ public class CodeAction extends ActionSupport {
             return SUCCESS;
         }
 
-        if(RedisUtils.get(emailOrPhone) != null){
-            RedisUtils.remove(emailOrPhone);
+        try {
+            if(RedisUtils.get(emailOrPhone) != null){
+                RedisUtils.remove(emailOrPhone);
+            }
+
+            RedisUtils.set(emailOrPhone, emailOrPhoneCode);
+
+            RedisUtils.expireKey(emailOrPhone, 15, TimeUnit.MINUTES);
+        }catch (Exception e){
+            message = JsonBody.fail();
+            logger.error("存入redis出错");
+            return SUCCESS;
         }
-
-        RedisUtils.set(emailOrPhone, emailOrPhoneCode);
-
-        RedisUtils.expireKey(emailOrPhone, 15, TimeUnit.MINUTES);
 
         message = JsonBody.success();
         return SUCCESS;

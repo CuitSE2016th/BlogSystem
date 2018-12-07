@@ -146,4 +146,22 @@ public class User{
         this.headPortrait = headPortrait;
         this.sex = sex;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", headPortrait='" + headPortrait + '\'' +
+                ", birthday=" + birthday +
+                ", sex='" + sex + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", roleId=" + roleId +
+                ", lastLoginTime=" + lastLoginTime +
+                ", createTime=" + createTime +
+                '}';
+    }
 }
