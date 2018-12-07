@@ -1,5 +1,8 @@
 package com.bs.ssh.common.wordfilter;
 
+import org.apache.struts2.ServletActionContext;
+
+import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -164,5 +167,4 @@ public class SensitivewordFilter {
 		}
 		return false;
 	}
-
 }
