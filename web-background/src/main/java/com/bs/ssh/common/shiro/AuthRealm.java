@@ -46,7 +46,7 @@ public class AuthRealm extends AuthorizingRealm {
             RedisUtils.expireKey(accessToken, TIME_OUT_DAY, TimeUnit.DAYS);
             return new SimpleAuthenticationInfo(user, accessToken, getName());
         }else {
-            //token过期
+            //token过期或不存在
             return null;
         }
 

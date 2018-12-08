@@ -12,12 +12,12 @@ import com.opensymphony.xwork2.validator.annotations.IntRangeFieldValidator;
  * @date 2018/11/29 15:19
  **/
 public class BasePageAction extends BaseAction{
-    protected PageRequest pageRequest = new PageRequest();
-
     protected int pn;
     protected int ps;
 
-    @IntRangeFieldValidator(message = "页号不合法", min = "1")
+    protected PageRequest pageRequest = new PageRequest();
+
+    //        @IntRangeFieldValidator(message = "页号不合法", min = "1")
     public int getPn() {
         return pn;
     }
@@ -27,7 +27,7 @@ public class BasePageAction extends BaseAction{
         this.pn = pn;
     }
 
-    @IntRangeFieldValidator(message = "单页记录数不合法", min = "1", max = "50")
+    //    @IntRangeFieldValidator(message = "单页记录数不合法", min = "1", max = "50")
     public int getPs() {
         return ps;
     }

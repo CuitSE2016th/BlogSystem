@@ -50,14 +50,11 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /error.jsp = anon
-                /login/captcha = anon
-                /static/** = anon
-                <!--/logout = anon-->
-                <!--/code = anon-->
-                <!--/userRegist = anon-->
-                <!--/index.jsp = anon-->
-                /** = anon
+                /user/login = anon
+                /user/register = anon
+                /user/code = anon
+                /user/article/all = anon
+                /** = auth
             </value>
         </property>
     </bean>

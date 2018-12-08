@@ -39,7 +39,6 @@
                 <interceptor-ref name="conversionError"/>
                 <!--开启方法级别的验证-->
                 <interceptor-ref name="validation">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
                     <param name="validateAnnotatedMethodOnly">true</param>
                 </interceptor-ref>
                 <interceptor-ref name="workflow">
