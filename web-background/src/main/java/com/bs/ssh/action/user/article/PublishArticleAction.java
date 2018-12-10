@@ -8,12 +8,12 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PublishArticleAction extends BaseAction {
+@Namespace("/user/article")
+public class PublishArticleAction extends AbstractArticleAction {
 
-    @Autowired
-    UserArticleService articleService;
 
     private String title;
 
