@@ -1,6 +1,7 @@
 package com.bs.ssh.entity;
 
 import com.google.gson.annotations.Expose;
+import org.apache.struts2.json.annotations.JSON;
 
 import javax.persistence.*;
 
@@ -14,20 +15,21 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User{
     private String id;
-    @Expose private String nickname;
-    @Expose private String headPortrait;
-    @Expose private Long birthday;
-    @Expose private String sex;
-    @Expose private String email;
-    @Expose private String phone;
-    @Expose private String password;
+    private String nickname;
+    private String headPortrait;
+    private Long birthday;
+    private String sex;
+    private String email;
+    private String phone;
+    private String password;
     private String salt;
-    @Expose private Integer roleId;
-    @Expose private Long lastLoginTime;
-    @Expose private Long createTime;
+    private Integer roleId;
+    private Long lastLoginTime;
+    private Long createTime;
 
 
     @Id
+    @JSON(serialize = false)
     public String getId() {
         return id;
     }
@@ -92,6 +94,7 @@ public class User{
     }
 
     @Basic
+    @JSON(serialize = false)
     public String getPassword() {
         return password;
     }
@@ -101,6 +104,7 @@ public class User{
     }
 
     @Basic
+    @JSON(serialize = false)
     public String getSalt() {
         return salt;
     }

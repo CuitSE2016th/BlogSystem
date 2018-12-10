@@ -23,7 +23,6 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JSON(serialize = false)
     public Integer getId() {
         return id;
     }
