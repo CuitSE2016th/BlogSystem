@@ -31,5 +31,5 @@ interface ArticleDataSource {
 
     fun uploadArticleImages()
 
-    fun deleteArticle()
+    fun deleteArticle()//architecture
 }
