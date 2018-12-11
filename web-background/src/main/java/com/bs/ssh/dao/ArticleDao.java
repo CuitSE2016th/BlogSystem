@@ -10,7 +10,13 @@ import java.util.List;
 public interface ArticleDao extends BaseDao<Article>{
     int setArticleStatus(int parseInt, int articleStatus);
 
-    List<Article> getArticlesInclude500(int pn, int pageSize);
+    List<Article> getArticlesInAdmin(int pn, int pageSize);
+
+    boolean isArticleExisted(Integer articleId);
+
+    Article findArticle(String userId, Integer articleId);
 
     int getArticlesCount();
+
+    Article findOneByArticleID(int parseInt);
 }

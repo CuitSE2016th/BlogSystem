@@ -4,11 +4,7 @@ import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.user.UserService;
-import com.bs.ssh.utils.Constants;
-import com.bs.ssh.utils.HashUtils;
-import com.bs.ssh.utils.IDUtils;
-import com.bs.ssh.utils.RegexString;
-import com.bs.ssh.utils.StringUtils;
+import com.bs.ssh.utils.*;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +41,10 @@ public class UserServiceImpl implements UserService {
         } else {
             body.setCode(Constants.RESPONSE_SUCCEED);
             body.setMessage("登录成功");
-            //保存token到redis服务器
             String token = HashUtils.getToken();
+            //保存token到redis服务器
+            String userJson = JsonUtil.toJson(user);
+            RedisUtils.set(token, userJson);
             body.setData(token);
             user.setLastLoginTime(System.currentTimeMillis());
             userDao.update(user);

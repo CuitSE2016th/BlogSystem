@@ -5,6 +5,7 @@ import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.service.root.impl.RootServiceImpl;
+import com.bs.ssh.utils.Constants;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -30,6 +31,17 @@ public class RootAction extends BaseAction {
 
     //前端发送的查询条件
     private String identity;
+
+    //前端发送的角色ID号，进行分页的一个条件,可以为空，如果为空则进行全部查询，如果带有用户角色则必须为数字
+    private String roleType;
+
+    public String getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(String roleType) {
+        this.roleType = roleType;
+    }
 
     //暂时指定每一页的数据数量
     private static final int pageSize = 15;
@@ -85,11 +97,31 @@ public class RootAction extends BaseAction {
             return SUCCESS;
         }
 
+        int roleID;
+
+        if(roleType == null){
+            roleID = 0;
+        }else{
+            try {
+                roleID = Integer.parseInt(roleType);
+            }catch (NumberFormatException e){
+                result = JsonBody.fail();
+                result.setMessage("传入角色非数字");
+                return SUCCESS;
+            }
+        }
+
+        if(roleID == 4){
+            result = JsonBody.fail();
+            result.setMessage("传入角色不合法数字");
+            return SUCCESS;
+        }
+
         if (pn <= 0){
             pn = 1;
         }
 
-        PageBean users = rootService.getAllUserToPageBean(pn, pageSize);
+        PageBean users = rootService.getAllUserToPageBean(pn, pageSize, roleID);
 
         if(users == null){
             result = JsonBody.fail();
@@ -111,7 +143,7 @@ public class RootAction extends BaseAction {
             result = JsonBody.success();
             result.setMessage("查询全部数据");
             result.setData(
-                    rootService.getAllUserToPageBean(1, pageSize));
+                    rootService.getAllUserToPageBean(1, pageSize, 0));
             return SUCCESS;
         }
         User user = rootService.getUserByIdentity(identity);
@@ -131,6 +163,28 @@ public class RootAction extends BaseAction {
         if(userID == null || type == null){
             result = JsonBody.fail();
             result.setMessage("前端数据出错");
+            return SUCCESS;
+        }
+
+        int role;
+
+        try {
+            role = Integer.parseInt(type);
+        }catch (NumberFormatException e){
+            result = JsonBody.fail();
+            result.setMessage("传入页数非数字");
+            return SUCCESS;
+        }
+
+        if(role == Constants.ROOT_ROLR_ID){
+            result = JsonBody.fail();
+            result.setMessage("前端数据非法");
+            return SUCCESS;
+        }
+
+        if(role != 1 || role != 2 || role != 3){
+            result = JsonBody.fail();
+            result.setMessage("前端角色数据非法");
             return SUCCESS;
         }
 

@@ -11,5 +11,5 @@ public interface UserAdminService {
 
     int deleteUserByUserID(String userID);
 
-    String getUserByUserID(String identity);
+    User getUserByUserID(String identity);
 }

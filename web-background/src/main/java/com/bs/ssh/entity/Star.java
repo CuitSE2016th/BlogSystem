@@ -45,4 +45,19 @@ public class Star implements Serializable{
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
+
+    @Override
+    public int hashCode() {
+        return articleId.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Star){
+            Star key = (Star) obj;
+            return articleId.equals(key.getArticleId()) && userId.equals(key.getUserId());
+        }
+        return false;
+    }
+
 }

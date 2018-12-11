@@ -8,7 +8,7 @@ import com.bs.ssh.entity.User;
  */
 public interface RootService {
 
-    PageBean getAllUserToPageBean(int pn, int pageSize);
+    PageBean getAllUserToPageBean(int pn, int pageSize, int roleID);
 
     User getUserByIdentity(String identity);
 

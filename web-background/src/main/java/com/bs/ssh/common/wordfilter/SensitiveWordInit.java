@@ -1,4 +1,4 @@
-package wordfilter;
+package com.bs.ssh.common.wordfilter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -125,7 +125,9 @@ public class SensitiveWordInit {
 		
 		//File file = new File("D:\\SensitiveWord.txt");    //读取文件
 		//InputStreamReader read = new InputStreamReader(new FileInputStream(file),ENCODING);
-		String fileName = "D:\\CensorWords.txt";
+		String fileName = new File("")
+				.getCanonicalPath() + File.separator + "src\\main\\resources\\CensorWords.txt";
+
 		InputStream inputStream = new FileInputStream(new File(fileName));
 		InputStreamReader read = null;
 		try {

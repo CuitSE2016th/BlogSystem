@@ -1,8 +1,15 @@
 package com.bs.ssh.action;
 
 import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.utils.Constants;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
+import org.apache.shiro.SecurityUtils;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 
 /**
  * 通用动作
@@ -10,6 +17,10 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Egan
  * @date 2018/11/12 12:44
  **/
+@ParentPackage("json-default")
+@Results({
+        @Result(name = "json", type = "json", params = {"root", "result"})
+})
 public class BaseAction extends ActionSupport {
 
 
@@ -17,10 +28,13 @@ public class BaseAction extends ActionSupport {
 
     protected final String JSON = "json";
 
-//    protected PageRequest pageRequest = new PageRequest();
-//
-//    protected int pn;
-//    protected int ps;
+    public User getUser(){
+        return (User) SecurityUtils.getSubject().getPrincipal();
+    }
+
+    public String getUserId(){
+        return this.getUser().getId();
+    }
 
     /**
      * 通用验证方法，减少工作量
@@ -42,24 +56,4 @@ public class BaseAction extends ActionSupport {
     public void setResult(JsonBody<Object> result) {
         this.result = result;
     }
-
-//    @DateRangeFieldValidator(message = "页号不合法", min = "0")
-//    public int getPn() {
-//        return pn;
-//    }
-//
-//    public void setPn(int pn) {
-//        pageRequest.setPageNumber(pn);
-//        this.pn = pn;
-//    }
-//
-//    @DateRangeFieldValidator(message = "单页记录数不合法", min = "1", max = "50")
-//    public int getPs() {
-//        return ps;
-//    }
-//
-//    public void setPs(int ps) {
-//        pageRequest.setPageSize(ps);
-//        this.ps = ps;
-//    }
 }

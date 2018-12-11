@@ -1,5 +1,6 @@
 package com.bs.ssh.dao.impl;
 
+import com.bs.ssh.bean.UserPlus;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import org.hibernate.Session;
@@ -70,13 +71,14 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     }
 
     @Override
-    public List<User> getAllUser(int pn, int pageSize) {
+    public List getAllUser(int pn, int pageSize) {
 
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
 
-        List<User> from_user = currentSession.createQuery("from User").setFirstResult((pn-1) * pageSize).setMaxResults(pageSize).list();
+        List list = currentSession.createQuery("from User u inner join Role r on u.roleId = r.id")
+                .setFirstResult((pn - 1) * pageSize).setMaxResults(pageSize).list();
 
-        return from_user;
+        return list;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
         Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
         Query query = currentSession.createQuery("update User set roleId = ? where id = ?");
-        query.setParameter(0, type);
+        query.setParameter(0, Integer.parseInt(type));
         query.setParameter(1, userID);
         int i = query.executeUpdate();
 
@@ -98,6 +100,29 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
                 .setParameter(0, identity)
                 .setParameter(1, identity).uniqueResult();
         return o;
+    }
+
+    @Override
+    public List<UserPlus> getAllUserExcludeAdmin(int pn, int pageSize) {
+
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+
+        List list = currentSession.createQuery("from User u inner join Role r on u.roleId = r.id where u.roleId = 1")
+                .setFirstResult((pn - 1) * pageSize).setMaxResults(pageSize).list();
+
+        return list;
+    }
+
+    @Override
+    public List getAllUserByRoleID(int pn, int pageSize, int roleID) {
+
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+
+        List list = currentSession.createQuery("from User u inner join Role r on u.roleId = r.id where u.roleId = ?")
+                .setParameter(0, roleID)
+                .setFirstResult((pn - 1) * pageSize).setMaxResults(pageSize).list();
+
+        return list;
     }
 
 }

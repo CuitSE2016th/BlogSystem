@@ -2,7 +2,6 @@ package com.bs.ssh.test;
 
 import com.bs.ssh.entity.*;
 import com.bs.ssh.dao.BaseDao;
-import com.bs.ssh.dao.PermissionDao;
 import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.utils.HashUtils;
@@ -19,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.LinkedList;
-import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/*")
@@ -38,15 +35,11 @@ public class UserTest {
     @Resource
     private RoleDao roleDao;
 
-    @Resource
-    private PermissionDao permissionDao;
+
 
     //        @Test
-    public void initRoleAndPermission() {
+    public void initRole() {
         Role role = new Role();
-        Permission permission = new Permission();
-        List<Permission> permissions = new LinkedList<>();
-
         role.setName("user");
         role.setCreateTime(System.currentTimeMillis());
 

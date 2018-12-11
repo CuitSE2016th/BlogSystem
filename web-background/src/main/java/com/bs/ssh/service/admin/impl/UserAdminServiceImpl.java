@@ -1,11 +1,11 @@
 package com.bs.ssh.service.admin.impl;
 
 import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.bean.UserPlus;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.AdminDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.admin.UserAdminService;
-import com.bs.ssh.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,26 +32,22 @@ public class UserAdminServiceImpl implements UserAdminService{
         PageBean users = new PageBean();
         users.setPageSize(pageSize);
 
-        //查询总记录数
-        int recordCount = userDao.getUserCount();
-
-        //判断当前页是否大于最大页数
-
-        if (pn > Math.ceil(recordCount / pageSize)){
-            pn = recordCount / pageSize;
-        }
-
-        users.setRecordCount(recordCount);
         users.setCurrentPage(pn);
 
-
-        List<User> userList = userDao.getAllUser(pn, pageSize);
+        List<UserPlus> userList = userDao.getAllUserExcludeAdmin(pn, pageSize);
 
         if(userList == null){
             return null;
         }
 
+        int recordCount = userDao.getUserCount();
+
+        //判断当前页是否大于最大页数
+        if (pn > Math.ceil(recordCount / pageSize)){
+            pn = recordCount / pageSize;
+        }
         users.setResult(userList);
+        users.setRecordCount(recordCount);
 
         return users;
     }
@@ -63,12 +59,12 @@ public class UserAdminServiceImpl implements UserAdminService{
     }
 
     @Override
-    public String getUserByUserID(String identity) {
+    public User getUserByUserID(String identity) {
         User byIdentityExcludeAdmin = userDao.findByIdentityExcludeAdmin(identity);
         if(byIdentityExcludeAdmin == null){
             return null;
         }
 
-        return JsonUtil.toJsonExposed(byIdentityExcludeAdmin);
+        return byIdentityExcludeAdmin;
     }
 }

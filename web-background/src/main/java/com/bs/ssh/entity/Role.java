@@ -53,4 +53,12 @@ public class Role {
         this.createTime = createTime;
     }
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", createTime=" + createTime +
+                '}';
+    }
 }
