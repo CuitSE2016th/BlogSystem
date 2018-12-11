@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.base.network
+package com.lfork.blogsystem.data
 /**
  *
  * Created by 98620 on 2018/11/15.

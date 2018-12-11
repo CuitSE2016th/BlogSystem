@@ -1,7 +1,7 @@
 package com.lfork.blogsystem.data.user
 
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.base.network.DataCallback
+import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.user.remote.UserRemoteDataSource
 import com.lfork.blogsystem.utils.StringValidation
 import java.io.File
@@ -14,7 +14,6 @@ object UserDataRepository : UserDataSource {
 
     private val remoteDataSource = UserRemoteDataSource()
 
-
     var userCache: User = User()
 
     var followings: List<User>? = null
@@ -25,7 +24,8 @@ object UserDataRepository : UserDataSource {
 
 
     override fun login(account: String, password: String, callback: DataCallback<String>) {
-        remoteDataSource.login(account, password, object : DataCallback<String> {
+        remoteDataSource.login(account, password, object :
+            DataCallback<String> {
             override fun succeed(data: String) {
 
                 if (StringValidation.isEmailValid(account)) {
@@ -65,7 +65,8 @@ object UserDataRepository : UserDataSource {
                 callback.succeed(userCache)
                 return
             } else {
-                remoteDataSource.getUserInfo(account, token, object : DataCallback<User> {
+                remoteDataSource.getUserInfo(account, token, object :
+                    DataCallback<User> {
                     override fun succeed(data: User) {
 
                         updateCoreUserInfo(data)
@@ -89,9 +90,11 @@ object UserDataRepository : UserDataSource {
         token: String,
         callback: DataCallback<User>
     ) {
-       remoteDataSource.updateUserInfo(newUser, account, token, object :DataCallback<User>{
+       remoteDataSource.updateUserInfo(newUser, account, token, object :
+           DataCallback<User> {
            override fun succeed(data: User) {
                updateCoreUserInfo(data)
+               callback.succeed(data)
            }
 
            override fun failed(code: Int, log: String) {
@@ -106,9 +109,11 @@ object UserDataRepository : UserDataSource {
         token: String,
         callback: DataCallback<User>
     ) {
-       remoteDataSource.updateUserPortrait(pic, account, token,object :DataCallback<User>{
+       remoteDataSource.updateUserPortrait(pic, account, token,object :
+           DataCallback<User> {
            override fun succeed(data: User) {
                updateCoreUserInfo(data)
+               callback.succeed(data)
            }
 
            override fun failed(code: Int, log: String) {
@@ -149,6 +154,5 @@ object UserDataRepository : UserDataSource {
         }
 
     }
-
 
 }

@@ -130,12 +130,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                        app:layout_constraintEnd_toStartOf="@+id/img_arrow_article"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="TextView" />
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/img_arrow_article"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -175,12 +175,55 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                        app:layout_constraintEnd_toStartOf="@+id/img_arrow_star"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="TextView" />
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/img_arrow_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right_gray_24dp"
+                        tools:ignore="ContentDescription" />
+
+
+                </android.support.constraint.ConstraintLayout>
+                <include layout="@layout/item_horizontal_line" />
+                <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:id="@+id/item_notifications"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/btn_notification"
+                        style="@style/title_h1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="24dp"
+                        android:text="@string/notifications"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/my_btn_notification_tips"
+                        style="@style/sub_title_h1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/img_arrow_notify"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="TextView" />
+
+                    <ImageView
+                        android:id="@+id/img_arrow_notify"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -193,7 +236,10 @@
 
                 </android.support.constraint.ConstraintLayout>
 
+
                 <include layout="@layout/item_separator_bar" />
+
+
 
                 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -220,12 +266,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                        app:layout_constraintEnd_toStartOf="@+id/img_arrow_set"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="TextView" />
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/img_arrow_set"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -266,12 +312,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                        app:layout_constraintEnd_toStartOf="@+id/img_arrow_help"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="TextView" />
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/img_arrow_help"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -280,7 +326,6 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_arrow_right_gray_24dp"
                         tools:ignore="ContentDescription" />
-
 
                 </android.support.constraint.ConstraintLayout>
 

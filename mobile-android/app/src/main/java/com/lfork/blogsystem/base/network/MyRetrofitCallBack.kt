@@ -1,5 +1,6 @@
 package com.lfork.blogsystem.base.network
 
+import com.lfork.blogsystem.data.DataCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,6 +17,6 @@ class MyRetrofitCallBack<T>(private val generalCallback: DataCallback<T>) : Call
     }
 
     override fun onResponse(call: Call<Result<T>>, response: Response<Result<T>>) {
-        Result.deal(response.body() as Result<T>, generalCallback)
+        Result.deal(response.body(), generalCallback)
     }
 }

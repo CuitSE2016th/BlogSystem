@@ -5,7 +5,7 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.base.network.DataCallback
+import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
 

@@ -1,7 +1,6 @@
 package com.lfork.blogsystem.data.user.remote
 
-import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.base.network.DataCallback
+import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.base.network.MyRetrofitCallBack
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataSource

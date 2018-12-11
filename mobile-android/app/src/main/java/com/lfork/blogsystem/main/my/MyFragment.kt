@@ -19,6 +19,7 @@ import com.lfork.blogsystem.helpfeedback.HelpFeedBackActivity
 import com.lfork.blogsystem.login.LoginActivity
 import com.lfork.blogsystem.main.MainActivity
 import com.lfork.blogsystem.myarticles.MyArticlesActivity
+import com.lfork.blogsystem.notifications.NotificationsActivity
 import com.lfork.blogsystem.settings.SettingsActivity
 import com.lfork.blogsystem.starsandlikes.StarLikeActivity
 import com.lfork.blogsystem.userinfo.UserInfoActivity
@@ -61,10 +62,14 @@ class MyFragment : Fragment(), Navigator, View.OnClickListener {
 
     private fun registerBtnListener(view: View) {
         view.username_or_sign_in.setOnClickListener(this)
+
         view.user_portrait.setOnClickListener(this)
         view.user_info_tips.setOnClickListener(this)
+
         view.followers.setOnClickListener(this)
         view.following.setOnClickListener(this)
+
+        view.item_notifications.setOnClickListener(this)
 
         view.item_my_articles.setOnClickListener(this)
         view.item_star_like.setOnClickListener(this)
@@ -119,16 +124,15 @@ class MyFragment : Fragment(), Navigator, View.OnClickListener {
 
             R.id.item_my_articles -> mainActivity.startActivity<MyArticlesActivity>()
             R.id.item_star_like -> mainActivity.startActivity<StarLikeActivity>()
+            R.id.item_notifications-> mainActivity.startActivity<NotificationsActivity>()
 
             R.id.item_settings -> mainActivity.startActivity<SettingsActivity>()
             R.id.item_help_feedback -> mainActivity.startActivity<HelpFeedBackActivity>()
+
         }
     }
 
     override fun showTips(msg: String?) {
         ToastUtil.showShort(context, msg)
     }
-
-
-
 }
