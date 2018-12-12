@@ -66,7 +66,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".notifications.NotificationsActivity"></activity>
+        <activity android:name=".notifications.NotificationsActivity" />
+        <activity android:name=".usermainpage.UserMainPageActivity"></activity>
     </application>
 
 </manifest>

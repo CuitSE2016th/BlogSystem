@@ -25,7 +25,7 @@ interface UserDataSource {
     fun getUserInfo(account: String, token: String, callback: DataCallback<User>)
 
 
-    fun updateUserInfo(newUser: User, account: String, token: String,  callback: DataCallback<User>)
+    fun updateUserInfo(newUser: User, account: String, token: String, callback: DataCallback<User>)
 
     fun updateUserPortrait(pic: File, account: String, token: String, callback: DataCallback<User>)
 
@@ -35,16 +35,26 @@ interface UserDataSource {
     fun getVerificationCode(account: String, callback: DataCallback<String>)
 
 
-//    fun unFollow();
+    fun unFollow(
+        beUnFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    );
 
-    //fun follow()
+    fun follow(
+        beFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    )
 
     //分页，userId,
 //    fun getFollowings();
 
     //分页，userId,
-//    fun getFollowers();
+    fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>);
 
-
+    fun getFollowings(account: String, token: String, callback: DataCallback<List<User>>)
 
 }

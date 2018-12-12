@@ -4,7 +4,7 @@ import com.lfork.blogsystem.base.Config
 
 data class User(var nickname: String?, var headPortrait: String?, var sex: String? = null) {
     constructor() : this(null, null, null)
-    constructor(nickname: String ) : this(nickname, null, null)
+    constructor(nickname: String) : this(nickname, null, null)
 
     var id: String? = null
     var birthday: Long? = null
@@ -15,6 +15,9 @@ data class User(var nickname: String?, var headPortrait: String?, var sex: Strin
     var roleID: String? = null
     var lastLoginTime: Long? = null
     var createTime: Long? = null
+    var description:String?=null
+
+    var beFollowed = true
 
     fun getAccount(): String {
         return if (email != null) {
@@ -24,6 +27,15 @@ data class User(var nickname: String?, var headPortrait: String?, var sex: Strin
         }
     }
 
-    fun getRealPortraitUrl() = Config.ServerPath + headPortrait
+    fun getUsername(): String {
+        return when {
+            nickname != null -> nickname!!
+            email != null -> email!!
+            else -> phone!!
+        }
+    }
 
+    fun getRealPortraitUrl() = Config.ServerPath + headPortrait
 }
+
+

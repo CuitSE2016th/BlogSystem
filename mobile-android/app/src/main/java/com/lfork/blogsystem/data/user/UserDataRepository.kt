@@ -12,13 +12,14 @@ import java.io.File
  */
 object UserDataRepository : UserDataSource {
 
+
     private val remoteDataSource = UserRemoteDataSource()
 
     var userCache: User = User()
 
-    var followings: List<User>? = null
+    var followings: ArrayList<User>? = null
 
-    var followers: List<User>? = null
+    var followers: ArrayList<User>? = null
 
     private var userCacheIsDirty = true
 
@@ -121,6 +122,37 @@ object UserDataRepository : UserDataSource {
            }
        })
     }
+
+    override fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>) {
+       remoteDataSource.getFollowers(account, token, callback)
+    }
+
+    override fun getFollowings(
+        account: String,
+        token: String,
+        callback: DataCallback<List<User>>
+    ) {
+       remoteDataSource.getFollowings(account, token, callback)
+    }
+
+    override fun unFollow(
+        beUnFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    ) {
+        remoteDataSource.unFollow(beUnFollowedAccount, account, token, callback)
+    }
+
+    override fun follow(
+        beFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    ) {
+        remoteDataSource.follow(beFollowedAccount, account, token, callback)
+    }
+
 
 
     fun refreshUserInfor() {

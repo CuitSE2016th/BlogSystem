@@ -73,7 +73,7 @@
 //        return items;
 //    }
 //
-//    public void setItems(List<ViewModel> items) {
+//    public void refreshItems(List<ViewModel> items) {
 //        notifyDataSetChanged();
 //        this.items = items;
 //    }
