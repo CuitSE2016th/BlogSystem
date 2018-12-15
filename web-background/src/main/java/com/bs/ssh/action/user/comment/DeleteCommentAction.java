@@ -1,6 +1,7 @@
 package com.bs.ssh.action.user.comment;
 
 import com.bs.ssh.bean.JsonBody;
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import org.apache.struts2.convention.annotation.Action;
@@ -15,6 +16,7 @@ public class DeleteCommentAction extends AbstractCommentAction {
                     @RequiredStringValidator(fieldName = "cid", message = "评论ID不能不为空")
             }
     )
+    @InputConfig(methodName = "verify")
     @Override
     public String execute() throws Exception {
         try {

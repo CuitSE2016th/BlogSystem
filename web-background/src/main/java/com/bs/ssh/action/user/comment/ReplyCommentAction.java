@@ -1,6 +1,7 @@
 package com.bs.ssh.action.user.comment;
 
 import com.bs.ssh.bean.JsonBody;
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -24,6 +25,7 @@ public class ReplyCommentAction extends AbstractCommentAction{
                             message = "内容长度不合法"),
             }
     )
+    @InputConfig(methodName = "verify")
     @Override
     public String execute() throws Exception {
         try {
