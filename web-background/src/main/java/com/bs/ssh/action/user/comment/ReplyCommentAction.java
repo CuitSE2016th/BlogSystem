@@ -1,0 +1,53 @@
+package com.bs.ssh.action.user.comment;
+
+import com.bs.ssh.bean.JsonBody;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import org.apache.struts2.convention.annotation.Action;
+
+public class ReplyCommentAction extends AbstractCommentAction{
+
+    private int pid;
+    private String content;
+
+
+    @Action("/user/comment/reply")
+    @Validations(
+            requiredStrings = {
+                    @RequiredStringValidator(fieldName = "pid", message = "父评论ID不能为空"),
+                    @RequiredStringValidator(fieldName = "content", message = "内容不能为空")
+            },
+            stringLengthFields = {
+                    @StringLengthFieldValidator(fieldName = "content",
+                            minLength = "1", maxLength = "400",
+                            message = "内容长度不合法"),
+            }
+    )
+    @Override
+    public String execute() throws Exception {
+        try {
+            commentService.reply(this.getUserId(), pid, content);
+        }catch (Exception e){
+            result = JsonBody.fail();
+            result.setData(e.getMessage());
+        }
+        return JSON;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+}
