@@ -44,14 +44,14 @@ class FollowActivity : AppCompatActivity() {
         when (fragId) {
             FOLLOWING_FRAG ->{
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FollowingFragment.newInstance())
+                        .replace(R.id.article_main_container, FollowingFragment.newInstance())
                         .commitNow()
                 setupToolBar(resources.getString(R.string.title_following));
             }
 
             FOLLOWER_FRAG -> {
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FollowerFragment.newInstance())
+                        .replace(R.id.article_main_container, FollowerFragment.newInstance())
                         .commitNow()
                 setupToolBar(resources.getString(R.string.title_follower));
             }

@@ -11,7 +11,7 @@ class NotificationsActivity : AppCompatActivity() {
         setContentView(R.layout.notifications_act)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, NotificationsFragment.newInstance())
+                .replace(R.id.article_main_container, NotificationsFragment.newInstance())
                 .commitNow()
         }
     }

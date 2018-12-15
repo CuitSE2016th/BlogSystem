@@ -67,7 +67,8 @@
         </provider>
 
         <activity android:name=".notifications.NotificationsActivity" />
-        <activity android:name=".usermainpage.UserMainPageActivity"></activity>
+        <activity android:name=".usermainpage.UserMainPageActivity" />
+        <activity android:name=".articledetail.ArticleDetailActivity"></activity>
     </application>
 
 </manifest>

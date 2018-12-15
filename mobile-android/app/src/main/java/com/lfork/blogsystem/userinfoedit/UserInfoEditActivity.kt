@@ -20,7 +20,7 @@ class UserInfoEditActivity : AppCompatActivity() {
         setContentView(R.layout.user_infoedit_act)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, UserInfoEditFragment.newInstance())
+                .replace(R.id.article_main_container, UserInfoEditFragment.newInstance())
                 .commitNow()
         }
 

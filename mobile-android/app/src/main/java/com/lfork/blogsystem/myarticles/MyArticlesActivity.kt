@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.lfork.blogsystem.BlogApplication.Companion.context
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.Test
+import com.lfork.blogsystem.articledetail.ArticleDetailActivity.Companion.openArticleDetail
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.utils.ToastUtil
@@ -98,7 +99,6 @@ class MyArticlesActivity : AppCompatActivity(), MyArticleContract.View {
     }
 
 
-
     inner class ArticlesAdapter :
         RecyclerView.Adapter<ArticlesAdapter.MyViewHolder>() {
         private val items = ArrayList<Article>(0);
@@ -108,14 +108,14 @@ class MyArticlesActivity : AppCompatActivity(), MyArticleContract.View {
                 TYPE_TAIL -> {
                     val view = LayoutInflater.from(parent.context)
                         .inflate(R.layout.item_loadmore, parent, false)
-                    MyViewHolder(view,TYPE_TAIL)
+                    MyViewHolder(view, TYPE_TAIL)
                 }
 
                 //TYPE_NORMAL
                 else -> {
                     val view = LayoutInflater.from(parent.context)
                         .inflate(R.layout.item_article_widen_style, parent, false)
-                    MyViewHolder(view,TYPE_NORMAL)
+                    MyViewHolder(view, TYPE_NORMAL)
                 }
             }
 
@@ -151,7 +151,7 @@ class MyArticlesActivity : AppCompatActivity(), MyArticleContract.View {
                 holder.itemView.setOnClickListener {
                     if (context != null) {
                         ToastUtil.showShort(context, "跳转到文章详情，当前的文章id为${item.id}")
-//                    startActivity<>()
+                        openArticleDetail(this@MyArticlesActivity)
                     }
                 }
             }

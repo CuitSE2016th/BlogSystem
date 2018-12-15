@@ -12,7 +12,7 @@ class StarLikeActivity : AppCompatActivity() {
         setContentView(R.layout.star_like_act)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, StarFragment.newInstance())
+                .replace(R.id.article_main_container, StarFragment.newInstance())
                 .commitNow()
         }
     }

@@ -43,7 +43,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
     ) {
 
         BlogApplication.doAsyncTask {
-            Thread.sleep(2000)
+            Thread.sleep(1200)
             val items = ArrayList<Article>(0);
             for (i in 1..10) {
                 val it = Article()
