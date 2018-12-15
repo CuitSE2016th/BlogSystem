@@ -207,7 +207,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
 
 
-        BlogApplication.executeThreadWithThreadPool(Runnable {
+        BlogApplication.doAsyncTask {
             val countDownSeconds = 60
             for (i in 1..countDownSeconds) {
                 Thread.sleep(1000)
@@ -219,7 +219,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 get_verification_code_button.text = getText(R.string.action_get_verification_code)
             }
             mVerificationCodeTask = null
-        })
+        }
 
         val accountStr = account.text.toString()
 

@@ -55,7 +55,7 @@
         <item name="android:layout_marginStart">24dp</item>
         <item name=" android:layout_marginEnd">24dp</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/gray_cc</item>
+        <item name="android:background">@color/gray_cc_separator</item>
     </style>
 
     <style name="tool_bar">

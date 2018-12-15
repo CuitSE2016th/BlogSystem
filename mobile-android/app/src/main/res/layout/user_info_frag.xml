@@ -109,7 +109,7 @@
                 <!--style="@style/username_marquee_text"-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->
-                <!--android:text="@={viewModel.username}"-->
+                <!--android:text="@={viewModel.title}"-->
                 <!--tools:layout_editor_absoluteX="228dp"-->
                 <!--tools:layout_editor_absoluteY="221dp"-->
                 <!--tools:text="User Name" />-->
