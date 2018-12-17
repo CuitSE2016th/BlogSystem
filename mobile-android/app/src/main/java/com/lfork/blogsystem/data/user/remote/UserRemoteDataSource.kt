@@ -1,7 +1,6 @@
 package com.lfork.blogsystem.data.user.remote
 
-import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.base.network.DataCallback
+import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.base.network.MyRetrofitCallBack
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataSource
@@ -15,6 +14,57 @@ import java.io.File
  * Created by 98620 on 2018/11/15.
  */
 class UserRemoteDataSource : UserDataSource {
+    override fun unFollow(
+        beUnFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    ) {
+        callback.succeed("UnFollowed")
+    }
+
+    override fun follow(
+        beFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    ) {
+        callback.succeed("Followed")
+    }
+
+    override fun getFollowings(
+        account: String,
+        token: String,
+        callback: DataCallback<List<User>>
+    ) {
+        val items = ArrayList<User>(10);
+        for (i in 1..10){
+            val it = User()
+            it.phone = "18628904485"
+            it.nickname = "the number $i following"
+            it.headPortrait = "images/580598104651543672840254.jpg"
+            it.description="the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
+            items.add(it)
+        }
+        callback.succeed(items)
+    }
+
+    /**
+     * 暂时不考虑分页加载
+     */
+    override fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>) {
+        val items = ArrayList<User>(10);
+        for (i in 1..10){
+            val it = User()
+            it.phone = "18628904485"
+            it.nickname = "the number $i follower"
+            it.headPortrait = "images/580598104651543672840254.jpg"
+            it.description="the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
+            items.add(it)
+        }
+        callback.succeed(items)
+    }
+
     override fun updateUserInfo(
         newUser: User,
         account: String,

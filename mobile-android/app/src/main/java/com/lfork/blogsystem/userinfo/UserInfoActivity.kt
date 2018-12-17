@@ -14,7 +14,7 @@ class UserInfoActivity : AppCompatActivity() {
         setContentView(R.layout.user_info_act)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, UserInfoFragment.newInstance())
+                    .replace(R.id.article_main_container, UserInfoFragment.newInstance())
                     .commitNow()
         }
 

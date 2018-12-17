@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
             if (StringUtils.isNotBlank(tempUser.getHeadPortrait())) {
 
                 //删掉旧头像
-
+                
                 user.setHeadPortrait(tempUser.getHeadPortrait());
             }
 
@@ -114,15 +114,10 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        System.out.println("文件删除测试1" + user.getHeadPortrait());
         if(user.getHeadPortrait() != null) {
             File oldAvatarFile = new File( ServletActionContext.getServletContext()
                     .getRealPath(user.getHeadPortrait()));
-
-            System.out.println("文件删除测试2" +  oldAvatarFile.getPath());
-
-            System.out.println("文件删除测试3" +   oldAvatarFile.delete());
-
+            System.out.println("文件删除结果" +   oldAvatarFile.delete());
         }
 
         //以服务器的文件保存地址和原文件名建立上传文件输出流

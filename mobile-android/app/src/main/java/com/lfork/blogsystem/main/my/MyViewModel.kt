@@ -2,7 +2,7 @@ package com.lfork.blogsystem.main.my
 
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.base.viewmodel.UserViewModel
-import com.lfork.blogsystem.base.network.DataCallback
+import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
 

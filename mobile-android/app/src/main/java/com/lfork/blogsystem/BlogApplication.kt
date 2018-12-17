@@ -22,40 +22,6 @@ import java.util.concurrent.TimeUnit
 
 class BlogApplication : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-        context = applicationContext
-        initDataBase()
-        initThreadPool()
-        initUserInfo();
-    }
-
-    private fun initDataBase() {}
-
-    private fun initThreadPool() {
-        val namedThreadFactory = MyThreadFactory("UI辅助线程池")
-        appFixedThreadPool = ThreadPoolExecutor(
-                Config.BASE_THREAD_POOL_SIZE,
-                Config.BASE_THREAD_POOL_SIZE * 2,
-                0L,
-                TimeUnit.MICROSECONDS,
-                LinkedBlockingDeque(),
-                namedThreadFactory
-        )
-    }
-
-    private fun initUserInfo() {
-        sp = context!!.getSharedPreferences("user_info", Context.MODE_PRIVATE)
-        UserDataRepository.initBasicUserInfo(
-                sp.getString("email", null),
-                sp.getString("phone", null),
-                sp.getString("username", null))
-        token = sp.getString("token", null)
-        if (token != null) {
-            isSignIn = true
-        }
-    }
-
     companion object {
 
         val APP_SHARED_PREF = "application_shared_pref"
@@ -75,7 +41,7 @@ class BlogApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         var context: Context? = null
 
-        fun executeThreadWithThreadPool(r: Runnable) {
+        fun doAsyncTask(r: () -> Unit) {
             appFixedThreadPool!!.execute(r)
         }
 
@@ -83,7 +49,7 @@ class BlogApplication : Application() {
 
         fun saveNickname(nickname: String) {
             val editor = sp.edit()
-            editor.putString("username", nickname)
+            editor.putString("title", nickname)
             editor.apply()
         }
 
@@ -120,4 +86,42 @@ class BlogApplication : Application() {
             isSignIn = false
         }
     }
+
+
+    override fun onCreate() {
+        super.onCreate()
+        context = applicationContext
+        initDataBase()
+        initThreadPool()
+        initUserInfo();
+    }
+
+    private fun initDataBase() {}
+
+    private fun initThreadPool() {
+        val namedThreadFactory = MyThreadFactory("UI辅助线程池")
+        appFixedThreadPool = ThreadPoolExecutor(
+            Config.BASE_THREAD_POOL_SIZE,
+            Config.BASE_THREAD_POOL_SIZE * 2,
+            0L,
+            TimeUnit.MICROSECONDS,
+            LinkedBlockingDeque(),
+            namedThreadFactory
+        )
+    }
+
+    private fun initUserInfo() {
+        sp = context!!.getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        UserDataRepository.initBasicUserInfo(
+            sp.getString("email", null),
+            sp.getString("phone", null),
+            sp.getString("title", null)
+        )
+        token = sp.getString("token", null)
+        if (token != null) {
+            isSignIn = true
+        }
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package com.lfork.blogsystem.data.user
 
-import com.lfork.blogsystem.base.network.DataCallback
+import com.lfork.blogsystem.data.DataCallback
 import java.io.File
 
 /**
@@ -14,7 +14,6 @@ interface UserDataSource {
      */
     fun login(account: String, password: String, callback: DataCallback<String>)
 
-//    fun logout()
 
     fun register(
         account: String,
@@ -25,9 +24,8 @@ interface UserDataSource {
 
     fun getUserInfo(account: String, token: String, callback: DataCallback<User>)
 
-//    fun getFlowingListInfo()
 
-    fun updateUserInfo(newUser: User, account: String, token: String,  callback: DataCallback<User>)
+    fun updateUserInfo(newUser: User, account: String, token: String, callback: DataCallback<User>)
 
     fun updateUserPortrait(pic: File, account: String, token: String, callback: DataCallback<User>)
 
@@ -35,5 +33,28 @@ interface UserDataSource {
      * 需要做好限60秒一次的限制
      */
     fun getVerificationCode(account: String, callback: DataCallback<String>)
+
+
+    fun unFollow(
+        beUnFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    );
+
+    fun follow(
+        beFollowedAccount: String,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    )
+
+    //分页，userId,
+//    fun getFollowings();
+
+    //分页，userId,
+    fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>);
+
+    fun getFollowings(account: String, token: String, callback: DataCallback<List<User>>)
 
 }

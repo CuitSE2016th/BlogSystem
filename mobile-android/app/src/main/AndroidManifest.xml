@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".BlogApplication"
         android:allowBackup="true"
@@ -52,13 +51,10 @@
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".userinfoedit.UserInfoEditActivity" />
         <activity android:name=".imagebrowser.ImageBrowserActivity" />
-
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar"
-            />
+            android:theme="@style/AppThemeNoActionBar" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -69,6 +65,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".notifications.NotificationsActivity" />
+        <activity android:name=".usermainpage.UserMainPageActivity" />
+        <activity android:name=".articledetail.ArticleDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.lfork.blogsystem.base.network
 
 import com.google.gson.annotations.SerializedName
+import com.lfork.blogsystem.data.DataCallback
 
 
 /**

@@ -27,7 +27,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.base.network.DataCallback
+import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.utils.StringValidation.isPhoneValid
 import com.lfork.blogsystem.utils.ToastUtil
@@ -185,7 +185,8 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             // perform the user login attempt.
             showProgress(true)
             mRegisterTask = UserDataRepository
-            mRegisterTask?.register(accountStr, passwordStr, verificationCodeStr, object : DataCallback<String> {
+            mRegisterTask?.register(accountStr, passwordStr, verificationCodeStr, object :
+                DataCallback<String> {
                 override fun succeed(data: String) {
                     ToastUtil.showLong(applicationContext, "注册成功")
                     finish()
@@ -206,7 +207,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
 
 
-        BlogApplication.executeThreadWithThreadPool(Runnable {
+        BlogApplication.doAsyncTask {
             val countDownSeconds = 60
             for (i in 1..countDownSeconds) {
                 Thread.sleep(1000)
@@ -218,12 +219,13 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 get_verification_code_button.text = getText(R.string.action_get_verification_code)
             }
             mVerificationCodeTask = null
-        })
+        }
 
         val accountStr = account.text.toString()
 
         mVerificationCodeTask = UserDataRepository
-        mVerificationCodeTask?.getVerificationCode(accountStr, object : DataCallback<String> {
+        mVerificationCodeTask?.getVerificationCode(accountStr, object :
+            DataCallback<String> {
             override fun succeed(data: String) {
                 ToastUtil.showLong(this@RegisterActivity, data)
             }
