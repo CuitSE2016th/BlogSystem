@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".articledetail.ArticleDetailActivity" >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        style="@style/article_detail_navigation_btns"
-        android:id="@+id/button6"
-        android:text="Star" />
+    <data>
 
-    <Button
-        android:id="@+id/button8"
-        style="@style/article_detail_navigation_btns"
-        android:text="Like" />
+        <variable
+            name="viewModel"
+            type="com.lfork.blogsystem.articledetail.ArticleDetailViewModel" />
 
-    <Button
-        android:id="@+id/button9"
-        style="@style/article_detail_navigation_btns"
-        android:text="Comment" />
+        <import type="android.view.View" />
+    </data>
 
-    <Button
-        android:id="@+id/button7"
-        style="@style/article_detail_navigation_btns"
-        android:text="Share" />
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".articledetail.ArticleDetailActivity">
+
+
+        <Button
+            android:id="@+id/btn_like"
+            style="@style/article_detail_navigation_btns"
+            tools:text="Like"
+            android:text="@{viewModel.like}" />
+
+        <Button
+            android:id="@+id/btn_star"
+            style="@style/article_detail_navigation_btns"
+            tools:text="Star"
+            android:text="@{viewModel.star}" />
+
+
+        <Button
+            android:id="@+id/btn_comment"
+            style="@style/article_detail_navigation_btns"
+            android:text="Comment" />
+
+        <Button
+            android:id="@+id/button7"
+            style="@style/article_detail_navigation_btns"
+            android:text="Share" />
+    </LinearLayout>
+
+</layout>

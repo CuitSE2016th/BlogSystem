@@ -14,18 +14,18 @@ class ArticleCommentFragment : Fragment() {
         fun newInstance() = ArticleCommentFragment()
     }
 
-    private lateinit var viewModel: ArticleDetailMainViewModel
+    private lateinit var viewModel: ArticleDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.article_detail_main_frag, container, false)
+        return inflater.inflate(R.layout.article_detail_comment_frag, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ArticleDetailMainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ArticleDetailViewModel::class.java)
 
         // TODO: Use the ViewModel
     }
