@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 @Repository("base")
@@ -26,9 +27,8 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    public <S extends T> S insert(S entity) {
-        template.save(entity);
-        return entity;
+    public <S extends T> Serializable insert(S entity) {
+        return template.save(entity);
     }
 
     @Override

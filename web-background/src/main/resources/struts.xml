@@ -44,6 +44,12 @@
                 <interceptor-ref name="workflow">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>
+                <!--文件上传限制-->
+                <interceptor-ref name="defaultStack">
+                    <param name="fileUpload.maximumSize">500000000</param>
+                    <param name="fileUpload.allowedTypes">image/gif,image/bmp,image/jpeg</param>
+                    <param name="fileUpload.allowedExtensions">.jpg,.png,.jpeg,.gif,.bmp</param>
+                </interceptor-ref>
             </interceptor-stack>
         </interceptors>
     </package>

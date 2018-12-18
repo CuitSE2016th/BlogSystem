@@ -30,7 +30,7 @@ public interface UserArticleService {
 	 * @param content 内容
      * @return void
      **/
-    void publishArticle(String userId, String title, String content);
+    Integer publishArticle(String userId, String title, String content);
 
 
     /**

@@ -3,10 +3,11 @@ package com.bs.ssh.dao;
 
 import com.bs.ssh.bean.PageRequest;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface BaseDao<T> {
-     <S extends T> S insert(S entity);
+     <S extends T> Serializable insert(S entity);
 
     <S extends T> Iterable<S> insert(Iterable<S> entities);
 
