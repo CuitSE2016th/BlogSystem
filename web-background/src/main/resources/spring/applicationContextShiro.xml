@@ -54,6 +54,8 @@
                 /user/register = anon
                 /user/code = anon
                 /user/article/all = anon
+                / = anon
+                <!--/user/article/upload = anon-->
                 /** = auth
             </value>
         </property>

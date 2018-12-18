@@ -31,10 +31,11 @@ public class UploadPictureAction extends AbstractArticleAction {
     @Override
     public String execute() throws Exception {
 
-//        String uid = this.getUserId();
+
 
         try {
-            String[] path = fileService.uploadPicture("1234567", image, imageFileName);
+            String uid = this.getUserId();
+            String[] path = fileService.uploadPicture(uid, image, imageFileName);
             result = JsonBody.success();
             result.setData(path);
         }catch (Exception e){

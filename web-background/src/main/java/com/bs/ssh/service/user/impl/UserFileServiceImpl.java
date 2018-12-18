@@ -54,7 +54,7 @@ public class UserFileServiceImpl implements UserFileService {
     @Override
     public void referencePicture(String uid, String[] iid, Integer aid) {
         for (String id : iid){
-            Image image = imageBaseDao.findOne("from Image where id=? and uid = ?", uid, id);
+            Image image = imageBaseDao.findOne("from Image where id=? and uid = ?", id, uid);
             if(image == null)
                 throw new NoSuchEntityException("图片不存在或您没有操作权限");
             image.setAid(aid);
