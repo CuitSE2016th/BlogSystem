@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,7 +23,6 @@ import com.lfork.blogsystem.utils.ToastUtil
 import com.lfork.blogsystem.utils.setupToolBar
 import kotlinx.android.synthetic.main.item_article_widen_style.view.*
 import kotlinx.android.synthetic.main.my_articles_act.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MyArticlesActivity : AppCompatActivity(), MyArticleContract.View {
@@ -36,6 +37,8 @@ class MyArticlesActivity : AppCompatActivity(), MyArticleContract.View {
         runOnUiThread {
             pageNumber++
             adapter.addItems(articles)
+            refresh_layout.visibility = VISIBLE
+            item_no_data.visibility = GONE
         }
 
     }
@@ -43,6 +46,8 @@ class MyArticlesActivity : AppCompatActivity(), MyArticleContract.View {
     override fun error(msg: String) {
         runOnUiThread {
             ToastUtil.showShort(this@MyArticlesActivity, msg)
+            item_no_data.visibility = VISIBLE
+            refresh_layout.visibility = GONE
         }
     }
 

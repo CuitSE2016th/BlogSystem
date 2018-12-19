@@ -215,5 +215,6 @@
     <string name="tips_empty">There is no data....</string>
     <string name="data_is_loading">Data is loading</string>
     <string name="enter_a_title">Enter a title</string>
+    <string name="the_data_is_empty">The data is empty</string>
 
 </resources>
