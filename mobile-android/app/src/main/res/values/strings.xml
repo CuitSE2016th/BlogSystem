@@ -214,5 +214,6 @@
     <string name="cancel">Cancel</string>
     <string name="tips_empty">There is no data....</string>
     <string name="data_is_loading">Data is loading</string>
+    <string name="enter_a_title">Enter a title</string>
 
 </resources>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:are="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".articleedit.ArticleEditorActivity"
+    xmlns:tools="http://schemas.android.com/tools"
+  >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/separator_line2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:textSize="36sp"
+                tools:text="编辑标题测试，嗯嗯嗯啊实打实大苏打撒旦"
+                android:id="@+id/article_title"
+                android:hint="@string/enter_a_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--<View-->
+                <!--android:layout_marginTop="4dp"-->
+                <!--android:layout_marginBottom="4dp"-->
+                <!--android:layout_marginStart="16dp"-->
+                <!--android:layout_marginEnd="16dp"-->
+                <!--android:background="@color/gray_cc_separator"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"/>-->
+
+
+            <com.chinalwb.are.AREditText
+                android:id="@+id/arEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:hint="Your EditText goes here"
+                android:textSize="50sp" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <View
+        android:background="@color/gray_cc_separator"
+        android:id="@+id/separator_line2"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/bottombar"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="1000">
+
+
+
+        <com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
+            android:id="@+id/areToolbar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="900"
+            android:gravity="center_vertical" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:background="@color/colorPrimaryDark" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="95"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/arrow_right" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
+
