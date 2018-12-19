@@ -7,7 +7,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AbstractArticleAction extends BaseAction {
     @Autowired protected UserArticleService articleService;
 
-    protected Integer aid;
-
 
 }

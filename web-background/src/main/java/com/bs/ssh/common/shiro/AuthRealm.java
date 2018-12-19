@@ -47,7 +47,7 @@ public class AuthRealm extends AuthorizingRealm {
             return new SimpleAuthenticationInfo(user, accessToken, getName());
         }else {
             //token过期或不存在
-            return null;
+            throw new RuntimeException("令牌已过期或不存在");
         }
 
     }

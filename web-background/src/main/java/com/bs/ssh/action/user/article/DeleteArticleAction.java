@@ -11,6 +11,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @Namespace("/user/article")
 public class DeleteArticleAction extends AbstractArticleAction {
 
+    private Integer aid;
 
     @Action("/delete")
     @Validations(

@@ -1,6 +1,7 @@
 package com.bs.ssh.common.shiro;
 
 import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.utils.Constants;
 import com.google.gson.Gson;
 import org.apache.http.HttpStatus;
 import org.apache.shiro.authc.AuthenticationException;
@@ -49,7 +50,7 @@ public class AuthFilter extends AuthenticatingFilter {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             response.setContentType("application/json;charset=utf-8");
             JsonBody<String> r = new JsonBody<String>();
-            r.setCode(HttpStatus.SC_UNAUTHORIZED);
+            r.setCode(Constants.RESPONSE_FAILED);
             r.setMessage("需要令牌");
             String json = new Gson().toJson(r);
             httpResponse.getWriter().print(json);
@@ -68,7 +69,7 @@ public class AuthFilter extends AuthenticatingFilter {
         try {
             Throwable throwable = e.getCause() == null ? e : e.getCause();
             JsonBody<String> r = new JsonBody<String>();
-            r.setCode(HttpStatus.SC_UNAUTHORIZED);
+            r.setCode(Constants.RESPONSE_FAILED);
             r.setMessage("令牌无效");
             r.setData(throwable.getMessage());
             String json = new Gson().toJson(r);
