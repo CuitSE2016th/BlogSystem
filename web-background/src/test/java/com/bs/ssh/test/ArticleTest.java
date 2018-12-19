@@ -1,5 +1,6 @@
 package com.bs.ssh.test;
 
+import com.bs.ssh.service.user.UserFileService;
 import com.bs.ssh.utils.JsonUtil;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.service.user.UserArticleService;
@@ -14,9 +15,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:spring/*")
 public class ArticleTest {
     @Autowired private UserArticleService articleService;
+    @Autowired private UserFileService fileService;
 
     private final static String USER_ID = "35268860677";
     private final static Integer ARTICLE_ID = 1;
+
+    @Test
+    public void referencePic(){
+        String uid = "1234567";
+        String[] paths = new String[1];
+        paths[0] = "53955181255";
+        Integer aid = 1;
+
+        fileService.referencePicture(uid, paths, aid);
+
+    }
 
     @Test
     public void add(){

@@ -8,7 +8,9 @@ import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.dao.impl.BaseDaoImpl;
 import com.bs.ssh.service.user.UserArticleService;
 import com.bs.ssh.utils.HashUtils;
+import com.bs.ssh.utils.IDUtils;
 import com.bs.ssh.utils.RedisUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -21,6 +23,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/*")
@@ -44,31 +49,28 @@ public class UnitTest {
     @Autowired
     UserArticleService articleService;
 
-//    @Test
-    @Transactional
-    public PageBean page(){
-//        Pageable pageable = new PageRequest(0, 3);
-
-        PageRequest request = new PageRequest();
-        request.setPageSize(2);
-        request.setPageNumber(1);
-        PageBean pageBean = articleService.getAllArticle(request);
-        return pageBean;
-//        System.out.println(pageBean.getResult());
-//        System.out.println(JsonUtils.toJsonExposed(
-//                pageBean
-//        ));
+    @Test
+    public void suffixTest(){
+        String filename = "154";
+        System.out.println(filename.lastIndexOf("."));
+        System.out.println(IDUtils.UserID());
+        System.out.println(IDUtils.UserID());
+        System.out.println(IDUtils.UserID());
     }
 
+    @Test
+    public void fileTest() throws IOException {
+        File file = new File("E:\\tt.jpg");
+        File file2 = new File("E:\\tt-test.jpg");
+        System.out.println(file2.createNewFile());
+        FileUtils.copyFile(file, file2);
+        String fileString = new String(FileUtils.readFileToByteArray(file));
+        System.out.println(fileString.length());
+        File file1 = new File("E:\\test.jpg");
+        byte b[] = fileString.getBytes();
+        FileUtils.writeByteArrayToFile(file1, b);
+        System.out.println(file.exists());
 
-//    @Test
-    @Transactional
-    public void articlePage(){
-//        System.out.println(
-//                JsonUtils.toJsonExposed(
-//                        articleService.getAllArticle(new PageRequest(0, 2)).getContent()
-//                )
-//        );
     }
 
 //    @Test

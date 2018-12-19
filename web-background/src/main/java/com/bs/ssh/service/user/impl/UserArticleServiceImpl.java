@@ -42,7 +42,7 @@ public class UserArticleServiceImpl implements UserArticleService{
     }
 
     @Override
-    public void publishArticle(String userId, String title, String content) {
+    public Integer publishArticle(String userId, String title, String content) {
         Article article = new Article();
         article.setAuthorId(userId);
         article.setTitle(title);
@@ -50,7 +50,8 @@ public class UserArticleServiceImpl implements UserArticleService{
         article.setCreateTime(System.currentTimeMillis());
         article.setStatus(Constants.AUDIT_COMPLETE);
 
-        articleDao.insert(article);
+        return (Integer) articleDao.insert(article);
+
 
     }
 

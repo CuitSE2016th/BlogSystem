@@ -3,6 +3,7 @@ package com.bs.ssh.action.user.article;
 import com.bs.ssh.action.BaseAction;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.service.user.UserArticleService;
+import com.bs.ssh.service.user.UserFileService;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
@@ -14,10 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Namespace("/user/article")
 public class PublishArticleAction extends AbstractArticleAction {
 
+    @Autowired
+    private UserFileService fileService;
 
     private String title;
 
     private String content;
+
+    private String[] images;
 
     @Action("/publish")
     @Validations(
@@ -39,8 +44,11 @@ public class PublishArticleAction extends AbstractArticleAction {
     public String execute(){
         try{
             String uid = getUserId();
-            articleService.publishArticle(uid, title, content);
+            Integer aid = articleService.publishArticle(uid, title, content);
+            if(images != null)
+                fileService.referencePicture(uid, images, aid);
             result = JsonBody.success();
+
         }catch (Exception e){
             result = JsonBody.fail();
             result.setMessage(e.getMessage());
@@ -63,5 +71,13 @@ public class PublishArticleAction extends AbstractArticleAction {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String[] getImages() {
+        return images;
+    }
+
+    public void setImages(String[] images) {
+        this.images = images;
     }
 }

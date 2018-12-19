@@ -11,18 +11,36 @@ import javax.persistence.*;
 @Entity
 @Table(name = "image")
 public class Image {
-    private Integer id;
+    private String id;
+    private String uid;
+    private Integer aid;
     private String url;
     private Long createTime;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public Integer getAid() {
+        return aid;
+    }
+
+    public void setAid(Integer aid) {
+        this.aid = aid;
     }
 
     @Basic
