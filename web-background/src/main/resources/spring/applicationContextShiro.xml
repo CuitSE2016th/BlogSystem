@@ -55,6 +55,7 @@
                 /user/code = anon
                 /user/article/page = anon
                 /user/comment/page = anon
+                /isExist = anon
                 / = anon
                 <!--/user/article/upload = anon-->
                 /** = auth
