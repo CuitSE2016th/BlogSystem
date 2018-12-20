@@ -96,7 +96,7 @@
         <div class="form-group col-xs-offset-2 col-xs-8 has-feedback" >
             <div>
                 <span class=" form-control-feedback glyphicon glyphicon-lock"></span>
-                <input id="register_password" type="password" class="form-control" style="padding-left: 34px" placeholder="设置密码">
+                <input id="register_password" type="password" class="form-control" style="padding-left: 34px" placeholder="密码（含大小写和数字）">
             </div>
         </div>
         <div class="form-group col-xs-offset-2 col-xs-4" >
@@ -208,6 +208,7 @@
 
     });
     $("#register_tel").blur(function() {
+        var email=$("#register_tel").val();
         $("#register_reminder").empty();
         //校验用户名是否为空，ajax异步校验是否注册了
         if ($("#register_tel").val()== "") {
@@ -223,7 +224,14 @@
                 type: "POST", //请求方式 可换为post 注意验证页面接收方式
                 data: {"emailOrPhone": email}, //取得表文本框数据，作为提交数据
                 success: function (data) { //请求成功时执行操作
-
+                    if(data.code=100){
+                    }else{
+                        var str1='';
+                        str1 +='<span style="color:red">';
+                        str1 +='该手机号或邮箱已被注册！'
+                        str1 +='</span>'
+                        $("#register_reminder").html(str1);
+                    }
                 }
             })
         }
@@ -260,10 +268,13 @@
     $("#register_code_get").click(function(){
         var email=$("#register_tel").val();
         $.ajax({
-            url: "http://localhost:8080/isExist", //请求验证页面
+            url: "http://localhost:8080/user/code", //请求验证页面
             type: "POST", //请求方式 可换为post 注意验证页面接收方式
-            data: {"emailOrPhone": email}, //取得表文本框数据，作为提交数据
+            data: {"emailOrPhone": email},
             success: function (data) { //请求成功时执行操作
+                if(data.code==100){
+
+                }
             }
         })
 
@@ -271,7 +282,7 @@
 
     $("#register").click(function(){
         var email=$("#register_tel").val();
-        var emailcode=$("#register_code").val();
+        var email_code=$("#register_code").val();
         var password=$("#register_password").val();
         $.ajax({
 
@@ -279,10 +290,19 @@
 
             type:'post',
 
-            data:{"emailOrPhone": email,"emailOrPhoneCode":emailcode,"password":password},//向服务器（接口）传递的参数
+            data:{"emailOrPhone": email,"emailOrPhoneCode":email_code,"password":password},//向服务器（接口）传递的参数
 
             success:function(data){//服务器（接口）返回来的数据
-                if(data.code==100){//如果返回来的信息说明提交的信息为正确的
+                alert(data.code);
+                if(data.code==200){//如果返回来的信息说明提交的信息为正确的
+                    $("#register_reminder").empty();
+                    var str1='';
+                    str1 +='<span style="color:red">';
+                    str1 +='注册失败！检查验证码和密码'
+                    str1 +='</span>'
+                    $("#register_reminder").html(str1);
+                }
+                if(data.code==100){
                     $("#register_reminder").empty();
                     var str1='';
                     str1 +='<span style="color:red">';
