@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<nav class="navbar navbar-default" id="nav" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header" style="width: 60px; height: 60px;margin-left: 60px;" >
+            <a href=""><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+        </div>
+        <div class="nav_btn">
+            <button type="button" class="btn btn-primary btn-block">发现</button>
+        </div>
+        <div class="nav_btn">
+            <button type="button" class="btn btn-primary btn-block">关注</button>
+        </div>
+        <ul class="nav navbar-nav navbar-right nav_ul">
+            <li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+            <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="index_body">
+</div>
+
+</body>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        //首先获取导航栏距离浏览器顶部的高度
+        var top = $('#nav').offset().top;
+        //开始监控滚动栏scroll
+        $(document).scroll(function(){
+        //获取当前滚动栏scroll的高度并赋值
+            var scrTop = $(window).scrollTop();
+            //开始判断如果导航栏距离顶部的高度等于当前滚动栏的高度则开启悬浮
+            if(scrTop >= top){
+                $('#nav').css({'position':'fixed','top':'0','width':'100%'});
+            }else{//否则清空悬浮
+                $('#nav').css({'position':'','top':''});
+            }
+        })
+    })
+</script>
+</html>

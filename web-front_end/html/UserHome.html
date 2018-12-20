@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/paging_model.js"></script>
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<nav class="navbar navbar-default" id="nav" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header" style="width: 60px; height: 60px;margin-left: 60px;" >
+            <a href=""><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+        </div>
+        <div class="nav_btn">
+            <button type="button" class="btn btn-primary btn-block">发现</button>
+        </div>
+        <div class="nav_btn">
+            <a href="UserFllow.html"><button type="button" class="btn btn-primary btn-block">关注</button></a>
+        </div>
+        <div class="input-group search_input">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">搜索</button>
+            </span>
+            <input type="text" class="form-control" placeholder="输入要查找文章">
+        </div>
+        <ul class="nav navbar-nav navbar-right nav_ul">
+            <div class="navbar-header" style="width: 60px; height: 60px;float: left" >
+                <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+            </div>
+            <div class="nav_btn">
+                <button type="button" class="btn btn-primary btn-block">写文章</button>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+<div style="margin-top:60px ">
+    <div class="user_all">
+        <div class="user_head">
+            <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+        </div>
+
+        <div class="user_detail">
+            <h1>用户名</h1>
+            <ul>
+                <li>文章数：200</li>
+                <li class="li_item">|</li>
+                <li class="li_item">字数：2000</li>
+                <li class="li_item">|</li>
+                <li class="li_item">粉丝：28</li>
+                <li class="li_item">|</li>
+                <li class="li_item">关注：58</li>
+                <li class="li_item">|</li>
+                <li class="li_item">赞数：99</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="tab_chang">
+        <table border="1">
+            <tr>
+                <td id="change_item_1" style="cursor: pointer">文章</td>
+                <td id="change_item_2" style="cursor: pointer">最新评论</td>
+                <td id="change_item_3" style="cursor: pointer">收藏</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div>
+    <div class="article_body" id="order1">
+        <div class="single_article">
+            <div class="article_msg">
+                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
+                <div class="article_char">
+                    <p>
+                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                    </p>
+                </div>
+                <div class="article_detail">
+                    <ul>
+                        <li style="padding-left: 0">访问量:100</li>
+                        <li>赞数:10</li>
+                        <li>评论条数：23</li>
+                        <li>2018年11月1日 01点12分</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="article_img" >
+                <img width="100%" height="100%" src="../img/logo.jpg" />
+            </div>
+        </div>
+        <div class="single_article">
+            <div class="article_msg">
+                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
+                <div class="article_char">
+                    <p>
+                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                    </p>
+                </div>
+                <div class="article_detail">
+                    <ul>
+                        <li style="padding-left: 0">访问量:100</li>
+                        <li>赞数:10</li>
+                        <li>评论条数：23</li>
+                        <li>2018年11月1日 01点12分</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="article_img" >
+                <img width="100%" height="100%" src="../img/logo.jpg" />
+            </div>
+        </div>
+        <div class="single_article">
+            <div class="article_msg">
+                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
+                <div class="article_char">
+                    <p>
+                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                    </p>
+                </div>
+                <div class="article_detail">
+                    <ul>
+                        <li style="padding-left: 0">访问量:100</li>
+                        <li>赞数:10</li>
+                        <li>评论条数：23</li>
+                        <li>2018年11月1日 01点12分</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="article_img" >
+                <img width="100%" height="100%" src="../img/logo.jpg" />
+            </div>
+        </div>
+        <div class="single_article">
+            <div class="article_msg">
+                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
+                <div class="article_char">
+                    <p>
+                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                    </p>
+                </div>
+                <div class="article_detail">
+                    <ul>
+                        <li style="padding-left: 0">访问量:100</li>
+                        <li>赞数:10</li>
+                        <li>评论条数：23</li>
+                        <li>2018年11月1日 01点12分</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="article_img" >
+                <img width="100%" height="100%" src="../img/logo.jpg" />
+            </div>
+        </div>
+        <div class="single_article">
+            <div class="article_msg">
+                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
+                <div class="article_char">
+                    <p>
+                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
+                    </p>
+                </div>
+                <div class="article_detail">
+                    <ul>
+                        <li style="padding-left: 0">访问量:100</li>
+                        <li>赞数:10</li>
+                        <li>评论条数：23</li>
+                        <li>2018年11月1日 01点12分</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="article_img" >
+                <img width="100%" height="100%" src="../img/logo.jpg" />
+            </div>
+        </div>
+        <div class="pager-list"></div>
+    </div>
+    <div class="review_body" id="order2" style="display:none;">
+        <div>
+
+        </div>
+    </div>
+    <div class="collect_body" id="order3" style="display:none;">
+        <div>
+
+        </div>
+        <div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //首先获取导航栏距离浏览器顶部的高度
+        var top = $('#nav').offset().top;
+        //开始监控滚动栏scroll
+        $(document).scroll(function () {
+            //获取当前滚动栏scroll的高度并赋值
+            var scrTop = $(window).scrollTop();
+            //开始判断如果导航栏距离顶部的高度等于当前滚动栏的高度则开启悬浮
+            if (scrTop >= top) {
+                $('#nav').css({'position': 'fixed', 'top': '0', 'width': '100%'});
+            } else {//否则清空悬浮
+                $('#nav').css({'position': '', 'top': ''});
+            }
+        })
+    });
+
+    $(document).ready(function () {
+        var temp = "none";
+
+        $("#change_item_1").click(function () {
+            openMatter(1);
+        });
+        $("#change_item_2").click(function () {
+            openMatter(2);
+        });
+        $("#change_item_3").click(function () {
+            openMatter(3);
+        });
+
+        function openMatter(obj) {
+            for (var i = 1; i < 4; i++) {
+                if (i == obj) {
+                    temp = "block";
+                } else {
+                    temp = "none";
+                }
+                document.getElementById("order" + i).style.display = temp;
+
+            }
+        }
+    });
+    $().ready(function () {
+        $('div.pager-list').pageList({
+            prevText: '前一页',
+            nextText: '下一页',
+            recordText: '共{0}页，{1}条记录',
+            totalCount: 200,
+            goInputType: 'text',
+            //showGoLink: true,
+            showPageRange: 5,
+            renderPerCall: true,
+            clickCallback: function (currentPage) {
+                console.info("currentPage:" + currentPage);
+            }
+        });
+    });
+</script>
+</html>

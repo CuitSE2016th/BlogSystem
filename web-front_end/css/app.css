@@ -1,0 +1,347 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul li{
+    list-style: none;
+    cursor: pointer;
+}
+.nav_btn{
+    width: 60px;
+    margin-top: 10px;
+    margin-left: 50px;
+    float: left;
+}
+.search_input{
+    float: left;
+    width: 400px;
+    margin-top: 10px;
+    margin-left: 15%;
+
+}
+.nav_ul{
+    margin-right: 60px;
+}
+
+.index_body{
+    width: 1024px;
+}
+/*用户信息css*/
+.user_all{
+    width: 1024px;
+    height: 200px;
+    margin: 0 auto;
+}
+.user_all .user_detail{
+    padding-top: 50px;
+    padding-left: 240px;
+}
+.user_all .user_detail ul li a:hover,
+.user_all .user_detail ul li{
+    list-style: none;
+    float: left;
+    font-weight:900;
+}
+.user_all .user_detail .li_item{
+    padding-left: 40px;
+}
+.user_all .user_head{
+    width: 160px;
+    height: 160px;
+    float: left;
+}
+
+.tab_chang{
+    width: 800px;
+    margin:0 auto;
+}
+.tab_chang table tr td{
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: 700;
+}
+.user_info{
+    width: 1024px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+.user_info .tab_userinfo{
+    width: 200px;
+    margin-left:50px;
+    float: left;
+}
+.user_info .tab_userinfo ul{
+    width: 180px;
+}
+.user_info .show_userinfo{
+    width: 600px;
+    float: left;
+    margin-left: 50px;
+}
+.user_info .show_userinfo .user_upload_head{
+    width: 600px;
+    height: 100px;
+    padding-left: px;
+}
+.user_info .show_userinfo .user_upload_head .head_img{
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+.user_info .show_userinfo .edit_head{
+    width: 180px;
+    height: 60px;
+    padding-top: 40px;
+    padding-left: 50px;
+    float: left;
+}
+.user_info .show_userinfo .user_detail_info{
+    width: 400px;
+    padding-top: 30px;
+}
+.user_info .show_userinfo .user_detail_info .user_detail_info_ev{
+    height: 70px;
+    padding-top: 20px;
+    border-bottom: 1px solid #000000;
+}
+/*关注粉丝页css*/
+.fallow_body{
+    padding-top: 50px;
+    width: 1024px;
+    margin: 0 auto;
+}
+.fallow_body .tab_chang ul {
+    width: 800px;
+    height: 50px;
+    margin: 0 auto;
+    border-bottom: #eeeeee 1px;
+}
+.fallow_body .tab_chang ul li{
+    list-style: none;
+    font-size: 20px;
+    text-align: center;
+    float: left;
+    width: 100px;
+    margin-left: 50px;
+    border-bottom:2px solid #eeeeee;
+}
+.fallow_body .fallow_change_body{
+    width: 900px;
+    margin: 0 auto;
+}
+.fallow_body .fallow_change_body .user_all{
+    width: 900px;
+    height: 150px;
+    margin: 0 auto;
+    padding-top: 50px;
+    border-bottom: 1px solid #000000;
+}
+.fallow_body .fallow_change_body .user_all .user_head{
+    width: 80px;
+    height: 80px;
+    float: left;
+}
+.fallow_body .fallow_change_body .user_all .user_detail{
+    padding-top: 5px;
+    padding-left: 100px;
+}
+.fallow_body .fallow_change_body .user_all .user_detail ul{
+    width: 700px;
+}
+.fallow_body .fallow_change_body .user_all .user_detail .li_item {
+    padding-left: 20px;
+}
+.fallow_body .fallow_change_body .user_all .user_detail{
+    width: 700px;
+    height: 100px;
+    float: left;
+}
+.fallow_body .fallow_change_body .user_all .user_detail ul li{
+    list-style: none;
+    float: left;
+    font-weight:100;
+}
+.fallow_body .fallow_change_body .user_all .focus_btn{
+    height: 100px;
+    padding-top: 50px;
+    float: left;
+}
+/*用户文章页*/
+.article_body{
+    width: 800px;
+    margin: 0 auto;
+}
+.article_body .single_article{
+    margin-top: 5px;
+    height: 200px;
+    border-bottom: 1px solid #000000;
+}
+.article_body .single_article .article_msg{
+    width: 600px;
+    float: left;
+}
+.article_body .single_article .article_msg .article_char{
+    height: 100px;
+}
+.article_body .single_article .article_msg .article_char p{
+    /*position:relative;*/
+    line-height:1.4em;
+    height:4.2em;/* 3 倍line-height  多少倍就是多少行*/
+    overflow:hidden;
+}
+.article_body .single_article .article_msg .article_detail{
+    margin-top: 5px;
+    height: 35px;
+}
+.article_body .single_article .article_msg .article_detail ul li{
+    list-style: none;
+    float: left;
+    padding-left: 25px;
+}
+
+.article_body .single_article .article_img{
+    float: left;
+    width: 180px;
+    height: 160px;
+    padding-top: 20px;
+}
+.pager-list {
+    position: relative;
+    font-size: 10pt;
+    margin: 0 auto;
+}
+
+.pager-list > .pager {
+    display: block;
+    position: relative;
+}
+
+.pager-list ul li {
+    list-style: none;
+    float: left;
+    margin: 0 3px;
+    min-width: 37px;
+}
+
+.pager-list ul li.next,
+.pager-list ul li.prev {
+    width: auto;
+}
+
+.pager-list ul li.disable a {
+    color: #848c94;
+}
+
+.pager-list ul li .text {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 0px;
+    color: black;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+.pager-list ul li.text input.go {
+    width: 25px;
+}
+.pager-list ul li.text select.go {
+    padding:2px 2px;
+}
+.pager-list ul li.text span.go {
+    color: #848c94;
+    margin-left: 2px;
+    cursor: pointer;
+    background-color: silver;
+    padding: 4px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+.pager-list ul li a {
+    display: block;
+    /*width: 24px;*/
+    padding: 0 7px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    border: 1px solid #848c94;
+    color: black;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+/*分页*/
+.pager-list ul li a:hover,
+.pager-list ul li.active a {
+    background-color: #b2d1d8;
+}
+
+/*超级管理员*/
+.user_article_body{
+    width:800px ;
+    height: 100px;
+    padding-left: 60px;
+}
+.user_article_body .user_article_head{
+    height: 80px;
+    width: 80px;
+    float: left;
+}
+.user_article_body .user_article_name{
+    height: 80px;
+    width: 200px;
+    float: left;
+}
+.user_article_body .user_article_btn{
+    width: 400px;
+    padding-top: 20px;
+    padding-left: 20px;
+    height:80px;
+    float: left;
+}
+.single_article{
+    margin-top: 5px;
+    height: 200px;
+    border-bottom: 1px solid #000000;
+}
+.single_article .article_msg{
+    width: 600px;
+    float: left;
+}
+.single_article .article_msg .article_char{
+    height: 100px;
+}
+.single_article .article_msg .article_char p{
+    /*position:relative;*/
+    line-height:1.4em;
+    height:4.2em;/* 3 倍line-height  多少倍就是多少行*/
+    overflow:hidden;
+}
+.single_article .article_msg .article_detail{
+    margin-top: 5px;
+    height: 35px;
+}
+.single_article .article_msg .article_detail ul li{
+    list-style: none;
+    float: left;
+    padding-left: 25px;
+}
+
+.single_article .article_img{
+    float: left;
+    width: 180px;
+    height: 160px;
+    padding-top: 20px;
+}
+.single_article .article_btn{
+    float: left;
+    width:140px;
+    height: 40px;
+    padding-top: 70px;
+}
