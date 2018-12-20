@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.base;
+package com.lfork.blogsystem.common;
 
 /**
  * Created by 98620 on 2018/4/7.

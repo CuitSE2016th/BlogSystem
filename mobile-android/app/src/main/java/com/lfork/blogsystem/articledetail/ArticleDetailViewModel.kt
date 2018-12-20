@@ -13,6 +13,8 @@ import com.lfork.blogsystem.data.user.UserDataRepository
 class ArticleDetailViewModel : ViewModel() {
     var account: String?=null
 
+    val title = ObservableField<String>("Rational Unified Process")
+
     val portraitUrl = ObservableField<String>("")
 
     val username = ObservableField<String>("L.Fork")
@@ -61,83 +63,583 @@ class ArticleDetailViewModel : ViewModel() {
             })
     }
 
-    val htmlTestData = ObservableField<String>("\n" +
+    val htmlTestData = ObservableField<String>("<html>\n" +
             "\n" +
-            "<!DOCTYPE html>\n" +
-            "<html lang=\"en\">\n" +
-            "  <head>\n" +
-            "  <title>BlogSystem/简化版的RUP模型.md at master · CuitSE2016th/BlogSystem</title>\n" +
-            "   \n" +
+            "<head>\n" +
+            "<meta http-equiv=Content-Type content=\"text/html; charset=utf-8\">\n" +
+            "<meta name=Generator content=\"Microsoft Word 15 (filtered)\">\n" +
+            "<style>\n" +
             "\n" +
-            "  </head>\n" +
             "\n" +
-            "  <body class=\"logged-in env-production page-blob\">\n" +
-            "    \n" +
+            "</style>\n" +
             "\n" +
-            "      \n" +
-            "  <div id=\"readme\" class=\"readme blob instapaper_body\">\n" +
-            "    <article class=\"markdown-body entry-content\" itemprop=\"text\"><h1><a id=\"user-content-前言\" class=\"anchor\" aria-hidden=\"true\" href=\"#前言\"><svg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\"></path></svg></a>前言</h1>\n" +
-            "<h2><a id=\"user-content-参考的模型\" class=\"anchor\" aria-hidden=\"true\" href=\"#参考的模型\"><svg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\"></path></svg></a>参考的模型</h2>\n" +
-            "<p>RUP的迭代开发、增量模型、快速原型模式、小型瀑布流模式。<br><br>\n" +
-            "可以说有点接近敏捷开发了、但是我们的沟通是个问题，所以实际上很难采用敏捷开发，<br>\n" +
-            "因为敏捷开发需要较强的团队沟通，我觉得不容易达到，我我认为还是需要写一些必要的<br>\n" +
-            "文档来降低沟通成本</p>\n" +
-            "<h1><a id=\"user-content-开发流程\" class=\"anchor\" aria-hidden=\"true\" href=\"#开发流程\"><svg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\"></path></svg></a>开发流程</h1>\n" +
-            "<h2><a id=\"user-content-第一次迭代\" class=\"anchor\" aria-hidden=\"true\" href=\"#第一次迭代\"><svg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\"></path></svg></a>第一次迭代：</h2>\n" +
-            "<ul>\n" +
-            "<li>-&gt;系统层次图(总体设计简化版)</li>\n" +
-            "<li>-&gt;一个模块的原型(UI简要设计)【必须】</li>\n" +
-            "<li>-&gt;一个模块的CIM与PIM(可以简画)、</li>\n" +
-            "<li>-&gt;一个模块的数据库设计(E-R图)【必须】、</li>\n" +
-            "<li>-&gt;一个模块的接口设计【必须】</li>\n" +
-            "<li>-&gt;开发</li>\n" +
-            "<li>-&gt;单元测试</li>\n" +
-            "</ul>\n" +
-            "<h2><a id=\"user-content-第二次迭代\" class=\"anchor\" aria-hidden=\"true\" href=\"#第二次迭代\"><svg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\"></path></svg></a>第二次迭代：</h2>\n" +
-            "<ul>\n" +
-            "<li>-&gt;一个模块的原型(UI简要设计)【必须】</li>\n" +
-            "<li>-&gt;一个模块的CIM与PIM(可以简画)、</li>\n" +
-            "<li>-&gt;一个模块的数据库设计(E-R图)【必须】、</li>\n" +
-            "<li>-&gt;一个模块的接口设计【必须】</li>\n" +
-            "<li>-&gt;开发</li>\n" +
-            "<li>-&gt;单元测试</li>\n" +
-            "<li>-&gt;集成测试</li>\n" +
-            "</ul>\n" +
-            "<p><em><strong>……….</strong></em></p>\n" +
-            "<h2><a id=\"user-content-第n-1次迭代\" class=\"anchor\" aria-hidden=\"true\" href=\"#第n-1次迭代\"><svg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\"></path></svg></a>第N-1次迭代：</h2>\n" +
-            "<ul>\n" +
-            "<li>-&gt;一个模块的原型(UI简要设计)【必须】</li>\n" +
-            "<li>-&gt;一个模块的CIM与PIM(可以简画)、</li>\n" +
-            "<li>-&gt;一个模块的数据库设计(E-R图)【必须】、</li>\n" +
-            "<li>-&gt;一个模块的接口设计【必须】</li>\n" +
-            "<li>-&gt;开发</li>\n" +
-            "<li>-&gt;单元测试</li>\n" +
-            "<li>-&gt;集成测试</li>\n" +
-            "</ul>\n" +
-            "<h2><a id=\"user-content-第n次迭代\" class=\"anchor\" aria-hidden=\"true\" href=\"#第n次迭代\"><svg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z\"></path></svg></a>第N次迭代：</h2>\n" +
-            "<ul>\n" +
-            "<li>-&gt;一个模块的原型(UI简要设计)【必须】</li>\n" +
-            "<li>-&gt;一个模块的CIM与PIM(可以简画)、</li>\n" +
-            "<li>-&gt;一个模块的数据库设计(E-R图)【必须】、</li>\n" +
-            "<li>-&gt;一个模块的接口设计【必须】</li>\n" +
-            "<li>-&gt;开发</li>\n" +
-            "<li>-&gt;单元测试</li>\n" +
-            "<li>-&gt;集成测试</li>\n" +
-            "<li>-&gt;系统测试</li>\n" +
-            "</ul>\n" +
-            "</article>\n" +
-            "  </div>\n" +
+            "</head>\n" +
             "\n" +
-            "    </div>\n" +
+            "<body lang=ZH-CN style='text-justify-trim:punctuation'>\n" +
             "\n" +
-            "  \n" +
+            "<div class=WordSection1 style='layout-grid:15.6pt'>\n" +
             "\n" +
-            "  <details class=\"details-reset details-overlay details-overlay-dark\">\n" +
-            "    <summary data-hotkey=\"l\" aria-label=\"Jump to line\"></summary>\n" +
-            "    <details-dialog class=\"Box Box--overlay d-flex flex-column anim-fade-in fast linejump\" aria-label=\"Jump to line\">\n" +
-            "      <!-- '\"` --><!-- </textarea></xmp> --></option></form>\n" +
-            "  </body>\n" +
-            "</html>\n" +
-            "\n")
+            "<p class=MsoNormal align=left style='text-align:left'><b><span lang=EN-US\n" +
+            "style='font-size:24.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Foreword</span></b></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='text-align:left'><b><span lang=EN-US\n" +
+            "style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Reference\n" +
+            "model</span></b></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-bottom:12.0pt;text-align:left'><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>RUP</span><span lang=EN-US style='font-size:13.5pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>iterative\n" +
+            "development, incremental model, rapid prototyping mode, small waterfall flow\n" +
+            "mode.</span><span lang=EN-US style='font-size:13.5pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:black'>&nbsp;<br>\n" +
+            "<br>\n" +
+            "</span><span lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>It can be said that it is a bit close to agile development, but\n" +
+            "our communication is a problem, so it is actually difficult to adopt agile\n" +
+            "development.</span><span lang=EN-US style='font-size:13.5pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:black'>&nbsp;<br>\n" +
+            "</span><span lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>Because agile development requires strong team communication, I\n" +
+            "don’t think it’s easy to achieve.</span><span lang=EN-US style='font-size:13.5pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>I</span><span lang=EN-US style='font-size:13.5pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>think</span><span\n" +
+            "lang=EN-US style='font-size:13.5pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:black'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>I</span><span lang=EN-US\n" +
+            "style='font-size:13.5pt;font-family:\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>still need to write some necessary</span><span lang=EN-US\n" +
+            "style='font-size:13.5pt;font-family:\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;<br>\n" +
+            "</span><span lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>Documentation to reduce communication costs</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='text-align:left'><b><span lang=EN-US\n" +
+            "style='font-size:24.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Development\n" +
+            "Process</span></b></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='text-align:left'><b><span lang=EN-US\n" +
+            "style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>First\n" +
+            "iteration:</span></b></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:5.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>System\n" +
+            "Level Diagram</span><span lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Overall Design\n" +
+            "Startup</span><span lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>prototype\n" +
+            "of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(UI</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>brief design</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>[must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>CIM</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>and</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>PIM of</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>a module</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>can be simplified</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>,</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Database\n" +
+            "design of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(ER</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>diagram</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>[Must],</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Interface\n" +
+            "design of a module [must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Development</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Unit\n" +
+            "test</span></p>\n" +
+            "\n" +
+            "<div style='border:none;border-bottom:solid #EAECEF 1.0pt;padding:0cm 0cm 4.0pt 0cm'>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:18.0pt;margin-right:0cm;\n" +
+            "margin-bottom:12.0pt;margin-left:0cm;text-align:left;border:none;padding:0cm'><b><span\n" +
+            "lang=EN-US style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>The second iteration:</span></b></p>\n" +
+            "\n" +
+            "</div>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:5.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>prototype\n" +
+            "of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(UI</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>brief design</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>[must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>CIM</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>and</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>PIM of</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>a module</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>can be simplified</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>,</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Database\n" +
+            "design of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(ER</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>diagram</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>[Must],</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Interface\n" +
+            "design of a module [must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Development</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Unit\n" +
+            "test</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Integration\n" +
+            "test</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-bottom:12.0pt;text-align:left'><b><i><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>..........</span></i></b></p>\n" +
+            "\n" +
+            "<div style='border:none;border-bottom:solid #EAECEF 1.0pt;padding:0cm 0cm 4.0pt 0cm'>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:18.0pt;margin-right:0cm;\n" +
+            "margin-bottom:12.0pt;margin-left:0cm;text-align:left;border:none;padding:0cm'><b><span\n" +
+            "lang=EN-US style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>N-1</span></b><span lang=EN-US style='font-size:13.5pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><b><span\n" +
+            "lang=EN-US style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>first</span></b><span lang=EN-US style='font-size:13.5pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><b><span\n" +
+            "lang=EN-US style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>iterations:</span></b></p>\n" +
+            "\n" +
+            "</div>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:5.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>prototype\n" +
+            "of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(UI</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>brief design</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>[must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>CIM</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>and</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>PIM of</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>a module</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>can be simplified</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>,</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E;background:#E6ECF9'>-&gt;</span><span lang=EN-US\n" +
+            "style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E;\n" +
+            "background:#E6ECF9'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E;background:#E6ECF9'>Database\n" +
+            "design of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E;background:#E6ECF9'>&nbsp;</span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E;background:#E6ECF9'>(ER</span><span lang=EN-US style='font-size:\n" +
+            "10.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E;background:\n" +
+            "#E6ECF9'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E;background:#E6ECF9'>diagram</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E;background:#E6ECF9'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E;\n" +
+            "background:#E6ECF9'>)</span><span lang=EN-US style='font-size:10.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E;background:#E6ECF9'>&nbsp;</span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E;background:#E6ECF9'>[Must],</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Interface\n" +
+            "design of a module [must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Development</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Unit\n" +
+            "test</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Integration\n" +
+            "test</span></p>\n" +
+            "\n" +
+            "<div style='border:none;border-bottom:solid #EAECEF 1.0pt;padding:0cm 0cm 4.0pt 0cm'>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:18.0pt;margin-right:0cm;\n" +
+            "margin-bottom:12.0pt;margin-left:0cm;text-align:left;border:none;padding:0cm'><b><span\n" +
+            "lang=EN-US style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>The</span></b><span lang=EN-US style='font-size:13.5pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><b><span\n" +
+            "lang=EN-US style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>Nth</span></b><span lang=EN-US style='font-size:13.5pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:black'>&nbsp;</span><b><span\n" +
+            "lang=EN-US style='font-size:18.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>iteration:</span></b></p>\n" +
+            "\n" +
+            "</div>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:5.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>prototype\n" +
+            "of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(UI</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>brief design</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>[must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>CIM</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>and</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>PIM of</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>a module</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>can be simplified</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>,</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Database\n" +
+            "design of a module</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>(ER</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>diagram</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>)</span><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>&nbsp;</span><span lang=EN-US style='font-size:12.0pt;\n" +
+            "font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>[Must],</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Interface\n" +
+            "design of a module [must]</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Development</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Unit\n" +
+            "test</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>Integration\n" +
+            "test</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal align=left style='margin-top:3.0pt;margin-right:0cm;\n" +
+            "margin-bottom:5.0pt;margin-left:25.8pt;text-align:left;text-indent:0cm'><span\n" +
+            "lang=EN-US style='font-size:10.0pt;font-family:Symbol;color:#24292E'>·<span\n" +
+            "style='font:7.0pt \"Times New Roman\"'>&nbsp;&nbsp; </span></span><span\n" +
+            "lang=EN-US style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;\n" +
+            "color:#24292E'>-&gt;</span><span lang=EN-US style='font-size:10.0pt;font-family:\n" +
+            "\"Bahnschrift Light\",sans-serif;color:#24292E'>&nbsp;</span><span lang=EN-US\n" +
+            "style='font-size:12.0pt;font-family:\"Bahnschrift Light\",sans-serif;color:#24292E'>System\n" +
+            "Test</span></p>\n" +
+            "\n" +
+            "<p class=MsoNormal><span lang=EN-US style='font-family:\"Bahnschrift Light\",sans-serif'>&nbsp;</span></p>\n" +
+            "\n" +
+            "</div>\n" +
+            "\n" +
+            "</body>\n" +
+            "\n" +
+            "</html>\n")
 
 }

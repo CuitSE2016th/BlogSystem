@@ -39,4 +39,8 @@ interface ArticleDataSource {
     fun getUsesArticles(account: String, token: String, callback: DataCallback<List<Article>>)
 
     fun loadMoreUsesArticles(pageNumber:Int,account: String, token: String, callback: DataCallback<List<Article>>)
+
+    fun getLatestArticles(
+        callback: DataCallback<List<Article>>
+    )
 }
