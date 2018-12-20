@@ -55,6 +55,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
                         "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
                 items.add(it)
             }
+//            callback.failed(0,"error")
             callback.succeed(items)
         }
     }

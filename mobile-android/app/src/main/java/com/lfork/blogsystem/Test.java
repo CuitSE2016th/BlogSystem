@@ -35,6 +35,7 @@ public class Test {
     public static String getRandomImages() {
         int randomNumber = Math.abs(new Random().nextInt() % 10);
         return imagesUrl[randomNumber];
+
     }
 
 
