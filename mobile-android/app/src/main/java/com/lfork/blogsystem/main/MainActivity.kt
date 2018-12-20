@@ -48,20 +48,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragments() {
-        if(fragments.size < 1){
-            fragments[FRAG_HOME] = HomeFragment()
-            fragments[FRAG_MY] = MyFragment()
-            fragments[FRAG_EXPLORE] = ExploreFragment()
-            replaceFragment(fragments[FRAG_HOME]!!)
+
+        if (fragments.size>0){
+            return
         }
+
+        fragments[FRAG_MY] = MyFragment()
+
+        fragments[FRAG_EXPLORE] = ExploreFragment()
+
+        fragments[FRAG_HOME] = HomeFragment()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_frag, fragments[FRAG_MY]!!, fragments[FRAG_MY]!!.tag)
+            .hide(fragments[FRAG_MY]!!)
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_frag, fragments[FRAG_EXPLORE]!!, fragments[FRAG_EXPLORE]!!.tag)
+            .hide(fragments[FRAG_EXPLORE]!!)
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_frag, fragments[FRAG_HOME]!!, fragments[FRAG_HOME]!!.tag)
+            .show(fragments[FRAG_HOME]!!)
+            .commit()
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        if (!fragment.isAdded) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.main_frag, fragment, fragment.tag)
-                .commit()
-        }
 
         for (i in fragments) {
             supportFragmentManager.beginTransaction()
@@ -74,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * 解决Fragment重影
+     * 解决Fragment重影，只有被添加了的fragment才会出现在这里
      */
     override fun onAttachFragment(fragment: Fragment?) {
         super.onAttachFragment(fragment)
@@ -83,11 +97,9 @@ class MainActivity : AppCompatActivity() {
             fragments[FRAG_EXPLORE] = fragment
 
         } else if (fragments[FRAG_HOME] == null && fragment is HomeFragment) {
-
             fragments[FRAG_HOME] = fragment
 
         } else if (fragments[FRAG_MY] == null && fragment is MyFragment) {
-
             fragments[FRAG_MY] = fragment
         }
 
