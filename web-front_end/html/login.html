@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link  rel="stylesheet" href="../css/app.css">
+
+    <style>
+        body{
+            background-color: #eeeeee;
+        }
+        .login_container{
+            /*background:rgba(0,0,0,0.1) none repeat scroll !important;*/
+            background: white;
+            width:400px;
+            height:500px;
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin:-250px 0 0 -250px
+        }
+        input::-webkit-input-placeholder {
+            /* placeholder颜色  */
+            color: #000000;
+            /* placeholder字体大小  */
+            font-size: 14px;
+            /* placeholder位置  */
+            text-align:left ;
+        }
+        .change_btn{
+            width: 200px;
+            margin: 0 auto;
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .change_btn ul{
+            list-style: none;
+        }
+        .change_btn ul li{
+            float: left;
+            width: 45px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div style="width: 120px;height: 120px;margin-left: 60px;margin-top: 60px">
+    <a href="index.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+</div>
+<div class="login_container">
+    <div class="change_btn" >
+        <ul>
+            <li  id="change_item_1">登录</li>
+            <li>·</li>
+            <li  id="change_item_2">注册</li>
+        </ul>
+    </div>
+    <div style="height: 20px"></div>
+    <form id="order1">
+        <div class="form-group col-xs-offset-2 col-xs-8 has-feedback" >
+            <div>
+                <span class="form-control-feedback glyphicon glyphicon-user "></span>
+                <input style="padding-left: 34px" id="username" type="text"  class="form-control"placeholder="邮箱或手机号">
+            </div>
+        </div>
+        <div class="form-group col-xs-offset-2 col-xs-8 has-feedback" >
+            <div>
+                <span class=" form-control-feedback glyphicon glyphicon-lock"></span>
+                <input  id="password" type="password"   class="form-control" style="padding-left: 34px" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-8">
+                <button type="button" class="btn btn-primary btn-block" id="login" >登录</button>
+            </div>
+        </div>
+        <div class="form-group col-xs-offset-2 col-xs-8" style="height:10px">
+
+        </div>
+        <div class="form-group col-xs-offset-2 col-xs-8" >
+            <div id="login_reminder" style="text-align: center">
+            </div>
+        </div>
+    </form>
+    <form id="order2" style="display: none">
+        <div class="form-group col-xs-offset-2 col-xs-8 has-feedback" >
+            <div>
+                <span class="form-control-feedback glyphicon glyphicon-user "></span>
+                <input id="register_tel" class="form-control" type="text" style="padding-left: 34px" placeholder="邮箱或手机号">
+            </div>
+        </div>
+        <div class="form-group col-xs-offset-2 col-xs-8 has-feedback" >
+            <div>
+                <span class=" form-control-feedback glyphicon glyphicon-lock"></span>
+                <input id="register_password" type="password" class="form-control" style="padding-left: 34px" placeholder="设置密码">
+            </div>
+        </div>
+        <div class="form-group col-xs-offset-2 col-xs-4" >
+            <div>
+                <input id="register_code" class="form-control col-xs-4"placeholder="">
+            </div>
+        </div>
+        <div class="form-group  col-xs-4" >
+            <div>
+                <button type="button" class="btn btn-success btn-block" id="register_code_get" >获取验证码</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-8 has-feedback">
+                <button type="button" class="btn btn-success btn-block" id="register" >注册</button>
+            </div>
+        </div>
+
+        <div class="form-group col-sm-offset-1 col-xs-10" style="height:10px">
+
+        </div>
+        <div class="form-group col-sm-offset-1 col-xs-10" >
+            <div id="register_reminder" style="text-align: center">
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var temp = "none";
+
+        $("#change_item_1").click(function () {
+            openMatter(1);
+        });
+        $("#change_item_2").click(function () {
+            openMatter(2);
+        });
+        function openMatter(obj) {
+            for (var i = 1; i < 3; i++) {
+                if (i == obj) {
+                    temp = "block";
+                } else {
+                    temp = "none";
+                }
+                document.getElementById("order" + i).style.display = temp;
+
+            }
+        }
+    });
+    $("#login").click(
+
+        function (){
+
+            var user=$("#username").val();//获取页面中登录名和密码
+
+            var pwd=$("#password").val();
+
+            if(user==""|| pwd==""){//判断两个均不为空（其他判断规则在其输入时已经判断）
+                var str='';
+                str +='<span style="color:red">';
+                str +='账号密码为空！'
+                str +='</span>'
+                $("#login_reminder").html(str);
+                return false;
+            }else{//以上均符合要求，则调用登录esb接口
+                $.ajax({
+
+                    url:'http://localhost:8080/user/login',//相对应的esb接口地址
+
+                    type:'post',
+
+                    data:{"identity":user,"password":pwd},//向服务器（接口）传递的参数
+
+                    success:function(data){//服务器（接口）返回来的数据
+
+                        if(data.code==100){//如果返回来的信息说明提交的信息为正确的\
+                            var str_username='';
+                            str_username+='index.html?token='+data.data;
+                            window.location.href=str_username;//正确登录后页面跳转至
+                        }
+                        else{//如果返回来的信息说明提供的信息为错误的
+                            $("#login_reminder").empty();
+                            var str1='';
+                            str1 +='<span style="color:red">';
+                            str1 +='账号密码错误！'
+                            str1 +='</span>'
+                            $("#login_reminder").html(str1);
+
+                        }
+                    }
+
+                })
+
+            }
+        }
+    );
+    /*直接点击enter免除手动点击登录按钮*/
+    $(document).keyup(function(event){
+
+        if(event.keyCode ==13){
+
+            $("#login").trigger("click");
+
+        }
+
+    });
+    $("#register_tel").blur(function() {
+        $("#register_reminder").empty();
+        //校验用户名是否为空，ajax异步校验是否注册了
+        if ($("#register_tel").val()== "") {
+            var str1='';
+            str1 +='<span style="color:red">';
+            str1 +='请输入手机号或邮箱！'
+            str1 +='</span>'
+            $("#register_reminder").html(str1);
+        } else {
+            $("#register_reminder").empty();
+            $.ajax({
+                url: "http://localhost:8080/user/isExist", //请求验证页面
+                type: "POST", //请求方式 可换为post 注意验证页面接收方式
+                data: {"emailOrPhone": email}, //取得表文本框数据，作为提交数据
+                success: function (data) { //请求成功时执行操作
+
+                }
+            })
+        }
+
+    });
+    $("#register_password").blur(function() {
+        $("#register_reminder").empty();
+        if ($("#register_password").val()== "") {
+            var str1='';
+            str1 +='<span style="color:red">';
+            str1 +='请输入密码！'
+            str1 +='</span>'
+            $("#register_reminder").html(str1);
+        } else {
+            $("#register_reminder").empty();
+        }
+
+    });
+
+    $("#register_code").blur(function() {
+        $("#register_reminder").empty();
+        if ($("#register_code").val()== "") {
+            $("#register_reminder").empty();
+            var str1='';
+            str1 +='<span style="color:red">';
+            str1 +='请输入验证码！'
+            str1 +='</span>'
+            $("#register_reminder").html(str1);
+        } else {
+            $("#register_reminder").empty();
+        }
+
+    });
+    $("#register_code_get").click(function(){
+        var email=$("#register_tel").val();
+        $.ajax({
+            url: "http://localhost:8080/isExist", //请求验证页面
+            type: "POST", //请求方式 可换为post 注意验证页面接收方式
+            data: {"emailOrPhone": email}, //取得表文本框数据，作为提交数据
+            success: function (data) { //请求成功时执行操作
+            }
+        })
+
+    });
+
+    $("#register").click(function(){
+        var email=$("#register_tel").val();
+        var emailcode=$("#register_code").val();
+        var password=$("#register_password").val();
+        $.ajax({
+
+            url:'http://localhost:8080/user/register',//相对应的esb接口地址
+
+            type:'post',
+
+            data:{"emailOrPhone": email,"emailOrPhoneCode":emailcode,"password":password},//向服务器（接口）传递的参数
+
+            success:function(data){//服务器（接口）返回来的数据
+                if(data.code==100){//如果返回来的信息说明提交的信息为正确的
+                    $("#register_reminder").empty();
+                    var str1='';
+                    str1 +='<span style="color:red">';
+                    str1 +='注册成功！'
+                    str1 +='</span>'
+                    $("#register_reminder").html(str1);
+                }
+            }
+
+        })
+    });
+</script>
+
+</html>
