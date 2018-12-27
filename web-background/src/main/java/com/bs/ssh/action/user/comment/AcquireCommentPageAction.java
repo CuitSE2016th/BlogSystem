@@ -34,7 +34,8 @@ public class AcquireCommentPageAction extends AbstractCommentPageAction {
     @Override
     public String execute() throws Exception {
         try {
-            commentService.findAllComment(pageRequest, aid);
+            result = JsonBody.success();
+            result.setData(commentService.findAllComment(pageRequest, aid));
         }catch (Exception e){
             result = JsonBody.fail();
             result.setData(e.getMessage());

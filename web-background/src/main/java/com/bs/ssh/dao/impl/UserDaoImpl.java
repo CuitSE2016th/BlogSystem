@@ -27,7 +27,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
     @Override
     public User getUserInfoById(String id) {
-        return null;
+        return this.findOne("FROM User where id = ?", id);
     }
 
     @Override
