@@ -59,6 +59,10 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+    }
+
 
 
 

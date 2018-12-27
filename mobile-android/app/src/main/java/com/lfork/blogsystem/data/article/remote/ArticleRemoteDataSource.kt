@@ -1,7 +1,7 @@
 package com.lfork.blogsystem.data.article.remote
 
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.Test
+import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.data.article.ArticleDataSource
@@ -71,9 +71,9 @@ class ArticleRemoteDataSource : ArticleDataSource {
         for (i in 1..10) {
             val it = Article()
             it.id = i.toString()
-            it.title = Test.getRandomTitles()
+            it.title = RandomTest.getRandomTitles()
             it.editTime = Date().toString()
-            it.coverUrl = Test.getRandomImages()
+            it.coverUrl = RandomTest.getRandomImages()
             it.abstract =
                     "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
             items.add(it)

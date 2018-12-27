@@ -117,13 +117,15 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             root!!.data_container.visibility = View.VISIBLE
             presenter.refreshArticles()
         }
+
+        presenter.refreshArticles()
         return root
 
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.refreshArticles()
+
     }
 
     override fun onDestroy() {

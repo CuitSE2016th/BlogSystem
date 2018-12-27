@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by 98620 on 2018/11/28.
  */
-public class Test {
+public class RandomTest {
 //     public AlwaysMarqueeTextView(Context context) {
 //          super(context);
 //     }
@@ -89,6 +89,12 @@ public class Test {
     }
 
     public static String getRandomTitles() {
+        int randomNumber = Math.abs(new Random().nextInt() % randomTitles.length);
+        return randomTitles[randomNumber];
+    }
+
+
+    public static String getRandomText() {
         int randomNumber = Math.abs(new Random().nextInt() % randomTitles.length);
         return randomTitles[randomNumber];
     }

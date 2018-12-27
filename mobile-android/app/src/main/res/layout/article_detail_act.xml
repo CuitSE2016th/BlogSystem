@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         tools:context=".articledetail.ArticleDetailActivity">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/include"
@@ -141,9 +141,9 @@
 
 
                 <FrameLayout
-                    android:id="@+id/article_review_container"
+                    android:id="@+id/article_comment_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     tools:background="@color/gray"
                     tools:layout_height="200dp">
 
@@ -152,10 +152,11 @@
 
             </LinearLayout>
 
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
 
         <include
+
             android:id="@+id/include"
             app:viewModel="@{viewModel}"
             layout="@layout/article_detail_navigation_btns"

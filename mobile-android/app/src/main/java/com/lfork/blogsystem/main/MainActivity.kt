@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onAttachFragment(fragment: Fragment?) {
         super.onAttachFragment(fragment)
+
         //当前的界面的保存状态，只是重新让新的Fragment指向了原本未被销毁的fragment，它就是onAttach方法对应的Fragment对象
         if (fragments[FRAG_EXPLORE] == null && fragment is ExploreFragment) {
             fragments[FRAG_EXPLORE] = fragment

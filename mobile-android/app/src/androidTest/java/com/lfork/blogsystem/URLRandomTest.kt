@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
  * Created by 98620 on 2018/11/15.
  */
 @RunWith(AndroidJUnit4::class)
-class URLTest {
+class URLRandomTest {
 
     @Test
     fun getUserInfo() {
@@ -26,7 +26,7 @@ class URLTest {
 //        })
     }
 
-//    @Test
+//    @RandomTest
 //    fun getVerificationCode() {
 //
 //

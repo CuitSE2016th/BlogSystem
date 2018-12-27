@@ -11,7 +11,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.Test
+import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.common.fragment.ArticlesFragment
 import com.lfork.blogsystem.data.article.Article
@@ -24,9 +24,9 @@ class LatestArticleFragment : ArticlesFragment() {
         super.refreshArticles(articles)
         activity?.runOnUiThread {
             val images = ArrayList<String>()
-            images.add(Test.getRandomImages())
-            images.add(Test.getRandomImages())
-            images.add(Test.getRandomImages())
+            images.add(RandomTest.getRandomImages())
+            images.add(RandomTest.getRandomImages())
+            images.add(RandomTest.getRandomImages())
 
             (adapter.headerView as Banner).setAutoPlay(true)
                 .setPages(

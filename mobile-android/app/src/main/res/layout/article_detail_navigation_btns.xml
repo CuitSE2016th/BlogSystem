@@ -32,9 +32,9 @@
             tools:text="Star"
             android:text="@{viewModel.star}" />
 
-
         <Button
             android:id="@+id/btn_comment"
+            android:singleLine="true"
             style="@style/article_detail_navigation_btns"
             android:text="Comment" />
 
