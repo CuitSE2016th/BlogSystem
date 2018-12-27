@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.myarticles
+package com.lfork.blogsystem.common.mvp
 
 import com.lfork.blogsystem.data.article.Article
 
@@ -6,7 +6,7 @@ import com.lfork.blogsystem.data.article.Article
  *
  * Created by 98620 on 2018/12/15.
  */
-interface MyArticleContract {
+interface ArticleContract {
     interface View{
         fun refreshArticles(articles:ArrayList<Article>)
 

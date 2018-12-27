@@ -1,33 +1,24 @@
 package com.lfork.blogsystem.starsandlikes
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.common.fragment.ArticlesFragment
 
-class LikeFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = LikeFragment()
-    }
-
-    private lateinit var viewModel: LikeViewModel
+class LikeFragment :  ArticlesFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.like_frag, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(LikeViewModel::class.java)
-        // TODO: Use the ViewModel
+        if (root == null) {
+            root = inflater.inflate(R.layout.like_frag, container, false)
+            super.onCreateView(inflater, container, savedInstanceState)
+        }
+        // Inflate the layout for this fragment
+        return root
     }
 
 }

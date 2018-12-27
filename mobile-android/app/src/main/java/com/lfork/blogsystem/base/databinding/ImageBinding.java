@@ -25,6 +25,9 @@ public class ImageBinding {
 
     @BindingAdapter(value = {"imageUrl", "placeDrawableId"})
     public static void setImage(ImageView view, String imageUrl, int placeDrawableId) {
+        if(view.getContext() == null){
+            return;
+        }
         RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).placeholder(placeDrawableId);
         Glide.with(view.getContext()).load(imageUrl).apply(options).into(view);
     }

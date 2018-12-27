@@ -1,6 +1,6 @@
 package com.lfork.blogsystem.data.user
 
-import com.lfork.blogsystem.base.Config
+import com.lfork.blogsystem.common.Config
 
 data class User(var nickname: String?, var headPortrait: String?, var sex: String? = null) {
     constructor() : this(null, null, null)

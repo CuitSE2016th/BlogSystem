@@ -1,11 +1,12 @@
 package com.lfork.blogsystem.data.article.remote
 
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.Test
+import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.data.article.ArticleDataSource
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  *
@@ -21,20 +22,11 @@ class ArticleRemoteDataSource : ArticleDataSource {
     ) {
         BlogApplication.doAsyncTask {
             Thread.sleep(1000)
-            val items = ArrayList<Article>(0);
-            for (i in 1..10) {
-                val it = Article()
-                it.id = i.toString()
-                it.title = "Android Studio3.$pageNumber.$i  Released~"
-                it.editTime = Date().toString()
-                it.coverUrl = Test.getRandomImages()
-                it.abstract =
-                        "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
-                items.add(it)
-            }
-            callback.succeed(items)
+            callback.succeed(getRandomArticles())
         }
     }
+
+
 
     override fun getUsesArticles(
         account: String,
@@ -44,20 +36,54 @@ class ArticleRemoteDataSource : ArticleDataSource {
 
         BlogApplication.doAsyncTask {
             Thread.sleep(1200)
-            val items = ArrayList<Article>(0);
-            for (i in 1..10) {
-                val it = Article()
-                it.id = i.toString()
-                it.title = "Android Studio3.1.$i Released~"
-                it.editTime = Date().toString()
-                it.coverUrl = Test.getRandomImages()
-                it.abstract =
-                        "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
-                items.add(it)
+            if (testFlag % 2 == 1){
+                callback.failed(0,"error")
+            } else {
+                callback.succeed(getRandomArticles())
             }
-//            callback.failed(0,"error")
-            callback.succeed(items)
+            testFlag++
+
         }
+    }
+
+    override fun getLatestArticles(
+        callback: DataCallback<List<Article>>
+    ) {
+
+        BlogApplication.doAsyncTask {
+            Thread.sleep(1200)
+
+            val random = testFlag % 6
+            if (random == 4){
+                callback.failed(0,"error")
+            }  else if (random == 2 || random == 3) {
+                callback.succeed(ArrayList())
+            } else {
+                callback.succeed(getRandomArticles())
+            }
+            testFlag++
+
+        }
+    }
+
+    fun getRandomArticles():ArrayList<Article>{
+        val items = ArrayList<Article>(0);
+        for (i in 1..10) {
+            val it = Article()
+            it.id = i.toString()
+            it.title = RandomTest.getRandomTitles()
+            it.editTime = Date().toString()
+            it.coverUrl = RandomTest.getRandomImages()
+            it.abstract =
+                    "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
+            items.add(it)
+        }
+
+        return items
+    }
+
+    companion object {
+        var testFlag = 0
     }
 
 }

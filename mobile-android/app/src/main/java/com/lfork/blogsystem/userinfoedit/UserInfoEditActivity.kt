@@ -30,7 +30,7 @@ class UserInfoEditActivity : AppCompatActivity() {
             isGranted = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         }
 
-        Log.d("Permission Test", "eeee $isGranted")
+        Log.d("Permission RandomTest", "eeee $isGranted")
 
         setupToolBar(toolbar, resources.getString(R.string.title_activity_my_information))
     }

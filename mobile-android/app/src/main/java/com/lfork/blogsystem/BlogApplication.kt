@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.lfork.blogsystem.base.thread.MyThreadFactory
 import com.lfork.blogsystem.data.user.UserDataRepository
-import com.lfork.blogsystem.base.Config
+import com.lfork.blogsystem.common.Config
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.LinkedBlockingDeque
