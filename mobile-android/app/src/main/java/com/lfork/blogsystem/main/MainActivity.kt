@@ -1,11 +1,13 @@
 package com.lfork.blogsystem.main
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.base.communication.LiveDataBus
 import com.lfork.blogsystem.main.explore.ExploreFragment
 import com.lfork.blogsystem.main.home.HomeFragment
 import com.lfork.blogsystem.main.my.MyFragment
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_act)
         initFragments()
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        registerSignOutSucceedListener()
     }
 
     companion object {
@@ -103,6 +106,15 @@ class MainActivity : AppCompatActivity() {
         } else if (fragments[FRAG_MY] == null && fragment is MyFragment) {
             fragments[FRAG_MY] = fragment
         }
+
+    }
+
+    private fun registerSignOutSucceedListener() {
+        LiveDataBus.get()
+            .with("sign_out_succeed", String::class.java)
+            .observe(this, Observer<String> {
+                finish()
+            })
 
     }
 }

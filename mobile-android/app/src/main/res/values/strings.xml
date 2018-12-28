@@ -221,5 +221,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="click_to_reload_the_data">Click to reload the data</string>
     <string name="There_is_no_more_data">There is no more data</string>
+    <string name="help_tips">项目地址:\n<a href="https://github.com/CuitSE2016th/BlogSystem">https://github.com/CuitSE2016th/BlogSystem</a></string>
 
 </resources>

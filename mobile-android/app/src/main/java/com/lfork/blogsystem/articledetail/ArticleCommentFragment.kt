@@ -8,14 +8,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.data.comment.Comment
 import kotlinx.android.synthetic.main.article_detail_comment_frag.view.*
 import kotlinx.android.synthetic.main.item_comment.view.*
+import kotlinx.android.synthetic.main.item_comment_with_children.view.*
 
 class ArticleCommentFragment : Fragment() {
 
@@ -116,15 +120,30 @@ class ArticleCommentFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, p1: Int): CommentViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_comment, parent, false)
+                .inflate(R.layout.item_comment_with_children, parent, false)
             return CommentViewHolder(view)
         }
 
         override fun getItemCount() = items.size
 
 
-        override fun onBindViewHolder(p0: CommentViewHolder, p1: Int) {
+        override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
+            if (items[position].children != null){
+                val params = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                val textView1 = LayoutInflater.from(context).inflate(R.layout.item_comment, holder.subCommentContainer,false)
 
+
+                val textView2 = LayoutInflater.from(context).inflate(R.layout.item_comment, holder.subCommentContainer,false)
+
+                val textView3 = LayoutInflater.from(context).inflate(R.layout.item_comment, holder.subCommentContainer,false)
+
+                holder.subCommentContainer.visibility = View.VISIBLE
+                holder.separator.visibility = View.VISIBLE
+
+                holder.subCommentContainer.addView(textView1,params)
+                holder.subCommentContainer.addView(textView2,params)
+                holder.subCommentContainer.addView(textView3,params)
+            }
         }
 
 
@@ -137,6 +156,8 @@ class ArticleCommentFragment : Fragment() {
             val btnDelete: Button = itemView.delete
             val btnLike = itemView.like
             val btnReply = itemView.reply
+            val subCommentContainer = itemView.sub_comments
+            val separator = itemView.separator
         }
 
     }

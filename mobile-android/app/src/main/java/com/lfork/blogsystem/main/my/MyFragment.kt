@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
 
 import com.lfork.blogsystem.R
@@ -122,8 +123,26 @@ class MyFragment : Fragment(), Navigator, View.OnClickListener {
             R.id.following -> startFollowActivity(context!!, FollowActivity.FOLLOWING_FRAG)
             R.id.followers -> startFollowActivity(context!!, FollowActivity.FOLLOWER_FRAG)
 
-            R.id.item_my_articles -> mainActivity.startActivity<MyArticlesActivity>()
-            R.id.item_star_like -> mainActivity.startActivity<StarLikeActivity>()
+            R.id.item_my_articles ->{
+                if (isSignIn){
+                    mainActivity.startActivity<MyArticlesActivity>()
+                } else{
+                    ToastUtil.showLong(context, "Please sign in.")
+                    mainActivity.startActivity<LoginActivity>()
+                }
+
+            }
+
+
+            R.id.item_star_like -> {
+                if (isSignIn){
+                    mainActivity.startActivity<StarLikeActivity>()
+                } else{
+                    ToastUtil.showLong(context, "Please sign in.")
+                    mainActivity.startActivity<LoginActivity>()
+                }
+
+            }
             R.id.item_notifications-> mainActivity.startActivity<NotificationsActivity>()
 
             R.id.item_settings -> mainActivity.startActivity<SettingsActivity>()

@@ -123,5 +123,10 @@ class BlogApplication : Application() {
         }
     }
 
+    fun clearCache(){
+        sp = context!!.getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        sp.edit().clear().apply()
+    }
+
 
 }

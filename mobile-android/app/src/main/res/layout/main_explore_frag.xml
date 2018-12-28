@@ -33,7 +33,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.v7.widget.RecyclerView
-                            android:background="@drawable/bg_rectangle_purple"
+                            android:background="@drawable/bg_rectangle_green"
                             android:id="@+id/recycle_themes"
                             android:layout_width="match_parent"
                             android:layout_height="280dp"
