@@ -32,7 +32,7 @@ public class UserArticleServiceImpl implements UserArticleService{
     @Override
     public PageBean getAllArticle(PageRequest pageRequest) {
 
-        List<Article> results = articleDao.findAll(pageRequest, "from Article where status="+ Constants.AUDIT_COMPLETE);
+        List<Article> results = articleDao.findAll(pageRequest, "from Article where status=?", Constants.AUDIT_COMPLETE);
 
         return new PageBean<>(
                 pageRequest,

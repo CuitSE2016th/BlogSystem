@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.lfork.blogsystem.articledetail.ArticleDetailViewModel" />
@@ -16,7 +17,7 @@
         android:layout_height="match_parent"
         tools:context=".articledetail.ArticleDetailActivity">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/include"
@@ -28,13 +29,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="4dp"
-                    android:gravity="start"
-                    android:background="@color/colorBase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="48dp"
+                    android:background="@color/colorBase"
+                    android:gravity="start"
                     android:text="@={viewModel.title}"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
@@ -50,20 +51,20 @@
                         android:layout_height="60dp"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
+                        app:imageUrl="@{viewModel.portraitUrl}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:imageUrl="@{viewModel.portraitUrl}"
                         app:placeDrawableId="@{viewModel.placeDrawableId}"
                         tools:src="@drawable/ic_person_black_24dp" />
 
                     <com.lfork.blogsystem.base.widget.MarqueeTextView
                         android:id="@+id/username_or_sign_in"
                         style="@style/username_marquee_text"
-                        android:text="@={viewModel.username}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
+                        android:text="@={viewModel.username}"
 
                         app:layout_constraintBottom_toBottomOf="@+id/user_portrait"
                         app:layout_constraintStart_toEndOf="@+id/user_portrait"
@@ -105,10 +106,8 @@
 
                     <Button
                         android:id="@+id/button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/button_article_action"
                         android:layout_marginEnd="16dp"
-                        android:textAllCaps="false"
                         android:text="Follow"
                         app:layout_constraintBottom_toBottomOf="@+id/user_portrait"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -122,11 +121,11 @@
 
 
                     <WebView
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         android:id="@+id/article_main_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -141,9 +140,11 @@
 
 
                 <FrameLayout
-                    android:id="@+id/article_review_container"
+                    android:id="@+id/article_comment_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     tools:background="@color/gray"
                     tools:layout_height="200dp">
 
@@ -152,18 +153,19 @@
 
             </LinearLayout>
 
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
 
         <include
+
             android:id="@+id/include"
-            app:viewModel="@{viewModel}"
             layout="@layout/article_detail_navigation_btns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:viewModel="@{viewModel}">
 
         </include>
 

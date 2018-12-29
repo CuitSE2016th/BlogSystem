@@ -14,34 +14,89 @@
         <import type="android.view.View" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".articledetail.ArticleDetailActivity">
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:visibility="gone"
+            android:id="@+id/editor_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="visible"
+            android:orientation="vertical"
+            tools:context=".articledetail.ArticleDetailActivity">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Reply:"
+                app:layout_constraintBottom_toBottomOf="@+id/button2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button2" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/button_article_action"
+                android:layout_marginEnd="16dp"
+                android:text="Publish"
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
-        <Button
-            android:id="@+id/btn_like"
-            style="@style/article_detail_navigation_btns"
-            tools:text="Like"
-            android:text="@{viewModel.like}" />
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:hint="Enter you comment."
+                android:lines="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2" />
 
-        <Button
-            android:id="@+id/btn_star"
-            style="@style/article_detail_navigation_btns"
-            tools:text="Star"
-            android:text="@{viewModel.star}" />
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            tools:visibility="gone"
+            android:id="@+id/navigation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".articledetail.ArticleDetailActivity">
 
 
-        <Button
-            android:id="@+id/btn_comment"
-            style="@style/article_detail_navigation_btns"
-            android:text="Comment" />
+            <Button
+                android:id="@+id/btn_like"
+                style="@style/article_detail_navigation_btns"
+                tools:text="Like"
+                android:text="@{viewModel.like}" />
 
-        <Button
-            android:id="@+id/button7"
-            style="@style/article_detail_navigation_btns"
-            android:text="Share" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_star"
+                style="@style/article_detail_navigation_btns"
+                tools:text="Star"
+                android:text="@{viewModel.star}" />
+
+
+            <Button
+                android:id="@+id/btn_comment"
+                style="@style/article_detail_navigation_btns"
+                android:text="Comment" />
+
+            <Button
+                android:id="@+id/button7"
+                style="@style/article_detail_navigation_btns"
+                android:text="Share" />
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+
+
 
 </layout>

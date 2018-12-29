@@ -166,7 +166,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/bg_rectangle_frame_black"
+                android:background="@drawable/bg_circle_rectangle_frame_black"
                 android:text="@string/edit_my_information"
                 android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"

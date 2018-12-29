@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.Test
+import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.common.fragment.ArticlesFragment
 import com.lfork.blogsystem.data.article.Theme
@@ -62,7 +62,7 @@ class ExploreFragment : ArticlesFragment() {
 
         init {
             for (i in 1..16) {
-                items.add(Theme(Test.getRandomNames(), Test.getRandomImages()))
+                items.add(Theme(RandomTest.getRandomNames(), RandomTest.getRandomImages()))
             }
         }
 

@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".settings.SettingsActivity">
 
+    <Button
+        android:id="@+id/btn_sign_out"
+        style="@style/button_article_action"
+        android:layout_width="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_rectangle_frame_red"
+        android:text="Sign Out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

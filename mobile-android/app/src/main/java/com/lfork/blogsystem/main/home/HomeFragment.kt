@@ -20,6 +20,9 @@ import java.util.*
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import android.graphics.Color
+import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
+import com.lfork.blogsystem.login.LoginActivity
+import com.lfork.blogsystem.utils.ToastUtil
 import net.lucode.hackware.magicindicator.FragmentContainerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
@@ -59,6 +62,10 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+    }
+
 
 
 
@@ -78,7 +85,12 @@ class HomeFragment : Fragment() {
                 colorTransitionPagerTitleView.selectedColor = Color.BLACK
                 colorTransitionPagerTitleView.text = viewModel.mTitleDataList[index]
                 colorTransitionPagerTitleView.setOnClickListener {
-                    root!!.container.currentItem = index;
+                    if (isSignIn || index == 0){
+                        root!!.container.currentItem = index;
+                    } else{
+                        ToastUtil.showLong(context, "Please sign in.")
+                        activity?.startActivity<LoginActivity>()
+                    }
                 }
                 return colorTransitionPagerTitleView
             }

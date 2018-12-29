@@ -92,10 +92,7 @@ class NotificationsFragment : Fragment(), NotificationContract.View {
     ): View? {
         if (root == null) {
             root = inflater.inflate(R.layout.notifications_frag, container, false)
-
-
             adapter = NotificationsAdapter()
-
             root!!.recycle_notifications.layoutManager = LinearLayoutManager(context)
             root!!.recycle_notifications.adapter = adapter
             presenter = NotificationPresenter(this)
@@ -109,14 +106,11 @@ class NotificationsFragment : Fragment(), NotificationContract.View {
                 root!!.data_container.visibility = View.VISIBLE
                 presenter.refresh()
             }
+            presenter.refresh()
         }
         return root
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.refresh()
-    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -1,11 +1,13 @@
 package com.lfork.blogsystem.main
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.base.communication.LiveDataBus
 import com.lfork.blogsystem.main.explore.ExploreFragment
 import com.lfork.blogsystem.main.home.HomeFragment
 import com.lfork.blogsystem.main.my.MyFragment
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_act)
         initFragments()
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        registerSignOutSucceedListener()
     }
 
     companion object {
@@ -92,6 +95,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onAttachFragment(fragment: Fragment?) {
         super.onAttachFragment(fragment)
+
         //当前的界面的保存状态，只是重新让新的Fragment指向了原本未被销毁的fragment，它就是onAttach方法对应的Fragment对象
         if (fragments[FRAG_EXPLORE] == null && fragment is ExploreFragment) {
             fragments[FRAG_EXPLORE] = fragment
@@ -102,6 +106,15 @@ class MainActivity : AppCompatActivity() {
         } else if (fragments[FRAG_MY] == null && fragment is MyFragment) {
             fragments[FRAG_MY] = fragment
         }
+
+    }
+
+    private fun registerSignOutSucceedListener() {
+        LiveDataBus.get()
+            .with("sign_out_succeed", String::class.java)
+            .observe(this, Observer<String> {
+                finish()
+            })
 
     }
 }
