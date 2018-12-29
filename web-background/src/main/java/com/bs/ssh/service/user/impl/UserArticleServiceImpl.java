@@ -47,6 +47,11 @@ public class UserArticleServiceImpl implements UserArticleService{
     }
 
     @Override
+    public Article getArticleById(Integer aid) {
+        return articleDao.findOne("from Article where id=?", aid);
+    }
+
+    @Override
     public PageBean getAuthorArticle(PageRequest pageRequest, String uid) {
         List<Article> results = articleDao.findAll(pageRequest, "from Article where status=? and authorId=?", Constants.AUDIT_COMPLETE, uid);
 
@@ -63,8 +68,6 @@ public class UserArticleServiceImpl implements UserArticleService{
 
         List objects = objectBaseDao.findAll("from User u left join Follow f on u.id = f.followingId where f.followingId = ?", uid);
 //        userList.forEach(u->userIdList.add(u.getId()));
-
-
 
         for (Object obj : objects){
             String t = obj.getClass().getName();
