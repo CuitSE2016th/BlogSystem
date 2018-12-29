@@ -8,6 +8,7 @@
         <variable
             name="viewModel"
             type="com.lfork.blogsystem.main.my.MyViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -63,8 +64,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            tools:visibility="gone"
             android:layout_marginTop="24dp"
             android:text="@string/following_test"
+            android:visibility="@{viewModel.isLogin ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_portrait"
             tools:text="100\nfollowing" />
@@ -73,6 +76,8 @@
             android:id="@+id/followers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isLogin ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone"
             android:layout_marginStart="24dp"
             android:text="@string/followers_test"
             app:layout_constraintBaseline_toBaselineOf="@+id/following"
@@ -82,8 +87,10 @@
         <TextView
             android:id="@+id/words_count"
             android:layout_width="wrap_content"
+            tools:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:visibility="@{viewModel.isLogin ? View.VISIBLE : View.GONE}"
             android:text="@string/word_count_test"
             app:layout_constraintBaseline_toBaselineOf="@+id/followers"
             app:layout_constraintStart_toEndOf="@+id/followers"

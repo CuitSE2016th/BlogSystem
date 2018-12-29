@@ -1,11 +1,13 @@
 package com.lfork.blogsystem.settings
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.base.communication.LiveDataBus
+import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.login.LoginActivity
 import com.lfork.blogsystem.utils.DataCleanManager
 import com.lfork.blogsystem.utils.startActivity
@@ -21,11 +23,14 @@ class SettingsActivity : AppCompatActivity() {
         }
         btn_sign_out.setOnClickListener {
             DataCleanManager.cleanSharedPreference(this)
-            this@SettingsActivity.startActivity<LoginActivity>()
-            LiveDataBus.get().with("sign_out_succeed").value = "退出登录";
             BlogApplication.clearUserInfo()
+            this@SettingsActivity.startActivity<LoginActivity>()
+//            UserDataRepository.refreshUserInfo()
             finish()
 
+//            val intent = Intent(this, LoginActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(intent)
         }
     }
 }

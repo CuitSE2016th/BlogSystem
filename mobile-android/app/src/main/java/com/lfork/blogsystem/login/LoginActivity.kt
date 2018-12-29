@@ -4,7 +4,9 @@ import android.Manifest.permission.READ_CONTACTS
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
+import android.app.ActivityManager
 import android.app.LoaderManager.LoaderCallbacks
+import android.content.Context
 import android.content.CursorLoader
 import android.content.Loader
 import android.content.pm.PackageManager
@@ -41,6 +43,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,9 +169,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
                     LiveDataBus.get().with("login_succeed").value = "登录成功";
                     ToastUtil.showLong(applicationContext, "登录成功")
-
-                    startActivity<MainActivity>()
-
                     finish()
                 }
 
@@ -283,7 +283,10 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     companion object {
-
+        fun signInFirst(context: Context){
+            ToastUtil.showLong(context, "Please sign in.")
+            context.startActivity<LoginActivity>()
+        }
         /**
          * Id to identity READ_CONTACTS permission request.
          */
@@ -296,4 +299,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         private val DUMMY_CREDENTIALS =
             arrayOf("foo@example.com:hello", "bar@example.com:world", "admin@lfork.com:abc123456")
     }
+
+
 }

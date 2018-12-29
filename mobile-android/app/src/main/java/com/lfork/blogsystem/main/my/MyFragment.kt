@@ -50,7 +50,7 @@ class MyFragment : Fragment(), Navigator, View.OnClickListener {
 
             viewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
             viewModel.registerNavigator(this)
-            viewModel.start(resources.getString(R.string.click_to_sign_in))
+            viewModel.start()
 
             binding = MainMyFragBinding.bind(root!!)
             binding.viewModel = viewModel
@@ -98,7 +98,6 @@ class MyFragment : Fragment(), Navigator, View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-
         viewModel.refreshData()
 
     }
@@ -120,8 +119,20 @@ class MyFragment : Fragment(), Navigator, View.OnClickListener {
                 }
             }
 
-            R.id.following -> startFollowActivity(context!!, FollowActivity.FOLLOWING_FRAG)
-            R.id.followers -> startFollowActivity(context!!, FollowActivity.FOLLOWER_FRAG)
+            R.id.following -> {
+                if (isSignIn) {
+                    startFollowActivity(context!!, FollowActivity.FOLLOWING_FRAG)
+                } else {
+                    context?.startActivity<LoginActivity>()
+                }
+            }
+            R.id.followers ->
+                if (isSignIn) {
+                    startFollowActivity(context!!, FollowActivity.FOLLOWER_FRAG)
+                } else {
+                    context?.startActivity<LoginActivity>()
+                }
+
 
             R.id.item_my_articles ->{
                 if (isSignIn){

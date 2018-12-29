@@ -45,8 +45,8 @@ class LatestArticlePresenter(private var view: ArticleContract.View?) :
         val cacheUser = UserDataRepository.userCache
         ArticleDataRepository.loadMoreUsesArticles(
             pageNumber,
-            cacheUser.getAccount(),
-            BlogApplication.token!!,
+            "test",//cacheUser.getAccount(),
+          "test",//  BlogApplication.token!!,
             loadMoreDataCallBack
         )
     }

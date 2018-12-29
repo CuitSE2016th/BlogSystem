@@ -13,6 +13,8 @@ import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.databinding.ArticleDetailActBinding
 import com.lfork.blogsystem.login.LoginActivity
+import com.lfork.blogsystem.login.LoginActivity.Companion.signInFirst
+import com.lfork.blogsystem.utils.ShareUtil
 import com.lfork.blogsystem.utils.ToastUtil
 import com.lfork.blogsystem.utils.startActivity
 import kotlinx.android.synthetic.main.article_detail_act.*
@@ -75,13 +77,37 @@ class ArticleDetailActivity : AppCompatActivity() {
                 editor_layout.visibility = View.VISIBLE
                 editor_layout.startAnimation(mShowAction);
             } else{
-                ToastUtil.showLong(this@ArticleDetailActivity, "Please sign in.")
-                this@ArticleDetailActivity.startActivity<LoginActivity>()
+                signInFirst(this)
             }
+        }
 
+        btn_star.setOnClickListener {
+
+            if (isSignIn ){
+            } else{
+                signInFirst(this)
+            }
 
         }
 
+        btn_like.setOnClickListener {
+            if (isSignIn ){
+            } else{
+                signInFirst(this)
+            }
+
+        }
+
+        btn_share.setOnClickListener {
+            ShareUtil.shareTextBySystem(this@ArticleDetailActivity, viewModel?.title?.get()?:"Article is null","Article Share" )
+        }
+
+        btn_follow.setOnClickListener{
+            if (isSignIn ){
+            } else{
+                signInFirst(this)
+            }
+        }
     }
 
     override fun onBackPressed() {

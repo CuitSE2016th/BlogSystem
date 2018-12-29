@@ -87,7 +87,7 @@
                 android:text="Comment" />
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/btn_share"
                 style="@style/article_detail_navigation_btns"
                 android:text="Share" />
         </LinearLayout>

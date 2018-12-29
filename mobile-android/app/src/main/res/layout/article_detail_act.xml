@@ -105,7 +105,7 @@
                         tools:text="2018/12/15" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/btn_follow"
                         style="@style/button_article_action"
                         android:layout_marginEnd="16dp"
                         android:text="Follow"
