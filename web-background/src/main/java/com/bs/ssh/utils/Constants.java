@@ -10,7 +10,7 @@ public class Constants {
 
     public final static int RESPONSE_FAILED = 200;
 
-    public final static String FILE_IMAGE_RELATIVE_PATH = "images";
+    public static String FILE_IMAGE_RELATIVE_PATH = null;
 
     //审核中
     public final static int AUDIT_IN = 300;

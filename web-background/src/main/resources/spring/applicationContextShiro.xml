@@ -58,6 +58,7 @@
                 /user/isExist = anon
                 / = anon
                 <!--/user/article/upload = anon-->
+                /images/** = anon
                 /** = auth
             </value>
         </property>
