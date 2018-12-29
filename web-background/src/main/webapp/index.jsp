@@ -36,6 +36,7 @@
         <input type="file" name="image"/>
         <input type="file" name="image"/>
         <input type="submit" value="上传"/>
+        <input type="hidden" name="token" value="1e27c5eddd8d4fc2bbd46edab1be914b"/>
     </form>
 </fieldset>
 </body>
