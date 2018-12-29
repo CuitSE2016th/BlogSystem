@@ -1,7 +1,6 @@
 package com.lfork.blogsystem.common.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,7 +96,7 @@ class ArticlesAdapter :
                 )
 //            //暂时没有description
                 holder.abstract?.text = item.abstract
-                holder.editTime?.text = item.editTime
+                holder.editTime?.text = item.createTime
 //
                 holder.itemView.setOnClickListener {
                     if (BlogApplication.context != null) {
