@@ -5,3 +5,7 @@ function GetQueryString(name ){
 
     if(r!=null)return  unescape(r[2]); return null;
 }
+function btn() {
+    window.location.href = 'demo.html';
+}
+

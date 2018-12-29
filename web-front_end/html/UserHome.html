@@ -5,8 +5,10 @@
     <title>个人主页</title>
     <link href="../css/bootstrap.css" rel="stylesheet">
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <script src="../js/paging_model.js"></script>
     <link rel="stylesheet" href="../css/app.css">
+    <script type="text/javascript"src="../js/common.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default" id="nav" role="navigation">
@@ -72,132 +74,135 @@
 </div>
 <div>
     <div class="article_body" id="order1">
-        <div class="single_article">
-            <div class="article_msg">
-                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
-                <div class="article_char">
-                    <p>
-                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                    </p>
-                </div>
-                <div class="article_detail">
-                    <ul>
-                        <li style="padding-left: 0">访问量:100</li>
-                        <li>赞数:10</li>
-                        <li>评论条数：23</li>
-                        <li>2018年11月1日 01点12分</li>
-                    </ul>
-
-                </div>
-            </div>
-            <div class="article_img" >
-                <img width="100%" height="100%" src="../img/logo.jpg" />
-            </div>
+        <div id="article_body">
         </div>
-        <div class="single_article">
-            <div class="article_msg">
-                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
-                <div class="article_char">
-                    <p>
-                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                    </p>
-                </div>
-                <div class="article_detail">
-                    <ul>
-                        <li style="padding-left: 0">访问量:100</li>
-                        <li>赞数:10</li>
-                        <li>评论条数：23</li>
-                        <li>2018年11月1日 01点12分</li>
-                    </ul>
+        <div id="pagelist"></div>
+        <!--<div class="single_article">-->
+            <!--<div class="article_msg">-->
+                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
+                <!--<div class="article_char">-->
+                    <!--<p>-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                    <!--</p>-->
+                <!--</div>-->
+                <!--<div class="article_detail">-->
+                    <!--<ul>-->
+                        <!--<li style="padding-left: 0">访问量:100</li>-->
+                        <!--<li>赞数:10</li>-->
+                        <!--<li>评论条数：23</li>-->
+                        <!--<li>2018年11月1日 01点12分</li>-->
+                    <!--</ul>-->
 
-                </div>
-            </div>
-            <div class="article_img" >
-                <img width="100%" height="100%" src="../img/logo.jpg" />
-            </div>
-        </div>
-        <div class="single_article">
-            <div class="article_msg">
-                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
-                <div class="article_char">
-                    <p>
-                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                    </p>
-                </div>
-                <div class="article_detail">
-                    <ul>
-                        <li style="padding-left: 0">访问量:100</li>
-                        <li>赞数:10</li>
-                        <li>评论条数：23</li>
-                        <li>2018年11月1日 01点12分</li>
-                    </ul>
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="article_img" >-->
+                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="single_article">-->
+            <!--<div class="article_msg">-->
+                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
+                <!--<div class="article_char">-->
+                    <!--<p>-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                    <!--</p>-->
+                <!--</div>-->
+                <!--<div class="article_detail">-->
+                    <!--<ul>-->
+                        <!--<li style="padding-left: 0">访问量:100</li>-->
+                        <!--<li>赞数:10</li>-->
+                        <!--<li>评论条数：23</li>-->
+                        <!--<li>2018年11月1日 01点12分</li>-->
+                    <!--</ul>-->
 
-                </div>
-            </div>
-            <div class="article_img" >
-                <img width="100%" height="100%" src="../img/logo.jpg" />
-            </div>
-        </div>
-        <div class="single_article">
-            <div class="article_msg">
-                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
-                <div class="article_char">
-                    <p>
-                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                    </p>
-                </div>
-                <div class="article_detail">
-                    <ul>
-                        <li style="padding-left: 0">访问量:100</li>
-                        <li>赞数:10</li>
-                        <li>评论条数：23</li>
-                        <li>2018年11月1日 01点12分</li>
-                    </ul>
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="article_img" >-->
+                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="single_article">-->
+            <!--<div class="article_msg">-->
+                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
+                <!--<div class="article_char">-->
+                    <!--<p>-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                    <!--</p>-->
+                <!--</div>-->
+                <!--<div class="article_detail">-->
+                    <!--<ul>-->
+                        <!--<li style="padding-left: 0">访问量:100</li>-->
+                        <!--<li>赞数:10</li>-->
+                        <!--<li>评论条数：23</li>-->
+                        <!--<li>2018年11月1日 01点12分</li>-->
+                    <!--</ul>-->
 
-                </div>
-            </div>
-            <div class="article_img" >
-                <img width="100%" height="100%" src="../img/logo.jpg" />
-            </div>
-        </div>
-        <div class="single_article">
-            <div class="article_msg">
-                <h2>月入3W的高级Java工程师都具备哪些能力？</h2>
-                <div class="article_char">
-                    <p>
-                        很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                        很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼
-                    </p>
-                </div>
-                <div class="article_detail">
-                    <ul>
-                        <li style="padding-left: 0">访问量:100</li>
-                        <li>赞数:10</li>
-                        <li>评论条数：23</li>
-                        <li>2018年11月1日 01点12分</li>
-                    </ul>
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="article_img" >-->
+                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="single_article">-->
+            <!--<div class="article_msg">-->
+                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
+                <!--<div class="article_char">-->
+                    <!--<p>-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                    <!--</p>-->
+                <!--</div>-->
+                <!--<div class="article_detail">-->
+                    <!--<ul>-->
+                        <!--<li style="padding-left: 0">访问量:100</li>-->
+                        <!--<li>赞数:10</li>-->
+                        <!--<li>评论条数：23</li>-->
+                        <!--<li>2018年11月1日 01点12分</li>-->
+                    <!--</ul>-->
 
-                </div>
-            </div>
-            <div class="article_img" >
-                <img width="100%" height="100%" src="../img/logo.jpg" />
-            </div>
-        </div>
-        <div class="pager-list"></div>
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="article_img" >-->
+                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="single_article">-->
+            <!--<div class="article_msg">-->
+                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
+                <!--<div class="article_char">-->
+                    <!--<p>-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
+                    <!--</p>-->
+                <!--</div>-->
+                <!--<div class="article_detail">-->
+                    <!--<ul>-->
+                        <!--<li style="padding-left: 0">访问量:100</li>-->
+                        <!--<li>赞数:10</li>-->
+                        <!--<li>评论条数：23</li>-->
+                        <!--<li>2018年11月1日 01点12分</li>-->
+                    <!--</ul>-->
+
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="article_img" >-->
+                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="pager-list"></div>-->
     </div>
     <div class="review_body" id="order2" style="display:none;">
         <div>
@@ -216,6 +221,7 @@
 </div>
 </body>
 <script type="text/javascript">
+    let wand='eccaad52d6854162ab834eed12f91fc3';
     $(document).ready(function () {
         //首先获取导航栏距离浏览器顶部的高度
         var top = $('#nav').offset().top;
@@ -231,7 +237,6 @@
             }
         })
     });
-
     $(document).ready(function () {
         var temp = "none";
 
@@ -258,19 +263,113 @@
         }
     });
     $().ready(function () {
-        $('div.pager-list').pageList({
-            prevText: '前一页',
-            nextText: '下一页',
-            recordText: '共{0}页，{1}条记录',
-            totalCount: 200,
-            goInputType: 'text',
-            //showGoLink: true,
-            showPageRange: 5,
-            renderPerCall: true,
-            clickCallback: function (currentPage) {
-                console.info("currentPage:" + currentPage);
+        let total='';
+        $.ajax({
+
+            url: ' http://www.lfork.top/blog/user/article/page',//相对应的esb接口地址
+
+            type: 'post',
+
+            data: {"pn": 1, "ps":5,"token":wand},//向服务器（接口）传递的参数
+
+            success: function (data) {//服务器（接口）返回来的数据
+                if (data.code == 100) {//如果返回来的信息说明提交的信息为正确的
+                    total=data.data.recordCount;
+                    let datas = data.data.result;
+                    let str ='';
+                    let str1 ='';
+                    for(let i=0; i<datas.length;i++){
+                        str += '<div class="single_article">'
+                        str += '<div class="article_msg">'
+                        str +='<a href="articl_detail.html?id='+datas[i].id+'">'
+                        str += '<h2>'+datas[i].title+'</h2>'
+                        str += '</a>'
+                        str += '<div class="article_char" >'+datas[i].content
+                        str += '</div>'
+                        str += '<div class="article_detail">'
+                        str += '<ul>'
+                        str += ' <li style="padding-left: 0">访问量:100</li>'
+                        str += ' <li>赞数:10</li>'
+                        str += '<li>评论条数：23</li>'
+                        str += '<li>2018年11月1日 01点12分</li>'
+                        str += '</ul>'
+                        str += '</div>'
+                        str += '</div>'
+                        str += '<div class="article_img" >'
+                        str += '<img width="100%" height="100%" src="../img/logo.jpg" />'
+                        str += '</div>'
+                        str += '</div>'
+
+                    }
+                    str1+='<div class="pager-list"></div>'
+                    $('#article_body').html(str);
+                    $('#pagelist').html(str1);
+                    $('div.pager-list').pageList({
+                        prevText: '前一页',
+                        nextText: '下一页',
+                        recordText: '共{0}页，{1}条记录',
+                        totalCount: total,
+                        goInputType: 'text',
+                        //showGoLink: true,
+                        showPageRange: 5,
+                        renderPerCall: true,
+                        clickCallback: function (currentPage) {
+
+                            let str = next_page(currentPage);
+                        }
+
+                    });
+                }
+                else {//如果返回来的信息说明提供的信息为错误的
+
+
+                }
             }
+
         });
     });
+    function next_page(curpage) {
+        $.ajax({
+
+            url: 'http://www.lfork.top/blog/user/article/page',//相对应的esb接口地址
+
+            type: 'post',
+
+            data: {"pn": curpage, "ps":5,"token":wand},//向服务器（接口）传递的参数
+
+            success: function (data) {//服务器（接口）返回来的数据
+                if (data.code == 100) {//如果返回来的信息说明提交的信息为正确的
+                    let datas = data.data.result;
+                    let str='';
+                    for(let i=0; i<datas.length;i++){
+                        str += '<div class="single_article">'
+                        str += '<div class="article_msg">'
+                        str +='<a href="articl_detail.html?id='+datas[i].id+'">'
+                        str += '<h2>'+datas[i].title+'</h2>'
+                        str += '</a>'
+                        str += '<div class="article_char">'+datas[i].content
+                        str += '</div>'
+                        str += '<div class="article_detail">'
+                        str += '<ul>'
+                        str += ' <li style="padding-left: 0">访问量:100</li>'
+                        str += ' <li>赞数:10</li>'
+                        str += '<li>评论条数：23</li>'
+                        str += '<li>2018年11月1日 01点12分</li>'
+                        str += '</ul>'
+                        str += '</div>'
+                        str += '</div>'
+                        str += '<div class="article_img" >'
+                        str += '<img width="100%" height="100%" src="../img/logo.jpg" />'
+                        str += '</div>'
+                        str += '</div>'
+                    }
+                    $('#article_body').empty;
+                    $('#article_body').html(str);
+                } else {//如果返回来的信息说明提供的信息为错误的
+
+                }
+            }
+        });
+    }
 </script>
 </html>

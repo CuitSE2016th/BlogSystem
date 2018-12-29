@@ -6,6 +6,12 @@ ul li{
     list-style: none;
     cursor: pointer;
 }
+a, a:hover, a:visited, a:link, a:active {
+    color:#000;
+    text-decoration:none;
+    outline: none;
+// a标签的四种状态都和本身颜色保持一致
+}
 .nav_btn{
     width: 60px;
     margin-top: 10px;
@@ -184,12 +190,10 @@ ul li{
 }
 .article_body .single_article .article_msg .article_char{
     height: 100px;
-}
-.article_body .single_article .article_msg .article_char p{
-    /*position:relative;*/
-    line-height:1.4em;
-    height:4.2em;/* 3 倍line-height  多少倍就是多少行*/
-    overflow:hidden;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width:600px;
 }
 .article_body .single_article .article_msg .article_detail{
     margin-top: 5px;
@@ -345,3 +349,44 @@ ul li{
     height: 40px;
     padding-top: 70px;
 }
+
+
+/*文章详情*/
+.follow-detail .user_all{
+    width: 600px;
+    height: 150px;
+    margin: 0 auto;
+    padding-top: 50px;
+    border-bottom: 1px solid #000000;
+}
+.follow-detail .user_all .user_head{
+    width: 80px;
+    height: 80px;
+    float: left;
+}
+.follow-detail .user_all .user_detail{
+    padding-top: 5px;
+    padding-left: 50px;
+}
+.follow-detail .user_all .user_detail ul{
+    width: 400px;
+}
+.follow-detail .user_all .user_detail .li_item {
+    padding-left: 20px;
+}
+.follow-detail .user_all .user_detail{
+    width: 400px;
+    height: 100px;
+    float: left;
+}
+.follow-detail .user_all .user_detail ul li{
+    list-style: none;
+    float: left;
+    font-weight:100;
+}
+.follow-detail .user_all .focus_btn{
+    height: 100px;
+    padding-top: 50px;
+    float: left;
+}
+
