@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<div>
+    <input id="pic" type="file"  accept="image/*" />
+    <input type="button" value="上传头像" id="btn_head">
+</div>
+</body>
+<script>
+    $("#btn_head").click(
+        function(){
+            let picture=$("#pic").val();
+            let wand='eccaad52d6854162ab834eed12f91fc3';
+            $.ajax({
+                url: 'http://localhost:8080/user/uploadPortrait',//相对应的esb接口地址
+                type: 'post',
+                data: {"token":wand,"pic":picture},//向服务器（接口）传递的参数
+
+                success: function (data) {//服务器（接口）返回来的数据
+                    if(data.code==100){
+                        alert(data.data);
+                    }
+                }
+            });
+
+        }
+    );
+</script>
+</html>

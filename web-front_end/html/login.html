@@ -5,6 +5,7 @@
     <title>login</title>
     <link rel="stylesheet" href="../css/bootstrap.css">
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <link  rel="stylesheet" href="../css/app.css">
 
     <style>
@@ -130,7 +131,7 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
-        var temp = "none";
+        let temp = "none";
 
         $("#change_item_1").click(function () {
             openMatter(1);
@@ -139,7 +140,7 @@
             openMatter(2);
         });
         function openMatter(obj) {
-            for (var i = 1; i < 3; i++) {
+            for (let i = 1; i < 3; i++) {
                 if (i == obj) {
                     temp = "block";
                 } else {
@@ -154,12 +155,12 @@
 
         function (){
 
-            var user=$("#username").val();//获取页面中登录名和密码
+            let user=$("#username").val();//获取页面中登录名和密码
 
-            var pwd=$("#password").val();
+            let pwd=$("#password").val();
 
             if(user==""|| pwd==""){//判断两个均不为空（其他判断规则在其输入时已经判断）
-                var str='';
+                let str='';
                 str +='<span style="color:red">';
                 str +='账号密码为空！'
                 str +='</span>'
@@ -176,14 +177,17 @@
 
                     success:function(data){//服务器（接口）返回来的数据
 
-                        if(data.code==100){//如果返回来的信息说明提交的信息为正确的\
-                            var str_username='';
-                            str_username+='index.html?token='+data.data;
+                        if(data.code==100){//如果返回来的信息说明提交的信息为正确的
+                            let str_username='';
+                            let wand="";
+                            str_username+='index.html?this_identity='+user;
+                            wand+=data.data;
+                            $.cookie('this_token', wand,{ expires: 7,path:'/',secure:false,raw:false});  // 存储在cookie中
                             window.location.href=str_username;//正确登录后页面跳转至
                         }
                         else{//如果返回来的信息说明提供的信息为错误的
                             $("#login_reminder").empty();
-                            var str1='';
+                            let str1='';
                             str1 +='<span style="color:red">';
                             str1 +='账号密码错误！'
                             str1 +='</span>'
@@ -208,11 +212,11 @@
 
     });
     $("#register_tel").blur(function() {
-        var email=$("#register_tel").val();
+        let email=$("#register_tel").val();
         $("#register_reminder").empty();
         //校验用户名是否为空，ajax异步校验是否注册了
         if ($("#register_tel").val()== "") {
-            var str1='';
+            let str1='';
             str1 +='<span style="color:red">';
             str1 +='请输入手机号或邮箱！'
             str1 +='</span>'
@@ -226,7 +230,7 @@
                 success: function (data) { //请求成功时执行操作
                     if(data.code=100){
                     }else{
-                        var str1='';
+                        let str1='';
                         str1 +='<span style="color:red">';
                         str1 +='该手机号或邮箱已被注册！'
                         str1 +='</span>'
@@ -240,7 +244,7 @@
     $("#register_password").blur(function() {
         $("#register_reminder").empty();
         if ($("#register_password").val()== "") {
-            var str1='';
+            let str1='';
             str1 +='<span style="color:red">';
             str1 +='请输入密码！'
             str1 +='</span>'
@@ -255,7 +259,7 @@
         $("#register_reminder").empty();
         if ($("#register_code").val()== "") {
             $("#register_reminder").empty();
-            var str1='';
+            let str1='';
             str1 +='<span style="color:red">';
             str1 +='请输入验证码！'
             str1 +='</span>'
@@ -266,7 +270,7 @@
 
     });
     $("#register_code_get").click(function(){
-        var email=$("#register_tel").val();
+        let email=$("#register_tel").val();
         $.ajax({
             url: "http://localhost:8080/user/code", //请求验证页面
             type: "POST", //请求方式 可换为post 注意验证页面接收方式
@@ -281,9 +285,9 @@
     });
 
     $("#register").click(function(){
-        var email=$("#register_tel").val();
-        var email_code=$("#register_code").val();
-        var password=$("#register_password").val();
+        let email=$("#register_tel").val();
+        let email_code=$("#register_code").val();
+        let password=$("#register_password").val();
         $.ajax({
 
             url:'http://localhost:8080/user/register',//相对应的esb接口地址
@@ -296,7 +300,7 @@
                 alert(data.code);
                 if(data.code==200){//如果返回来的信息说明提交的信息为正确的
                     $("#register_reminder").empty();
-                    var str1='';
+                    let str1='';
                     str1 +='<span style="color:red">';
                     str1 +='注册失败！检查验证码和密码'
                     str1 +='</span>'
@@ -304,7 +308,7 @@
                 }
                 if(data.code==100){
                     $("#register_reminder").empty();
-                    var str1='';
+                    let str1='';
                     str1 +='<span style="color:red">';
                     str1 +='注册成功！'
                     str1 +='</span>'

@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>个人资料</title>
-    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="../css/bootstrap.css" rel="stylesheet">
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/xcConfirm.css">
+    <script type="text/javascript" src="../js/xcConfirm.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript"src="../js/common.js"></script>
     <link rel="stylesheet" href="../css/app.css">
 </head>
 <body>
 <nav class="navbar navbar-default" id="nav" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header" style="width: 60px; height: 60px;margin-left: 60px;" >
-            <a href="index.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+            <a href="index.html" id="index_id"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
         </div>
         <div class="nav_btn">
             <button type="button" class="btn btn-primary btn-block">发现</button>
@@ -25,13 +29,18 @@
             </span>
             <input type="text" class="form-control" placeholder="输入要查找文章">
         </div>
-        <ul class="nav navbar-nav navbar-right nav_ul">
-            <div class="navbar-header" style="width: 60px; height: 60px;float: left" >
-                <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-            </div>
-            <div class="nav_btn">
-                <button type="button" class="btn btn-primary btn-block">写文章</button>
-            </div>
+        <ul class="nav navbar-nav navbar-right nav_ul" id="user_info">
+            <!--<a href="UserInfo.html">-->
+                <!--<div class="navbar-header" style="width: 60px; height: 60px;float: left">-->
+                    <!--<img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle">-->
+                <!--</div>-->
+                <!--<div style="width: 60px; height: 60px;float: left;line-height: 60px">-->
+                    <!--<span>15682369546</span>-->
+                <!--</div>-->
+            <!--</a>-->
+            <!--<div class="nav_btn">-->
+                <!--<button type="button" class="btn btn-primary btn-block">写文章</button>-->
+            <!--</div>-->
         </ul>
     </div>
 </nav>
@@ -52,7 +61,7 @@
         <div class="show_userinfo" id="order1">
             <div class="user_upload_head">
                 <div class="head_img">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+                    <a href="" id="head_img"></a>
                 </div>
                 <div class="edit_head">
                     <button class="btn btn-default">点击修改</button>
@@ -63,19 +72,18 @@
                     <div class="form-group user_detail_info_ev">
                         <label class="col-sm-3 control-label">昵称</label>
                         <div class="col-sm-9">
-                            <input class="form-control" placeholder="sdsdfds">
+                            <input class="form-control" id="nickname" placeholder="输入你的昵称">
                         </div>
                     </div>
                     <div class="form-group user_detail_info_ev">
-                        <label class="col-sm-3 control-label">电子邮件</label>
-                        <div class="col-sm-9">
-                            <input  type="email" class="form-control" placeholder="输入绑定(实际不用绑定)">
-                        </div>
-                    </div>
-                    <div class="form-group user_detail_info_ev">
-                        <label class="col-sm-3 control-label">电话号码</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" placeholder="输入绑定(实际不用绑定)">
+                        <label class="col-sm-3 control-label">性别</label>
+                        <div class="col-sm-9" id="sex">
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="M" checked="checked">男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="F" > 女
+                            </label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -92,19 +100,19 @@
                     <div class="form-group user_detail_info_ev" style="padding-top: 0px">
                         <label class="col-sm-3 control-label">旧密码</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" placeholder="sdsdfds">
+                            <input type="password" class="form-control" placeholder="输入旧的密码">
                         </div>
                     </div>
                     <div class="form-group user_detail_info_ev">
                         <label class="col-sm-3 control-label">新密码</label>
                         <div class="col-sm-9">
-                            <input  type="password" class="form-control" placeholder="输入绑定(实际不用绑定)">
+                            <input  type="password" class="form-control" placeholder="输入新的密码">
                         </div>
                     </div>
                     <div class="form-group user_detail_info_ev">
                         <label class="col-sm-3 control-label">确认密码</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" placeholder="输入绑定(实际不用绑定)">
+                            <input type="password" class="form-control" placeholder="确认新的密码">
                         </div>
                     </div>
                     <div class="form-group">
@@ -157,5 +165,77 @@
             }
         }
     });
+</script>
+<script>
+    let user_id=GetQueryString("this_identity");
+    let wand=$.cookie('this_token');
+    let str1='';
+    let str2='';
+    let str3='';
+    let str4='';
+    let str5='';
+    let str6='';
+    $(document).ready(function(){
+        $.ajax({
+            url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
+            type: 'post',
+            data: {"identity": user_id,"token":wand},//向服务器（接口）传递的参数
+            success: function (data) {//服务器（接口）返回来的数据
+                let obj = eval('(' + data + ')');
+                if(obj.code==100){
+                    str2='UserInfo.html?this_identity='+user_id;
+                    str6='index.html?this_identity='+user_id;
+                    str1+='<a href="'+str2+'">'
+                    str1+='<div class="navbar-header" style="width: 60px; height: 60px;float: left">'
+                    str1+='<img src="'+'http://www.lfork.top/blog/'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
+                    str1+='</div>'
+                    str1+='<div style="width: 60px; height: 60px;float: left;line-height: 60px">'
+                    str1+= '<span>'+user_id+'</span>'
+                    str1+= '</div>'
+                    str1+= '</a>'
+                    str1+='<div class="nav_btn">'
+                    str1+='<button type="button" class="btn btn-primary btn-block">写文章</button></div>'
+                    str3=obj.data.nickname
+                    str4=obj.data.sex
+                    str5+='<img src="'+'http://www.lfork.top/blog/'+ obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
+                    $("#user_info").html(str1);
+                    $("#index_id").attr("href",str6);
+                    $("#nickname").attr("value",str3);
+                    $("input:radio[value='"+str4+"']").attr('checked','true');
+                    $("#head_img").html(str5);
+
+                }else{
+                }
+            }
+        })
+    });
+    $("#re_save").click(
+        function () {
+            let sex=$("input[name='sex']:checked").val();
+            let nickname=$("#nickname").val();
+            $.ajax({
+
+                url: 'http://www.lfork.top/blog/user/updateUserInfo',//相对应的esb接口地址
+
+                type: 'post',
+
+                data: {"identity": user_id, "token":wand,"sex":sex,"nickname":nickname},//向服务器（接口）传递的参数
+
+                success: function (data) {//服务器（接口）返回来的数据
+                    let obj = eval('(' + data + ')');
+                    if (obj.code == 100) {//如果返回来的信息说明提交的信息为正确的
+                        let txt=  "修改个人信息成功";
+                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+                    }
+                    else {//如果返回来的信息说明提供的信息为错误的
+                        let txt=  "修改个人信息失败";
+                        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);
+
+                    }
+                }
+
+            })
+        }
+    );
 </script>
 </html>

@@ -3,6 +3,7 @@ package com.bs.ssh.service.user.impl;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.dao.ArticleDao;
+import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.entity.*;
 
 import com.bs.ssh.dao.BaseDao;
@@ -28,6 +29,7 @@ public class UserArticleServiceImpl implements UserArticleService{
     @Resource private ArticleDao articleDao;
     @Resource private BaseDao<Star> starDao;
     @Resource private BaseDao<Like> likeDao;
+    @Resource private UserDao userDao;
 
     @Override
     public PageBean getAllArticle(PageRequest pageRequest) {
@@ -39,6 +41,35 @@ public class UserArticleServiceImpl implements UserArticleService{
                 articleDao.count("Article"),
                 results);
 
+    }
+
+    @Override
+    public PageBean getAuthorArticle(PageRequest pageRequest, String uid) {
+        List<Article> results = articleDao.findAll(pageRequest, "from Article where status=? and authorId=?", Constants.AUDIT_COMPLETE, uid);
+
+        return new PageBean<>(
+                pageRequest,
+                articleDao.count("Article"),
+                results);
+    }
+
+    @Override
+    public PageBean getFollowerArticle(PageRequest pageRequest, String uid) {
+
+        List<User> userList = userDao.findAll("from User u left join Follow f on u.id = f.followingId where f.followingId = ?", uid);
+
+        String param = userList.toString();
+        param = param.replaceAll("\\[|\\]", "");
+
+        List<Article> results = null;
+
+        if(!param.equals(""))
+           results = articleDao.findAll("from Article where status=? and authorId in (?)", Constants.AUDIT_COMPLETE, param);
+
+        return new PageBean<>(
+                pageRequest,
+                articleDao.count("Article"),
+                results);
     }
 
     @Override
