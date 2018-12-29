@@ -1,6 +1,8 @@
 package com.lfork.blogsystem.articleedit
 
+import android.app.ProgressDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -9,20 +11,28 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import com.chinalwb.are.AREditText
+import com.chinalwb.are.spans.AreImageSpan
+import com.chinalwb.are.strategies.ImageStrategy
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
 import com.chinalwb.are.styles.toolbar.IARE_Toolbar
 import com.chinalwb.are.styles.toolitems.*
+import com.chinalwb.are.styles.toolitems.styles.ARE_Style_Image
+import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
-import com.lfork.blogsystem.articleedit.helpers.ArticleImageStrategy
+import com.lfork.blogsystem.data.DataCallback
+import com.lfork.blogsystem.data.article.ArticleDataRepository
+import com.lfork.blogsystem.utils.ToastUtil
+import com.lfork.blogsystem.utils.UriHelper
 import com.lfork.blogsystem.utils.setupToolBar
 import kotlinx.android.synthetic.main.article_edit_act.*
+import java.io.File
 
 
 class ArticleEditorActivity : AppCompatActivity() {
 
     private var mToolbar: IARE_Toolbar? = null
 
-    private var androidToolbar: Toolbar?=null
+    private var androidToolbar: Toolbar? = null
 
     private var mEditText: AREditText? = null
 
@@ -39,14 +49,14 @@ class ArticleEditorActivity : AppCompatActivity() {
         initEditorToolbar()
     }
 
-    private fun initAndroidToolBar(){
+    private fun initAndroidToolBar() {
         androidToolbar = toolbar
-        setupToolBar(androidToolbar!!, "0字")
+        setupToolBar(androidToolbar!!, "0 word")
 
     }
 
     private fun initEditorToolbar() {
-        mToolbar =areToolbar
+        mToolbar = areToolbar
         val bold = ARE_ToolItem_Bold()
         val italic = ARE_ToolItem_Italic()
         val underline = ARE_ToolItem_Underline()
@@ -82,7 +92,7 @@ class ArticleEditorActivity : AppCompatActivity() {
         mToolbar!!.addToolbarItem(center)
         mToolbar!!.addToolbarItem(right)
         mToolbar!!.addToolbarItem(image)
-        mToolbar!!.addToolbarItem(video)
+//        mToolbar!!.addToolbarItem(video)
         mToolbar!!.addToolbarItem(at)
 
         mEditText = this.findViewById(R.id.arEditText)
@@ -147,10 +157,11 @@ class ArticleEditorActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            com.chinalwb.are.R.id.action_save->{
-                val html = this.mEditText!!.html
-                Log.d("生成的HTML文本", html)
+            com.chinalwb.are.R.id.action_save -> {
+                val content = this.mEditText!!.html
+                Log.d("生成的HTML文本", content)
                 //            DemoUtil.saveHtml(this, html);
+                publishArticle(article_title.text.toString(), content)
                 return true
             }
         }
@@ -164,6 +175,22 @@ class ArticleEditorActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun publishArticle(title: String, content: String) {
+        ArticleDataRepository.publishOrEditArticle(
+            BlogApplication.token!!,
+            title,
+            content,
+            object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    ToastUtil.showShort(this@ArticleEditorActivity, "发布成功")
+
+                }
+
+                override fun failed(code: Int, log: String) {
+                }
+            });
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         mToolbar!!.onActivityResult(requestCode, resultCode, data)
@@ -174,6 +201,49 @@ class ArticleEditorActivity : AppCompatActivity() {
      * upload
      */
     fun getHtmlText() {
+
+    }
+
+    var dialog : ProgressDialog?=null
+
+    private fun showUploadingDialog() {
+        dialog = ProgressDialog.show(
+            this,
+            "",
+            "Uploading image. Please wait...",
+            true)
+    }
+
+
+    private fun dismissUploadingDialog() {
+        dialog?.dismiss()
+    }
+
+    inner class ArticleImageStrategy : ImageStrategy {
+
+       private var areStyleImage:ARE_Style_Image?=null
+
+        val callback = object : DataCallback<String> {
+            override fun succeed(data: String) {
+                dismissUploadingDialog()
+                areStyleImage?.insertImage(data, AreImageSpan.ImageType.URL)
+                areStyleImage = null
+            }
+
+            override fun failed(code: Int, log: String) {
+                dismissUploadingDialog()
+                areStyleImage = null
+            }
+        }
+
+
+        override fun uploadAndInsertImage(uri: Uri?, areStyleImage: ARE_Style_Image?) {
+            this.areStyleImage = areStyleImage
+            showUploadingDialog()
+            val  realUrl = UriHelper.getPath(this@ArticleEditorActivity,uri)
+            ArticleDataRepository.uploadArticleImages(BlogApplication.token!!, File(realUrl),callback)
+
+        }
 
     }
 }

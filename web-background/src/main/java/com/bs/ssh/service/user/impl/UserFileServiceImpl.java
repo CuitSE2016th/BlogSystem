@@ -4,6 +4,7 @@ import com.bs.ssh.dao.BaseDao;
 import com.bs.ssh.entity.Image;
 import com.bs.ssh.exception.NoSuchEntityException;
 import com.bs.ssh.service.user.UserFileService;
+import com.bs.ssh.utils.Constants;
 import com.bs.ssh.utils.IDUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ import java.io.IOException;
 @Service
 public class UserFileServiceImpl implements UserFileService {
 
-    private static String contextPath = "E:\\";
 
     @Resource
     private BaseDao<Image> imageBaseDao;
@@ -33,7 +33,7 @@ public class UserFileServiceImpl implements UserFileService {
             String imageId = IDUtils.UserID();
             String suffix = pos == -1 ? "jpg" : filenames[i].substring(pos+1);
 
-            String path = contextPath + uid + "\\" +
+            String path = Constants.FILE_IMAGE_RELATIVE_PATH + "\\" + uid + "\\" +
                     imageId + "." + suffix;
 
             File target = new File(path);

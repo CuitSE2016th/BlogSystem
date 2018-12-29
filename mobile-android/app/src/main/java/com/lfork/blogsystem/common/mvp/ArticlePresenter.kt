@@ -36,7 +36,6 @@ open class ArticlePresenter(private var view: ArticleContract.View?) : BasePrese
 
 
     override fun refreshArticles() {
-        val cacheUser = UserDataRepository.userCache
         ArticleDataRepository.getLatestArticles(
             refreshDataCallBack
         )
@@ -45,8 +44,6 @@ open class ArticlePresenter(private var view: ArticleContract.View?) : BasePrese
 
 
     override fun loadMoreArticle(pageNumber: Int) {
-
-        val cacheUser = UserDataRepository.userCache
         ArticleDataRepository.getLatestArticles(
             loadMoreDataCallBack
         )

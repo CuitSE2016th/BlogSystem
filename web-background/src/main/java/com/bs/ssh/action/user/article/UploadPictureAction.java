@@ -2,8 +2,10 @@ package com.bs.ssh.action.user.article;
 
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.service.user.UserFileService;
+import com.bs.ssh.utils.Constants;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,10 @@ public class UploadPictureAction extends AbstractArticleAction {
     @Override
     public String execute() throws Exception {
 
-
+        if(Constants.FILE_IMAGE_RELATIVE_PATH == null){
+            Constants.FILE_IMAGE_RELATIVE_PATH =
+                    ServletActionContext.getServletContext().getRealPath("/images");
+        }
 
         try {
             String uid = this.getUserId();

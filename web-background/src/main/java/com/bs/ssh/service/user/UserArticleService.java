@@ -22,6 +22,24 @@ public interface UserArticleService {
     PageBean getAllArticle(PageRequest pageRequest);
 
     /**
+     * 获取作者发布的文章
+     *
+     * @date 2018/12/28 21:48
+     * @param pageRequest
+     * @return com.bs.ssh.bean.PageBean
+     **/
+    PageBean getAuthorArticle(PageRequest pageRequest, String uid);
+
+    /**
+     * 获取用户关注者发布的文章
+     *
+     * @date 2018/12/28 21:48
+     * @param pageRequest
+     * @return com.bs.ssh.bean.PageBean
+     **/
+    PageBean getFollowerArticle(PageRequest pageRequest, String uid);
+
+    /**
      * 发布文章
      *
      * @date 2018/12/4 18:40
