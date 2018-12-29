@@ -26,6 +26,7 @@ class BlogApplication : Application() {
 
         val APP_SHARED_PREF = "application_shared_pref"
 
+        @JvmStatic
         var token: String? = null
 
         var isSignIn = false

@@ -21,7 +21,7 @@ $.fn.pageList = function (arg, methodName) {
             recordText: '',//显示记录数，为空时不显示，否则按照占位符显示文本，{0}表示总页数，{1}表示总记录数
             clickCallback: function (currentPage) { },//链接被点击时触发的事件，currentPage表示当前点击的是第几页，索引从1开始
             renderPerCall: true,//是否每次点击都重新绘制，如果每次clickCallback事件中都会重新绘制pageList，此处请设置为false减少绘制消耗
-            pageSize: 10,//每页显示的数据条数
+            pageSize: 5,//每页显示的数据条数
             currentPage: 1,//当前第几页，索引从1开始
             totalCount: 0,//总记录数
             currentPageCenter: true,//当前页是否居中，true表示居中,false表示按showPageRange倍率范围显示,注意此值会导致完全不同的显示方式

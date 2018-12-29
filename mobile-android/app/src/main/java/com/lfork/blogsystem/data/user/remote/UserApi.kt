@@ -66,7 +66,7 @@ interface UserApi {
     @POST("user/uploadPortrait")
     fun uploadPortrait(
         @Part("identity") identity: RequestBody,
-        @Part("token") token: RequestBody,
+        @Header("token") token: String,
         @Part fileBody: MultipartBody.Part
     ): Call<Result<User>>
 

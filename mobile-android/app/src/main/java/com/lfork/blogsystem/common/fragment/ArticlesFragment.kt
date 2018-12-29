@@ -32,8 +32,6 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             } else {
                 adapter.refreshItems(articles)
             }
-
-
         }
     }
 
@@ -63,7 +61,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
 
     private var pageNumber = 0
 
-    lateinit var presenter: ArticlePresenter
+    open var presenter: ArticlePresenter?=null
 
     private val recycleScrollListener = object : RecyclerView.OnScrollListener() {
 
@@ -83,12 +81,12 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             isLoadingMore = true
             Log.d("加载两次?", "enen?1$isLoadingMore $this")
             adapter.showIsLoading()
-            presenter.loadMoreArticle(pageNumber)
+            presenter?.loadMoreArticle(pageNumber)
         }
     }
 
     private val swipeRefreshListener = SwipeRefreshLayout.OnRefreshListener {
-            presenter.refreshArticles()
+            presenter?.refreshArticles()
 
     }
 
@@ -106,7 +104,10 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
         adapter = ArticlesAdapter()
         root!!.recycle_articles.layoutManager = LinearLayoutManager(context)
         root!!.recycle_articles.adapter = adapter
-        presenter = ArticlePresenter(this)
+        if (presenter== null){
+            presenter = ArticlePresenter(this)
+        }
+
         root!!.refresh_layout.setOnRefreshListener(swipeRefreshListener)
         root!!.recycle_articles.addOnScrollListener(recycleScrollListener)
 
@@ -115,10 +116,10 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             root?.refresh_layout?.isRefreshing = false
             root!!.item_no_data.visibility = View.GONE
             root!!.data_container.visibility = View.VISIBLE
-            presenter.refreshArticles()
+            presenter?.refreshArticles()
         }
 
-        presenter.refreshArticles()
+        presenter?.refreshArticles()
         return root
 
     }
@@ -130,7 +131,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.destroy()
+        presenter?.destroy()
     }
 
 }

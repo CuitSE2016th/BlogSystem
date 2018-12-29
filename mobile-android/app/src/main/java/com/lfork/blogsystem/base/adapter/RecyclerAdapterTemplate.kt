@@ -93,7 +93,7 @@
 //                )
 ////            //暂时没有description
 //                holder.abstract?.text = item.abstract
-//                holder.editTime?.text = item.editTime
+//                holder.createTime?.text = item.createTime
 ////
 //                holder.itemView.setOnClickListener {
 //                    if (BlogApplication.context != null) {
@@ -129,7 +129,7 @@
 //        RecyclerView.ViewHolder(itemView) {
 //
 //        var title: TextView? = null
-//        var editTime: TextView? = null
+//        var createTime: TextView? = null
 //        var cover: ImageView? = null
 //        var abstract: TextView? = null
 //
@@ -137,7 +137,7 @@
 //            when (itemType) {
 //                TYPE_NORMAL -> {
 //                    title = itemView.title
-//                    editTime = itemView.edit_time
+//                    createTime = itemView.edit_time
 //                    cover = itemView.cover
 //                    abstract = itemView.article_abstract
 //                }

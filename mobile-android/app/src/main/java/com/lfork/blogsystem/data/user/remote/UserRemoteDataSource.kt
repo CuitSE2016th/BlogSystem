@@ -84,7 +84,7 @@ class UserRemoteDataSource : UserDataSource {
     ) {
         val fileBody = RequestBody.create(MediaType.parse("image/*"),pic)
         val photo = MultipartBody.Part.createFormData("pic", pic.name, fileBody)
-        api.uploadPortrait(RequestBody.create(null, account), RequestBody.create(null, token), photo)
+        api.uploadPortrait(RequestBody.create(null, account), token, photo)
             .enqueue(MyRetrofitCallBack(callback))
     }
 

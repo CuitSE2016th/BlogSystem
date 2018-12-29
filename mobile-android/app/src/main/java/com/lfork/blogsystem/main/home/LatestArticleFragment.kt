@@ -14,12 +14,15 @@ import com.lfork.blogsystem.R
 import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.common.fragment.ArticlesFragment
+import com.lfork.blogsystem.common.mvp.ArticlePresenter
 import com.lfork.blogsystem.data.article.Article
 import com.ms.banner.Banner
 import com.ms.banner.holder.BannerViewHolder
 import dip2px
 
 class LatestArticleFragment : ArticlesFragment() {
+
+
     override fun refreshArticles(articles: ArrayList<Article>) {
         super.refreshArticles(articles)
         activity?.runOnUiThread {
@@ -37,7 +40,6 @@ class LatestArticleFragment : ArticlesFragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +49,7 @@ class LatestArticleFragment : ArticlesFragment() {
          */
         if (root == null) {
             root = inflater.inflate(R.layout.main_home_latest_article_inner_frag, container, false)
+            presenter = LatestArticlePresenter(this)
             super.onCreateView(inflater, container, savedInstanceState)
             setupBanner()
         }

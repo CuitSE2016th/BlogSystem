@@ -1,4 +1,4 @@
-package com.lfork.blogsystem.myarticles
+package com.lfork.blogsystem.main.home
 
 import android.support.v7.util.AsyncListUtil
 import com.lfork.blogsystem.BlogApplication
@@ -15,8 +15,9 @@ import java.sql.Array
  *
  * Created by 98620 on 2018/12/15.
  */
-class MyArticlePresenter(private var view: ArticleContract.View?) :
+class LatestArticlePresenter(private var view: ArticleContract.View?) :
     ArticlePresenter(view) {
+
 
     override fun refreshArticles() {
         val cacheUser = UserDataRepository.userCache
