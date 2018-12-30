@@ -142,6 +142,7 @@
 
                 <FrameLayout
                     android:id="@+id/article_comment_container"
+                    android:background="@drawable/bg_circle_rectangle_frame_black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

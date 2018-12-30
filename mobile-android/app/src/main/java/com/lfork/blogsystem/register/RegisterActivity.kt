@@ -122,7 +122,7 @@ class RegisterActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         account.error = null
         password.error = null
 
-        // Store values at the time of the login attempt.
+        // Store values at the createTime of the login attempt.
         val accountStr = account.text.toString()
         val passwordStr = password.text.toString()
         val passwordSecondStr = password_second.text.toString()

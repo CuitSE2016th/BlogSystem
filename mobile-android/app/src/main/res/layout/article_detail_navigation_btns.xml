@@ -50,8 +50,7 @@
                 android:hint="Enter you comment."
                 android:gravity="top"
                 android:scrollbars="vertical"
-                android:lines="3"
-                android:maxLines="3"
+                android:lines="1"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_publish_comment"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -128,7 +128,7 @@ public class HttpService {
     /**
      * request body 的构造方法
      * RequestBody requestbody = new FormBody.Builder()
-     * .add("studentId", user.getUserName())
+     * .add("studentId", user.getUsername())
      * .add("userPassword", user.getUserPassword())
      * .build();
      * synchronize post
