@@ -69,8 +69,8 @@
         },
         // （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
         customInsert: function (insertImg,result,editor) {
-            alert(result.message)
-            let url = result.url
+            alert(result.data)
+            let url = result.data
             insertImg(url)
         }
     };
@@ -113,6 +113,7 @@
             }
         }
     );
+
 </script>
 </body>
 </html>

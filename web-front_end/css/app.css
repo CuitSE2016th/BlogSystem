@@ -354,9 +354,8 @@ a, a:hover, a:visited, a:link, a:active {
 /*文章详情*/
 .follow-detail .user_all{
     width: 600px;
-    height: 150px;
+    height: 100px;
     margin: 0 auto;
-    padding-top: 50px;
     border-bottom: 1px solid #000000;
 }
 .follow-detail .user_all .user_head{
@@ -387,6 +386,19 @@ a, a:hover, a:visited, a:link, a:active {
 .follow-detail .user_all .focus_btn{
     height: 100px;
     padding-top: 50px;
+    float: left;
+}
+.content_area{
+    width: 600px;
+    margin: 0 auto;
+}
+.review_area{
+    width: 600px;
+    margin: 0 auto;
+}
+.review_area .user_head{
+    width: 50px;
+    height: 50px;
     float: left;
 }
 

@@ -10,6 +10,7 @@
     <script type="text/javascript" src="../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <script type="text/javascript"src="../js/common.js"></script>
+    <script src="../js/jquery.form.js" type="text/javascript"></script>
 </head>
 <body>
 <nav class="navbar navbar-default" id="nav" role="navigation">
@@ -18,10 +19,10 @@
             <a href="index.html" id="index_id"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
         </div>
         <div class="nav_btn">
-            <button type="button" class="btn btn-primary btn-block">发现</button>
+            <button type="button" class="btn btn-primary btn-block" onclick="find_btn()">发现</button>
         </div>
         <div class="nav_btn">
-            <button type="button" class="btn btn-primary btn-block">关注</button>
+            <button type="button" class="btn btn-primary btn-block" >关注</button>
         </div>
         <div class="input-group search_input">
             <span class="input-group-btn">
@@ -64,7 +65,7 @@
                     <a href="" id="head_img"></a>
                 </div>
                 <div class="edit_head">
-                    <button class="btn btn-default">点击修改</button>
+                    <button class="btn btn-default" id="change_item_3">点击修改</button>
                 </div>
             </div>
             <div class="user_detail_info">
@@ -94,6 +95,7 @@
                 </form>
             </div>
         </div>
+
         <div class="show_userinfo" id="order2" style="display: none">
             <div class="user_detail_info" style="padding-top: 0px">
                 <form class="form-horizontal">
@@ -123,6 +125,25 @@
                 </form>
             </div>
         </div>
+        <div class="show_userinfo" id="order3" style="display: none">
+            <div class="user_detail_info" style="padding-top: 0px">
+                <form class="form-horizontal" method="post" action="http://www.lfork.top/blog/user/uploadPortrait" enctype="multipart/form-data" id="formId">
+                    <div class="form-group user_detail_info_ev">
+                        <label class="col-sm-3 control-label">选择图片</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="file" name="pic" accept="image/*" >
+                            <input class="form-control" type="text" name="identity" id="the_identy" style="display: none">
+                            <input class="form-control" type="text" name="token" id="the_wand" style="display: none">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-6 has-feedback">
+                            <button type="submit" class="btn btn-primary btn-block">确认上传</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>
@@ -141,11 +162,24 @@
                 $('#nav').css({'position':'','top':''});
             }
         })
-    })
+    });
+    $(document).ready(function() {
+        $("#formId").ajaxForm(function(data){
+            alert(data.message);
+            if(data.code==100){
+                let txt=  "上传头像成功";
+                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+            }else{
+                let txt=  "上传头像失败";
+                window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);
+            }
+
+        });
+    });
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
-        var temp = "none";
+        let temp = "none";
 
         $("#change_item_1").click(function () {
             openMatter(1);
@@ -153,8 +187,11 @@
         $("#change_item_2").click(function () {
             openMatter(2);
         });
+        $("#change_item_3").click(function () {
+            openMatter(3);
+        });
         function openMatter(obj) {
-            for (var i = 1; i < 3; i++) {
+            for (let i = 1; i < 4; i++) {
                 if (i == obj) {
                     temp = "block";
                 } else {
@@ -168,6 +205,7 @@
 </script>
 <script>
     let user_id=GetQueryString("this_identity");
+    let user_identity=$.cookie('this_id');
     let wand=$.cookie('this_token');
     let str1='';
     let str2='';
@@ -177,20 +215,20 @@
     let str6='';
     $(document).ready(function(){
         $.ajax({
-            url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
+            url: 'http://www.lfork.top/blog/user/getUserInfo',//相对应的esb接口地址
             type: 'post',
-            data: {"identity": user_id,"token":wand},//向服务器（接口）传递的参数
+            data: {"identity": user_identity,"token":wand},//向服务器（接口）传递的参数
             success: function (data) {//服务器（接口）返回来的数据
                 let obj = eval('(' + data + ')');
                 if(obj.code==100){
-                    str2='UserInfo.html?this_identity='+user_id;
-                    str6='index.html?this_identity='+user_id;
+                    str2='UserInfo.html?this_identity='+user_identity;
+                    str6='index.html?this_identity='+user_identity;
                     str1+='<a href="'+str2+'">'
                     str1+='<div class="navbar-header" style="width: 60px; height: 60px;float: left">'
                     str1+='<img src="'+'http://www.lfork.top/blog/'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
                     str1+='</div>'
                     str1+='<div style="width: 60px; height: 60px;float: left;line-height: 60px">'
-                    str1+= '<span>'+user_id+'</span>'
+                    str1+= '<span>'+user_identity+'</span>'
                     str1+= '</div>'
                     str1+= '</a>'
                     str1+='<div class="nav_btn">'
@@ -201,6 +239,8 @@
                     $("#user_info").html(str1);
                     $("#index_id").attr("href",str6);
                     $("#nickname").attr("value",str3);
+                    $("#the_identy").attr("value",user_identity);
+                    $("#the_wand").attr("value",wand);
                     $("input:radio[value='"+str4+"']").attr('checked','true');
                     $("#head_img").html(str5);
 
@@ -237,5 +277,9 @@
             })
         }
     );
+    function find_btn() {
+        window.location.href = 'UserFllow.html';
+    }
+
 </script>
 </html>

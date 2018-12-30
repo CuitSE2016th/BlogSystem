@@ -18,7 +18,7 @@
             <a href=""><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
         </div>
         <div class="nav_btn">
-            <button type="button" class="btn btn-primary btn-block">发现</button>
+            <button type="button" class="btn btn-primary btn-block" onclick="find_btn()">发现</button>
         </div>
         <div class="nav_btn">
             <button type="button" class="btn btn-primary btn-block">关注</button>
@@ -61,6 +61,7 @@
 <script>
     let user_id=GetQueryString("this_identity");
     let wand=$.cookie('this_token');
+    let user_identity=$.cookie('this_id');
     let str1='';
     let str2='';
     let str3='';
@@ -68,17 +69,17 @@
         $.ajax({
             url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
             type: 'post',
-            data: {"identity": user_id,"token":wand},//向服务器（接口）传递的参数
+            data: {"identity": user_identity,"token":wand},//向服务器（接口）传递的参数
             success: function (data) {//服务器（接口）返回来的数据
                 let obj = eval('(' + data + ')');
                 if(obj.code==100){
-                    str2='UserInfo.html?this_identity='+user_id;
+                    str2='UserInfo.html?this_identity='+user_identity;
                     str1+='<a href="'+str2+'">'
                     str1+='<div class="navbar-header" style="width: 60px; height: 60px;float: left">'
                     str1+='<img src="'+'http://www.lfork.top/blog/'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
                     str1+='</div>'
                     str1+='<div style="width: 60px; height: 60px;float: left;line-height: 60px">'
-                    str1+= '<span>'+user_id+'</span>'
+                    str1+= '<span>'+user_identity+'</span>'
                     str1+= '</div>'
                     str1+= '</a>'
                     str1+='<div class="nav_btn">'
@@ -200,6 +201,9 @@
                 }
             }
         });
+    }
+    function find_btn() {
+        window.location.href = 'UserFllow.html';
     }
 </script>
 

@@ -264,6 +264,7 @@
     });
     $().ready(function () {
         let total='';
+
         $.ajax({
 
             url: ' http://www.lfork.top/blog/user/article/page',//相对应的esb接口地址
@@ -314,7 +315,6 @@
                         showPageRange: 5,
                         renderPerCall: true,
                         clickCallback: function (currentPage) {
-
                             let str = next_page(currentPage);
                         }
 
@@ -370,6 +370,9 @@
                 }
             }
         });
+    }
+    function find_btn() {
+        window.location.href = 'demo.html';
     }
 </script>
 </html>
