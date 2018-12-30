@@ -3,6 +3,7 @@ package com.bs.ssh.service.user;
 
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
+import com.bs.ssh.entity.Article;
 
 /**
  * 文章服务
@@ -20,6 +21,15 @@ public interface UserArticleService {
      * @return com.bs.ssh.bean.PageBean
      **/
     PageBean getAllArticle(PageRequest pageRequest);
+
+    /**
+     * 根据文章ID获取文章
+     *
+     * @date 2018/12/29 23:01
+     * @param aid
+     * @return com.bs.ssh.entity.Article
+     **/
+    Article getArticleById(Integer aid);
 
     /**
      * 获取作者发布的文章

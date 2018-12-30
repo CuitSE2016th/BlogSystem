@@ -2,6 +2,7 @@ package com.bs.ssh.service.user.impl;
 
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
+import com.bs.ssh.bean.UserPlus;
 import com.bs.ssh.dao.ArticleDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.entity.*;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +32,7 @@ public class UserArticleServiceImpl implements UserArticleService{
     @Resource private BaseDao<Star> starDao;
     @Resource private BaseDao<Like> likeDao;
     @Resource private UserDao userDao;
+    @Resource private BaseDao<Object> objectBaseDao;
 
     @Override
     public PageBean getAllArticle(PageRequest pageRequest) {
@@ -41,6 +44,11 @@ public class UserArticleServiceImpl implements UserArticleService{
                 articleDao.count("Article"),
                 results);
 
+    }
+
+    @Override
+    public Article getArticleById(Integer aid) {
+        return articleDao.findOne("from Article where id=?", aid);
     }
 
     @Override
@@ -56,15 +64,23 @@ public class UserArticleServiceImpl implements UserArticleService{
     @Override
     public PageBean getFollowerArticle(PageRequest pageRequest, String uid) {
 
-        List<User> userList = userDao.findAll("from User u left join Follow f on u.id = f.followingId where f.followingId = ?", uid);
+        List<String> userIdList = new ArrayList<>();
 
-        String param = userList.toString();
+        List objects = objectBaseDao.findAll("from User u left join Follow f on u.id = f.followingId where f.followingId = ?", uid);
+//        userList.forEach(u->userIdList.add(u.getId()));
+
+        for (Object obj : objects){
+            String t = obj.getClass().getName();
+            userIdList.add(((User)(((Object[])obj)[0])).getId());
+        }
+
+        String param = userIdList.toString();
         param = param.replaceAll("\\[|\\]", "");
 
         List<Article> results = null;
 
         if(!param.equals(""))
-           results = articleDao.findAll("from Article where status=? and authorId in (?)", Constants.AUDIT_COMPLETE, param);
+           results = articleDao.findAll("from Article where status=? and authorId in (" + param + ")", Constants.AUDIT_COMPLETE);
 
         return new PageBean<>(
                 pageRequest,
@@ -129,5 +145,26 @@ public class UserArticleServiceImpl implements UserArticleService{
         if(star == null)
             throw new NoSuchEntityException("已取消收藏，请勿重复操作");
         starDao.delete(star);
+    }
+
+    private class UserFollow{
+        private User user;
+        private Follow follow;
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        public Follow getFollow() {
+            return follow;
+        }
+
+        public void setFollow(Follow follow) {
+            this.follow = follow;
+        }
     }
 }

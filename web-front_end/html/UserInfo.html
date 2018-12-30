@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <title>个人资料</title>
     <link type="text/css" href="../css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../css/app.css">
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
     <link type="text/css" rel="stylesheet" href="../css/xcConfirm.css">
     <script type="text/javascript" src="../js/xcConfirm.js"></script>
     <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <script type="text/javascript"src="../js/common.js"></script>
-    <link rel="stylesheet" href="../css/app.css">
 </head>
 <body>
 <nav class="navbar navbar-default" id="nav" role="navigation">
@@ -194,7 +194,7 @@
                     str1+= '</div>'
                     str1+= '</a>'
                     str1+='<div class="nav_btn">'
-                    str1+='<button type="button" class="btn btn-primary btn-block">写文章</button></div>'
+                    str1+='<button type="button" class="btn btn-primary btn-block" onclick="btn()">写文章</button></div>'
                     str3=obj.data.nickname
                     str4=obj.data.sex
                     str5+='<img src="'+'http://www.lfork.top/blog/'+ obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'

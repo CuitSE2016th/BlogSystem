@@ -54,6 +54,7 @@
                 /user/register = anon
                 /user/code = anon
                 /user/article/page = anon
+                /user/article/id = anon
                 /user/comment/page = anon
                 /user/isExist = anon
                 / = anon
