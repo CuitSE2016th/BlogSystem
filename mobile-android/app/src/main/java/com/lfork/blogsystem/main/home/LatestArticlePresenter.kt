@@ -1,15 +1,11 @@
 package com.lfork.blogsystem.main.home
 
-import android.support.v7.util.AsyncListUtil
-import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.common.mvp.ArticleContract
 import com.lfork.blogsystem.common.mvp.ArticlePresenter
 import com.lfork.blogsystem.data.DataCallback
-import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.data.article.ArticleDataRepository
-import com.lfork.blogsystem.data.article.ArticleResponse
+import com.lfork.blogsystem.data.article.ArticleListResponse
 import com.lfork.blogsystem.data.user.UserDataRepository
-import java.sql.Array
 
 /**
  *
@@ -26,8 +22,8 @@ class LatestArticlePresenter(private var view: ArticleContract.View?) :
 //            BlogApplication.token!!,
 //            refreshDataCallBack
 //        )
-        ArticleDataRepository.getLatestArticles(1, 10, object : DataCallback<ArticleResponse> {
-            override fun succeed(data: ArticleResponse) {
+        ArticleDataRepository.getLatestArticles(1, 10, object : DataCallback<ArticleListResponse> {
+            override fun succeed(data: ArticleListResponse) {
                 if (data.result != null)
                     view?.refreshArticles(data.result!!)
                 else {

@@ -1,24 +1,36 @@
 package com.lfork.blogsystem.data.article
 
-import com.lfork.blogsystem.base.network.Result
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.remote.ArticleRemoteDataSource
 import java.io.File
 
 /**
  *
- * Created by 98620 on 2018/12/11.
+ * Created by 98620 on 2018/12/11.2
  */
 object ArticleDataRepository : ArticleDataSource {
+    override fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>) {
+        remoteDataSource.getArticle(articleId, callback)
+    }
+
+    override fun getMyArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    ) {
+        remoteDataSource.getMyArticles(token,pageNumber, pageSize, callback)
+    }
+
     override fun getLatestArticles(
         pageNumber: Int,
         pageSize: Int,
-        callback: DataCallback<ArticleResponse>
+        callback: DataCallback<ArticleListResponse>
     ) {
         remoteDataSource.getLatestArticles(pageNumber, pageSize, callback)
     }
 
-    override fun uploadArticleImages(token: String, image: File, callback: DataCallback<String>) {
+    override fun uploadArticleImages(token: String, image: File, callback: DataCallback<ArrayList<String>>) {
        remoteDataSource.uploadArticleImages(token, image, callback)
     }
 

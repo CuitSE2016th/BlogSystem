@@ -11,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import com.chinalwb.are.AREditText
+import com.chinalwb.are.Constants
+import com.chinalwb.are.android.inner.Html
 import com.chinalwb.are.spans.AreImageSpan
 import com.chinalwb.are.strategies.ImageStrategy
 import com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
@@ -19,6 +21,7 @@ import com.chinalwb.are.styles.toolitems.*
 import com.chinalwb.are.styles.toolitems.styles.ARE_Style_Image
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.common.Config
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.ArticleDataRepository
 import com.lfork.blogsystem.utils.ToastUtil
@@ -158,7 +161,7 @@ class ArticleEditorActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> finish()
             com.chinalwb.are.R.id.action_save -> {
-                val content = this.mEditText!!.html
+                val content = this.mEditText!!.getHtmlBody()
                 Log.d("生成的HTML文本", content)
                 //            DemoUtil.saveHtml(this, html);
                 publishArticle(article_title.text.toString(), content)
@@ -223,10 +226,15 @@ class ArticleEditorActivity : AppCompatActivity() {
 
        private var areStyleImage:ARE_Style_Image?=null
 
-        val callback = object : DataCallback<String> {
-            override fun succeed(data: String) {
+        val callback = object : DataCallback<ArrayList<String>> {
+            override fun succeed(data: ArrayList<String>) {
                 dismissUploadingDialog()
-                areStyleImage?.insertImage(data, AreImageSpan.ImageType.URL)
+                var url:String?=data[0]
+                if (data[0].contains("webapps")){
+                    url = ((Config.ServerPath +  data[0].substring(data[0].indexOf("images"))) as String).replace( "\\",   "/");
+                }
+
+                areStyleImage?.insertImage(url, AreImageSpan.ImageType.URL)
                 areStyleImage = null
             }
 
@@ -245,5 +253,19 @@ class ArticleEditorActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    companion object {
+        fun AREditText.getHtmlBody():String{
+            val html = StringBuffer()
+//            html.append("<html><body>")
+            val editTextHtml = Html.toHtml(editableText, Html.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL)
+            html.append(editTextHtml)
+//            html.append("</body></html>")
+            val htmlContent =
+                html.toString().replace(Constants.ZERO_WIDTH_SPACE_STR_ESCAPE.toRegex(), "")
+            println(htmlContent)
+            return htmlContent
+        }
     }
 }

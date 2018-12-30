@@ -31,6 +31,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
                 adapter.showNoMoreData()
             } else {
                 adapter.refreshItems(articles)
+
             }
         }
     }
@@ -68,7 +69,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             //判断是否能向上滑动
-            if (!root!!.recycle_articles.canScrollVertically(1)) {
+            if (!root!!.recycle_articles.canScrollVertically(1) && adapter.canLoadMore()) {
                 loadMoreArticles()
             }
         }
@@ -76,10 +77,8 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
 
     @Synchronized
     fun loadMoreArticles(){
-        Log.d("加载两次?", "enen?2$isLoadingMore $this")
         if(!isLoadingMore){
             isLoadingMore = true
-            Log.d("加载两次?", "enen?1$isLoadingMore $this")
             adapter.showIsLoading()
             presenter?.loadMoreArticle(pageNumber)
         }

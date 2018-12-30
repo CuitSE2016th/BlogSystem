@@ -23,14 +23,16 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
             refresh_layout.isRefreshing = false
             recycle_articles.visibility = VISIBLE
             item_no_data.visibility = GONE
+
         }
     }
 
     override fun displayMoreArticles(articles: ArrayList<Article>) {
-        runOnUiThread {
+        if (articles.size < 1){
+            adapter.showNoMoreData()
+        } else {
             pageNumber++
             adapter.addItems(articles)
-
         }
 
     }
@@ -56,7 +58,8 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             //判断是否能向上滑动
-            if (!recycle_articles.canScrollVertically(1)) {
+            if (!recycle_articles.canScrollVertically(1) && adapter.canLoadMore()) {
+                adapter.showIsLoading()
                 presenter.loadMoreArticle(pageNumber)
             }
         }

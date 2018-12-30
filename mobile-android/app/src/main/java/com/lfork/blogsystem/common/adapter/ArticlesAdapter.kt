@@ -23,7 +23,7 @@ class ArticlesAdapter :
 
     var headerView: View? = null
 
-    var footerView:View?=null
+    var footerView: View? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder =
         when (viewType) {
@@ -104,22 +104,29 @@ class ArticlesAdapter :
                             BlogApplication.context,
                             "跳转到文章详情，当前的文章id为${item.id}"
                         )
-                        ArticleDetailActivity.openArticleDetail(it.context)
+                        ArticleDetailActivity.openArticleDetail(it.context, item.id!!)
                     }
                 }
             }
         }
     }
 
+    fun canLoadMore(): Boolean {
+        return footerView?.visibility != View.VISIBLE
+    }
+
     fun refreshItems(items: ArrayList<Article>) {
         this.items.clear()
         this.items.addAll(items)
+        hideLoadMore()
         notifyDataSetChanged()
     }
 
     fun addItems(data: ArrayList<Article>) {
         items.addAll(data)
+        hideLoadMore()
         notifyDataSetChanged()
+
 //            notifyItemRangeInserted(items.size - data.size, items.size)
     }
 
@@ -148,18 +155,25 @@ class ArticlesAdapter :
                 }
                 else -> {
                     footerView = itemView
+                    footerView?.visibility = View.INVISIBLE
                 }
             }
         }
     }
 
-    fun showNoMoreData(){
+    fun showNoMoreData() {
+        footerView?.visibility = View.VISIBLE
         footerView?.textView?.text = footerView!!.context.getString(R.string.There_is_no_more_data)
         footerView?.progressBar?.visibility = View.INVISIBLE
     }
 
-    fun showIsLoading(){
+    fun showIsLoading() {
+        footerView?.visibility = View.VISIBLE
         footerView?.textView?.text = footerView!!.context.getString(R.string.data_is_loading)
         footerView?.progressBar?.visibility = View.VISIBLE
+    }
+
+    fun hideLoadMore() {
+        footerView?.visibility = View.INVISIBLE
     }
 }
