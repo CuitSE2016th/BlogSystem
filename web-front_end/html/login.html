@@ -180,9 +180,12 @@
                         if(data.code==100){//如果返回来的信息说明提交的信息为正确的
                             let str_username='';
                             let wand="";
+                            let u_id="";
                             str_username+='index.html?this_identity='+user;
                             wand+=data.data;
+                            u_id+=user;
                             $.cookie('this_token', wand,{ expires: 7,path:'/',secure:false,raw:false});  // 存储在cookie中
+                            $.cookie('this_id',u_id,{ expires: 7,path:'/',secure:false,raw:false});
                             window.location.href=str_username;//正确登录后页面跳转至
                         }
                         else{//如果返回来的信息说明提供的信息为错误的
@@ -298,7 +301,7 @@
 
             success:function(data){//服务器（接口）返回来的数据
                 alert(data.code);
-                if(data.code==200){//如果返回来的信息说明提交的信息为正确的
+                if(data.code==200){
                     $("#register_reminder").empty();
                     let str1='';
                     str1 +='<span style="color:red">';
@@ -306,7 +309,7 @@
                     str1 +='</span>'
                     $("#register_reminder").html(str1);
                 }
-                if(data.code==100){
+                if(data.code==100){//如果返回来的信息说明提交的信息为正确的
                     $("#register_reminder").empty();
                     let str1='';
                     str1 +='<span style="color:red">';
@@ -318,6 +321,9 @@
 
         })
     });
+    function find_btn() {
+        window.location.href = 'demo.html';
+    }
 </script>
 
 </html>
