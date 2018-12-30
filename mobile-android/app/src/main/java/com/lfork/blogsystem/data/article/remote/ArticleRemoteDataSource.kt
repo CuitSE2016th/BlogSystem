@@ -7,6 +7,7 @@ import com.lfork.blogsystem.base.network.Result
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.data.article.ArticleDataSource
+import com.lfork.blogsystem.data.article.ArticleListResponse
 import com.lfork.blogsystem.data.article.ArticleResponse
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -21,10 +22,23 @@ import kotlin.collections.ArrayList
  * @date 2018/12/15
  */
 class ArticleRemoteDataSource : ArticleDataSource {
+    override fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>) {
+        api.getArticle(BlogApplication.token!!,articleId).enqueue(MyRetrofitCallBack(callback))
+    }
+
+    override fun getMyArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    ) {
+        api.getMyArticles(token,pageNumber, pageSize).enqueue(MyRetrofitCallBack(callback))
+    }
+
     override fun getLatestArticles(
         pageNumber: Int,
         pageSize: Int,
-        callback: DataCallback<ArticleResponse>
+        callback: DataCallback<ArticleListResponse>
     ) {
         api.getLatestArticles(pageNumber, pageSize).enqueue(MyRetrofitCallBack(callback))
     }
@@ -40,14 +54,14 @@ class ArticleRemoteDataSource : ArticleDataSource {
             .enqueue(MyRetrofitCallBack(callback))
     }
 
-    override fun uploadArticleImages(token: String, image: File, callback: DataCallback<String>) {
+    override fun uploadArticleImages(token: String, image: File, callback: DataCallback<ArrayList<String>>) {
         val fileBody = RequestBody.create(MediaType.parse("image/*"),image)
         val photo = MultipartBody.Part.createFormData("image", image.name, fileBody)
         api.uploadArticleImage(token, photo)
             .enqueue(MyRetrofitCallBack(callback))
     }
 
-    override fun uploadArticleImages(token: String, image: File): Result<String>? {
+    override fun uploadArticleImages(token: String, image: File): Result<ArrayList<String>>? {
         val fileBody = RequestBody.create(MediaType.parse("image/*"),image)
         val photo = MultipartBody.Part.createFormData("image", image.name, fileBody)
         return api.uploadArticleImage(token, photo).execute().body()

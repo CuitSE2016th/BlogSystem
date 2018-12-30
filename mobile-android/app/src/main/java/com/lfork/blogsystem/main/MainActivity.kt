@@ -106,15 +106,14 @@ class MainActivity : AppCompatActivity() {
         } else if (fragments[FRAG_MY] == null && fragment is MyFragment) {
             fragments[FRAG_MY] = fragment
         }
-
     }
 
     private fun registerSignOutSucceedListener() {
-        LiveDataBus.get()
-            .with("sign_out_succeed", String::class.java)
-            .observe(this, Observer<String> {
-                finish()
-            })
+//        LiveDataBus.get()
+//            .with("sign_out_succeed", String::class.java)
+//            .observe(this, Observer<String> {
+//                finish()
+//            })
 
     }
 }

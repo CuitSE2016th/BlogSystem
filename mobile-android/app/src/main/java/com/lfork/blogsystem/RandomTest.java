@@ -30,6 +30,7 @@ public class RandomTest {
             "http://www.pptbz.com/upfile/pptpic/201110/20111020112515401.jpg",
             "http://www.pptbz.com/upfile/pptpic/201501/2015012617293543.jpg",
             "http://www.pptbz.com/upfile/pptpic/201401/2014012906432159.jpg"
+
     };
 
 
@@ -98,6 +99,9 @@ public class RandomTest {
         int randomNumber = Math.abs(new Random().nextInt() % randomTitles.length);
         return randomTitles[randomNumber];
     }
+
+
+
 
 
 }

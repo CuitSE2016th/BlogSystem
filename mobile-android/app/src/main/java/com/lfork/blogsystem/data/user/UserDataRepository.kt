@@ -80,7 +80,8 @@ object UserDataRepository : UserDataSource {
                     }
                 })
             }
-        } else {
+        }
+        else {
             remoteDataSource.getUserInfo(account, token, callback)
         }
     }
@@ -155,7 +156,7 @@ object UserDataRepository : UserDataSource {
 
 
 
-    fun refreshUserInfor() {
+    fun refreshUserInfo() {
         userCacheIsDirty = true
     }
 

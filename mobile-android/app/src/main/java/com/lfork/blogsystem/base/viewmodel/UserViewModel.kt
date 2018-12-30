@@ -1,6 +1,7 @@
 package com.lfork.blogsystem.base.viewmodel
 
 import android.arch.lifecycle.ViewModel;
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import com.lfork.blogsystem.BlogApplication
@@ -23,7 +24,9 @@ abstract class UserViewModel(var account: String?) : ViewModel() {
 
     val wordCount = ObservableField<String>("")
 
-    val placeDrawableId = ObservableInt(R.drawable.ic_person_black_24dp)
+    val isLogin = ObservableBoolean(false)
+
+    val placeDrawableId = ObservableInt(R.drawable.avatar)
 
     var navigator: Navigator? = null
 
@@ -38,7 +41,7 @@ abstract class UserViewModel(var account: String?) : ViewModel() {
     fun refreshUserInfo() {
         if (account == null)
             account = UserDataRepository.userCache.getAccount()
-
+        UserDataRepository.refreshUserInfo()
         UserDataRepository.getUserInfo(
             account!!, BlogApplication.token!!,
             object : DataCallback<User> {

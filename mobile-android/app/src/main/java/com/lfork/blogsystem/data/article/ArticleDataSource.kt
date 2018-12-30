@@ -2,7 +2,6 @@ package com.lfork.blogsystem.data.article
 
 import com.lfork.blogsystem.base.network.Result
 import com.lfork.blogsystem.data.DataCallback
-import com.lfork.blogsystem.data.user.User
 import java.io.File
 
 /**
@@ -20,9 +19,15 @@ interface ArticleDataSource {
 //
 //    fun search()
 //
-//    fun getArticle()
+    fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>)
 //
 
+    fun getMyArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    )
 
     //
 //    fun getFollowingsArticle()
@@ -41,9 +46,9 @@ interface ArticleDataSource {
     )
 
     ////
-    fun uploadArticleImages(token: String, image: File, callback: DataCallback<String>)
+    fun uploadArticleImages(token: String, image: File, callback: DataCallback<ArrayList<String>>)
 
-    fun uploadArticleImages(token: String, image: File): Result<String>?
+    fun uploadArticleImages(token: String, image: File): Result<ArrayList<String>>?
 //
 //    fun deleteArticle()//architecture
 
@@ -59,7 +64,7 @@ interface ArticleDataSource {
     fun getLatestArticles(
         pageNumber: Int,
         pageSize: Int,
-        callback: DataCallback<ArticleResponse>
+        callback: DataCallback<ArticleListResponse>
     )
 
     /**

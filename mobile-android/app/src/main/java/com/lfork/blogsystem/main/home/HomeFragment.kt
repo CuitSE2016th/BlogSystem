@@ -53,7 +53,13 @@ class HomeFragment : Fragment() {
         if (root == null) {
             viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
             root = inflater.inflate(R.layout.main_home_frag, container, false)
-            root!!.btn_edit.setOnClickListener { context?.startActivity<ArticleEditorActivity>() }
+            root!!.btn_edit.setOnClickListener {
+                if (isSignIn) {
+                    context?.startActivity<ArticleEditorActivity>()
+                } else {
+                    context?.startActivity<LoginActivity>()
+                }
+            }
             setupSubFragIndicator()
             setupViewPager()
             ViewPagerHelper.bind(root!!.magicIndicator, root!!.container);
