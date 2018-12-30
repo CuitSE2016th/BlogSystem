@@ -11,6 +11,9 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
+import java.util.Objects;
+
+import com.bs.ssh.utils.JsonUtil;
 
 /**
  * 图片上传动作
@@ -35,20 +38,27 @@ public class UploadPictureAction extends AbstractArticleAction {
 
         if(Constants.FILE_IMAGE_RELATIVE_PATH == null){
             Constants.FILE_IMAGE_RELATIVE_PATH =
-                    ServletActionContext.getServletContext().getRealPath("/images");
+                    ServletActionContext.getServletContext().getRealPath(Constants.IMAGE_PATH);
         }
 
         try {
             String uid = this.getUserId();
-            String[] path = fileService.uploadPicture(uid, image, imageFileName);
+//            String uid = "00000";
+            Object[] path = fileService.uploadPicture(uid, image, imageFileName);
             result = JsonBody.success();
             result.setData(path);
+            ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+            ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+            ServletActionContext.getResponse().getWriter().write(Objects.requireNonNull(JsonUtil.toJson(result)));
+            ServletActionContext.getResponse().getWriter().flush();
+            return null;
+
         }catch (Exception e){
             result = JsonBody.fail();
             result.setMessage(e.getMessage());
+            return JSON;
         }
 
-        return JSON;
     }
 
     @RequiredFieldValidator(message = "请先选择上传文件")

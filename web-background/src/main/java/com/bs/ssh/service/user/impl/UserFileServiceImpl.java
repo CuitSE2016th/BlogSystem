@@ -23,9 +23,9 @@ public class UserFileServiceImpl implements UserFileService {
     private BaseDao<Image> imageBaseDao;
 
     @Override
-    public String[] uploadPicture(String uid, File[] files, String[] filenames) throws IOException {
+    public Object[] uploadPicture(String uid, File[] files, String[] filenames) throws IOException {
 
-        String[] paths = new String[files.length];
+        Object[] paths = new Object[files.length];
 
         for(int i=0; i<files.length; i++){
             int pos = filenames[i].lastIndexOf('.');
@@ -33,17 +33,17 @@ public class UserFileServiceImpl implements UserFileService {
             String imageId = IDUtils.UserID();
             String suffix = pos == -1 ? "jpg" : filenames[i].substring(pos+1);
 
-            String path = Constants.FILE_IMAGE_RELATIVE_PATH + "\\" + uid + "\\" +
+            String suffix_path = "/" + uid + "/" +
                     imageId + "." + suffix;
 
-            File target = new File(path);
+            File target = new File(Constants.FILE_IMAGE_RELATIVE_PATH + suffix_path);
             FileUtils.copyFile(files[i], target);
-            paths[i] = path;
+            paths[i] = Constants.HOST_PATH + suffix_path;
 
             Image image = new Image();
             image.setId(imageId);
             image.setUid(uid);
-            image.setUrl(path);
+            image.setUrl(Constants.HOST_PATH + suffix_path);
             image.setCreateTime(System.currentTimeMillis());
 
             imageBaseDao.insert(image);
