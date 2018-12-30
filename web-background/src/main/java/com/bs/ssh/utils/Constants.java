@@ -12,6 +12,8 @@ public class Constants {
 
     public static String FILE_IMAGE_RELATIVE_PATH = null;
 
+    public static String IMAGE_URL_HEADER = "http://www.lfork.top/blog/images/";
+
     //审核中
     public final static int AUDIT_IN = 300;
 
