@@ -38,10 +38,11 @@ public class UserArticleServiceImpl implements UserArticleService{
     public PageBean getAllArticle(PageRequest pageRequest) {
 
         List<Article> results = articleDao.findAll(pageRequest, "from Article where status=?", Constants.AUDIT_COMPLETE);
+        int count = articleDao.findAll("from Article where status=?", Constants.AUDIT_COMPLETE).size();
 
         return new PageBean<>(
                 pageRequest,
-                articleDao.count("Article"),
+                count,
                 results);
 
     }
@@ -53,11 +54,14 @@ public class UserArticleServiceImpl implements UserArticleService{
 
     @Override
     public PageBean getAuthorArticle(PageRequest pageRequest, String uid) {
-        List<Article> results = articleDao.findAll(pageRequest, "from Article where status=? and authorId=?", Constants.AUDIT_COMPLETE, uid);
+        List<Article> results = articleDao.findAll(pageRequest, "from Article where status=? and authorId=?",
+                Constants.AUDIT_COMPLETE, uid);
+        int count = articleDao.findAll("from Article where status=? and authorId=?",
+                Constants.AUDIT_COMPLETE, uid).size();
 
         return new PageBean<>(
                 pageRequest,
-                articleDao.count("Article"),
+                count,
                 results);
     }
 
@@ -79,12 +83,18 @@ public class UserArticleServiceImpl implements UserArticleService{
 
         List<Article> results = null;
 
-        if(!param.equals(""))
-           results = articleDao.findAll("from Article where status=? and authorId in (" + param + ")", Constants.AUDIT_COMPLETE);
+        int count = 0;
+        if(!param.equals("")){
+            results = articleDao.findAll(pageRequest,
+                    "from Article where status=? and authorId in (" + param + ")", Constants.AUDIT_COMPLETE);
+            count = articleDao.findAll(
+                    "from Article where status=? and authorId in (" + param + ")", Constants.AUDIT_COMPLETE)
+                    .size();
+        }
 
         return new PageBean<>(
                 pageRequest,
-                articleDao.count("Article"),
+                count,
                 results);
     }
 

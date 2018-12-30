@@ -31,17 +31,33 @@ public class UserCommentServiceImpl implements UserCommentService {
     private CommentDao commentBaseDao;
     @Autowired
     private ArticleDao articleDao;
+    @Autowired
+    private BaseDao<Object> objectDao;
 
     @Override
     public PageBean findAllComment(PageRequest request, Integer articleId) {
         if (!articleDao.isArticleExisted(articleId))
             throw new NoSuchEntityException("文章不存在");
 
-        List<Comment> parentList = commentBaseDao.findAll(request, "from Comment where article_id=? and is_deleted=? and parent_id=null",
+        List<Object> objectList = objectDao.findAll(request,
+                "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null",
                 articleId, false);
 
+        int count = objectDao.findAll(
+                "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null",
+                articleId, false).size();
+
+        List<User> userList = new LinkedList<>();
+        List<Comment> commentList = new LinkedList<>();
+
+        objectList.forEach(o -> {
+            Object[] objects = (Object[])o;
+            userList.add((User)objects[1]);
+            commentList.add((Comment)objects[0]);
+        });
+
         List<CommentViewBean> result = new LinkedList<>();
-        for (Comment parent : parentList) {
+        for (Comment parent : commentList) {
             User user = userDao.getUserInfoById(parent.getAuthorId());
 
             if(user == null)
@@ -65,7 +81,7 @@ public class UserCommentServiceImpl implements UserCommentService {
         }
 
 
-        return new PageBean<>(request, commentBaseDao.count("Comment"), result);
+        return new PageBean<>(request, count, result);
     }
 
     @Override
