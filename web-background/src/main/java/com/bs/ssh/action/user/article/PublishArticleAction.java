@@ -1,13 +1,12 @@
 package com.bs.ssh.action.user.article;
 
-import com.bs.ssh.action.BaseAction;
 import com.bs.ssh.bean.JsonBody;
-import com.bs.ssh.service.user.UserArticleService;
 import com.bs.ssh.service.user.UserFileService;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;

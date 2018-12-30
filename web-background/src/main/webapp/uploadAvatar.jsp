@@ -13,7 +13,7 @@
     选择一个文件:
     <input type="file" name="pic" accept="image/*" /><br/>
     手机号：<input type="text" name="identity"><br>
-    token：<input type="text" name="token" value="asdsad"><br>
+    token：<input type="text" name="token" value="7ea78d11cde34f459db2d819bf5c874d"><br>
     <input type="submit" value="上传"/>
 </form>
 </body>

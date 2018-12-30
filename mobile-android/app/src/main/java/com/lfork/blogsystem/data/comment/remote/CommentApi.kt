@@ -25,9 +25,9 @@ interface CommetApi {
 
     @GET("user/comment/page")
     fun getComments(
-        @Header("token") token: String,
         @Query("pn") pageNumber: Int,
-        @Query("ps") pageSize: Int
+        @Query("ps") pageSize: Int,
+        @Query("aid") articleId: String
     ): Call<Result<CommentListResponse>>
 
 
