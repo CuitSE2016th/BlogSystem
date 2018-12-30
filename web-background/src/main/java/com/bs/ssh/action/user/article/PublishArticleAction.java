@@ -48,6 +48,7 @@ public class PublishArticleAction extends AbstractArticleAction {
             if(images != null)
                 fileService.referencePicture(uid, images, aid);
             result = JsonBody.success();
+            result.setData(aid);
 
         }catch (Exception e){
             result = JsonBody.fail();
