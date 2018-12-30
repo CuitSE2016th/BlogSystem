@@ -1,10 +1,12 @@
 package com.bs.ssh.service.user;
 
 import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.entity.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 用户服务
@@ -48,4 +50,6 @@ public interface UserService {
     int isExistPhone(String emailOrPhone);
 
     boolean isTokenValid(String token);
+
+    PageBean<List> getArticlePage(int pn, int pNum);
 }

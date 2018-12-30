@@ -1,5 +1,6 @@
 package com.bs.ssh.dao;
 
+import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.UserPlus;
 import com.bs.ssh.entity.User;
 
@@ -42,4 +43,8 @@ public interface UserDao extends BaseDao<User> {
     List<UserPlus> getAllUserExcludeAdmin(int pn, int pageSize);
 
     List getAllUserByRoleID(int pn, int pageSize, int roleID);
+
+    int selectCountArticlePage();
+
+    List<IndexArticle> getArticleforPage(int pn, int pNum);
 }

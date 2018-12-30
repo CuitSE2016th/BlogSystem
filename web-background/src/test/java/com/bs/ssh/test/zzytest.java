@@ -9,6 +9,7 @@ import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.admin.impl.ArticleAdminServiceImpl;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import com.bs.ssh.service.root.impl.RootServiceImpl;
+import com.bs.ssh.service.user.impl.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class zzytest {
 
     @Autowired
     private ArticleAdminServiceImpl articleAdminService;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     @Test
     public void test1(){
@@ -122,7 +126,13 @@ public class zzytest {
     }
 
 
+    @Test
+    public void getIndexArticlesForPage(){
 
+        System.out.println("------------------------------------");
+        System.out.println(userService.getArticlePage(1, 8));
+        System.out.println("------------------------------------");
+    }
 
 
 }

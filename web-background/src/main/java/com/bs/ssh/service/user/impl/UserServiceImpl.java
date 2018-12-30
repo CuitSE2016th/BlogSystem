@@ -1,12 +1,15 @@
 package com.bs.ssh.service.user.impl;
 
+import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.user.UserService;
 import com.bs.ssh.utils.*;
 
 import org.apache.struts2.ServletActionContext;
+import org.jboss.jandex.Index;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Transactional
@@ -191,6 +196,49 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isTokenValid(String token) {
         return token != null;
+    }
+
+    @Override
+    public PageBean<List> getArticlePage(int pn, int pNum) {
+        PageBean<List> pageBean = new PageBean<>();
+
+        int articleNum = userDao.selectCountArticlePage();
+
+        if(pn > (articleNum / pNum)){
+            pn = articleNum / pNum;
+        }
+
+        pageBean.setCurrentPage(pn);
+        pageBean.setPageSize(pNum);
+        pageBean.setRecordCount(articleNum);
+
+        List articles = userDao.getArticleforPage(pn, pNum);
+        List<IndexArticle> articlesNew = new ArrayList<>();
+
+        for (int i = 0; i < articles.size(); i++) {
+
+            Object[] article = (Object[]) articles.get(i);
+
+            IndexArticle indexArticle = new IndexArticle();
+            indexArticle.setId((Integer) article[0]);
+            indexArticle.setAuthorId((String) article[1]);
+            indexArticle.setTitle((String) article[2]);
+            indexArticle.setContent((String) article[3]);
+            indexArticle.setStatus(Integer.parseInt(article[4].toString()));
+            indexArticle.setCreateTime(Long.valueOf(article[5].toString()));
+            indexArticle.setImageUrl((String) article[6]);
+            indexArticle.setLikeCount(Integer.parseInt(article[7].toString()));
+            indexArticle.setCommCount(Integer.parseInt(article[8].toString()));
+
+            articlesNew.add(indexArticle);
+        }
+
+
+
+
+        pageBean.setResult(articlesNew);
+
+        return pageBean;
     }
 
 

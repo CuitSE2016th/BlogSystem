@@ -1,5 +1,6 @@
 package com.bs.ssh.dao.impl;
 
+import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.UserPlus;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
@@ -121,6 +122,28 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         List list = currentSession.createQuery("from User u inner join Role r on u.roleId = r.id where u.roleId = ?")
                 .setParameter(0, roleID)
                 .setFirstResult((pn - 1) * pageSize).setMaxResults(pageSize).list();
+
+        return list;
+    }
+
+    @Override
+    public int selectCountArticlePage() {
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+
+        long num = (long) currentSession.createQuery("select count(*) from Article").uniqueResult();
+
+        return new Long(num).intValue();
+    }
+
+    @Override
+    public List<IndexArticle> getArticleforPage(int pn, int pNum) {
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+//        List list = currentSession.createQuery("SELECT a.id,a.title,a.content, (SELECT  FROM Image i WHERE a.id = i.aid LIMIT 1) as im_url," +
+//                "(SELECT COUNT(*) FROM Like l WHERE l.articleId = a.id) as like_count FROM Article a ORDER BY a.createTime DESC ")
+//                .setFirstResult((pn - 1) * pNum).setMaxResults(pNum).list();
+        List list = currentSession.createSQLQuery("SELECT a.*,(SELECT i.`url` FROM image i WHERE a.`id` = i.`aid` LIMIT 1) im_url, \n" +
+                "(SELECT COUNT(*) FROM `like` l WHERE l.`article_id` = a.`id`) like_count, \n" +
+                "(SELECT COUNT(*) FROM `comment` c WHERE c.`article_id` = a.`id`) comm_count FROM article a ORDER BY a.`create_time` ").setFirstResult((pn - 1) * pNum).setMaxResults(pNum).list();
 
         return list;
     }
