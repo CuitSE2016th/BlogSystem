@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -26,8 +27,12 @@ import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.ArticleDataRepository
 import com.lfork.blogsystem.utils.ToastUtil
 import com.lfork.blogsystem.utils.UriHelper
+import com.lfork.blogsystem.utils.UriHelper.getPath
 import com.lfork.blogsystem.utils.setupToolBar
 import kotlinx.android.synthetic.main.article_edit_act.*
+import top.zibin.luban.CompressionPredicate
+import top.zibin.luban.Luban
+import top.zibin.luban.OnCompressListener
 import java.io.File
 
 
@@ -186,10 +191,11 @@ class ArticleEditorActivity : AppCompatActivity() {
             object : DataCallback<String> {
                 override fun succeed(data: String) {
                     ToastUtil.showShort(this@ArticleEditorActivity, "发布成功")
-
+                    finish()
                 }
 
                 override fun failed(code: Int, log: String) {
+                    ToastUtil.showShort(this@ArticleEditorActivity," "+log)
                 }
             });
     }
@@ -207,14 +213,15 @@ class ArticleEditorActivity : AppCompatActivity() {
 
     }
 
-    var dialog : ProgressDialog?=null
+    var dialog: ProgressDialog? = null
 
     private fun showUploadingDialog() {
         dialog = ProgressDialog.show(
             this,
             "",
             "Uploading image. Please wait...",
-            true)
+            true
+        )
     }
 
 
@@ -224,15 +231,20 @@ class ArticleEditorActivity : AppCompatActivity() {
 
     inner class ArticleImageStrategy : ImageStrategy {
 
-       private var areStyleImage:ARE_Style_Image?=null
+        private var areStyleImage: ARE_Style_Image? = null
 
         val callback = object : DataCallback<ArrayList<String>> {
             override fun succeed(data: ArrayList<String>) {
                 dismissUploadingDialog()
-                var url:String?=data[0]
-                if (data[0].contains("webapps")){
-                    url = ((Config.ServerPath +  data[0].substring(data[0].indexOf("images"))) as String).replace( "\\",   "/");
+                var url: String? = data[0]
+                if (data[0].contains("webapps")) {
+                    url =
+                            ((Config.ServerPath + data[0].substring(data[0].indexOf("images"))) as String).replace(
+                                "\\",
+                                "/"
+                            );
                 }
+
 
                 areStyleImage?.insertImage(url, AreImageSpan.ImageType.URL)
                 areStyleImage = null
@@ -248,15 +260,39 @@ class ArticleEditorActivity : AppCompatActivity() {
         override fun uploadAndInsertImage(uri: Uri?, areStyleImage: ARE_Style_Image?) {
             this.areStyleImage = areStyleImage
             showUploadingDialog()
-            val  realUrl = UriHelper.getPath(this@ArticleEditorActivity,uri)
-            ArticleDataRepository.uploadArticleImages(BlogApplication.token!!, File(realUrl),callback)
+            //这里需要对图片进行压缩
+            Luban.with(this@ArticleEditorActivity)
+                .load(UriHelper.getPath(this@ArticleEditorActivity,uri))
+                .ignoreBy(100)
+                .setTargetDir(externalCacheDir.path)
+                .filter { !(TextUtils.isEmpty(it) || it.toLowerCase().endsWith(".gif")) }
+                .setCompressListener(object : OnCompressListener {
+                    override fun onSuccess(file: File?) {
+                        ArticleDataRepository.uploadArticleImages(
+                            BlogApplication.token!!,
+                            file!!,
+                            callback
+                        )
 
+                    }
+
+                    override fun onError(e: Throwable?) {
+                    }
+
+                    override fun onStart() {
+                    }
+                }).launch()
         }
 
     }
 
+    fun compressImage() {
+
+
+    }
+
     companion object {
-        fun AREditText.getHtmlBody():String{
+        fun AREditText.getHtmlBody(): String {
             val html = StringBuffer()
 //            html.append("<html><body>")
             val editTextHtml = Html.toHtml(editableText, Html.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL)

@@ -4,10 +4,8 @@ import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.common.mvp.ArticleContract
 import com.lfork.blogsystem.common.mvp.ArticlePresenter
 import com.lfork.blogsystem.data.DataCallback
-import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.data.article.ArticleDataRepository
 import com.lfork.blogsystem.data.article.ArticleListResponse
-import com.lfork.blogsystem.data.user.UserDataRepository
 
 /**
  *
@@ -16,15 +14,15 @@ import com.lfork.blogsystem.data.user.UserDataRepository
 class MyArticlePresenter(private var view: ArticleContract.View?) :
     ArticlePresenter(view) {
 
-    var currentPage = 1
+    var nextPage = 1
 
     var pageSize = 10
 
     override fun refreshArticles() {
-        currentPage = 1
+        nextPage = 1
         ArticleDataRepository.getMyArticles(
             BlogApplication.token!!,
-            currentPage,
+            nextPage,
             pageSize,
             object : DataCallback<ArticleListResponse> {
                 override fun succeed(data: ArticleListResponse) {
@@ -39,7 +37,7 @@ class MyArticlePresenter(private var view: ArticleContract.View?) :
                         return
                     }
 
-                    currentPage++
+                    nextPage++
                     view?.refreshArticles(articles)
                 }
 
@@ -52,7 +50,7 @@ class MyArticlePresenter(private var view: ArticleContract.View?) :
     override fun loadMoreArticle(pageNumber: Int) {
         ArticleDataRepository.getMyArticles(
             BlogApplication.token!!,
-            currentPage,
+            nextPage,
             pageSize,
             object : DataCallback<ArticleListResponse> {
                 override fun succeed(data: ArticleListResponse) {
@@ -61,7 +59,7 @@ class MyArticlePresenter(private var view: ArticleContract.View?) :
                         failed(0, "数据为空")
                         return
                     }
-
+                    nextPage++
                     view?.displayMoreArticles(articles)
                 }
 

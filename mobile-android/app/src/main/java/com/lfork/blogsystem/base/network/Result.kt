@@ -28,6 +28,9 @@ class Result<T> {
                 if (result.code == RESPONSE_SUCCEED) {
                     if (result.data != null) {
                         callback.succeed(result.data!!)
+                    } else{
+                        result.data = "succeed" as T
+                        callback.succeed(result.data!!)
                     }
                 } else {
                     callback.failed(result.code, result.message?:"unknown error")

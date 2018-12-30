@@ -1,5 +1,6 @@
 package com.lfork.blogsystem.articledetail
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.data.article.ArticleResponse
 import com.lfork.blogsystem.data.comment.Comment
 import com.lfork.blogsystem.databinding.ArticleDetailActBinding
 import com.lfork.blogsystem.login.LoginActivity.Companion.signInFirst
@@ -133,11 +135,23 @@ class ArticleDetailActivity : AppCompatActivity(),ArticleContentNavigator {
                 signInFirst(this)
             }
         }
+
+        setupWebView()
     }
 
-    override fun showContent(htmlContent:String){
-        runOnUiThread {  article_main_container.loadData(
-            viewModel?.htmlTestData?.get(),
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setupWebView(){
+        article_main_container.settings.javaScriptEnabled = true
+        article_main_container.webViewClient = ContentWebClient();
+        article_main_container.addJavascriptInterface(JavaScriptInterface(this), "imagelistner");//这个是给图片设置点击监听的，如果你项目需要webview中图片，点击查看大图功能，可以这么添加
+    }
+
+    override fun showContent(htmlContent:ArticleResponse){
+        runOnUiThread {
+            title
+            article_main_container.loadData(
+
+            htmlContent.content,
             "text/html", "UTF-8"
         ) }
 

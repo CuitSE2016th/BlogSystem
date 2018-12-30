@@ -104,6 +104,4 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-
-
 }

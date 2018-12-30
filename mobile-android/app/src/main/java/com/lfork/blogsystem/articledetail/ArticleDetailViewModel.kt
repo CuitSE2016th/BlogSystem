@@ -49,7 +49,9 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
     private fun loadArticle() {
         val callback = object : DataCallback<ArticleResponse> {
             override fun succeed(data: ArticleResponse) {
-                navigator?.showContent(htmlTestData.get()!!)
+                time.set(data.createTime)
+                title.set(data.title)
+                navigator?.showContent(data)
             }
 
             override fun failed(code: Int, log: String) {
@@ -89,7 +91,7 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
             }
 
             override fun failed(code: Int, log: String) {
-                navigator?.showContent("")
+                navigator?.showTips(log)
             }
         }
 

@@ -75,6 +75,7 @@ class CommentFragment : Fragment(), CommentNavigator {
             adapter = CommentAdapter()
             root!!.recycle_comments.layoutManager = LinearLayoutManager(context)
             root!!.recycle_comments.adapter = adapter
+            root!!.recycle_comments.isNestedScrollingEnabled = false;
         }
         return root!!
     }
