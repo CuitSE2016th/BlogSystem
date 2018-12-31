@@ -148,4 +148,13 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         return list;
     }
 
+    @Override
+    public List<User> getUserFollows(String userId) {
+
+        List<User> users = (List<User>) getTemplate().find("select u from Follow f left join User u on f.followingId = u.id where f.followerId = ?",
+                userId);
+
+        return users;
+    }
+
 }

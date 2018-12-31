@@ -52,4 +52,6 @@ public interface UserService {
     boolean isTokenValid(String token);
 
     PageBean<List> getArticlePage(int pn, int pNum);
+
+    List<User> getUserFollows(String userId);
 }

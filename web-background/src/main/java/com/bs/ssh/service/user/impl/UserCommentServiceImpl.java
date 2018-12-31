@@ -4,7 +4,6 @@ import com.bs.ssh.bean.CommentViewBean;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.dao.ArticleDao;
-import com.bs.ssh.dao.BaseDao;
 import com.bs.ssh.dao.CommentDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.entity.Comment;
@@ -16,10 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 @Service
@@ -77,7 +74,7 @@ public class UserCommentServiceImpl implements UserCommentService {
     }
 
     @Override
-    public void newComment(String userId, Integer articleId, String content) {
+    public Comment newComment(String userId, Integer articleId, String content) {
 
         if (!articleDao.isArticleExisted(articleId))
             throw new NoSuchEntityException("文章不存在");
@@ -85,6 +82,7 @@ public class UserCommentServiceImpl implements UserCommentService {
         Comment comment = new Comment(
                 articleId, userId, content, System.currentTimeMillis());
         commentBaseDao.insert(comment);
+        return comment;
     }
 
     @Override

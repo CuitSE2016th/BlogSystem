@@ -1,6 +1,7 @@
 package com.bs.ssh.action.user.comment;
 
 import com.bs.ssh.bean.JsonBody;
+import com.bs.ssh.entity.Comment;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -39,8 +40,9 @@ public class NewCommentAction extends AbstractCommentAction{
     @Override
     public String execute() throws Exception {
         try {
-            commentService.newComment(this.getUserId(), aid, content);
+            Comment comment = commentService.newComment(this.getUserId(), aid, content);
             result = JsonBody.success();
+            result.setData(comment);
             return JSON;
         }catch (Exception e){
             result = JsonBody.fail();

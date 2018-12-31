@@ -39,7 +39,7 @@ public interface UserCommentService {
      * @param content
      * @return void
      **/
-    void newComment(String userId, Integer articleId, String content);
+    Comment newComment(String userId, Integer articleId, String content);
 
     /**
      * 删除评论

@@ -11,6 +11,7 @@ import com.bs.ssh.utils.*;
 import org.apache.struts2.ServletActionContext;
 import org.jboss.jandex.Index;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     private final UserDao userDao;
 
@@ -230,6 +231,8 @@ public class UserServiceImpl implements UserService {
             indexArticle.setLikeCount(Integer.parseInt(article[7].toString()));
             indexArticle.setCommCount(Integer.parseInt(article[8].toString()));
 
+            indexArticle.setTime(DateUtils.getDateStringFromLong(Long.valueOf(article[5].toString())));
+
             articlesNew.add(indexArticle);
         }
 
@@ -239,6 +242,14 @@ public class UserServiceImpl implements UserService {
         pageBean.setResult(articlesNew);
 
         return pageBean;
+    }
+
+    @Override
+    public List<User> getUserFollows(String userId) {
+
+        List<User> userFollows = userDao.getUserFollows(userId);
+
+        return userFollows;
     }
 
 

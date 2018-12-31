@@ -23,7 +23,7 @@ public class UserFileServiceImpl implements UserFileService {
     private BaseDao<Image> imageBaseDao;
 
     @Override
-    public Object[] uploadPicture(String uid, File[] files, String[] filenames) throws IOException {
+    public String[] uploadPicture(String uid, File[] files, String[] filenames) throws IOException {
 
         Object[] paths = new Object[files.length];
 
@@ -48,7 +48,7 @@ public class UserFileServiceImpl implements UserFileService {
 
             imageBaseDao.insert(image);
         }
-        return paths;
+        return (String[]) paths;
     }
 
     @Override
