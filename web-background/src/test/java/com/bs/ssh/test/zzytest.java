@@ -9,6 +9,7 @@ import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.admin.impl.ArticleAdminServiceImpl;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
 import com.bs.ssh.service.root.impl.RootServiceImpl;
+import com.bs.ssh.service.user.impl.UserCommentServiceImpl;
 import com.bs.ssh.service.user.impl.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +30,9 @@ public class zzytest {
 
     @Autowired
     private HibernateTemplate template;
+
+    @Autowired
+    private UserCommentServiceImpl userCommentService;
 
     @Resource
     private UserDao userDao;
@@ -133,6 +137,23 @@ public class zzytest {
         System.out.println(userService.getArticlePage(1, 8));
         System.out.println("------------------------------------");
     }
+
+    @Test
+    public void test04(){
+
+        System.out.println("------------------------------------");
+        System.out.println(userCommentService.newComment("35268860677",1,"测试111"));
+        System.out.println("------------------------------------");
+    }
+
+    @Test
+    public void test05(){
+
+        System.out.println("------------------------------------");
+        System.out.println(userService.getUserLikeArticles("59350743452", 1));
+        System.out.println("------------------------------------");
+    }
+
 
 
 }

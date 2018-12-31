@@ -38,7 +38,7 @@ public class UserArticleServiceImpl implements UserArticleService{
     public PageBean getAllArticle(PageRequest pageRequest) {
 
         List<Article> results = articleDao.findAll(pageRequest, "from Article where status=?", Constants.AUDIT_COMPLETE);
-        int count = articleDao.findAll("from Article where status=?", Constants.AUDIT_COMPLETE).size();
+        int count = articleDao.findAll("from Article where status=? order by createTime desc", Constants.AUDIT_COMPLETE).size();
 
         return new PageBean<>(
                 pageRequest,
@@ -49,14 +49,14 @@ public class UserArticleServiceImpl implements UserArticleService{
 
     @Override
     public Article getArticleById(Integer aid) {
-        return articleDao.findOne("from Article where id=?", aid);
+        return articleDao.findOne("from Article where id=? order by createTime desc", aid);
     }
 
     @Override
     public PageBean getAuthorArticle(PageRequest pageRequest, String uid) {
-        List<Article> results = articleDao.findAll(pageRequest, "from Article where status=? and authorId=?",
+        List<Article> results = articleDao.findAll(pageRequest, "from Article where status=? and authorId=? order by createTime desc",
                 Constants.AUDIT_COMPLETE, uid);
-        int count = articleDao.findAll("from Article where status=? and authorId=?",
+        int count = articleDao.findAll("from Article where status=? and authorId=? order by createTime desc",
                 Constants.AUDIT_COMPLETE, uid).size();
 
         return new PageBean<>(
@@ -97,6 +97,7 @@ public class UserArticleServiceImpl implements UserArticleService{
                 count,
                 results);
     }
+
 
     @Override
     public Integer publishArticle(String userId, String title, String content) {

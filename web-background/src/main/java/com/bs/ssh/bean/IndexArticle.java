@@ -14,6 +14,16 @@ public class IndexArticle extends Article {
 
     private Integer commCount;
 
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public Integer getCommCount() {
         return commCount;
     }
@@ -41,6 +51,12 @@ public class IndexArticle extends Article {
     public IndexArticle(String imageUrl, Integer likeCount) {
         ImageUrl = imageUrl;
         this.likeCount = likeCount;
+    }
+
+    public IndexArticle(Article article,
+                        String image,
+                        Integer like,
+                        Integer star) {
     }
 
     public IndexArticle() {

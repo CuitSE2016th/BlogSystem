@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 @Service
@@ -39,46 +39,48 @@ public class UserCommentServiceImpl implements UserCommentService {
         if (!articleDao.isArticleExisted(articleId))
             throw new NoSuchEntityException("文章不存在");
 
-        List<Object> objectList = objectDao.findAll(request,
-                "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null",
-                articleId, false);
-
+//        List<Object> objectList = objectDao.findAll(request,
+//                "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null",
+//                articleId, false);
+//
+        List<CommentViewBean> result = getComment(request, articleId);
         int count = objectDao.findAll(
                 "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null",
                 articleId, false).size();
 
-        List<User> userList = new LinkedList<>();
-        List<Comment> commentList = new LinkedList<>();
-
-        objectList.forEach(o -> {
-            Object[] objects = (Object[])o;
-            userList.add((User)objects[1]);
-            commentList.add((Comment)objects[0]);
-        });
-
-        List<CommentViewBean> result = new LinkedList<>();
-        for (Comment parent : commentList) {
-            User user = userDao.getUserInfoById(parent.getAuthorId());
-
-            if(user == null)
-                throw new NoSuchEntityException("评论用户不存在");
-
-            CommentViewBean parentVB = new CommentViewBean(
-                    user,
-                    parent);
-
-            List<CommentViewBean.Child> childrenVBList = new LinkedList<>();
-            for (Comment child :
-                    commentBaseDao.findAll("from Comment where parent_id=?",
-                            parent.getAuthorId())) {
-                CommentViewBean.Child childVB = new CommentViewBean.Child(
-                        userDao.getUserInfoById(child.getAuthorId()),
-                        child
-                );
-                childrenVBList.add(childVB);
-            }
-            result.add(parentVB);
-        }
+//
+//        List<User> userList = new LinkedList<>();
+//        List<Comment> commentList = new LinkedList<>();
+//
+//        objectList.forEach(o -> {
+//            Object[] objects = (Object[])o;
+//            userList.add((User)objects[1]);
+//            commentList.add((Comment)objects[0]);
+//        });
+//
+//        List<CommentViewBean> result = new LinkedList<>();
+//        for (Comment parent : commentList) {
+//            User user = userDao.getUserInfoById(parent.getAuthorId());
+//
+//            if(user == null)
+//                throw new NoSuchEntityException("评论用户不存在");
+//
+//            CommentViewBean parentVB = new CommentViewBean(
+//                    user,
+//                    parent);
+//
+//            List<CommentViewBean.Child> childrenVBList = new LinkedList<>();
+//            for (Comment child :
+//                    commentBaseDao.findAll("from Comment where parent_id=?",
+//                            parent.getAuthorId())) {
+//                CommentViewBean.Child childVB = new CommentViewBean.Child(
+//                        userDao.getUserInfoById(child.getAuthorId()),
+//                        child
+//                );
+//                childrenVBList.add(childVB);
+//            }
+//            result.add(parentVB);
+//        }
 
 
         return new PageBean<>(request, count, result);
@@ -93,7 +95,7 @@ public class UserCommentServiceImpl implements UserCommentService {
     }
 
     @Override
-    public void newComment(String userId, Integer articleId, String content) {
+    public Comment newComment(String userId, Integer articleId, String content) {
 
         if (!articleDao.isArticleExisted(articleId))
             throw new NoSuchEntityException("文章不存在");
@@ -101,6 +103,7 @@ public class UserCommentServiceImpl implements UserCommentService {
         Comment comment = new Comment(
                 articleId, userId, content, System.currentTimeMillis());
         commentBaseDao.insert(comment);
+        return comment;
     }
 
     @Override
@@ -120,14 +123,51 @@ public class UserCommentServiceImpl implements UserCommentService {
     }
 
     @Override
-    public void reply(String userId, Integer parentId, String content) {
+    public Serializable reply(String userId, Integer parentId, String content) {
         Comment parent = commentBaseDao.findOne("from Comment where id=?", parentId);
         if (parent == null)
             throw new NoSuchEntityException("回复失败，评论不存在");
-        Comment comment = new Comment(parentId, userId, content, System.currentTimeMillis());
+        Comment comment = new Comment(userId, parentId, content, System.currentTimeMillis());
         comment.setArticleId(parent.getArticleId());
+        return commentBaseDao.insert(comment);
     }
 
+    private List<CommentViewBean> getComment(PageRequest request, Integer aid){
+
+        List<CommentViewBean> parents = new LinkedList<>();
+
+
+        objectDao.findAll(request,
+                "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null",
+                aid, false)
+                .forEach(o->{
+                    Object[] objects = (Object[])o;
+                    CommentViewBean commentViewBean =
+                            new CommentViewBean((User)objects[1], (Comment)objects[0]);
+                    commentViewBean.setChildren(getReply(commentViewBean.getId()));
+                    parents.add(commentViewBean);
+                });
+
+        return parents;
+
+    }
+
+    private List<CommentViewBean> getReply(Integer pid){
+
+        List<CommentViewBean> children = new LinkedList<>();
+
+        objectDao.findAll(
+                "from Comment c join User u on c.authorId = u.id where is_deleted=? and parent_id=?",
+                false, pid)
+                .forEach(o->{
+                    Object[] objects = (Object[])o;
+                    CommentViewBean commentViewBean =
+                            new CommentViewBean((User)objects[1], (Comment)objects[0]);
+                    commentViewBean.setChildren(getReply(commentViewBean.getId()));
+                    children.add(commentViewBean);
+                });
+        return children;
+    }
 //    private List<CommentViewBean> convertCommentForView(List<Comment> parentList) {
 //
 //        return parentVBList;

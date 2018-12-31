@@ -148,4 +148,39 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         return list;
     }
 
+    @Override
+    public List<User> getUserFollows(String userId) {
+
+        List<User> users = (List<User>) getTemplate().
+                find("select u from Follow f left join User u on f.followingId = u.id where f.followerId = ?",
+                userId);
+
+        return users;
+    }
+
+    @Override
+    public List<User> getUserFollowedUser(String userId) {
+        List<User> users = (List<User>) getTemplate().
+                find("select u from Follow f left join User u on f.followerId = u.id where f.followingId = ?",
+                userId);
+
+        return users;
+    }
+
+    @Override
+    public int getUserLikeArticlesCount(String userId) {
+
+        List<?> list = getTemplate().find("select count(*) from Like l where l.userId = ?", userId);
+        int count=0;
+
+        if(list.get(0) != null){
+            count = Integer.parseInt(list.get(0).toString());
+            return count;
+        }else{
+            return count;
+        }
+
+
+    }
+
 }

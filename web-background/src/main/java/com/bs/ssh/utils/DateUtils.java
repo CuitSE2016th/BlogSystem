@@ -68,6 +68,12 @@ public class DateUtils {
         }
     }
 
+    public static  String getDateStringFromLong(long time){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年mm月dd日 hh时mm分ss秒");
+        String format = dateFormat.format(new Date(time));
+        return format;
+    }
+
 
 
 
