@@ -35,7 +35,7 @@ data class User(var nickname: String?, var headPortrait: String?, var sex: Strin
         }
     }
 
-    fun getRealPortraitUrl() = Config.ServerPath + headPortrait
+    fun getRealPortraitUrl() = headPortrait //Config.ServerPath +
 }
 
 

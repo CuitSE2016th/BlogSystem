@@ -23,6 +23,7 @@ class UserInfoEditViewModel : UserViewModel() {
     }
 
     fun uploadPortrait(pic: File) {
+
         UserDataRepository.updateUserPortrait(pic,UserDataRepository.userCache.getAccount(), BlogApplication.token!!, object :
             DataCallback<User> {
             override fun succeed(data: User) {

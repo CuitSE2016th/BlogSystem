@@ -89,7 +89,7 @@ object ImageTool {
             Uri.fromFile(
                 File(
                     activity.externalCacheDir,
-                    "crop_portrait.jpg"
+                    "crop_portrait.png"
                 )
             ) //在某些场景还是得用fromFile
 
@@ -98,11 +98,13 @@ object ImageTool {
         options.setStatusBarColor(ContextCompat.getColor(context!!, R.color.colorBase))
         options.setToolbarWidgetColor(activity.resources.getColor(R.color.black))
         options.setActiveWidgetColor(activity.resources.getColor(R.color.colorAccent))
+        options.setCompressionFormat(Bitmap.CompressFormat.PNG)
 
         UCrop.of(picUri, cacheImageUri)     //源uri 为content类型的, 目标uri为file类型
             .withAspectRatio(1f, 1f)
             .withMaxResultSize(1080, 1920)
             .withOptions(options)
             .start(activity)
+
     }
 }
