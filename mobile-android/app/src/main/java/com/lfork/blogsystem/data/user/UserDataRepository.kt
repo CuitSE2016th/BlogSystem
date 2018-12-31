@@ -39,6 +39,7 @@ object UserDataRepository : UserDataSource {
                 BlogApplication.isSignIn = true
                 updateCoreUserInfo(null)
                 BlogApplication.saveToken(data.token!!)
+                callback.succeed(data)
             }
 
             override fun failed(code: Int, log: String) {
@@ -110,12 +111,13 @@ object UserDataRepository : UserDataSource {
         pic: File,
         account: String,
         token: String,
-        callback: DataCallback<User>
+        callback: DataCallback<String>
     ) {
        remoteDataSource.updateUserPortrait(pic, account, token,object :
-           DataCallback<User> {
-           override fun succeed(data: User) {
-               updateCoreUserInfo(data)
+           DataCallback<String> {
+           override fun succeed(data: String) {
+               userCache.headPortrait = data
+               updateCoreUserInfo(null)
                callback.succeed(data)
            }
 

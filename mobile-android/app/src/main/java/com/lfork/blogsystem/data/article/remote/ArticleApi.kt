@@ -45,7 +45,7 @@ interface ArticleApi {
 
     @GET("user/article/id")
     fun getArticle(
-        @Header("token") token: String,
+        @Header("token") token: String?,
         @Query("aid") articleId: String
     ): Call<Result<ArticleDetailResponse>>
 

@@ -80,7 +80,7 @@ class UserRemoteDataSource : UserDataSource {
         pic: File,
         account: String,
         token: String,
-        callback: DataCallback<User>
+        callback: DataCallback<String>
     ) {
         val fileBody = RequestBody.create(MediaType.parse("image/*"),pic)
         val photo = MultipartBody.Part.createFormData("pic", pic.name, fileBody)

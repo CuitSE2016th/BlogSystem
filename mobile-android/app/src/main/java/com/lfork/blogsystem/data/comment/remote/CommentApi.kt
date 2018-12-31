@@ -36,7 +36,7 @@ interface CommentApi {
         @Header("token") token: String,
         @Field("aid") articleId: String,
         @Field("content") content: String?
-    ): Call<Result<String>>
+    ): Call<Result<Comment>>
 
 
     @FormUrlEncoded

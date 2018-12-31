@@ -27,7 +27,7 @@ interface UserDataSource {
 
     fun updateUserInfo(newUser: User, account: String, token: String, callback: DataCallback<User>)
 
-    fun updateUserPortrait(pic: File, account: String, token: String, callback: DataCallback<User>)
+    fun updateUserPortrait(pic: File, account: String, token: String, callback: DataCallback<String>)
 
     /**
      * 需要做好限60秒一次的限制

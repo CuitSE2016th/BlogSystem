@@ -16,8 +16,10 @@ import android.widget.TextView
 import com.lfork.blogsystem.BlogApplication
 
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.base.databinding.ImageBinding.setImageNoCache
 import com.lfork.blogsystem.data.comment.Comment
+import com.lfork.blogsystem.utils.TimeUtil
 import com.lfork.blogsystem.utils.ToastUtil
 import com.lfork.blogsystem.utils.hideKeyboard
 import kotlinx.android.synthetic.main.article_detail_comment_frag.*
@@ -56,7 +58,7 @@ class CommentFragment : Fragment(), CommentNavigator {
 
     override fun refreshComments(comments: ArrayList<Comment>) {
         activity?.runOnUiThread {
-            if (comments.size>0){
+            if (comments.size > 0) {
                 recycle_comments.visibility = View.VISIBLE
                 adapter?.refreshComments(comments)
             } else {
@@ -126,32 +128,28 @@ class CommentFragment : Fragment(), CommentNavigator {
 
         override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
             val item = items[position]
-//            if (item.children != null) {
-//                val params = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-//                holder.subCommentContainer.visibility = View.VISIBLE
-//                holder.subCommentContainer.removeAllViews()
-//                for (i in item.children!!) {
-//                    holder.subCommentContainer.addView(getSubItemView(i , holder), params)
-//                }
-//            } else{
-//                holder.subCommentContainer.visibility = View.GONE
-//            }
-
-
-
-            if (item.portrait != null) {
-                setImageNoCache(holder.portrait, item.getRealPortraitUrl())
-            } else{
-                setImageNoCache(holder.portrait, "a")
+            if (item.children != null) {
+                val params = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                holder.subCommentContainer.visibility = View.VISIBLE
+                holder.subCommentContainer.removeAllViews()
+                for (i in item.children!!) {
+                    holder.subCommentContainer.addView(getSubItemView(i, holder), params)
+                }
+            } else {
+                holder.subCommentContainer.visibility = View.GONE
             }
 
-            holder.time.text = item.createTime
+
+
+            setImageNoCache(holder.portrait, item.portrait?:RandomTest.getRandomImages())
+
+            holder.time.text = TimeUtil.getStandardTime("${(item.createTime ?: 0)}".toLong())
             holder.content.text = item.content
-            holder.btnLike.text = "Like(${item.likeCount})"
-            if (item.replyTo != null){
+            holder.btnLike.text = "Like(${item.likeCount?:0})"
+            if (item.replyTo != null) {
                 holder.beRepliedUsername.text = "Reply ${item.replyTo}:"
             } else {
-               holder.beRepliedUsername.text = ""
+                holder.beRepliedUsername.text = ""
             }
             holder.username.text = item.username
             holder.btnReply.setOnClickListener {
@@ -171,19 +169,18 @@ class CommentFragment : Fragment(), CommentNavigator {
                 } else {
                     holder.reply_layout.visibility = View.GONE
                     val c = Comment(content = content.toString())
-                    c .replyTo = item.username
+                    c.replyTo = item.username
                     viewModel?.addSubComment(item, c)
                     activity?.hideKeyboard()
                 }
             }
 
-            if (item.userId == BlogApplication.userId){
+            if (item.userId == BlogApplication.userId) {
                 holder.btnDelete.visibility = View.VISIBLE
                 holder.btnDelete.setOnClickListener {
                     viewModel?.deleteComment(item)
                 }
             }
-
 
 
         }
@@ -194,14 +191,12 @@ class CommentFragment : Fragment(), CommentNavigator {
             val view = LayoutInflater.from(context)
                 .inflate(R.layout.item_comment_child, holder.subCommentContainer, false)
 
-            if (child.portrait != null) {
-                setImageNoCache(holder.portrait, child.getRealPortraitUrl())
-            }
-            view.comment_time.text = child.createTime
+            setImageNoCache(view.comment_portrait, child.portrait?:RandomTest.getRandomImages())
+            view.comment_time.text =TimeUtil.getStandardTime("${(child.createTime ?: 0)}".toLong())
             view.content.text = child.content
-            view.like.text = "Like(${child.likeCount})"
+            view.like.text = "Like(${child.likeCount?:0})"
             view.username.text = child.username
-            view.be_replied_username.text = "Reply ${child.replyTo}:"
+            view.be_replied_username.text = "Reply ${child.replyTo?:"tom"}:"
 
             view.reply.setOnClickListener {
                 if (view.reply_layout.visibility == View.VISIBLE) {
@@ -210,6 +205,19 @@ class CommentFragment : Fragment(), CommentNavigator {
                 } else {
                     view.reply.text = "Cancel"
                     view.reply_layout.visibility = View.VISIBLE
+                }
+            }
+
+            view.btn_reply_ok.setOnClickListener {
+                val content = view.editText_reply_content.text
+                if (TextUtils.isEmpty(content)) {
+                    ToastUtil.showShort(context, "Content cannot be null.")
+                } else {
+                    holder.reply_layout.visibility = View.GONE
+                    val c = Comment(content = content.toString())
+                    c.replyTo = child.username
+                    viewModel?.addSubComment(child, c)
+                    activity?.hideKeyboard()
                 }
             }
 
@@ -248,7 +256,7 @@ class CommentFragment : Fragment(), CommentNavigator {
 //            notifyDataSetChanged()
         }
 
-        fun deleteComment(c: Comment){
+        fun deleteComment(c: Comment) {
             items.remove(c)
             notifyDataSetChanged()
         }

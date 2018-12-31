@@ -35,7 +35,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
     }
 
     override fun getArticle(articleId: String, callback: DataCallback<ArticleDetailResponse>) {
-        api.getArticle(BlogApplication.token!!, articleId).enqueue(HTTPCallBack(callback))
+        api.getArticle(BlogApplication.token, articleId).enqueue(HTTPCallBack(callback))
     }
 
     override fun getMyArticles(

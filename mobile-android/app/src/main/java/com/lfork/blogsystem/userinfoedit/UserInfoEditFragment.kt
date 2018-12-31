@@ -193,9 +193,6 @@ class UserInfoEditFragment : Fragment(), Navigator {
             return
         }
 
-        Thread {
-            FileUtils.copyFile(pic.path, "${activity?.externalCacheDir}1.png")
-        }.start()
 
         ImageBinding.setImageNoCache(user_portrait, pic)
         //调用上传图片的接口 得到图片URL地址 清除本地缓存信息 //显示新头像

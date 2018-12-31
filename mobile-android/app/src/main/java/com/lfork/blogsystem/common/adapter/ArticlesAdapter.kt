@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.articledetail.ArticleDetailActivity
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.data.article.Article
@@ -92,7 +93,7 @@ class ArticlesAdapter :
                 holder.title?.text = item.title
                 ImageBinding.setImage(
                     holder.cover,
-                    item.imageUrl,
+                    item.imageUrl?:RandomTest.getRandomImages(),
                     R.drawable.ic_person_black_24dp
                 )
 //            //暂时没有description
