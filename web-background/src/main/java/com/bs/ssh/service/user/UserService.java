@@ -3,6 +3,7 @@ package com.bs.ssh.service.user;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.entity.User;
+import org.springframework.data.domain.Page;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,4 +57,6 @@ public interface UserService {
     List<User> getUserFollows(String userId);
 
     List<User> getUserFollowedUser(String userId);
+
+    PageBean<List> getUserLikeArticles(String userId, Integer pageNo);
 }

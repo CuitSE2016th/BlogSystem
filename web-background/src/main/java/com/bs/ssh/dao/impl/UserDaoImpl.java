@@ -167,4 +167,20 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         return users;
     }
 
+    @Override
+    public int getUserLikeArticlesCount(String userId) {
+
+        List<?> list = getTemplate().find("select count(*) from Like l where l.userId = ?", userId);
+        int count=0;
+
+        if(list.get(0) != null){
+            count = Integer.parseInt(list.get(0).toString());
+            return count;
+        }else{
+            return count;
+        }
+
+
+    }
+
 }

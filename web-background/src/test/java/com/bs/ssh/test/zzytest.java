@@ -150,7 +150,7 @@ public class zzytest {
     public void test05(){
 
         System.out.println("------------------------------------");
-        System.out.println(userService.getUserFollowedUser("59350743452"));
+        System.out.println(userService.getUserLikeArticles("59350743452", 1));
         System.out.println("------------------------------------");
     }
 
