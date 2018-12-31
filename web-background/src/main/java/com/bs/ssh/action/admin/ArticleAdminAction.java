@@ -4,9 +4,12 @@ import com.bs.ssh.action.BaseAction;
 import com.bs.ssh.entity.Article;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.service.admin.impl.ArticleAdminServiceImpl;
 import com.bs.ssh.utils.Constants;
 import com.bs.ssh.utils.RegexString;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -23,6 +26,16 @@ import org.springframework.beans.factory.annotation.Autowired;
         @Result(name = "success", type = "json", params = {"root", "result"})
 })
 public class ArticleAdminAction extends BaseAction {
+
+    private String loginId;
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 
     @Autowired
     private ArticleAdminServiceImpl articleAdminService;
@@ -87,9 +100,25 @@ public class ArticleAdminAction extends BaseAction {
     @Action("setArticleStatus")
     public String setArticleStatus(){
 
+
         if(!validationData(status) || !validationData(articleID)){
             result = JsonBody.fail();
             result.setMessage("前端数据出错！");
+            return SUCCESS;
+        }
+
+        Subject loginUser = SecurityUtils.getSubject();
+        User user = (User) loginUser.getPrincipal();
+
+        if(user == null){
+            result = JsonBody.fail();
+            result.setMessage("用户没有登录！");
+            return SUCCESS;
+        }
+
+        if(!loginId.equals(user.getId())){
+            result = JsonBody.fail();
+            result.setMessage("用户不一致,非法操作！");
             return SUCCESS;
         }
 
