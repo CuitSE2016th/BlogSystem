@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -119,14 +120,14 @@ public class UserCommentServiceImpl implements UserCommentService {
     }
 
     @Override
-    public void reply(String userId, Integer parentId, String content) {
+    public Serializable reply(String userId, Integer parentId, String content) {
         Comment parent = commentBaseDao.findOne("from Comment where id=?", parentId);
         if (parent == null)
             throw new NoSuchEntityException("回复失败，评论不存在");
-        Comment comment = new Comment(parentId, userId, content, System.currentTimeMillis());
+        Comment comment = new Comment(userId, parentId, content, System.currentTimeMillis());
         comment.setArticleId(parent.getArticleId());
+        return commentBaseDao.insert(comment);
     }
-
 //    private List<CommentViewBean> convertCommentForView(List<Comment> parentList) {
 //
 //        return parentVBList;

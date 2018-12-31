@@ -49,6 +49,7 @@ public interface UserArticleService {
      **/
     PageBean getFollowerArticle(PageRequest pageRequest, String uid);
 
+
     /**
      * 发布文章
      *
