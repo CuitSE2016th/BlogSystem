@@ -54,4 +54,6 @@ public interface UserService {
     PageBean<List> getArticlePage(int pn, int pNum);
 
     List<User> getUserFollows(String userId);
+
+    List<User> getUserFollowedUser(String userId);
 }

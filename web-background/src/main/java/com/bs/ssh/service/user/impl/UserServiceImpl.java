@@ -252,5 +252,12 @@ public class UserServiceImpl implements UserService{
         return userFollows;
     }
 
+    @Override
+    public List<User> getUserFollowedUser(String userId) {
+
+        List<User> userFollows = userDao.getUserFollowedUser(userId);
+        return userFollows;
+    }
+
 
 }

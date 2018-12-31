@@ -4,6 +4,7 @@ import com.bs.ssh.bean.CommentViewBean;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.dao.ArticleDao;
+import com.bs.ssh.dao.BaseDao;
 import com.bs.ssh.dao.CommentDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.entity.Comment;

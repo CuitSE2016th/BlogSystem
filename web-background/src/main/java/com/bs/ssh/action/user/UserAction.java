@@ -61,4 +61,36 @@ public class UserAction extends BaseAction {
         return SUCCESS;
     }
 
+    @Action("getUserFollowedUser")
+    public String getUserFollowedUser(){
+        Subject user = SecurityUtils.getSubject();
+
+        User userinfo = (User) user.getPrincipal();
+
+        if(userinfo == null){
+            result = JsonBody.fail();
+            result.setData("用户信息获取失败！！！");
+            return SUCCESS;
+        }
+
+        String userId = userinfo.getId();
+        if(userId == null){
+            result = JsonBody.fail();
+            result.setData("用户ID获取失败！！！");
+            return SUCCESS;
+        }
+
+        List<User> userFollows = userService.getUserFollowedUser(userId);
+
+        if(userFollows == null){
+            result = JsonBody.fail();
+            result.setData("用户关注者信息获取失败！！！");
+            return SUCCESS;
+        }
+
+        result = JsonBody.success();
+        result.setData(userFollows);
+        return SUCCESS;
+    }
+
 }
