@@ -29,6 +29,9 @@ class BlogApplication : Application() {
         @JvmStatic
         var token: String? = null
 
+        @JvmStatic
+        var userId: String? = null
+
         var isSignIn = false
 
         var appFixedThreadPool: ExecutorService? = null
@@ -77,6 +80,14 @@ class BlogApplication : Application() {
             editor.apply()
         }
 
+        fun saveId(id: String) {
+            userId = id
+            val sp = context!!.getSharedPreferences("user_info", Context.MODE_PRIVATE)
+            val editor = sp.edit()
+            editor.putString("id", id)
+            editor.apply()
+        }
+
         /**
          * log out
          */
@@ -85,7 +96,10 @@ class BlogApplication : Application() {
             sp.edit().clear().apply()
             token = null
             isSignIn = false
+            userId = null
         }
+
+
     }
 
 
@@ -116,15 +130,18 @@ class BlogApplication : Application() {
         UserDataRepository.initBasicUserInfo(
             sp.getString("email", null),
             sp.getString("phone", null),
-            sp.getString("title", null)
+            sp.getString("title", null),
+            sp.getString("id", null)
         )
         token = sp.getString("token", null)
+        userId =sp.getString("id",null)
+
         if (token != null) {
             isSignIn = true
         }
     }
 
-    fun clearCache(){
+    fun clearCache() {
         sp = context!!.getSharedPreferences("user_info", Context.MODE_PRIVATE)
         sp.edit().clear().apply()
     }

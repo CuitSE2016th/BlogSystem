@@ -22,10 +22,12 @@ interface ArticleApi {
         }
     }
 
-    @GET("user/article/page")
+//    user/getArticlePage?pageNo=1&pageNum=10
+
+    @GET("user/getArticlePage")
     fun getLatestArticles(
-        @Query("pn") pageNumber: Int,
-        @Query("ps") pageSize: Int
+        @Query("pageNo") pageNumber: Int,
+        @Query("pageNum") pageSize: Int
     ): Call<Result<ArticleListResponse>>
 
     @GET("user/article/myself")

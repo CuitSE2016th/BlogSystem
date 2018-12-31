@@ -14,11 +14,17 @@ import com.lfork.blogsystem.data.article.ArticleListResponse
 class MyArticlePresenter(private var view: ArticleContract.View?) :
     ArticlePresenter(view) {
 
+
+
     var nextPage = 1
 
     var pageSize = 10
 
     override fun refreshArticles() {
+        if (isRefreshing){
+            return
+        }
+        isRefreshing = true
         nextPage = 1
         ArticleDataRepository.getMyArticles(
             BlogApplication.token!!,
@@ -39,10 +45,12 @@ class MyArticlePresenter(private var view: ArticleContract.View?) :
 
                     nextPage++
                     view?.refreshArticles(articles)
+                    isRefreshing = false
                 }
 
                 override fun failed(code: Int, log: String) {
                     view?.error(log)
+                    isRefreshing = false
                 }
             })
     }

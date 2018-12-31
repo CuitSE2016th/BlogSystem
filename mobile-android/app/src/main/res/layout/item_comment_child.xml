@@ -5,154 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-
-
-    <ImageView
-        android:id="@+id/comment_portrait"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/avatar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="L.Fork"
-        app:layout_constraintStart_toEndOf="@+id/comment_portrait"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/be_replied_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/username"
-        app:layout_constraintStart_toEndOf="@+id/username"
-        app:layout_constraintTop_toTopOf="@+id/username"
-        tools:text="回复 Tom:" />
-
-    <TextView
-        android:id="@+id/comment_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="2018/12/27"
-        app:layout_constraintBottom_toBottomOf="@+id/comment_portrait"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/username"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
-
-    <TextView
-        android:id="@+id/like"
-        style="@style/button_article_comment_action"
-        android:layout_marginEnd="8dp"
-        android:text="Like(28)"
-        app:layout_constraintBottom_toBottomOf="@+id/reply"
-        app:layout_constraintEnd_toStartOf="@+id/reply"
-        app:layout_constraintTop_toTopOf="@+id/reply" />
-
-    <TextView
-        android:id="@+id/reply"
-        style="@style/button_article_comment_action"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
-        android:text="Reply"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/delete"
-        style="@style/button_article_comment_action"
-        android:layout_marginEnd="8dp"
-
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="@+id/reply"
-        app:layout_constraintEnd_toStartOf="@+id/like"
-        app:layout_constraintTop_toTopOf="@+id/reply" />
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Dr. Zhang Ming, Dr. Zhang Ming shared the blockchain from the technical value added to the social value enhancement, will be"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment_portrait" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/reply_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_rectangle_frame_black"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reply"
-        tools:context=".articledetail.ArticleDetailActivity"
-        tools:visibility="visible">
-
-        <Button
-            style="@style/button_article_action"
-            android:id="@+id/btn_reply_ok"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="OK"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <EditText
-            android:id="@+id/editText_reply_content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="top"
-            android:hint="Enter your reply."
-            android:lines="1"
-            android:scrollbars="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_reply_ok"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-
     <View
         android:id="@+id/separator2"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/black"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        android:background="@drawable/bg_top_line_green"
-        app:layout_constraintTop_toBottomOf="@id/reply_layout"
-        android:visibility="gone" />
+
+    <include
+        android:id="@+id/main"
+        layout="@layout/item_comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator2" />
+
+
 
 </android.support.constraint.ConstraintLayout>

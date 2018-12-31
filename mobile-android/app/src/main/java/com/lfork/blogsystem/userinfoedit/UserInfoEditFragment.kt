@@ -30,6 +30,7 @@ import com.lfork.blogsystem.base.image.ImageTool.cutPicture
 
 
 class UserInfoEditFragment : Fragment(), Navigator {
+
     private val REQUEST_CODE_CHOOSE = 0
 
     private val REQUEST_CODE_STORAGE_PERMISSION = 1

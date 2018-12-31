@@ -25,6 +25,17 @@ object UserDataRepository : UserDataSource {
 
 
     override fun login(account: String, password: String, callback: DataCallback<String>) {
+
+        val userInfoInitCallback = object :DataCallback<User>{
+            override fun succeed(data: User) {
+                callback.succeed("Success")
+            }
+
+            override fun failed(code: Int, log: String) {
+                callback.failed(code, log)
+            }
+        }
+
         remoteDataSource.login(account, password, object :
             DataCallback<String> {
             override fun succeed(data: String) {
@@ -36,8 +47,10 @@ object UserDataRepository : UserDataSource {
                 }
                 BlogApplication.isSignIn = true
                 updateCoreUserInfo(null)
+
                 BlogApplication.saveToken(data)
-                callback.succeed(data)
+                userCacheIsDirty = true
+                getUserInfo(account,data,userInfoInitCallback)
             }
 
             override fun failed(code: Int, log: String) {
@@ -161,10 +174,11 @@ object UserDataRepository : UserDataSource {
     }
 
 
-    fun initBasicUserInfo(email: String?, phone: String?, nickname: String?) {
+    fun initBasicUserInfo(email: String?, phone: String?, nickname: String?,id:String?) {
         userCache.email = email
         userCache.phone = phone
         userCache.nickname = nickname
+        userCache.id = id
     }
 
     private fun updateCoreUserInfo(data:User?) {
@@ -172,6 +186,10 @@ object UserDataRepository : UserDataSource {
         if(data != null) {
             userCache = data
             userCacheIsDirty = false
+        }
+
+        if (userCache.id != null){
+            BlogApplication.saveId(userCache.id!!)
         }
 
         if (userCache.email != null) {

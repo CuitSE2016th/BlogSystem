@@ -15,6 +15,7 @@ import com.lfork.blogsystem.utils.startActivity
 import kotlinx.android.synthetic.main.user_info_frag.view.*
 
 class UserInfoFragment : Fragment(),Navigator {
+
     override fun showTips(msg: String?) {
         ToastUtil.showShort(context,msg)
     }

@@ -54,6 +54,9 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
+    <include
+        android:id="@+id/data_is_loading"
+        layout="@layout/item_data_is_loading"/>
 
 
 </android.support.constraint.ConstraintLayout>

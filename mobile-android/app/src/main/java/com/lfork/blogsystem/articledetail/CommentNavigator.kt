@@ -12,4 +12,6 @@ interface CommentNavigator:Navigator {
     fun addSubComment(parent: Comment, child: Comment)
 
     fun addComments(comments: ArrayList<Comment>)
+
+    fun deleteComment(c:Comment)
 }

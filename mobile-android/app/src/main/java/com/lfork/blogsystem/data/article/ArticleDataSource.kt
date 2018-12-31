@@ -9,11 +9,11 @@ import java.io.File
  * Created by 98620 on 2018/12/11.
  */
 interface ArticleDataSource {
-    //    fun star()
-//
+    fun starArticle(token: String, articleId: String, callback: DataCallback<String>)
+    //
 //    fun unStar()
 //
-//    fun like()
+    fun likeArticle(token: String, articleId: String, callback: DataCallback<String>)
 //
 //    fun unlike()
 //
@@ -50,7 +50,7 @@ interface ArticleDataSource {
 
     fun uploadArticleImages(token: String, image: File): Result<ArrayList<String>>?
 //
-//    fun deleteArticle()//architecture
+    fun deleteArticle(token: String, articleId: String, callback: DataCallback<String>)//architecture
 
     fun getUsesArticles(account: String, token: String, callback: DataCallback<List<Article>>)
 

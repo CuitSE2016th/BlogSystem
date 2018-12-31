@@ -2,7 +2,7 @@ package com.lfork.blogsystem.data.article.remote
 
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.RandomTest
-import com.lfork.blogsystem.base.network.MyRetrofitCallBack
+import com.lfork.blogsystem.base.network.HTTPCallBack
 import com.lfork.blogsystem.base.network.Result
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.Article
@@ -22,8 +22,20 @@ import kotlin.collections.ArrayList
  * @date 2018/12/15
  */
 class ArticleRemoteDataSource : ArticleDataSource {
+    override fun starArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        api.starArticle(token, articleId).enqueue(HTTPCallBack(callback))
+    }
+
+    override fun likeArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        api.likeArticle(token, articleId).enqueue(HTTPCallBack(callback))
+    }
+
+    override fun deleteArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        api.deleteArticle(token, articleId).enqueue(HTTPCallBack(callback))
+    }
+
     override fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>) {
-        api.getArticle(BlogApplication.token!!,articleId).enqueue(MyRetrofitCallBack(callback))
+        api.getArticle(BlogApplication.token!!, articleId).enqueue(HTTPCallBack(callback))
     }
 
     override fun getMyArticles(
@@ -32,7 +44,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
         pageSize: Int,
         callback: DataCallback<ArticleListResponse>
     ) {
-        api.getMyArticles(token,pageNumber, pageSize).enqueue(MyRetrofitCallBack(callback))
+        api.getMyArticles(token, pageNumber, pageSize).enqueue(HTTPCallBack(callback))
     }
 
     override fun getLatestArticles(
@@ -40,7 +52,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
         pageSize: Int,
         callback: DataCallback<ArticleListResponse>
     ) {
-        api.getLatestArticles(pageNumber, pageSize).enqueue(MyRetrofitCallBack(callback))
+        api.getLatestArticles(pageNumber, pageSize).enqueue(HTTPCallBack(callback))
     }
 
 
@@ -51,18 +63,22 @@ class ArticleRemoteDataSource : ArticleDataSource {
         callback: DataCallback<String>
     ) {
         api.publishArticle(token, title, content)
-            .enqueue(MyRetrofitCallBack(callback))
+            .enqueue(HTTPCallBack(callback))
     }
 
-    override fun uploadArticleImages(token: String, image: File, callback: DataCallback<ArrayList<String>>) {
-        val fileBody = RequestBody.create(MediaType.parse("image/*"),image)
+    override fun uploadArticleImages(
+        token: String,
+        image: File,
+        callback: DataCallback<ArrayList<String>>
+    ) {
+        val fileBody = RequestBody.create(MediaType.parse("image/*"), image)
         val photo = MultipartBody.Part.createFormData("image", image.name, fileBody)
         api.uploadArticleImage(token, photo)
-            .enqueue(MyRetrofitCallBack(callback))
+            .enqueue(HTTPCallBack(callback))
     }
 
     override fun uploadArticleImages(token: String, image: File): Result<ArrayList<String>>? {
-        val fileBody = RequestBody.create(MediaType.parse("image/*"),image)
+        val fileBody = RequestBody.create(MediaType.parse("image/*"), image)
         val photo = MultipartBody.Part.createFormData("image", image.name, fileBody)
         return api.uploadArticleImage(token, photo).execute().body()
 
@@ -81,7 +97,6 @@ class ArticleRemoteDataSource : ArticleDataSource {
     }
 
 
-
     override fun getUsesArticles(
         account: String,
         token: String,
@@ -90,8 +105,8 @@ class ArticleRemoteDataSource : ArticleDataSource {
 
         BlogApplication.doAsyncTask {
             Thread.sleep(1200)
-            if (testFlag % 2 == 1){
-                callback.failed(0,"error")
+            if (testFlag % 2 == 1) {
+                callback.failed(0, "error")
             } else {
                 callback.succeed(getRandomArticles())
             }
@@ -108,9 +123,9 @@ class ArticleRemoteDataSource : ArticleDataSource {
             Thread.sleep(1200)
 
             val random = testFlag % 6
-            if (random == 4){
-                callback.failed(0,"error")
-            }  else if (random == 2 || random == 3) {
+            if (random == 4) {
+                callback.failed(0, "error")
+            } else if (random == 2 || random == 3) {
                 callback.succeed(ArrayList())
             } else {
                 callback.succeed(getRandomArticles())
@@ -120,7 +135,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
         }
     }
 
-    fun getRandomArticles():ArrayList<Article>{
+    fun getRandomArticles(): ArrayList<Article> {
         val items = ArrayList<Article>(0);
         for (i in 1..10) {
             val it = Article()
@@ -135,7 +150,9 @@ class ArticleRemoteDataSource : ArticleDataSource {
 
         return items
     }
+
     private val api: ArticleApi = ArticleApi.create()
+
     companion object {
         var testFlag = 0
     }

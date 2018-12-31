@@ -2,6 +2,7 @@ package com.lfork.blogsystem.data.comment.remote
 
 import com.lfork.blogsystem.base.network.HttpService
 import com.lfork.blogsystem.base.network.Result
+import com.lfork.blogsystem.data.comment.Comment
 import com.lfork.blogsystem.data.comment.CommentListResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -44,7 +45,7 @@ interface CommentApi {
         @Header("token") token: String,
         @Field("pid") commentId: String,
         @Field("content") content: String?
-    ): Call<Result<String>>
+    ): Call<Result<Comment>>
 
 
     @FormUrlEncoded

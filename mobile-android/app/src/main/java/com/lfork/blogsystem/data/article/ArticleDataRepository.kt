@@ -9,6 +9,18 @@ import java.io.File
  * Created by 98620 on 2018/12/11.2
  */
 object ArticleDataRepository : ArticleDataSource {
+    override fun starArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        remoteDataSource.starArticle(token, articleId, callback)
+    }
+
+    override fun likeArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        remoteDataSource.likeArticle(token, articleId, callback)
+    }
+
+    override fun deleteArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        remoteDataSource.deleteArticle(token, articleId, callback)
+    }
+
     override fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>) {
         remoteDataSource.getArticle(articleId, callback)
     }
@@ -19,7 +31,7 @@ object ArticleDataRepository : ArticleDataSource {
         pageSize: Int,
         callback: DataCallback<ArticleListResponse>
     ) {
-        remoteDataSource.getMyArticles(token,pageNumber, pageSize, callback)
+        remoteDataSource.getMyArticles(token, pageNumber, pageSize, callback)
     }
 
     override fun getLatestArticles(
@@ -30,8 +42,12 @@ object ArticleDataRepository : ArticleDataSource {
         remoteDataSource.getLatestArticles(pageNumber, pageSize, callback)
     }
 
-    override fun uploadArticleImages(token: String, image: File, callback: DataCallback<ArrayList<String>>) {
-       remoteDataSource.uploadArticleImages(token, image, callback)
+    override fun uploadArticleImages(
+        token: String,
+        image: File,
+        callback: DataCallback<ArrayList<String>>
+    ) {
+        remoteDataSource.uploadArticleImages(token, image, callback)
     }
 
     override fun uploadArticleImages(token: String, image: File) =

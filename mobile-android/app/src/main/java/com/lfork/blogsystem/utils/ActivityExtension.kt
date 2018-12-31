@@ -6,6 +6,7 @@ import android.content.Intent
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.inputmethod.InputMethodManager
 import java.util.*
 
 /**
@@ -29,6 +30,12 @@ fun AppCompatActivity.setupToolBar(toolbar:Toolbar, title:String) {
     val actionBar = supportActionBar
     actionBar?.setDisplayHomeAsUpEnabled(true)  //设置返回按钮，需要在监听里面实现返回功能   onOptionsItemSelected(MenuItem item)
     actionBar?.title = title
+}
+
+fun Activity.hideKeyboard(){
+    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+
 }
 
 

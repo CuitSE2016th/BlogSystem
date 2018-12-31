@@ -1,14 +1,17 @@
 package com.lfork.blogsystem.myarticles
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.base.communication.LiveDataBus
 import com.lfork.blogsystem.common.adapter.ArticlesAdapter
 import com.lfork.blogsystem.common.mvp.ArticleContract
 import com.lfork.blogsystem.data.article.Article
@@ -17,12 +20,22 @@ import com.lfork.blogsystem.utils.setupToolBar
 import kotlinx.android.synthetic.main.my_articles_act.*
 
 class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
+
+    private fun hideDataIsLoading(){
+        data_is_loading.visibility = View.GONE
+    }
+
+    private fun showDataIsLoading(){
+        data_is_loading.visibility = View.VISIBLE
+    }
     override fun refreshArticles(articles: ArrayList<Article>) {
         runOnUiThread {
+
             adapter.refreshItems(articles)
             refresh_layout.isRefreshing = false
             recycle_articles.visibility = VISIBLE
             item_no_data.visibility = GONE
+            hideDataIsLoading()
 
         }
     }
@@ -39,10 +52,12 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
 
     override fun error(msg: String) {
         runOnUiThread {
+
             refresh_layout.isRefreshing = false
             ToastUtil.showShort(this@MyArticlesActivity, msg)
             item_no_data.visibility = VISIBLE
             recycle_articles.visibility = GONE
+            hideDataIsLoading()
         }
     }
 
@@ -85,6 +100,13 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
             item_no_data.visibility = GONE
             adapter.clearItems()
             presenter.refreshArticles() }
+
+        LiveDataBus.get()
+            .with("article_deleted", String::class.java)
+            .observe(this, Observer<String> {
+                presenter.refreshArticles()
+            })
+
     }
 
     override fun onResume() {

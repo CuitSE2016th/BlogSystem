@@ -6,7 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -22,6 +24,7 @@ import com.chinalwb.are.styles.toolitems.*
 import com.chinalwb.are.styles.toolitems.styles.ARE_Style_Image
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.articledetail.ArticleDetailActivity
 import com.lfork.blogsystem.common.Config
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.ArticleDataRepository
@@ -52,15 +55,32 @@ class ArticleEditorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.article_edit_act)
 
-        initAndroidToolBar()
+
 
         initEditorToolbar()
+
+        initAndroidToolBar()
+
+        mEditText?.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                refreshToolBar()
+            }
+        })
     }
 
     private fun initAndroidToolBar() {
         androidToolbar = toolbar
-        setupToolBar(androidToolbar!!, "0 word")
+        setupToolBar(androidToolbar!!, "${mEditText?.text?.length} word")
+    }
 
+    fun refreshToolBar(){
+        toolbar.title = "${mEditText?.text?.length} word"
     }
 
     private fun initEditorToolbar() {
@@ -166,6 +186,11 @@ class ArticleEditorActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> finish()
             com.chinalwb.are.R.id.action_save -> {
+
+                if (TextUtils.isEmpty(article_title.text)){
+                    ToastUtil.showShort(this@ArticleEditorActivity, "Article title cannot be null.")
+                    return true
+                }
                 val content = this.mEditText!!.getHtmlBody()
                 Log.d("生成的HTML文本", content)
                 //            DemoUtil.saveHtml(this, html);
@@ -191,6 +216,7 @@ class ArticleEditorActivity : AppCompatActivity() {
             object : DataCallback<String> {
                 override fun succeed(data: String) {
                     ToastUtil.showShort(this@ArticleEditorActivity, "发布成功")
+                    ArticleDetailActivity.openArticleDetail(this@ArticleEditorActivity,data)
                     finish()
                 }
 
