@@ -41,6 +41,14 @@ public class CommentViewBean {
         this.id = id;
     }
 
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
     public String getUsername() {
         return username;
     }
