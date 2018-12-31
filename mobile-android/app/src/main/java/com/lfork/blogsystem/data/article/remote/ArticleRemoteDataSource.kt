@@ -43,7 +43,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
         api.getLatestArticles(pageNumber, pageSize).enqueue(MyRetrofitCallBack(callback))
     }
 
-    private val api: ArticleApi = ArticleApi.create()
+
     override fun publishOrEditArticle(
         token: String,
         title: String,
@@ -135,7 +135,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
 
         return items
     }
-
+    private val api: ArticleApi = ArticleApi.create()
     companion object {
         var testFlag = 0
     }

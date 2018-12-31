@@ -52,5 +52,4 @@ class UserPortraitUploadAction : BaseAction() {
         return super.execute()
     }
 
-
 }

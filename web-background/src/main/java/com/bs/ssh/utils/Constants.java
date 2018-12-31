@@ -12,9 +12,11 @@ public class Constants {
 
     public final static String IMAGE_PATH = "/images";
 
-    public final static String HOST_PATH = "http://www.ifork.top/blog/images";
+    public final static String HOST_PATH = "http://www.lfork.top/blog/images";
 
     public static String FILE_IMAGE_RELATIVE_PATH = null;
+
+    public static String IMAGE_URL_HEADER = "http://www.lfork.top/blog/images/";
 
     //审核中
     public final static int AUDIT_IN = 300;

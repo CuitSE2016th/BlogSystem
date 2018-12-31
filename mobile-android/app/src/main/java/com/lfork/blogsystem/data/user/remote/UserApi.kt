@@ -71,6 +71,7 @@ interface UserApi {
     ): Call<Result<User>>
 
     @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
     @POST("user/updateUserInfo")
     fun updateUserInfo(
         @Field("identity") identity: String,

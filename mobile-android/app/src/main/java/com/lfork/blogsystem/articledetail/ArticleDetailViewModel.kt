@@ -5,6 +5,7 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.BlogApplication.Companion.appFixedThreadPool
+import com.lfork.blogsystem.BlogApplication.Companion.token
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.ArticleDataRepository
@@ -39,6 +40,9 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
     var navigator: ArticleContentNavigator? = null
 
     var commentNavigator: CommentNavigator? = null
+
+    private var commentNextPageNumber = 1
+    private val commentNextPageSize = 10
 
 
     fun start() {
@@ -76,40 +80,27 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
             }
         }
 
-
-        appFixedThreadPool?.execute {
-            Thread.sleep(300)
-            CommentDataRepository.addComment(BlogApplication.token!!, c.content!!, callback)
-        }
+        CommentDataRepository.addComment(BlogApplication.token!!, articleId, c.content!!, callback)
     }
 
 
-    fun addSubComment(parent:Comment,c: Comment) {
+    fun addSubComment(parent: Comment, c: Comment) {
         val callback = object : DataCallback<Comment> {
             override fun succeed(data: Comment) {
-                commentNavigator?.addSubComment(parent,data)
+                data.replyTo = c.replyTo
+
+                commentNavigator?.addSubComment(parent, data)
             }
 
             override fun failed(code: Int, log: String) {
                 navigator?.showTips(log)
             }
         }
-
-
-        appFixedThreadPool?.execute {
-            Thread.sleep(300)
-            CommentDataRepository.addSubComment(
-                BlogApplication.token!!,
-                c.parentId!!,
-                c.content!!,
-                callback
-            )
-        }
+        CommentDataRepository.addSubComment(token!!,parent.id!!,c.content!!,callback)
     }
 
 
     private fun loadComments() {
-
         val callback = object : DataCallback<CommentListResponse> {
             override fun succeed(data: CommentListResponse) {
                 commentNavigator?.refreshComments(data.result!!)
@@ -119,12 +110,12 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
                 navigator?.showTips(log)
             }
         }
-
-        BlogApplication.appFixedThreadPool?.execute {
-            Thread.sleep(100)
-            CommentDataRepository.getComments(articleId, callback)
-        }
-
+        CommentDataRepository.getComments(
+            commentNextPageNumber,
+            commentNextPageSize,
+            articleId,
+            callback
+        )
     }
 
     fun refreshUserInfo() {

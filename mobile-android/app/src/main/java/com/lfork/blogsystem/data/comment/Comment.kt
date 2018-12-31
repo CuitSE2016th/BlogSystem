@@ -1,16 +1,18 @@
 package com.lfork.blogsystem.data.comment
 
+import com.lfork.blogsystem.common.Config
+
 /**
  *
  * Created by 98620 on 2018/12/11.
  */
 data class Comment(
 
-    var commentId: String? = null,
+    var id: String? = null,
 
-    var userName: String? = null,
+    var username: String? = null,
 
-    var userPortrait: String? = null,
+    var portrait: String? = null,
 
     /**
      * 评论依赖所依赖的对象：文章、父评论
@@ -23,10 +25,10 @@ data class Comment(
     var children: ArrayList<Comment>? = null,
 
 
-    var time: String? = null,
+    var createTime: String? = null,
 
     /**
-     * 回复对象的信息。 ui展示: userName 回复了 replyTo
+     * 回复对象的信息。 ui展示: username 回复了 replyTo
      */
     var replyTo: String? = null,
 
@@ -43,4 +45,13 @@ data class Comment(
     var content: String? = null
 ) {
     var userId: String? = null
+
+    fun getRealPortraitUrl(): String {
+        if (portrait != null) {
+            if (portrait!!.contains("http")) {
+                return portrait!!
+            }
+        }
+        return Config.ServerPath + portrait
+    }
 }

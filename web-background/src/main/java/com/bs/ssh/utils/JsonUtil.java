@@ -63,6 +63,9 @@ public class JsonUtil {
     }
 
     public static  <T> void returnJson(T data) throws IOException {
+
+        ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+        ServletActionContext.getResponse().setContentType("text/html; charset=utf-8");
         PrintWriter out= ServletActionContext.getResponse().getWriter();
         out.print(toJson(data));
         out.flush();

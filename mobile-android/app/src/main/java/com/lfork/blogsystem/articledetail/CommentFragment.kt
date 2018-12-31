@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,37 +112,71 @@ class CommentFragment : Fragment(), CommentNavigator {
 
         override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
             val item = items[position]
-
             if (item.children != null) {
                 val params = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-                for (i in item.children!!){
-                    holder.subCommentContainer.addView(getSubItemView(item,holder), params)
+                holder.subCommentContainer.visibility = View.VISIBLE
+                holder.subCommentContainer.removeAllViews()
+                for (i in item.children!!) {
+                    holder.subCommentContainer.addView(getSubItemView(i , holder), params)
                 }
-            } else {
-                setImageNoCache( holder.portrait, item.userPortrait)
-                holder.time.text = item.time
-                holder.content.text = item.content
-                holder.btnLike.text = "Like(${item.likeCount})"
-                holder.username.text= item.userName
-//
-
+            } else{
+                holder.subCommentContainer.visibility = View.GONE
             }
+
+            if (item.portrait != null) {
+                setImageNoCache(holder.portrait, item.getRealPortraitUrl())
+            }
+
+            holder.time.text = item.createTime
+            holder.content.text = item.content
+            holder.btnLike.text = "Like(${item.likeCount})"
+            holder.username.text = item.username
+            holder.btnReply.setOnClickListener {
+                if (holder.reply_layout.visibility == View.VISIBLE) {
+                    holder.btnReply.text = "Reply"
+                    holder.reply_layout.visibility = View.GONE
+                } else {
+                    holder.btnReply.text = "Cancel"
+                    holder.reply_layout.visibility = View.VISIBLE
+                }
+            }
+
+            holder.btn_reply_ok.setOnClickListener {
+                val content = holder.edit_reply_content.text
+                if (TextUtils.isEmpty(content)) {
+                    ToastUtil.showShort(context, "Content cannot be null.")
+                } else {
+                    val c = Comment(content = content.toString())
+                    c .replyTo = item.username
+                    viewModel?.addSubComment(item, c)
+                }
+            }
+
         }
 
-        private fun getSubItemView(item:Comment,holder: CommentViewHolder):View{
+
+        private fun getSubItemView(child: Comment, holder: CommentViewHolder): View {
 
             val view = LayoutInflater.from(context)
                 .inflate(R.layout.item_comment, holder.subCommentContainer, false)
 
-            setImageNoCache( holder.portrait, item.userPortrait)
-            view.comment_time.text = item.time
-            view.content.text = item.content
-            view.like.text = "Like(${item.likeCount})"
-            view.username.text= item.userName
-            view.be_replied_username.text = "Reply ${item.replyTo}:"
+            if (child.portrait != null) {
+                setImageNoCache(holder.portrait, child.getRealPortraitUrl())
+            }
+            view.comment_time.text = child.createTime
+            view.content.text = child.content
+            view.like.text = "Like(${child.likeCount})"
+            view.username.text = child.username
+            view.be_replied_username.text = "Reply ${child.replyTo}:"
+
             view.reply.setOnClickListener {
-
-
+                if (view.reply_layout.visibility == View.VISIBLE) {
+                    view.reply.text = "Reply"
+                    view.reply_layout.visibility = View.GONE
+                } else {
+                    view.reply.text = "Cancel"
+                    view.reply_layout.visibility = View.VISIBLE
+                }
             }
 
             return view
@@ -159,11 +194,14 @@ class CommentFragment : Fragment(), CommentNavigator {
             val btnReply = itemView.reply
             val subCommentContainer = itemView.sub_comments
             val separator = itemView.separator
+            val reply_layout = itemView.reply_layout
+            val edit_reply_content = itemView.editText_reply_content
+            val btn_reply_ok = itemView.btn_reply_ok
         }
 
 
         fun addComment(c: Comment) {
-            items.add(0,c)
+            items.add(0, c)
             notifyDataSetChanged()
         }
 

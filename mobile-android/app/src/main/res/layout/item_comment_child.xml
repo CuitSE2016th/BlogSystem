@@ -150,8 +150,9 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="4dp"
-        android:background="@color/black"
+
+        android:background="@drawable/bg_top_line_green"
         app:layout_constraintTop_toBottomOf="@id/reply_layout"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>
