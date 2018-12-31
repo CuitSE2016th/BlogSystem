@@ -29,7 +29,6 @@ public class User{
 
 
     @Id
-    @JSON(serialize = false)
     public String getId() {
         return id;
     }
