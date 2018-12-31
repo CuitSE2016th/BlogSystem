@@ -4,6 +4,8 @@ import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.entity.Comment;
 
+import java.io.Serializable;
+
 /**
  * 评论服务
  *
@@ -60,6 +62,6 @@ public interface UserCommentService {
      * @param content
      * @return void
      **/
-    void reply(String userId, Integer parentId, String content);
+    Serializable reply(String userId, Integer parentId, String content);
 
 }

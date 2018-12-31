@@ -32,7 +32,8 @@ public class ReplyCommentAction extends AbstractCommentAction{
     @Override
     public String execute() throws Exception {
         try {
-            commentService.reply(this.getUserId(), pid, content);
+            result = JsonBody.success();
+            result.setData(commentService.reply(this.getUserId(), pid, content));
         }catch (Exception e){
             result = JsonBody.fail();
             result.setData(e.getMessage());

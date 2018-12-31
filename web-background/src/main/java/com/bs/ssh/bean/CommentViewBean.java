@@ -13,18 +13,20 @@ import java.util.List;
  **/
 public class CommentViewBean {
 
-    protected Integer id;
-    protected String username;
-    protected String portrait;
-    protected String content;
-    protected Long createTime;
-    private List<Child> children;
+    private Integer id;
+    private Integer pid;
+    private String username;
+    private String portrait;
+    private String content;
+    private Long createTime;
+    private List<CommentViewBean> children;
 
     public CommentViewBean() {
     }
 
     public CommentViewBean(User user, Comment comment){
         this.id = comment.getId();
+        this.pid = comment.getParentId();
         this.username = user.getNickname();
         this.portrait = user.getHeadPortrait();
         this.content = comment.getContent();
@@ -71,18 +73,11 @@ public class CommentViewBean {
         this.createTime = createTime;
     }
 
-    public List<Child> getChildren() {
+    public List<CommentViewBean> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(List<CommentViewBean> children) {
         this.children = children;
-    }
-
-    public static class Child extends CommentViewBean{
-
-        public Child(User user, Comment comment) {
-            super(user, comment);
-        }
     }
 }

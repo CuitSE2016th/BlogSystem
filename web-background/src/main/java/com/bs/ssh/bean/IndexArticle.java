@@ -53,6 +53,12 @@ public class IndexArticle extends Article {
         this.likeCount = likeCount;
     }
 
+    public IndexArticle(Article article,
+                        String image,
+                        Integer like,
+                        Integer star) {
+    }
+
     public IndexArticle() {
     }
 
