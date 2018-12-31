@@ -1,6 +1,7 @@
 package com.bs.ssh.service.user;
 
 
+import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.entity.Article;
@@ -29,7 +30,7 @@ public interface UserArticleService {
      * @param aid
      * @return com.bs.ssh.entity.Article
      **/
-    Article getArticleById(Integer aid);
+    IndexArticle getArticleById(Integer aid);
 
     /**
      * 获取作者发布的文章

@@ -1,5 +1,6 @@
 package com.bs.ssh.service.user.impl;
 
+import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.bean.UserPlus;
@@ -48,8 +49,21 @@ public class UserArticleServiceImpl implements UserArticleService{
     }
 
     @Override
-    public Article getArticleById(Integer aid) {
-        return articleDao.findOne("from Article where id=? order by createTime desc", aid);
+    public IndexArticle getArticleById(Integer aid) {
+        Article article =  articleDao.findOne(
+                "from Article where id=? and status=?", aid, Constants.AUDIT_COMPLETE);
+        if(article == null)
+            throw new NoSuchEntityException("文章不存在");
+        User user = userDao.getUserInfoById(article.getAuthorId());
+        if(user == null)
+            throw new NoSuchEntityException("作者不存在");
+        Integer like = ((Long) objectBaseDao.findOne(
+                "select count(*) from Like where articleId=?", aid)).intValue();
+        Integer star = ((Long) objectBaseDao.findOne(
+                "select count(*) from Star where articleId=?", aid)).intValue();
+        Integer comment = ((Long) objectBaseDao.findOne(
+                "select count(*) from Comment where articleId=?", aid)).intValue();
+        return new IndexArticle(article, user, like, star, comment);
     }
 
     @Override

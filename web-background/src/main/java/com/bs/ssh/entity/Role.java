@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "role")
 public class Role {
     private Integer id;
-    @Expose private String name;
+    private String name;
     private Long createTime;
 
     //默认角色为普通用户

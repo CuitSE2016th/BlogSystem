@@ -2,6 +2,8 @@ package com.bs.ssh.bean;
 
 import com.bs.ssh.entity.Article;
 import com.bs.ssh.entity.Image;
+import com.bs.ssh.entity.User;
+import com.bs.ssh.utils.DateUtils;
 
 /**
  * Create By ZZY on 2018/12/30
@@ -13,6 +15,8 @@ public class IndexArticle extends Article {
     private Integer likeCount;
 
     private Integer commCount;
+
+    private Integer starCount;
 
     private String time;
 
@@ -48,15 +52,35 @@ public class IndexArticle extends Article {
         this.likeCount = likeCount;
     }
 
+    public Integer getStarCount() {
+        return starCount;
+    }
+
+    public void setStarCount(Integer starCount) {
+        this.starCount = starCount;
+    }
+
     public IndexArticle(String imageUrl, Integer likeCount) {
         ImageUrl = imageUrl;
         this.likeCount = likeCount;
     }
 
     public IndexArticle(Article article,
-                        String image,
+                        User user,
                         Integer like,
-                        Integer star) {
+                        Integer star,
+                        Integer commCount) {
+
+        this.setId(article.getId());
+        this.setAuthorId(article.getAuthorId());
+        this.setTitle(article.getTitle());
+        this.setContent(article.getContent());
+        this.setStatus(article.getStatus());
+        this.setTime(DateUtils.getDateStringFromLong(article.getCreateTime()));
+        this.setImageUrl(user.getHeadPortrait());
+        this.setLikeCount(like);
+        this.setStarCount(star);
+        this.setCommCount(commCount);
     }
 
     public IndexArticle() {

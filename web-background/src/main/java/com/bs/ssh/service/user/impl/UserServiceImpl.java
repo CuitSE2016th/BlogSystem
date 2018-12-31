@@ -3,6 +3,7 @@ package com.bs.ssh.service.user.impl;
 import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.service.user.UserService;
@@ -16,12 +17,15 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Transactional
@@ -29,6 +33,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private final UserDao userDao;
+
+    @Resource private RoleDao roleDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
@@ -52,7 +58,13 @@ public class UserServiceImpl implements UserService{
             //保存token到redis服务器
             String userJson = JsonUtil.toJson(user);
             RedisUtils.set(token, userJson);
-            body.setData(token);
+            //获取角色
+            String role = roleDao.findOne("from Role where id=?", user.getRoleId()).getName();
+            Map<String, String> map = new HashMap<>();
+            map.put("uid", user.getId());
+            map.put("token", token);
+            map.put("role", role);
+            body.setData(map);
             user.setLastLoginTime(System.currentTimeMillis());
             userDao.update(user);
         }
