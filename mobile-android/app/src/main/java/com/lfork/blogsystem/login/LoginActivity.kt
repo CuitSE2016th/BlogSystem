@@ -26,6 +26,7 @@ import android.widget.TextView
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.base.communication.LiveDataBus
 import com.lfork.blogsystem.data.DataCallback
+import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.main.MainActivity
 import com.lfork.blogsystem.register.RegisterActivity
@@ -164,8 +165,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(true)
             mAuthTask = UserDataRepository
             mAuthTask?.login(accountStr, passwordStr, object :
-                DataCallback<String> {
-                override fun succeed(data: String) {
+                DataCallback<User> {
+                override fun succeed(data: User) {
 
                     LiveDataBus.get().with("login_succeed").value = "登录成功";
                     ToastUtil.showLong(applicationContext, "登录成功")

@@ -21,7 +21,7 @@ object ArticleDataRepository : ArticleDataSource {
         remoteDataSource.deleteArticle(token, articleId, callback)
     }
 
-    override fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>) {
+    override fun getArticle(articleId: String, callback: DataCallback<ArticleDetailResponse>) {
         remoteDataSource.getArticle(articleId, callback)
     }
 

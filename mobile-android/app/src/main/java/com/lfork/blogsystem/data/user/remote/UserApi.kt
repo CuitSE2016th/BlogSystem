@@ -25,7 +25,7 @@ interface UserApi {
     fun login(
         @Field("identity") account: String,
         @Field("password") password: String
-    ): Call<Result<String>>
+    ): Call<Result<User>>
 
 
     /**

@@ -12,7 +12,7 @@ interface UserDataSource {
     /**
      * @param account Phone or Email
      */
-    fun login(account: String, password: String, callback: DataCallback<String>)
+    fun login(account: String, password: String, callback: DataCallback<User>)
 
 
     fun register(

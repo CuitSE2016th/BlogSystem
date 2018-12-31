@@ -20,5 +20,9 @@ public class TimeUtil {
         return DateFormat.format("yyyy/MM/dd HH:mm",date).toString();
     }
 
+    public static String getStandardTime(Long systemTimeMillis){
+        return DateFormat.format("yyyy/MM/dd HH:mm",new Date(systemTimeMillis)).toString();
+    }
+
 
 }

@@ -19,7 +19,7 @@ interface ArticleDataSource {
 //
 //    fun search()
 //
-    fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>)
+    fun getArticle(articleId: String, callback: DataCallback<ArticleDetailResponse>)
 //
 
     fun getMyArticles(

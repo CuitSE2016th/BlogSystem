@@ -1,7 +1,6 @@
 package com.lfork.blogsystem.articledetail
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -11,12 +10,11 @@ import android.text.TextUtils
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import android.view.inputmethod.InputMethodManager
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.base.communication.LiveDataBus
-import com.lfork.blogsystem.data.article.ArticleResponse
+import com.lfork.blogsystem.data.article.ArticleDetailResponse
 import com.lfork.blogsystem.data.comment.Comment
 import com.lfork.blogsystem.databinding.ArticleDetailActBinding
 import com.lfork.blogsystem.login.LoginActivity.Companion.signInFirst
@@ -165,7 +163,7 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
         );//这个是给图片设置点击监听的，如果你项目需要webview中图片，点击查看大图功能，可以这么添加
     }
 
-    override fun showContent(htmlContent: ArticleResponse) {
+    override fun showContent(htmlContent: ArticleDetailResponse) {
         runOnUiThread {
             title
             article_main_container.loadData(

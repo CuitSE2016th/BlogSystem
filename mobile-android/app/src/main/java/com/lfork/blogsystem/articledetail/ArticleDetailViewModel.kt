@@ -1,19 +1,17 @@
 package com.lfork.blogsystem.articledetail
 
-import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.BlogApplication.Companion.appFixedThreadPool
 import com.lfork.blogsystem.BlogApplication.Companion.token
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.base.viewmodel.BaseViewModel
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.ArticleDataRepository
-import com.lfork.blogsystem.data.article.ArticleResponse
+import com.lfork.blogsystem.data.article.ArticleDetailResponse
 import com.lfork.blogsystem.data.comment.Comment
 import com.lfork.blogsystem.data.comment.CommentDataRepository
 import com.lfork.blogsystem.data.comment.CommentListResponse
@@ -68,10 +66,14 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     }
 
     private fun loadArticle() {
-        val callback = object : DataCallback<ArticleResponse> {
-            override fun succeed(data: ArticleResponse) {
-                time.set(TimeUtil.getStandardTime(Date(data.createTime!!.toLong())))
+        val callback = object : DataCallback<ArticleDetailResponse> {
+            override fun succeed(data: ArticleDetailResponse) {
+//                time.set(TimeUtil.getStandardTime(Date(data.createTime!!.toLong())))
+                time.set(data.time)
+                star.set((data.starCount?:0))
+                like.set(data.likeCount?:0)
                 title.set(data.title)
+                portraitUrl.set(data.imageUrl)
                 wordCount.set("word count:${data.content?.length}")
                 if (data.authorId == BlogApplication.userId){
                     userIsAuthor.set(true)

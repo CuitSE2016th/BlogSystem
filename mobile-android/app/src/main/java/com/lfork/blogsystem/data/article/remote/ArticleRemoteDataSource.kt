@@ -8,7 +8,7 @@ import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.data.article.ArticleDataSource
 import com.lfork.blogsystem.data.article.ArticleListResponse
-import com.lfork.blogsystem.data.article.ArticleResponse
+import com.lfork.blogsystem.data.article.ArticleDetailResponse
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 /**
  *
  * @author 98620
- * @date 2018/12/15
+ * @. 2018/12/15
  */
 class ArticleRemoteDataSource : ArticleDataSource {
     override fun starArticle(token: String, articleId: String, callback: DataCallback<String>) {
@@ -34,7 +34,7 @@ class ArticleRemoteDataSource : ArticleDataSource {
         api.deleteArticle(token, articleId).enqueue(HTTPCallBack(callback))
     }
 
-    override fun getArticle(articleId: String, callback: DataCallback<ArticleResponse>) {
+    override fun getArticle(articleId: String, callback: DataCallback<ArticleDetailResponse>) {
         api.getArticle(BlogApplication.token!!, articleId).enqueue(HTTPCallBack(callback))
     }
 
@@ -141,8 +141,8 @@ class ArticleRemoteDataSource : ArticleDataSource {
             val it = Article()
             it.id = i.toString()
             it.title = RandomTest.getRandomTitles()
-            it.createTime = Date().toString()
-            it.coverUrl = RandomTest.getRandomImages()
+            it.createTime = System.currentTimeMillis().toString()
+            it.imageUrl = RandomTest.getRandomImages()
             it.abstract =
                     "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
             items.add(it)

@@ -3,7 +3,7 @@ package com.lfork.blogsystem.data.article.remote
 import com.lfork.blogsystem.base.network.HttpService
 import com.lfork.blogsystem.base.network.Result
 import com.lfork.blogsystem.data.article.ArticleListResponse
-import com.lfork.blogsystem.data.article.ArticleResponse
+import com.lfork.blogsystem.data.article.ArticleDetailResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -47,7 +47,7 @@ interface ArticleApi {
     fun getArticle(
         @Header("token") token: String,
         @Query("aid") articleId: String
-    ): Call<Result<ArticleResponse>>
+    ): Call<Result<ArticleDetailResponse>>
 
     //http://localhost:8080/user/article/myself
 

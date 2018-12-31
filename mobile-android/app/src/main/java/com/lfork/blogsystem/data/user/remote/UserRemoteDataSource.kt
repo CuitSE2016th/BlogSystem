@@ -94,7 +94,7 @@ class UserRemoteDataSource : UserDataSource {
 
     private val api: UserApi = UserApi.create()
 
-    override fun login(account: String, password: String, callback: DataCallback<String>) {
+    override fun login(account: String, password: String, callback: DataCallback<User>) {
         api.login(account, password).enqueue(HTTPCallBack(callback))
     }
 

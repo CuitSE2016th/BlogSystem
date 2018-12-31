@@ -24,33 +24,21 @@ object UserDataRepository : UserDataSource {
     private var userCacheIsDirty = true
 
 
-    override fun login(account: String, password: String, callback: DataCallback<String>) {
-
-        val userInfoInitCallback = object :DataCallback<User>{
-            override fun succeed(data: User) {
-                callback.succeed("Success")
-            }
-
-            override fun failed(code: Int, log: String) {
-                callback.failed(code, log)
-            }
-        }
+    override fun login(account: String, password: String, callback: DataCallback<User>) {
 
         remoteDataSource.login(account, password, object :
-            DataCallback<String> {
-            override fun succeed(data: String) {
+            DataCallback<User> {
+            override fun succeed(data: User) {
 
                 if (StringValidation.isEmailValid(account)) {
                     userCache.email = account
                 } else {
                     userCache.phone = account
                 }
+                userCache.id = data.id
                 BlogApplication.isSignIn = true
                 updateCoreUserInfo(null)
-
-                BlogApplication.saveToken(data)
-                userCacheIsDirty = true
-                getUserInfo(account,data,userInfoInitCallback)
+                BlogApplication.saveToken(data.token!!)
             }
 
             override fun failed(code: Int, log: String) {
