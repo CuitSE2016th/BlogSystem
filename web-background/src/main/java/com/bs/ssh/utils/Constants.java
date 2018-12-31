@@ -12,7 +12,7 @@ public class Constants {
 
     public final static String IMAGE_PATH = "/images";
 
-    public final static String HOST_PATH = "http://www.ifork.top/blog/images";
+    public final static String HOST_PATH = "http://www.lfork.top/blog/images";
 
     public static String FILE_IMAGE_RELATIVE_PATH = null;
 

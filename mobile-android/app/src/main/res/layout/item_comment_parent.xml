@@ -11,15 +11,7 @@
         android:id="@+id/comment"
         />
 
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/comment" />
+
 
     <!--手动添加子评论-->
     <LinearLayout
@@ -35,10 +27,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/separator"
+
+        app:layout_constraintTop_toBottomOf="@id/comment"
         tools:visibility="visible">
 
 
     </LinearLayout>
+
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:background="@drawable/bg_top_line_green"
+        app:layout_constraintTop_toTopOf="@+id/sub_comments"
+     />
 
 </android.support.constraint.ConstraintLayout>
