@@ -1,7 +1,9 @@
 package com.bs.ssh.service.user.impl;
 
 import com.bs.ssh.dao.BaseDao;
+import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.entity.Image;
+import com.bs.ssh.entity.User;
 import com.bs.ssh.exception.NoSuchEntityException;
 import com.bs.ssh.service.user.UserFileService;
 import com.bs.ssh.utils.Constants;
@@ -22,10 +24,13 @@ public class UserFileServiceImpl implements UserFileService {
     @Resource
     private BaseDao<Image> imageBaseDao;
 
+    @Resource
+    private UserDao userDao;
+
     @Override
     public String[] uploadPicture(String uid, File[] files, String[] filenames) throws IOException {
 
-        Object[] paths = new Object[files.length];
+        String[] paths = new String[files.length];
 
         for(int i=0; i<files.length; i++){
             int pos = filenames[i].lastIndexOf('.');
@@ -48,7 +53,7 @@ public class UserFileServiceImpl implements UserFileService {
 
             imageBaseDao.insert(image);
         }
-        return (String[]) paths;
+        return paths;
     }
 
     @Override
@@ -60,5 +65,31 @@ public class UserFileServiceImpl implements UserFileService {
             image.setAid(aid);
             imageBaseDao.update(image);
         }
+    }
+
+    @Override
+    public String uploadAvatar(String uid, File file, String filename) throws IOException {
+
+        int pos = filename.lastIndexOf('.');
+        String imageId = IDUtils.UserID();
+        String suffix = pos == -1 ? "jpg" : filename.substring(pos+1);
+
+        String suffix_path = "/" + uid + "/" +
+                imageId + "." + suffix;
+
+        File target = new File(Constants.FILE_IMAGE_RELATIVE_PATH + suffix_path);
+        FileUtils.copyFile(file, target);
+        String path = Constants.HOST_PATH + suffix_path;
+
+        User user = userDao.getUserInfoById(uid);
+        if(user == null)
+            throw new NoSuchEntityException("用户不存在");
+
+        user.setHeadPortrait(path);
+
+        userDao.update(user);
+
+
+        return path;
     }
 }

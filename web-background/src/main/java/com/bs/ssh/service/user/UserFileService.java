@@ -20,7 +20,7 @@ public interface UserFileService {
 	 * @param filenames 图片文件名
      * @return java.lang.String[] 图片保存路径
      **/
-    Object[] uploadPicture(String uid, File[] files, String[] filenames) throws IOException;
+    String[] uploadPicture(String uid, File[] files, String[] filenames) throws IOException;
 
     /**
      * 引用图片
@@ -33,4 +33,6 @@ public interface UserFileService {
      * @return void
      **/
     void referencePicture(String uid, String[] iid, Integer aid);
+
+    String uploadAvatar(String uid, File file, String filename) throws IOException;
 }

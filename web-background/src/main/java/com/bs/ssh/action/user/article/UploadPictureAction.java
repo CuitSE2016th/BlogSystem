@@ -44,7 +44,7 @@ public class UploadPictureAction extends AbstractArticleAction {
         try {
             String uid = this.getUserId();
 //            String uid = "00000";
-            Object[] path = fileService.uploadPicture(uid, image, imageFileName);
+            String[] path = fileService.uploadPicture(uid, image, imageFileName);
             result = JsonBody.success();
             result.setData(path);
             ServletActionContext.getResponse().setCharacterEncoding("utf-8");
