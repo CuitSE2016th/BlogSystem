@@ -19,7 +19,7 @@ import java.util.List;
  * Create By ZZY on 2018/12/31
  */
 @ParentPackage("json-default")
-@Namespace("/root")
+@Namespace("/user")
 @Results({
         @Result(name = "success", type = "json", params = {"root", "result"})
 })
