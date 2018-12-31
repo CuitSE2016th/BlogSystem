@@ -5,6 +5,8 @@ import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -21,6 +23,16 @@ import org.springframework.beans.factory.annotation.Autowired;
         @Result(name = "success", type = "json", params = {"root", "result"})
 })
 public class UserAdminAction extends BaseAction {
+
+    private String loginId;
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 
     @Autowired
     private UserAdminServiceImpl userAdminService;
@@ -99,6 +111,23 @@ public class UserAdminAction extends BaseAction {
             result.setMessage("前端消息出错！");
             return SUCCESS;
         }
+
+        Subject loginUser = SecurityUtils.getSubject();
+        User  user = (User) loginUser.getPrincipal();
+
+        if(user == null){
+            result = JsonBody.fail();
+            result.setMessage("用户没有登录！");
+            return SUCCESS;
+        }
+
+        if(!loginId.equals(user.getId())){
+            result = JsonBody.fail();
+            result.setMessage("用户不一致,非法操作！");
+            return SUCCESS;
+        }
+
+
 
         int flag = userAdminService.deleteUserByUserID(userID);
 

@@ -6,6 +6,8 @@ import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.service.root.impl.RootServiceImpl;
 import com.bs.ssh.utils.Constants;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -25,6 +27,16 @@ public class RootAction extends BaseAction {
 
     @Autowired
     private RootServiceImpl rootService;
+
+    private String loginId;
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 
     //需要查询的页数
     private String pageNo;
@@ -160,6 +172,12 @@ public class RootAction extends BaseAction {
     @Action("updateUserTypeByUserID")
     public String updateUserTypeByUserID(){
 
+        if(loginId == null){
+            result = JsonBody.fail();
+            result.setMessage("前端数据出错");
+            return SUCCESS;
+        }
+
         if(userID == null || type == null){
             result = JsonBody.fail();
             result.setMessage("前端数据出错");
@@ -182,9 +200,30 @@ public class RootAction extends BaseAction {
             return SUCCESS;
         }
 
-        if(role != 1 || role != 2 || role != 3){
+        if(role != 1 && role != 2 && role != 3){
             result = JsonBody.fail();
             result.setMessage("前端角色数据非法");
+            return SUCCESS;
+        }
+
+        Subject loginUser = SecurityUtils.getSubject();
+        User  user = (User) loginUser.getPrincipal();
+
+        if(user == null){
+            result = JsonBody.fail();
+            result.setMessage("用户没有登录！");
+            return SUCCESS;
+        }
+
+        if(user.getRoleId() != 4){
+            result = JsonBody.fail();
+            result.setMessage("非法操作！");
+            return SUCCESS;
+        }
+
+        if(!loginId.equals(user.getId())){
+            result = JsonBody.fail();
+            result.setMessage("用户不一致,非法操作！");
             return SUCCESS;
         }
 
