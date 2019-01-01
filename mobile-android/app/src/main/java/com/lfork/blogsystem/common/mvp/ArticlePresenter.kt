@@ -3,6 +3,7 @@ package com.lfork.blogsystem.common.mvp
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.data.article.ArticleDataRepository
+import com.lfork.blogsystem.data.article.ArticleListResponse
 import com.lfork.blogsystem.data.user.UserDataRepository
 
 /**
@@ -24,6 +25,8 @@ open class ArticlePresenter(private var view: ArticleContract.View?) : BasePrese
 
     val loadMoreDataCallBack = object : DataCallback<List<Article>> {
         override fun succeed(data: List<Article>) {
+
+
             view?.displayMoreArticles(data as ArrayList<Article>)
         }
 
@@ -31,6 +34,8 @@ open class ArticlePresenter(private var view: ArticleContract.View?) : BasePrese
             view?.error(log)
         }
     }
+
+
 
 
 

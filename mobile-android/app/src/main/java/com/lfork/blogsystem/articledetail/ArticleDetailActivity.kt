@@ -130,7 +130,6 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
             if (!TextUtils.isEmpty(editText_comment_content.text)) {
                 val c = Comment()
                 c.createTime = System.currentTimeMillis().toString()
-                c.authorId = UserDataRepository.userCache.id
                 c.userId = UserDataRepository.userCache.id
                 c.username = UserDataRepository.userCache.getUsername()
                 c.portrait = UserDataRepository.userCache.headPortrait

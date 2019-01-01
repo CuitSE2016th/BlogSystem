@@ -9,6 +9,24 @@ import java.io.File
  * Created by 98620 on 2018/12/11.2
  */
 object ArticleDataRepository : ArticleDataSource {
+    override fun getLikedArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    ) {
+        remoteDataSource.getLikedArticles(token, pageNumber, pageSize, callback)
+    }
+
+    override fun getStaredArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    ) {
+        remoteDataSource.getStaredArticles(token, pageNumber, pageSize, callback)
+    }
+
     override fun getFollowingArticles(
         token: String,
         pageNumber: Int,

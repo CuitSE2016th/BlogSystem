@@ -33,12 +33,14 @@ class NotificationsFragment : Fragment(), NotificationContract.View {
     override fun displayMore(data: ArrayList<Notification>) {
         activity?.runOnUiThread {
             isLoadMore = false
-            if (data.size < 1){
-                adapter.showNoMoreData()
-            } else {
-                pageNumber++
-                adapter.addItems(data)
-            }
+//            if (data.size < 1){
+//                adapter.showNoMoreData()
+//            } else {
+//                pageNumber++
+//                adapter.addItems(data)
+//            }
+
+            adapter.showNoMoreData()
         }
     }
 

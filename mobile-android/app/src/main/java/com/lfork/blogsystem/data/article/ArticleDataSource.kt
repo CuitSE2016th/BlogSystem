@@ -36,6 +36,21 @@ interface ArticleDataSource {
         token: String, pageNumber: Int, pageSize: Int, callback: DataCallback<ArticleListResponse>
     )
 
+    fun getLikedArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    )
+
+    fun getStaredArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    )
+
+
     //
 //    fun getFollowingsArticle()
 //

@@ -2,6 +2,7 @@ package com.lfork.blogsystem.notifications
 
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.util.TimeUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.data.notification.Notification
+import com.lfork.blogsystem.utils.TimeUtil
 import kotlinx.android.synthetic.main.item_article_widen_style.view.*
 import kotlinx.android.synthetic.main.item_loadmore.view.*
 import kotlinx.android.synthetic.main.item_notification.view.*
@@ -94,7 +96,17 @@ class NotificationsAdapter :
 
     fun refreshItems(items: ArrayList<Notification>) {
         this.items.clear()
-        this.items.addAll(items)
+        val n1 = Notification()
+        n1.content="欢迎使用博客系统，这里是通知频道"
+        n1.time =TimeUtil.getStandardTime()
+
+        val n2 = Notification()
+        n2.content = "2018年已经过去了，祝您在2019年取得新的成绩"
+        n2.time = TimeUtil.getStandardTime()
+
+
+        this.items.add(n1)
+        this.items.add(n2)
         notifyDataSetChanged()
     }
 
