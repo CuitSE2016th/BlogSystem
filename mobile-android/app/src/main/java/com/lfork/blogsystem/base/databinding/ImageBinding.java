@@ -45,7 +45,7 @@ public class ImageBinding {
     }
 
     public static void setImageNoCache(ImageView view, Object path) {
-        RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE).skipMemoryCache(true);
+        RequestOptions options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE);//.skipMemoryCache(true);
         Glide.with(view.getContext()).load(path).apply(options).into(view);
     }
 

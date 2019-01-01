@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_height="wrap_content">
 
 
@@ -52,27 +54,45 @@
         app:layout_constraintStart_toStartOf="@+id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
-    <TextView
+    <ImageView
+
         android:id="@+id/like"
+        android:src="@drawable/ic_like_gray_24dp"
         style="@style/button_article_comment_action"
+        android:layout_height="20dp"
         android:layout_marginEnd="8dp"
         android:text="Like(28)"
         app:layout_constraintBottom_toBottomOf="@+id/reply"
         app:layout_constraintEnd_toStartOf="@+id/reply"
         app:layout_constraintTop_toTopOf="@+id/reply" />
 
-    <TextView
+    <ImageView
         android:id="@+id/reply"
         style="@style/button_article_comment_action"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/ic_reply_gray_24dp"
+        android:text="Reply"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/comment_portrait"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+        app:layout_constraintTop_toTopOf="@+id/comment_portrait" />
+
+    <ImageView
+        android:id="@+id/btn_delete"
+        android:visibility="gone"
+        android:src="@drawable/ic_delete_gray_24dp"
+        style="@style/button_article_comment_action"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp"
+        tools:visibility="visible"
         android:layout_marginBottom="4dp"
         android:text="Reply"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/comment_portrait"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/comment_portrait" />
 
     <TextView
         android:id="@+id/delete"
@@ -98,6 +118,7 @@
         app:layout_constraintTop_toBottomOf="@+id/comment_portrait" />
 
     <android.support.constraint.ConstraintLayout
+
         android:id="@+id/reply_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,7 +132,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reply"
         tools:context=".articledetail.ArticleDetailActivity"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <Button
             style="@style/button_article_action"

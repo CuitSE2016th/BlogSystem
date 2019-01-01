@@ -20,6 +20,8 @@
         tools:context=".articledetail.ArticleDetailActivity">
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroller"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/include"
@@ -37,11 +39,11 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
                     android:background="@color/colorBase"
-                    android:gravity="start"
+                    android:gravity="center"
                     android:text="@={viewModel.title}"
                     android:textColor="@color/black"
                     android:textSize="24sp"
-                    tools:text="哈哈哈哈啊哈哈SADKdshakdhasjdsahdkasdhsakdhsadksahdk asdksdah " />
+                    tools:text="改革开发四十周年" />
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -130,7 +132,11 @@
 
 
                 <LinearLayout
+                    android:background="@drawable/bg_circle_rectangle_frame_black"
                     android:layout_width="match_parent"
+                    tools:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
@@ -139,41 +145,41 @@
                         android:id="@+id/article_main_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_margin="1dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:background="@color/gray"
+                        tools:visibility="gone"
                         tools:layout_height="800dp">
 
                     </WebView>
 
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:textColor="@color/red"
+                        android:id="@+id/btn_delete"
+                        style="@style/button_article_comment_action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="Delete"
+                        android:visibility="@{viewModel.userIsAuthor?View.VISIBLE:View.GONE}" />
+
+
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/btn_delete"
-                    style="@style/button_article_comment_action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Delete"
-                    android:visibility="@{viewModel.userIsAuthor?View.VISIBLE:View.GONE}" />
+
 
 
                 <FrameLayout
+                    android:layout_margin="16dp"
                     android:id="@+id/article_comment_container"
-
+                    android:background="@drawable/bg_circle_rectangle_frame_black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    tools:background="@color/gray"
+                    tools:background="@color/aliceblue"
                     tools:layout_height="200dp">
 
 

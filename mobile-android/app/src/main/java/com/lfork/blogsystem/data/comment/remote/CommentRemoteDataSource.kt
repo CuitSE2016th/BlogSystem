@@ -1,6 +1,5 @@
 package com.lfork.blogsystem.data.comment.remote
 
-import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.base.network.HTTPCallBack
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.comment.Comment
@@ -15,34 +14,22 @@ import com.lfork.blogsystem.data.comment.CommentListResponse
 class CommentRemoteDataSource : CommentDataSource {
     override fun addComment(
         token: String,
-        articleId: String,
-        content: String,
+        comment:Comment,
         callback: DataCallback<Comment>
     ) {
-//        val c = Comment(
-//            "11",
-//            "lfork${22 % 2}",
-//            RandomTest.getRandomImages(),
-//            null,
-//            null,
-//            null,
-//            "2018/12/30",
-//            null,
-//            "100",
-//            "300",
-//            content
-//        )
-//        val tempCallBack = object : DataCallback<Comment> {
-//            override fun succeed(data: Comment) {
-//                callback.succeed(c)
-//            }
-//
-//            override fun failed(code: Int, log: String) {
-//                callback.failed(code, log)
-//            }
-//        }
+        val tempCallBack = object : DataCallback<Comment> {
+            override fun succeed(data: Comment) {
+                comment.id = data.id
+                comment.createTime = data.createTime
+                callback.succeed(comment)
+            }
 
-        api.publishComment(token, articleId, content).enqueue(HTTPCallBack(callback))
+            override fun failed(code: Int, log: String) {
+                callback.failed(code, log)
+            }
+        }
+
+        api.publishComment(token, comment.articleId!!, comment.content).enqueue(HTTPCallBack(tempCallBack))
     }
 
     override fun deleteComment(token: String, cid: String, callback: DataCallback<String>) {
@@ -51,25 +38,21 @@ class CommentRemoteDataSource : CommentDataSource {
 
     override fun addSubComment(
         token: String,
-        pid: String,
-        content: String,
+        comment:Comment,
         callback: DataCallback<Comment>
     ) {
-//        val c = Comment(
-//            "11",
-//            "lfork${22 % 2}",
-//            RandomTest.getRandomImages(),
-//            pid,
-//            null,
-//            "2018/12/17",
-//            "Tom",
-//            "100",
-//            "300",
-//            content
-//        )
-//
-//        callback.succeed(c)
-        api.replyComment(token,pid,content).enqueue(HTTPCallBack(callback))
+        val tempCallBack = object : DataCallback<String> {
+            override fun succeed(data: String) {
+                comment.id = data
+                callback.succeed(comment)
+            }
+
+            override fun failed(code: Int, log: String) {
+                callback.failed(code, log)
+            }
+        }
+
+        api.replyComment(token, comment.parentId!!, comment.content).enqueue(HTTPCallBack(tempCallBack))
     }
 
     override fun getComments(

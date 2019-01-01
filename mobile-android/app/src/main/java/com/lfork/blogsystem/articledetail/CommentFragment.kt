@@ -2,6 +2,7 @@ package com.lfork.blogsystem.articledetail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,8 +19,12 @@ import com.lfork.blogsystem.BlogApplication
 
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.RandomTest
+import com.lfork.blogsystem.base.databinding.ImageBinding.setImage
 import com.lfork.blogsystem.base.databinding.ImageBinding.setImageNoCache
+import com.lfork.blogsystem.base.widget.listener.BottomListener
+import com.lfork.blogsystem.base.widget.listener.RecyclerViewScrollListener
 import com.lfork.blogsystem.data.comment.Comment
+import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.utils.TimeUtil
 import com.lfork.blogsystem.utils.ToastUtil
 import com.lfork.blogsystem.utils.hideKeyboard
@@ -28,9 +34,24 @@ import kotlinx.android.synthetic.main.article_detail_comment_frag.view.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.item_comment_parent.view.*
 
-class CommentFragment : Fragment(), CommentNavigator {
-    override fun deleteComment(c: Comment) {
-        adapter?.deleteComment(c)
+class CommentFragment : Fragment(), CommentNavigator, BottomListener {
+    override fun onScrollToBottom() {
+        if (root?.text_no_data_tips?.visibility != View.VISIBLE){
+            viewModel?.loadMoreComments()
+        }
+    }
+
+    override fun loadMoreComments(comments: ArrayList<Comment>) {
+        if (comments.size>0){
+            adapter?.loadMoreComments(comments)
+        } else{
+            root?.text_no_data_tips?.visibility = View.VISIBLE
+        }
+
+    }
+
+    override fun deleteComment(position: Int,c: Comment) {
+        adapter?.deleteComment(position,c)
     }
 
     override fun addComment(c: Comment) {
@@ -41,9 +62,9 @@ class CommentFragment : Fragment(), CommentNavigator {
 
     }
 
-    override fun addSubComment(parent: Comment, child: Comment) {
+    override fun addSubComment(position: Int, parent: Comment, child: Comment) {
         activity?.runOnUiThread {
-            adapter?.addSubComment(parent, child)
+            adapter?.addSubComment(position, parent, child)
         }
     }
 
@@ -97,6 +118,7 @@ class CommentFragment : Fragment(), CommentNavigator {
         return root!!
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (viewModel == null) {
@@ -108,6 +130,45 @@ class CommentFragment : Fragment(), CommentNavigator {
     override fun onDestroy() {
         super.onDestroy()
         viewModel?.commentNavigator = null
+    }
+
+
+    private fun openReplyDialog(position: Int, parent: Comment) {
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        val builder = AlertDialog.Builder(context!!)
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setTitle("Reply to ${parent.username}")
+
+        val inputView = EditText(context)
+        builder.setView(inputView)
+
+//        inputView.setText(viewModel.username.get())
+
+        // Add the buttons
+        builder.setPositiveButton(R.string.ok) { _, id ->
+            val content = inputView.text.toString()
+            if (TextUtils.isEmpty(content)) {
+                ToastUtil.showShort(context!!, "Content cannot be null.")
+
+            } else {
+                val c = Comment()
+                c.content = content
+                c.replyTo = parent.username
+                c.createTime = System.currentTimeMillis().toString()
+                c.parentId = parent.id
+                c.authorId = UserDataRepository.userCache.id
+                c.userId = UserDataRepository.userCache.id
+                c.username = UserDataRepository.userCache.getUsername()
+                c.portrait = UserDataRepository.userCache.headPortrait
+                viewModel?.addSubComment(position, parent, c)
+            }
+        }
+        //do nothing
+        builder.setNegativeButton(R.string.cancel) { dialog, id -> }
+        // 3. Get the AlertDialog from create()
+        val dialog = builder.create()
+        dialog.show()
     }
 
     /**
@@ -128,24 +189,32 @@ class CommentFragment : Fragment(), CommentNavigator {
 
         override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
             val item = items[position]
-            if (item.children != null) {
+            if (item.children != null && item.children!!.size > 0) {
+
+
                 val params = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+
                 holder.subCommentContainer.visibility = View.VISIBLE
                 holder.subCommentContainer.removeAllViews()
-                for (i in item.children!!) {
-                    holder.subCommentContainer.addView(getSubItemView(i, holder), params)
+                val childrenList = forestToArrayList(item.children!!)
+
+                childrenList.sortBy { comment -> comment.createTime }
+                for (c in childrenList) {
+                    holder.subCommentContainer.addView(
+                        getSubItemView(position, item, c, holder),
+                        params
+                    )
                 }
             } else {
                 holder.subCommentContainer.visibility = View.GONE
             }
 
 
-
-            setImageNoCache(holder.portrait, item.portrait?:RandomTest.getRandomImages())
+            setImageNoCache(holder.portrait, item.portrait ?: RandomTest.getRandomImages())
 
             holder.time.text = TimeUtil.getStandardTime("${(item.createTime ?: 0)}".toLong())
             holder.content.text = item.content
-            holder.btnLike.text = "Like(${item.likeCount?:0})"
+//            holder.btnLike.text = "Like(${item.likeCount?:0})"
             if (item.replyTo != null) {
                 holder.beRepliedUsername.text = "Reply ${item.replyTo}:"
             } else {
@@ -153,74 +222,95 @@ class CommentFragment : Fragment(), CommentNavigator {
             }
             holder.username.text = item.username
             holder.btnReply.setOnClickListener {
-                if (holder.reply_layout.visibility == View.VISIBLE) {
-                    holder.btnReply.text = "Reply"
-                    holder.reply_layout.visibility = View.GONE
-                } else {
-                    holder.btnReply.text = "Cancel"
-                    holder.reply_layout.visibility = View.VISIBLE
-                }
+                openReplyDialog(position, item)
             }
 
-            holder.btn_reply_ok.setOnClickListener {
-                val content = holder.edit_reply_content.text
-                if (TextUtils.isEmpty(content)) {
-                    ToastUtil.showShort(context, "Content cannot be null.")
-                } else {
-                    holder.reply_layout.visibility = View.GONE
-                    val c = Comment(content = content.toString())
-                    c.replyTo = item.username
-                    viewModel?.addSubComment(item, c)
-                    activity?.hideKeyboard()
-                }
-            }
-
-            if (item.userId == BlogApplication.userId) {
+            if ((item.authorId != null && (item.authorId == BlogApplication.userId)) || item.portrait==UserDataRepository.userCache.headPortrait){
                 holder.btnDelete.visibility = View.VISIBLE
                 holder.btnDelete.setOnClickListener {
-                    viewModel?.deleteComment(item)
+                    viewModel?.deleteComment(position,item)
                 }
+            } else{
+                holder.btnDelete.visibility = View.GONE
             }
+
+            if (position == items.size - 1){
+                holder.separator.visibility = View.GONE
+            } else{
+                holder.separator.visibility = View.VISIBLE
+            }
+
+//            holder.btn_reply_ok.setOnClickListener {
+//                val content = holder.edit_reply_content.text
+//                if (TextUtils.isEmpty(content)) {
+//                    ToastUtil.showShort(context, "Content cannot be null.")
+//                } else {
+//                    holder.reply_layout.visibility = View.GONE
+//                    val c = Comment(content = content.toString())
+//                    c.replyTo = item.username
+//                    viewModel?.addSubComment(item, c)
+//                    activity?.hideKeyboard()
+//                }
+//            }
+
 
 
         }
 
+        private fun forestToArrayList(children: ArrayList<Comment>): ArrayList<Comment> {
 
-        private fun getSubItemView(child: Comment, holder: CommentViewHolder): View {
+            val moreChildren = ArrayList<Comment>()
+
+            for (c in children) {
+                if (c.children != null && c.children!!.size > 0) {
+                    moreChildren.addAll(forestToArrayList(c.children!!))
+                }
+            }
+
+            moreChildren.addAll(0,children)
+            return moreChildren
+        }
+
+        private fun getSubItemView(
+            position: Int,
+            parent: Comment,
+            child: Comment,
+            holder: CommentViewHolder
+        ): View {
 
             val view = LayoutInflater.from(context)
                 .inflate(R.layout.item_comment_child, holder.subCommentContainer, false)
 
-            setImageNoCache(view.comment_portrait, child.portrait?:RandomTest.getRandomImages())
-            view.comment_time.text =TimeUtil.getStandardTime("${(child.createTime ?: 0)}".toLong())
+            setImage(view.comment_portrait, child.portrait ?: RandomTest.getRandomImages())
+            view.comment_time.text = TimeUtil.getStandardTime("${(child.createTime ?: 0)}".toLong())
             view.content.text = child.content
-            view.like.text = "Like(${child.likeCount?:0})"
+//            view.like.text = "Like(${child.likeCount?:0})"
             view.username.text = child.username
-            view.be_replied_username.text = "Reply ${child.replyTo?:"tom"}:"
+            view.be_replied_username.text = "Reply ${child.replyTo ?: parent.username}:"
 
             view.reply.setOnClickListener {
-                if (view.reply_layout.visibility == View.VISIBLE) {
-                    view.reply.text = "Reply"
-                    view.reply_layout.visibility = View.GONE
-                } else {
-                    view.reply.text = "Cancel"
-                    view.reply_layout.visibility = View.VISIBLE
-                }
+                openReplyDialog(position, child)
+//                if (view.reply_layout.visibility == View.VISIBLE) {
+//                    view.reply.text = "Reply"
+//                    view.reply_layout.visibility = View.GONE
+//                } else {
+//                    view.reply.text = "Cancel"
+//                    view.reply_layout.visibility = View.VISIBLE
+//                }
             }
 
-            view.btn_reply_ok.setOnClickListener {
-                val content = view.editText_reply_content.text
-                if (TextUtils.isEmpty(content)) {
-                    ToastUtil.showShort(context, "Content cannot be null.")
-                } else {
-                    holder.reply_layout.visibility = View.GONE
-                    val c = Comment(content = content.toString())
-                    c.replyTo = child.username
-                    viewModel?.addSubComment(child, c)
-                    activity?.hideKeyboard()
-                }
-            }
-
+//            view.btn_reply_ok.setOnClickListener {
+//                val content = view.editText_reply_content.text
+//                if (TextUtils.isEmpty(content)) {
+//                    ToastUtil.showShort(context, "Content cannot be null.")
+//                } else {
+//                    view.reply_layout.visibility = View.GONE
+//                    val c = Comment(content = content.toString())
+//                    c.replyTo = child.username
+//                    viewModel?.addSubComment(child, c)
+//                    activity?.hideKeyboard()
+//                }
+//            }
             return view
         }
 
@@ -231,34 +321,35 @@ class CommentFragment : Fragment(), CommentNavigator {
             val beRepliedUsername: TextView = itemView.be_replied_username
             val time: TextView = itemView.comment_time
             val content: TextView = itemView.content
-            val btnDelete = itemView.delete
             val btnLike = itemView.like
+            val btnDelete = itemView.btn_delete
             val btnReply = itemView.reply
             val subCommentContainer = itemView.sub_comments
             val reply_layout = itemView.reply_layout
             val edit_reply_content = itemView.editText_reply_content
             val btn_reply_ok = itemView.btn_reply_ok
+            val separator = itemView.separator
         }
 
 
         fun addComment(c: Comment) {
             items.add(0, c)
-            notifyDataSetChanged()
+            notifyItemInserted(0)
         }
 
-        fun addSubComment(parent: Comment, child: Comment) {
+        fun addSubComment(position: Int, parent: Comment, child: Comment) {
 
-            addComment(child)
-//            if (parent.children == null) {
-//                parent.children = ArrayList()
-//            }
-//            parent.children?.add(child)
-//            notifyDataSetChanged()
+//            addComment(child)
+            if (parent.children == null) {
+                parent.children = ArrayList()
+            }
+            parent.children?.add(child)
+            notifyItemChanged(position)
         }
 
-        fun deleteComment(c: Comment) {
+        fun deleteComment(position: Int,c: Comment) {
             items.remove(c)
-            notifyDataSetChanged()
+            notifyItemRemoved(position)
         }
 
 
@@ -277,6 +368,12 @@ class CommentFragment : Fragment(), CommentNavigator {
         fun addComments(comments: ArrayList<Comment>) {
             items.addAll(comments)
             notifyDataSetChanged()
+        }
+
+        fun loadMoreComments(comments: ArrayList<Comment>) {
+            val tailIndex = items.size - 1
+            items.addAll(comments)
+            notifyItemRangeChanged(tailIndex, comments.size)
         }
     }
 }

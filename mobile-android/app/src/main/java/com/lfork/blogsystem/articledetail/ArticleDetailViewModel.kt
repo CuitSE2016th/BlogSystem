@@ -106,29 +106,53 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
             }
         }
 
-        CommentDataRepository.addComment(BlogApplication.token!!, articleId, c.content!!, callback)
+        CommentDataRepository.addComment(BlogApplication.token!!, c, callback)
     }
 
 
-    fun addSubComment(parent: Comment, c: Comment) {
+    fun addSubComment(position: Int,parent: Comment, c: Comment) {
         val callback = object : DataCallback<Comment> {
             override fun succeed(data: Comment) {
-                data.replyTo = c.replyTo
-
-                commentNavigator?.addSubComment(parent, data)
+                commentNavigator?.addSubComment(position,parent, data)
             }
 
             override fun failed(code: Int, log: String) {
                 navigator?.showTips(log)
             }
         }
-        CommentDataRepository.addSubComment(token!!, parent.id!!, c.content!!, callback)
+        CommentDataRepository.addSubComment(token!!, c, callback)
     }
 
+     fun loadMoreComments() {
 
-    private fun loadComments() {
         val callback = object : DataCallback<CommentListResponse> {
             override fun succeed(data: CommentListResponse) {
+                commentNextPageNumber++
+                comments?.addAll(data.result?:ArrayList())
+                commentNavigator?.loadMoreComments(data.result?:ArrayList())
+            }
+
+            override fun failed(code: Int, log: String) {
+                navigator?.showTips(log)
+            }
+        }
+        CommentDataRepository.getComments(
+            commentNextPageNumber,
+            commentNextPageSize,
+            articleId,
+            callback
+        )
+    }
+
+    private fun loadComments() {
+
+        if ((comments?.size?:0) > 0){
+            return
+        }
+
+        val callback = object : DataCallback<CommentListResponse> {
+            override fun succeed(data: CommentListResponse) {
+                commentNextPageNumber++
                 comments = data.result
                 commentNavigator?.refreshComments(data.result!!)
 
@@ -151,10 +175,10 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
         )
     }
 
-    fun deleteComment(c: Comment) {
+    fun deleteComment( position: Int,c: Comment) {
         val callback = object : DataCallback<String> {
             override fun succeed(data: String) {
-                commentNavigator?.deleteComment(c)
+                commentNavigator?.deleteComment(position,c)
             }
 
             override fun failed(code: Int, log: String) {
