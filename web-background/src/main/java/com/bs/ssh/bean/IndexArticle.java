@@ -18,7 +18,13 @@ public class IndexArticle extends Article {
 
     private Integer starCount;
 
+    private String username;
+
     private String time;
+
+    private Boolean isStared;
+
+    private Boolean isLike;
 
     public String getTime() {
         return time;
@@ -52,8 +58,35 @@ public class IndexArticle extends Article {
         this.likeCount = likeCount;
     }
 
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Integer getStarCount() {
         return starCount;
+
+    }
+
+
+    public Boolean getStared() {
+        return isStared;
+    }
+
+    public void setStared(Boolean stared) {
+        isStared = stared;
+    }
+
+    public Boolean getLike() {
+        return isLike;
+    }
+
+    public void setLike(Boolean like) {
+        isLike = like;
     }
 
     public void setStarCount(Integer starCount) {
@@ -76,6 +109,7 @@ public class IndexArticle extends Article {
         this.setTitle(article.getTitle());
         this.setContent(article.getContent());
         this.setStatus(article.getStatus());
+        this.setUsername(user.getNickname());
         this.setTime(DateUtils.getDateStringFromLong(article.getCreateTime()));
         this.setImageUrl(user.getHeadPortrait());
         this.setLikeCount(like);

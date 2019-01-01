@@ -33,6 +33,8 @@ public class BaseAction extends ActionSupport {
     }
 
     public String getUserId(){
+        if(!SecurityUtils.getSubject().isAuthenticated())
+            return null;
         return this.getUser().getId();
     }
 
