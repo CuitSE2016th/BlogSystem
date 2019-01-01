@@ -133,7 +133,43 @@ public class UserAction extends BaseAction {
 
         if(userFollows == null){
             result = JsonBody.fail();
-            result.setData("用户关注者信息获取失败！！！");
+            result.setData("用户点赞文章信息获取失败！！！");
+            return SUCCESS;
+        }
+
+        result = JsonBody.success();
+        result.setData(userFollows);
+        return SUCCESS;
+    }
+
+    @Action("getUserStarArticles")
+    public String getUserStarArticles(){
+        Subject user = SecurityUtils.getSubject();
+
+        User userinfo = (User) user.getPrincipal();
+
+        if(userinfo == null){
+            result = JsonBody.fail();
+            result.setData("用户信息获取失败！！！");
+            return SUCCESS;
+        }
+
+        String userId = userinfo.getId();
+        if(userId == null){
+            result = JsonBody.fail();
+            result.setData("用户ID获取失败！！！");
+            return SUCCESS;
+        }
+
+        if(pageNo <= 0){
+            pageNo = 1;
+        }
+
+        PageBean<List> userFollows = userService.getUserStarArticles(userId, pageNo);
+
+        if(userFollows == null){
+            result = JsonBody.fail();
+            result.setData("用户收藏文章信息获取失败！！！");
             return SUCCESS;
         }
 

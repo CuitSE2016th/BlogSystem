@@ -167,4 +167,19 @@ public class User{
                 ", createTime=" + createTime +
                 '}';
     }
+
+    public User(String id, String nickname, String headPortrait, Long birthday, String sex, String email, String phone, String password, String salt, Integer roleId, Long lastLoginTime, Long createTime) {
+        this.id = id;
+        this.nickname = nickname;
+        this.headPortrait = headPortrait;
+        this.birthday = birthday;
+        this.sex = sex;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.salt = salt;
+        this.roleId = roleId;
+        this.lastLoginTime = lastLoginTime;
+        this.createTime = createTime;
+    }
 }

@@ -54,13 +54,15 @@ public class RootServiceImpl implements RootService {
         List<UserPlus> userPlusList = new ArrayList<>();
         for (int i = 0; i < userList.size(); i++) {
             Object[] o = (Object[]) userList.get(i);
-             UserPlus temp = new UserPlus();
-             temp.setUser((User) o[0]);
+             User user = (User) o[0];
+             UserPlus temp = new UserPlus(user.getId(), user.getNickname(), user.getHeadPortrait()
+                    ,user.getBirthday(), user.getSex(), user.getEmail(),user.getPhone(),
+                     user.getPassword(),user.getSalt(),user.getRoleId(), user.getLastLoginTime(),user.getCreateTime());
              temp.setRole((Role) o[1]);
              userPlusList.add(temp);
         }
 
-        users.setResult(userList);
+        users.setResult(userPlusList);
 
         return users;
     }

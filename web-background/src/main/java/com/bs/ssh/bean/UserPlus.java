@@ -6,18 +6,10 @@ import com.bs.ssh.entity.User;
 /**
  * Create By ZZY on 2018/12/6
  */
-public class UserPlus {
+public class UserPlus extends User{
 
-    private User user;
     private Role role;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Role getRole() {
         return role;
@@ -30,8 +22,11 @@ public class UserPlus {
     @Override
     public String toString() {
         return "UserPlus{" +
-                "user=" + user +
-                ", role=" + role +
+                "role=" + role +
                 '}';
+    }
+
+    public UserPlus(String id, String nickname, String headPortrait, Long birthday, String sex, String email, String phone, String password, String salt, Integer roleId, Long lastLoginTime, Long createTime) {
+        super(id, nickname, headPortrait, birthday, sex, email, phone, password, salt, roleId, lastLoginTime, createTime);
     }
 }
