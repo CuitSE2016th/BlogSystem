@@ -33,9 +33,11 @@ public class BaseAction extends ActionSupport {
     }
 
     public String getUserId(){
-        if(!SecurityUtils.getSubject().isAuthenticated())
+        try {
+            return this.getUser().getId();
+        }catch (Exception ignore){
             return null;
-        return this.getUser().getId();
+        }
     }
 
     /**

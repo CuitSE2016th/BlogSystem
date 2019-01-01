@@ -54,7 +54,7 @@
                 /user/register = anon
                 /user/code = anon
                 /user/article/page = anon
-                /user/article/id = anon
+                <!--/user/article/id = anon-->
                 /user/isfollow = anon
                 /user/comment/page = anon
                 /user/isExist = anon
@@ -62,6 +62,7 @@
                 / = anon
                 <!--/user/article/upload = anon-->
                 /images/** = anon
+                /favicon.ico = anon
                 /** = auth
             </value>
         </property>
