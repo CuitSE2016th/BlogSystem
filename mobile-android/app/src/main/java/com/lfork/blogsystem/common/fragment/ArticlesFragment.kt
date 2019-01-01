@@ -1,5 +1,6 @@
 package com.lfork.blogsystem.common.fragment
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.lfork.blogsystem.base.communication.LiveDataBus
 import com.lfork.blogsystem.common.adapter.ArticlesAdapter
 import com.lfork.blogsystem.common.mvp.ArticleContract
 import com.lfork.blogsystem.common.mvp.ArticlePresenter
@@ -17,7 +19,6 @@ import kotlinx.android.synthetic.main.main_home_latest_article_inner_frag.view.*
 
 open class ArticlesFragment: Fragment(),ArticleContract.View {
 
-    @Volatile
     var isLoadingMore = false
 
     override fun refreshArticles(articles: ArrayList<Article>) {
@@ -115,6 +116,13 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
         }
 
         presenter?.refreshArticles()
+
+
+        LiveDataBus.get()
+            .with("article_deleted", Int::class.java)
+            .observe(this, Observer<Int> {
+                adapter.notifyItemRemoved(it?:0)
+            })
         return root
 
     }

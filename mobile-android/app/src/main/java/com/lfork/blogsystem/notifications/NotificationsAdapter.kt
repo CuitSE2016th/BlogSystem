@@ -108,6 +108,7 @@ class NotificationsAdapter :
         this.items.add(n1)
         this.items.add(n2)
         notifyDataSetChanged()
+        hideDataIsLoading()
     }
 
     fun addItems(data: ArrayList<Notification>) {
@@ -153,12 +154,17 @@ class NotificationsAdapter :
     }
 
     fun showNoMoreData(){
+        footerView!!.visibility = View.VISIBLE
         footerView!!.progressBar.visibility = View.GONE
         footerView!!.textView.text = footerView!!.context.getString(R.string.There_is_no_more_data)
+    }
 
+    fun hideDataIsLoading(){
+        footerView!!.visibility = View.GONE
     }
 
     fun showIsLoading(){
+        footerView!!.visibility = View.VISIBLE
         footerView!!.progressBar.visibility = View.VISIBLE
         footerView!!.textView.text = footerView!!.context.getString(R.string.data_is_loading)
 

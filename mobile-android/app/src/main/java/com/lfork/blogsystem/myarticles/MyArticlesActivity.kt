@@ -100,9 +100,9 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
             presenter.refreshArticles() }
 
         LiveDataBus.get()
-            .with("article_deleted", String::class.java)
-            .observe(this, Observer<String> {
-                presenter.refreshArticles()
+            .with("article_deleted", Int::class.java)
+            .observe(this, Observer<Int> {
+                adapter.notifyItemRemoved(it?:0)
             })
 
     }

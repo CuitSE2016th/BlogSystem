@@ -31,12 +31,14 @@ import kotlinx.android.synthetic.main.article_detail_navigation_btns.*
 
 class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
 
+    var viewPosition = 0
+
 
     override fun showTips(msg: String) {
 
         ToastUtil.showLong(this, msg)
         if (msg == "Deleted"){
-            LiveDataBus.get().with("article_deleted").value = "Deleted";
+            LiveDataBus.get().with("article_deleted").value = viewPosition;
             finish()
         }
     }
@@ -53,6 +55,8 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
         super.onCreate(savedInstanceState)
 
         val articleId = intent.getStringExtra("article_id")
+
+        viewPosition= intent.getIntExtra("view_position",0)
 
         if (articleId == null) {
             ToastUtil.showLong(BlogApplication.context, "Article id cannot be null!!")
@@ -252,8 +256,9 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
     }
 
     companion object {
-        fun openArticleDetail(context: Context, articleId: String) {
+        fun openArticleDetail(context: Context, articleId: String,viewPosition:Int) {
             val intent = Intent(context, ArticleDetailActivity::class.java)
+            intent.putExtra("view_position",viewPosition)
             intent.putExtra("article_id", articleId)
             context.startActivity(intent)
         }

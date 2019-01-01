@@ -12,6 +12,7 @@ import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.articledetail.ArticleDetailActivity
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.data.article.Article
+import com.lfork.blogsystem.utils.StringUtils.getImgStr
 import com.lfork.blogsystem.utils.TimeUtil
 import com.lfork.blogsystem.utils.ToastUtil
 import kotlinx.android.synthetic.main.item_article_widen_style.view.*
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.item_loadmore.view.*
 class ArticlesAdapter :
     RecyclerView.Adapter<ArticlesAdapter.MyViewHolder>() {
     private val items = ArrayList<Article>(0);
+
 
     var headerLayoutId: Int = 0
 
@@ -91,17 +93,25 @@ class ArticlesAdapter :
                 //减一是因为有个Header View
                 val item = items[p1 - 1]
                 holder.title?.text = item.title
-                ImageBinding.setImage(
-                    holder.cover,
-                    item.imageUrl?:RandomTest.getRandomImages(),
-                    R.drawable.ic_person_black_24dp
-                )
-//            //暂时没有description
-                holder.abstract?.text = item.abstract?:item.content
-                holder.editTime?.text = TimeUtil.getStandardTime(item.createTime?.toLong())
-                holder.likeNumber?.text="${item.likeCount?:0}"
-                holder.starNumber?.text="${item.starCount?:0}"
 
+                val imageList = getImgStr(item.content)
+                if (imageList.isEmpty()) {
+                    holder.cover?.visibility = View.GONE
+                } else {
+                    holder.cover?.visibility = View.VISIBLE
+                    item.imageUrl = imageList[0]
+                    ImageBinding.setImage(
+                        holder.cover,
+                        item.imageUrl,
+                        R.drawable.ic_person_black_24dp
+                    )
+                }
+
+//            //暂时没有description
+                holder.abstract?.text = item.abstract ?: item.content
+                holder.editTime?.text = TimeUtil.getStandardTime(item.createTime?.toLong())
+                holder.likeNumber?.text = "${item.likeCount ?: 0}"
+                holder.starNumber?.text = "${item.starCount ?: 0}"
 
 //
                 holder.itemView.setOnClickListener {
@@ -110,7 +120,7 @@ class ArticlesAdapter :
                             BlogApplication.context,
                             "跳转到文章详情，当前的文章id为${item.id}"
                         )
-                        ArticleDetailActivity.openArticleDetail(it.context, item.id!!)
+                        ArticleDetailActivity.openArticleDetail(it.context, item.id!!,p1)
                     }
                 }
             }
@@ -124,7 +134,7 @@ class ArticlesAdapter :
     fun refreshItems(items: ArrayList<Article>) {
 
         this.items.clear()
-        this.items.addAll( items.filter { it.status != 404 })
+        this.items.addAll(items.filter { it.status != 404 })
         hideLoadMore()
         notifyDataSetChanged()
     }
@@ -149,8 +159,8 @@ class ArticlesAdapter :
         var editTime: TextView? = null
         var cover: ImageView? = null
         var abstract: TextView? = null
-        var starNumber :TextView?=null
-        var likeNumber:TextView?=null
+        var starNumber: TextView? = null
+        var likeNumber: TextView? = null
 
         init {
             when (itemType) {
@@ -166,7 +176,7 @@ class ArticlesAdapter :
                 }
                 else -> {
                     footerView = itemView
-                    footerView?.visibility = View.INVISIBLE
+                    footerView?.visibility = View.VISIBLE
                 }
             }
         }

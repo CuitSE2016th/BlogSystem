@@ -216,7 +216,7 @@ class ArticleEditorActivity : AppCompatActivity() {
             object : DataCallback<String> {
                 override fun succeed(data: String) {
                     ToastUtil.showShort(this@ArticleEditorActivity, "发布成功")
-                    ArticleDetailActivity.openArticleDetail(this@ArticleEditorActivity,data)
+                    ArticleDetailActivity.openArticleDetail(this@ArticleEditorActivity,data, 0)
                     finish()
                 }
 

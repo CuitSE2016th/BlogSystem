@@ -1,11 +1,13 @@
 package com.lfork.blogsystem.starsandlikes
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lfork.blogsystem.BlogApplication.Companion.token
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.base.communication.LiveDataBus
 import com.lfork.blogsystem.common.fragment.ArticlesFragment
 import com.lfork.blogsystem.common.mvp.ArticleContract
 import com.lfork.blogsystem.common.mvp.ArticlePresenter
@@ -23,6 +25,7 @@ class LikeFragment : ArticlesFragment() {
             root = inflater.inflate(R.layout.like_frag, container, false)
             presenter = LikePresenter(this)
             super.onCreateView(inflater, container, savedInstanceState)
+
         }
         // Inflate the layout for this fragment
         return root
