@@ -9,6 +9,15 @@ import java.io.File
  * Created by 98620 on 2018/12/11.2
  */
 object ArticleDataRepository : ArticleDataSource {
+    override fun getFollowingArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    ) {
+        remoteDataSource.getFollowingArticles(token, pageNumber, pageSize, callback)
+    }
+
     override fun unStarArticle(token: String, articleId: String, callback: DataCallback<String>) {
         remoteDataSource.unStarArticle(token, articleId, callback)
     }

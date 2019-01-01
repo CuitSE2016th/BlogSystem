@@ -48,4 +48,9 @@ class LatestArticlePresenter(private var view: ArticleContract.View?) :
                 }
             })
     }
+
+    override fun destroy() {
+        super.destroy()
+        view = null
+    }
 }

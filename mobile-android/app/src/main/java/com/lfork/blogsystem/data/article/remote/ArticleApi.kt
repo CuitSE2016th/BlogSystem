@@ -39,6 +39,7 @@ interface ArticleApi {
 
     @GET("user/article/follow")
     fun getFollowingArticles(
+        @Header("token")token:String,
         @Query("pn") pageNumber: Int,
         @Query("ps") pageSize: Int
     ): Call<Result<ArticleListResponse>>
@@ -48,6 +49,7 @@ interface ArticleApi {
         @Header("token") token: String?,
         @Query("aid") articleId: String
     ): Call<Result<ArticleDetailResponse>>
+
 
     //http://localhost:8080/user/article/myself
 
