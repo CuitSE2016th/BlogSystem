@@ -14,13 +14,13 @@
 <nav class="navbar navbar-default" id="nav" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header" style="width: 60px; height: 60px;margin-left: 60px;" >
-            <a href=""><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+            <a href="" id="index_id"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
         </div>
         <div class="nav_btn">
-            <button type="button" class="btn btn-primary btn-block">发现</button>
+            <button type="button" class="btn btn-primary btn-block" onclick="find_btn()">发现</button>
         </div>
         <div class="nav_btn">
-            <a href="UserFllow.html"><button type="button" class="btn btn-primary btn-block">关注</button></a>
+            <a href="UserFllow.html"><button type="button" class="btn btn-primary btn-block" onclick="fllow_btn()">关注</button></a>
         </div>
         <div class="input-group search_input">
             <span class="input-group-btn">
@@ -28,38 +28,12 @@
             </span>
             <input type="text" class="form-control" placeholder="输入要查找文章">
         </div>
-        <ul class="nav navbar-nav navbar-right nav_ul">
-            <div class="navbar-header" style="width: 60px; height: 60px;float: left" >
-                <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-            </div>
-            <div class="nav_btn">
-                <button type="button" class="btn btn-primary btn-block">写文章</button>
-            </div>
+        <ul class="nav navbar-nav navbar-right nav_ul" id="user_info">
         </ul>
     </div>
 </nav>
 
-<div style="margin-top:60px ">
-    <div class="user_all">
-        <div class="user_head">
-            <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-        </div>
-
-        <div class="user_detail">
-            <h1>用户名</h1>
-            <ul>
-                <li>文章数：200</li>
-                <li class="li_item">|</li>
-                <li class="li_item">字数：2000</li>
-                <li class="li_item">|</li>
-                <li class="li_item">粉丝：28</li>
-                <li class="li_item">|</li>
-                <li class="li_item">关注：58</li>
-                <li class="li_item">|</li>
-                <li class="li_item">赞数：99</li>
-            </ul>
-        </div>
-    </div>
+<div style="margin-top:60px " id="user_my">
 </div>
 <div>
     <div class="tab_chang">
@@ -77,132 +51,6 @@
         <div id="article_body">
         </div>
         <div id="pagelist"></div>
-        <!--<div class="single_article">-->
-            <!--<div class="article_msg">-->
-                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
-                <!--<div class="article_char">-->
-                    <!--<p>-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="article_detail">-->
-                    <!--<ul>-->
-                        <!--<li style="padding-left: 0">访问量:100</li>-->
-                        <!--<li>赞数:10</li>-->
-                        <!--<li>评论条数：23</li>-->
-                        <!--<li>2018年11月1日 01点12分</li>-->
-                    <!--</ul>-->
-
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="article_img" >-->
-                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="single_article">-->
-            <!--<div class="article_msg">-->
-                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
-                <!--<div class="article_char">-->
-                    <!--<p>-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="article_detail">-->
-                    <!--<ul>-->
-                        <!--<li style="padding-left: 0">访问量:100</li>-->
-                        <!--<li>赞数:10</li>-->
-                        <!--<li>评论条数：23</li>-->
-                        <!--<li>2018年11月1日 01点12分</li>-->
-                    <!--</ul>-->
-
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="article_img" >-->
-                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="single_article">-->
-            <!--<div class="article_msg">-->
-                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
-                <!--<div class="article_char">-->
-                    <!--<p>-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="article_detail">-->
-                    <!--<ul>-->
-                        <!--<li style="padding-left: 0">访问量:100</li>-->
-                        <!--<li>赞数:10</li>-->
-                        <!--<li>评论条数：23</li>-->
-                        <!--<li>2018年11月1日 01点12分</li>-->
-                    <!--</ul>-->
-
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="article_img" >-->
-                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="single_article">-->
-            <!--<div class="article_msg">-->
-                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
-                <!--<div class="article_char">-->
-                    <!--<p>-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="article_detail">-->
-                    <!--<ul>-->
-                        <!--<li style="padding-left: 0">访问量:100</li>-->
-                        <!--<li>赞数:10</li>-->
-                        <!--<li>评论条数：23</li>-->
-                        <!--<li>2018年11月1日 01点12分</li>-->
-                    <!--</ul>-->
-
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="article_img" >-->
-                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="single_article">-->
-            <!--<div class="article_msg">-->
-                <!--<h2>月入3W的高级Java工程师都具备哪些能力？</h2>-->
-                <!--<div class="article_char">-->
-                    <!--<p>-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字,眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                        <!--很多面试，很多人员能力要求都有“Java高级工程师的字眼很多面试，很多人员能力要求都有“Java高级工程师的字眼-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="article_detail">-->
-                    <!--<ul>-->
-                        <!--<li style="padding-left: 0">访问量:100</li>-->
-                        <!--<li>赞数:10</li>-->
-                        <!--<li>评论条数：23</li>-->
-                        <!--<li>2018年11月1日 01点12分</li>-->
-                    <!--</ul>-->
-
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="article_img" >-->
-                <!--<img width="100%" height="100%" src="../img/logo.jpg" />-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="pager-list"></div>-->
     </div>
     <div class="review_body" id="order2" style="display:none;">
         <div>
@@ -221,7 +69,12 @@
 </div>
 </body>
 <script type="text/javascript">
-    let wand='eccaad52d6854162ab834eed12f91fc3';
+    let user_identity=$.cookie('this_id');
+    let str1='';
+    let str2='';
+    let str3='';
+    let str4='';
+    let wand=$.cookie('this_token')
     $(document).ready(function () {
         //首先获取导航栏距离浏览器顶部的高度
         var top = $('#nav').offset().top;
@@ -262,12 +115,65 @@
             }
         }
     });
+    $(document).ready(function(){
+        $.ajax({
+            url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
+            type: 'post',
+            data: {"identity": user_identity,"token":wand},//向服务器（接口）传递的参数
+            success: function (data) {//服务器（接口）返回来的数据
+                let obj = eval('(' + data + ')');
+                if(obj.code==100){
+                    str2='UserInfo.html?this_identity='+user_identity;
+                    str6='index.html?this_identity='+user_identity;
+                    str1+='<a href="'+str2+'">'
+                    str1+='<div class="navbar-header" style="width: 60px; height: 60px;float: left">'
+                    str1+='<img src="'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
+                    str1+='</div>'
+                    str1+='<div style="width: 60px; height: 60px;float: left;line-height: 60px">'
+                    str1+= '<span>'+user_identity+'</span>'
+                    str1+= '</div>'
+                    str1+= '</a>'
+                    str1+='<div class="nav_btn">'
+                    str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="my_btn()">我的</button></div>'
+                    str1+='<div class="nav_btn">'
+                    str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="btn()">写文章</button></div>'
+
+                    str4+='<div class="user_all">'
+                    str4+='<div class="user_head">'
+                    str4+='<a href="UserInfo.html"><img src="'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle"></a>'
+                    str4+='</div>'
+                    str4+='<div class="user_detail">'
+                    str4+='<h1>'+user_identity+'</h1>'
+                    str4+='<ul>'
+                    str4+='<li>文章数：20</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">字数：2000</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">粉丝：28</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">关注：58</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">赞数：99</li>'
+                    str4+='</ul>'
+                    str4+='</div>'
+                    str4+='</div>'
+                    $("#user_info").html(str1);
+                    $("#index_id").attr("href",str6);
+                    $("#user_my").html(str4);
+                }else{
+                    str3+='<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 注册</a></li>'
+                    str3+='<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>'
+                    $("#user_info").html(str3);
+                }
+            }
+        })
+    });
     $().ready(function () {
         let total='';
 
         $.ajax({
 
-            url: ' http://www.lfork.top/blog/user/article/page',//相对应的esb接口地址
+            url: ' http://localhost:8080/user/article/myself',//相对应的esb接口地址
 
             type: 'post',
 
@@ -280,26 +186,26 @@
                     let str ='';
                     let str1 ='';
                     for(let i=0; i<datas.length;i++){
-                        str += '<div class="single_article">'
-                        str += '<div class="article_msg">'
-                        str +='<a href="articl_detail.html?id='+datas[i].id+'">'
-                        str += '<h2>'+datas[i].title+'</h2>'
-                        str += '</a>'
-                        str += '<div class="article_char" >'+datas[i].content
-                        str += '</div>'
-                        str += '<div class="article_detail">'
-                        str += '<ul>'
-                        str += ' <li style="padding-left: 0">访问量:100</li>'
-                        str += ' <li>赞数:10</li>'
-                        str += '<li>评论条数：23</li>'
-                        str += '<li>2018年11月1日 01点12分</li>'
-                        str += '</ul>'
-                        str += '</div>'
-                        str += '</div>'
-                        str += '<div class="article_img" >'
-                        str += '<img width="100%" height="100%" src="../img/logo.jpg" />'
-                        str += '</div>'
-                        str += '</div>'
+                            str += '<div class="single_article">'
+                            str += '<div class="article_msg">'
+                            str +='<a href="articl_detail.html?id='+datas[i].id+'">'
+                            str += '<h2>'+datas[i].title+'</h2>'
+                            str += '</a>'
+                            str += '<div class="article_char" >'+datas[i].content
+                            str += '</div>'
+                            str += '<div class="article_detail">'
+                            str += '<ul>'
+                            str += ' <li style="padding-left: 0">访问量:100</li>'
+                            str += ' <li>赞数:10</li>'
+                            str += '<li>评论条数：23</li>'
+                            str += '<li>2018年11月1日 01点12分</li>'
+                            str += '</ul>'
+                            str += '</div>'
+                            str += '</div>'
+                            str += '<div class="article_img" >'
+                            str += '<img width="100%" height="100%" src="../img/logo.jpg" />'
+                            str += '</div>'
+                            str += '</div>'
 
                     }
                     str1+='<div class="pager-list"></div>'
@@ -331,7 +237,7 @@
     function next_page(curpage) {
         $.ajax({
 
-            url: 'http://www.lfork.top/blog/user/article/page',//相对应的esb接口地址
+            url: 'http://localhost:8080/user/article/myself',//相对应的esb接口地址
 
             type: 'post',
 
@@ -342,26 +248,26 @@
                     let datas = data.data.result;
                     let str='';
                     for(let i=0; i<datas.length;i++){
-                        str += '<div class="single_article">'
-                        str += '<div class="article_msg">'
-                        str +='<a href="articl_detail.html?id='+datas[i].id+'">'
-                        str += '<h2>'+datas[i].title+'</h2>'
-                        str += '</a>'
-                        str += '<div class="article_char">'+datas[i].content
-                        str += '</div>'
-                        str += '<div class="article_detail">'
-                        str += '<ul>'
-                        str += ' <li style="padding-left: 0">访问量:100</li>'
-                        str += ' <li>赞数:10</li>'
-                        str += '<li>评论条数：23</li>'
-                        str += '<li>2018年11月1日 01点12分</li>'
-                        str += '</ul>'
-                        str += '</div>'
-                        str += '</div>'
-                        str += '<div class="article_img" >'
-                        str += '<img width="100%" height="100%" src="../img/logo.jpg" />'
-                        str += '</div>'
-                        str += '</div>'
+                            str += '<div class="single_article">'
+                            str += '<div class="article_msg">'
+                            str +='<a href="articl_detail.html?id='+datas[i].id+'">'
+                            str += '<h2>'+datas[i].title+'</h2>'
+                            str += '</a>'
+                            str += '<div class="article_char" >'+datas[i].content
+                            str += '</div>'
+                            str += '<div class="article_detail">'
+                            str += '<ul>'
+                            str += ' <li style="padding-left: 0">访问量:100</li>'
+                            str += ' <li>赞数:10</li>'
+                            str += '<li>评论条数：23</li>'
+                            str += '<li>2018年11月1日 01点12分</li>'
+                            str += '</ul>'
+                            str += '</div>'
+                            str += '</div>'
+                            str += '<div class="article_img" >'
+                            str += '<img width="100%" height="100%" src="../img/logo.jpg" />'
+                            str += '</div>'
+                            str += '</div>'
                     }
                     $('#article_body').empty;
                     $('#article_body').html(str);
@@ -371,8 +277,6 @@
             }
         });
     }
-    function find_btn() {
-        window.location.href = 'demo.html';
-    }
+
 </script>
 </html>

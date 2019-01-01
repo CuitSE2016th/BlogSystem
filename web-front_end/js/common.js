@@ -8,4 +8,13 @@ function GetQueryString(name ){
 function btn() {
     window.location.href = 'demo.html';
 }
+function my_btn() {
+    window.location.href = 'UserHome.html';
+}
+function find_btn() {
+    window.location.href = 'index.html';
+}
+function fllow_btn() {
+    window.location.href = 'UserFllow.html';
+}
 

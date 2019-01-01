@@ -5,19 +5,24 @@
     <title>用户关注</title>
     <link href="../css/bootstrap.css" rel="stylesheet">
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript"src="../js/common.js"></script>
+    <script src="../js/paging_model.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/xcConfirm.css">
+    <script type="text/javascript" src="../js/xcConfirm.js"></script>
     <link rel="stylesheet" href="../css/app.css">
 </head>
 <body>
 <nav class="navbar navbar-default" id="nav" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header" style="width: 60px; height: 60px;margin-left: 60px;" >
-            <a href=""><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
+            <a href="index.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
         </div>
         <div class="nav_btn">
-            <button type="button" class="btn btn-primary btn-block" >发现</button>
+            <button type="button" class="btn btn-primary btn-block" onclick="find_btn()">发现</button>
         </div>
         <div class="nav_btn">
-            <button type="button" class="btn btn-primary btn-block" href="#">关注</button>
+            <button type="button" class="btn btn-primary btn-block" >关注</button>
         </div>
         <div class="input-group search_input">
             <span class="input-group-btn">
@@ -25,18 +30,12 @@
             </span>
             <input type="text" class="form-control" placeholder="输入要查找文章">
         </div>
-        <ul class="nav navbar-nav navbar-right nav_ul">
-            <div class="navbar-header" style="width: 60px; height: 60px;float: left" >
-                <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-            </div>
-            <div class="nav_btn">
-                <button type="button" class="btn btn-primary btn-block">写文章</button>
-            </div>
+        <ul class="nav navbar-nav navbar-right nav_ul" id="user_info">
         </ul>
     </div>
 </nav>
 <div style="margin-top:60px ">
-    <div>
+    <div id="user_self">
         <div class="user_all">
             <div class="user_head">
                 <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
@@ -66,192 +65,16 @@
             </ul>
         </div>
         <div class="fallow_change_body" id="order1">
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
+            <div class="fallow_change_body"id="user_fllow">
 
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                        <button type="button" class="btn btn-primary btn-block">取消关注</button>
-                </div>
             </div>
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
-
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                    <button type="button" class="btn btn-primary btn-block">取消关注</button>
-                </div>
-            </div>
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
-
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                    <button type="button" class="btn btn-primary btn-block">取消关注</button>
-                </div>
-            </div>
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
-
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                    <button type="button" class="btn btn-primary btn-block">取消关注</button>
-                </div>
-            </div>
+            <div id="pagelist"></div>
         </div>
         <div class="fallow_change_body" id="order2" style="display: none">
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
-
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                    <button type="button" class="btn btn-primary btn-block">关注</button>
-                </div>
+            <div class="fallow_change_body"id="fllow_user">
             </div>
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
+            <div id="pagelist2"></div>
 
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                    <button type="button" class="btn btn-primary btn-block">关注</button>
-                </div>
-            </div>
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
-
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                    <button type="button" class="btn btn-primary btn-block">关注</button>
-                </div>
-            </div>
-            <div class="user_all">
-                <div class="user_head">
-                    <a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>
-                </div>
-
-                <div class="user_detail">
-                    <h3>用户名</h3>
-                    <ul>
-                        <li>文章数：200</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">字数：2000</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">粉丝：28</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">关注：58</li>
-                        <li class="li_item">|</li>
-                        <li class="li_item">赞数：99</li>
-                    </ul>
-                </div>
-                <div class="focus_btn">
-                    <button type="button" class="btn btn-primary btn-block">关注</button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -279,9 +102,135 @@
 
         $("#change_item_1").click(function () {
             openMatter(1);
+            $.ajax({
+
+                url: ' http://localhost:8080/user/getUserFollowedUser',//相对应的esb接口地址
+
+                type: 'post',
+
+                data: {"token":wand},//向服务器（接口）传递的参数
+
+                success: function (data) {//服务器（接口）返回来的数据
+                    if (data.code == 100) {//如果返回来的信息说明提交的信息为正确的
+                        let datas = data.data;
+                        let str ='';
+                        let str1 ='';
+                        let total='';
+                        total=datas.length-1;
+                        for(let i=1; i<datas.length;i++){
+                            str += '<div class="user_all">'
+                            str += '<div class="user_head">'
+                            str +='<a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>'
+                            str += '</div>'
+                            str += '<div class="user_detail">'
+                            str += '<h3>'+datas[i].phone+'</h3>'
+                            str += '<ul>'
+                            str += '<li>文章数：200</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">字数：2000</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">粉丝：28</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">关注：58</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">赞数：99</li>'
+                            str += '</ul>'
+                            str += '</div>'
+                            str += '<div class="focus_btn">'
+                            str += '<button type="button" class="btn btn-primary btn-block">取消关注</button>'
+                            str += '</div>'
+                            str += '</div>'
+                        }
+                        str1+='<div class="pager-list"></div>'
+                        $('#user_fllow').html(str);
+                        $('#pagelist').html(str1);
+                        $('div.pager-list').pageList({
+                            prevText: '前一页',
+                            nextText: '下一页',
+                            recordText: '共{0}页，{1}条记录',
+                            totalCount: total,
+                            goInputType: 'text',
+                            //showGoLink: true,
+                            showPageRange: 5,
+                            renderPerCall: true,
+                            clickCallback: function (currentPage) {
+                            }
+
+                        });
+                    }
+                    else {//如果返回来的信息说明提供的信息为错误的
+
+
+                    }
+                }
+
+            });
         });
         $("#change_item_2").click(function () {
             openMatter(2);
+            $.ajax({
+
+                url: ' http://localhost:8080/user/getUserFollows',//相对应的esb接口地址
+
+                type: 'post',
+
+                data: {"token":wand},//向服务器（接口）传递的参数
+
+                success: function (data) {//服务器（接口）返回来的数据
+                    if (data.code == 100) {//如果返回来的信息说明提交的信息为正确的
+                        let datas = data.data;
+                        let str ='';
+                        let str1 ='';
+                        let total ='';
+                        total=datas.length-1;
+                        for(let i=1; i<datas.length;i++){
+                            str += '<div class="user_all">'
+                            str += '<div class="user_head">'
+                            str +='<a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>'
+                            str += '</div>'
+                            str += '<div class="user_detail">'
+                            str += '<h3>'+datas[i].phone+'</h3>'
+                            str += '<ul>'
+                            str += '<li>文章数：200</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">字数：2000</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">粉丝：28</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">关注：58</li>'
+                            str += '<li class="li_item">|</li>'
+                            str += '<li class="li_item">赞数：99</li>'
+                            str += '</ul>'
+                            str += '</div>'
+                            str += '<div class="focus_btn">'
+                            str += '<button type="button" class="btn btn-primary btn-block">取消关注</button>'
+                            str += '</div>'
+                            str += '</div>'
+                        }
+                        str1+='<div class="pager-list"></div>'
+                        $('#fllow_user').html(str);
+                        $('#pagelist2').html(str1);
+                        $('div.pager-list').pageList({
+                            prevText: '前一页',
+                            nextText: '下一页',
+                            recordText: '共{0}页，{1}条记录',
+                            totalCount: total,
+                            goInputType: 'text',
+                            //showGoLink: true,
+                            showPageRange: 5,
+                            renderPerCall: true,
+                            clickCallback: function (currentPage) {
+                            }
+
+                        });
+                    }
+                    else {//如果返回来的信息说明提供的信息为错误的
+
+
+                    }
+                }
+
+            });
         });
         function openMatter(obj) {
             for (var i = 1; i < 3; i++) {
@@ -294,8 +243,131 @@
             }
         }
     });
-    function find_btn() {
-        window.location.href = 'demo.html';
-    }
+</script>
+<script type="text/javascript">
+    let wand=$.cookie('this_token');
+    let user_identity=$.cookie('this_id');
+    $(document).ready(function(){
+        $.ajax({
+            url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
+            type: 'post',
+            data: {"identity": user_identity,"token":wand},//向服务器（接口）传递的参数
+            success: function (data) {//服务器（接口）返回来的数据
+                let obj = eval('(' + data + ')');
+                let str1='';
+                let str2='';
+                let str3='';
+                let str4='';
+                if(obj.code==100){
+                    str2='UserInfo.html?this_identity='+user_identity;
+                    str1+='<a href="'+str2+'">'
+                    str1+='<div class="navbar-header" style="width: 60px; height: 60px;float: left">'
+                    str1+='<img src="'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
+                    str1+='</div>'
+                    str1+='<div style="width: 60px; height: 60px;float: left;line-height: 60px">'
+                    str1+= '<span>'+user_identity+'</span>'
+                    str1+= '</div>'
+                    str1+= '</a>'
+                    str1+='<div class="nav_btn">'
+                    str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="my_btn()">我的</button></div>'
+                    str1+='<div class="nav_btn">'
+                    str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="btn()">写文章</button></div>'
+
+
+                    str4+='<div class="user_all">'
+                    str4+='<div class="user_head">'
+                    str4+='<a href="UserInfo.html"><img src="'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle"></a>'
+                    str4+='</div>'
+                    str4+='<div class="user_detail">'
+                    str4+='<h1>'+user_identity+'</h1>'
+                    str4+='<ul>'
+                    str4+='<li>文章数：200</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">字数：2000</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">粉丝：28</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">关注：58</li>'
+                    str4+='<li class="li_item">|</li>'
+                    str4+='<li class="li_item">赞数：99</li>'
+                    str4+='</ul>'
+                    str4+='</div>'
+                    str4+='</div>'
+                    $("#user_info").html(str1);
+                    $("#user_self").html(str4);
+                }else{
+                    str3+='<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 注册</a></li>'
+                    str3+='<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>'
+                    $("#user_info").html(str3);
+                }
+            }
+        })
+    });
+
+    $().ready(function () {
+        $.ajax({
+
+            url: ' http://localhost:8080/user/getUserFollowedUser',//相对应的esb接口地址
+
+            type: 'post',
+
+            data: {"token":wand},//向服务器（接口）传递的参数
+
+            success: function (data) {//服务器（接口）返回来的数据
+                if (data.code == 100) {//如果返回来的信息说明提交的信息为正确的
+                    let datas = data.data;
+                    let str ='';
+                    let str1 ='';
+                    let total='';
+                    total=datas.length-1;
+                    for(let i=1; i<datas.length;i++){
+                        str += '<div class="user_all">'
+                        str += '<div class="user_head">'
+                        str +='<a href="UserInfo.html"><img src="../img/logo.jpg" style="height: 100%;width: 100%" class="img-circle"></a>'
+                        str += '</div>'
+                        str += '<div class="user_detail">'
+                        str += '<h3>'+datas[i].phone+'</h3>'
+                        str += '<ul>'
+                        str += '<li>文章数：200</li>'
+                        str += '<li class="li_item">|</li>'
+                        str += '<li class="li_item">字数：2000</li>'
+                        str += '<li class="li_item">|</li>'
+                        str += '<li class="li_item">粉丝：28</li>'
+                        str += '<li class="li_item">|</li>'
+                        str += '<li class="li_item">关注：58</li>'
+                        str += '<li class="li_item">|</li>'
+                        str += '<li class="li_item">赞数：99</li>'
+                        str += '</ul>'
+                        str += '</div>'
+                        str += '<div class="focus_btn">'
+                        str += '<button type="button" class="btn btn-primary btn-block">取消关注</button>'
+                        str += '</div>'
+                        str += '</div>'
+                    }
+                    str1+='<div class="pager-list"></div>'
+                    $('#user_fllow').html(str);
+                    $('#pagelist').html(str1);
+                    $('div.pager-list').pageList({
+                        prevText: '前一页',
+                        nextText: '下一页',
+                        recordText: '共{0}页，{1}条记录',
+                        totalCount: total,
+                        goInputType: 'text',
+                        //showGoLink: true,
+                        showPageRange: 5,
+                        renderPerCall: true,
+                        clickCallback: function (currentPage) {
+                        }
+
+                    });
+                }
+                else {//如果返回来的信息说明提供的信息为错误的
+
+
+                }
+            }
+
+        });
+    });
 </script>
 </html>

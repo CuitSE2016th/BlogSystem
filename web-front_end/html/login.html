@@ -179,14 +179,26 @@
 
                         if(data.code==100){//如果返回来的信息说明提交的信息为正确的
                             let str_username='';
+                            let str_manager='';
                             let wand="";
                             let u_id="";
+                            let w_id="";
+                            let role='';
                             str_username+='index.html?this_identity='+user;
-                            wand+=data.data;
+                            str_manager+='superManager.html?this_identity='+user;
+                            wand+=data.data.token;
                             u_id+=user;
+                            w_id+=data.data.uid;
+                            role+=data.data.role;
                             $.cookie('this_token', wand,{ expires: 7,path:'/',secure:false,raw:false});  // 存储在cookie中
                             $.cookie('this_id',u_id,{ expires: 7,path:'/',secure:false,raw:false});
-                            window.location.href=str_username;//正确登录后页面跳转至
+                            $.cookie('this_writer',w_id,{ expires: 7,path:'/',secure:false,raw:false});
+                            if(role=='root'){
+                                window.location.href=str_manager;//正确登录后页面跳转至
+
+                            }else {
+                                window.location.href=str_username;//正确登录后页面跳转至
+                            }
                         }
                         else{//如果返回来的信息说明提供的信息为错误的
                             $("#login_reminder").empty();
@@ -322,7 +334,7 @@
         })
     });
     function find_btn() {
-        window.location.href = 'demo.html';
+        window.location.href = 'index.html';
     }
 </script>
 
