@@ -173,7 +173,7 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
 
         btn_follow.setOnClickListener {
             if (isSignIn) {
-                viewModel?.followAuthor()
+                viewModel?.followOrUnFollowAuthor()
             } else {
                 signInFirst(this)
             }

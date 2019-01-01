@@ -27,7 +27,12 @@ interface UserDataSource {
 
     fun updateUserInfo(newUser: User, account: String, token: String, callback: DataCallback<User>)
 
-    fun updateUserPortrait(pic: File, account: String, token: String, callback: DataCallback<String>)
+    fun updateUserPortrait(
+        pic: File,
+        account: String,
+        token: String,
+        callback: DataCallback<String>
+    )
 
     /**
      * 需要做好限60秒一次的限制
@@ -36,17 +41,22 @@ interface UserDataSource {
 
 
     fun unFollow(
-        beUnFollowedAccount: String,
-        account: String,
+        beUnFollowedId: String,
         token: String,
         callback: DataCallback<String>
     );
 
     fun follow(
-        beFollowedAccount: String,
-        account: String,
+        beFollowedId: String,
         token: String,
         callback: DataCallback<String>
+    )
+
+    fun isFollowed(
+        token: String,
+        followerId: String,
+        beFollowedId: String,
+        callback: DataCallback<Boolean>
     )
 
     //分页，userId,

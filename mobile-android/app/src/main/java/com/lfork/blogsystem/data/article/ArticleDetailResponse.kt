@@ -14,6 +14,7 @@ data class ArticleDetailResponse(
     var imageUrl:String?=null,
     var likeCount:Int?=null,
     var starCount:Int?=null,
+    var username:String,
     var stared:Boolean?=null,
     @SerializedName("like")
     var liked:Boolean?=null,

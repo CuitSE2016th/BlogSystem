@@ -81,6 +81,34 @@ interface UserApi {
     ): Call<Result<User>>
 
 
+    @FormUrlEncoded
+    @POST("user/addfollow")
+    fun follow(
+        @Field("followerid") beFollowedId: String,
+        @Field("token") token: String
+    ): Call<Result<String>>
+
+    @FormUrlEncoded
+    @POST("user/cancelfollow")
+    fun unFollow(
+        @Field("followerid") beFollowedId: String,
+        @Field("token") token: String
+    ): Call<Result<String>>
+
+    /**
+     * 根据Id获取用户的完整信息
+     *
+     * @param userId .
+     * @return .
+     */
+    @GET("user/isfollow")
+    fun isFollowed(
+        @Query("followingid") followingid:String,
+        @Query("followerid") followerid: String,
+        @Header("token") token: String
+    ): Call<Result<Boolean>>
+
+
     /**
      * 根据Id获取用户的完整信息
      *
