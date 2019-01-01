@@ -39,4 +39,7 @@ public class Constants {
     public final static int DELETED_ARTICLE = 404;
 
     public final static int ROOT_ROLR_ID = 4;
+    public final static int USERADMIN_ROLR_ID = 2;
+
+    public final static int ARTICLEADMIN_ROLR_ID = 3;
 }

@@ -78,6 +78,12 @@ public class ArticleAdminAction extends BaseAction {
     @Action("getArticleByArticleID")
     public String getArticleByArticleID(){
 
+        if(validationUserRole() == false){
+            result = JsonBody.fail();
+            result.setMessage("角色出错！");
+            return SUCCESS;
+        }
+
         if(!validationData(articleID)){
             result = JsonBody.fail();
             result.setMessage("前端数据出错！");
@@ -95,6 +101,18 @@ public class ArticleAdminAction extends BaseAction {
         result = JsonBody.success();
         result.setData(article);
         return SUCCESS;
+    }
+
+    private boolean validationUserRole() {
+
+        Subject loginuser = SecurityUtils.getSubject();
+        User user = (User) loginuser.getPrincipal();
+        if(user.getRoleId() != Constants.ARTICLEADMIN_ROLR_ID){
+            return false;
+        }else{
+            return true;
+        }
+
     }
 
     @Action("setArticleStatus")
@@ -140,6 +158,13 @@ public class ArticleAdminAction extends BaseAction {
 
     @Action("getArticlesForPage")
     public String getArticlesForPage(){
+
+        if(validationUserRole() == false){
+            result = JsonBody.fail();
+            result.setMessage("角色出错！");
+            return SUCCESS;
+        }
+
         if(!validationData(pageNo)){
             result = JsonBody.fail();
             result.setMessage("前端数据出错！");
