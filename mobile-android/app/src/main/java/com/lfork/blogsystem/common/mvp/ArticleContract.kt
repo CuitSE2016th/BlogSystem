@@ -27,7 +27,6 @@ interface ArticleContract {
         fun loadMoreArticle(loadMoreAction: (() -> Unit)? = null)
 
 
-
         fun destroy(){
 
         }

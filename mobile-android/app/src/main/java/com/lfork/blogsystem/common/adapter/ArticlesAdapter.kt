@@ -101,6 +101,8 @@ class ArticlesAdapter :
                 holder.editTime?.text = TimeUtil.getStandardTime(item.createTime?.toLong())
                 holder.likeNumber?.text="${item.likeCount?:0}"
                 holder.starNumber?.text="${item.starCount?:0}"
+
+
 //
                 holder.itemView.setOnClickListener {
                     if (BlogApplication.context != null) {
@@ -120,14 +122,15 @@ class ArticlesAdapter :
     }
 
     fun refreshItems(items: ArrayList<Article>) {
+
         this.items.clear()
-        this.items.addAll(items)
+        this.items.addAll( items.filter { it.status != 404 })
         hideLoadMore()
         notifyDataSetChanged()
     }
 
     fun addItems(data: ArrayList<Article>) {
-        items.addAll(data)
+        items.addAll(data.filter { it.status != 404 })
         hideLoadMore()
         notifyDataSetChanged()
 
