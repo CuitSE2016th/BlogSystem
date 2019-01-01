@@ -11,19 +11,12 @@ import com.bs.ssh.utils.DateUtils;
 public class IndexArticle extends Article {
 
     private String ImageUrl;
-
     private Integer likeCount;
-
     private Integer commCount;
-
     private Integer starCount;
-
     private String username;
-
     private String time;
-
     private Boolean isStared;
-
     private Boolean isLike;
 
     public String getTime() {
