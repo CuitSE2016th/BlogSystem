@@ -4,18 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/articledetail"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".articledetail.ArticleDetailActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_comments"
-        android:background="@drawable/bg_circle_rectangle_frame_black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_no_data_tips"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:layout_height="200dp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_comment_child" />
+
+    <TextView
+        android:id="@+id/text_no_data_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="There is no more comments."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

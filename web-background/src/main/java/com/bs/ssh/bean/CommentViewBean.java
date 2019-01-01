@@ -15,6 +15,7 @@ public class CommentViewBean {
 
     private Integer id;
     private Integer pid;
+    private String uid;
     private String username;
     private String portrait;
     private String content;
@@ -27,10 +28,19 @@ public class CommentViewBean {
     public CommentViewBean(User user, Comment comment){
         this.id = comment.getId();
         this.pid = comment.getParentId();
+        this.uid = user.getId();
         this.username = user.getNickname();
         this.portrait = user.getHeadPortrait();
         this.content = comment.getContent();
         this.createTime = comment.getCreateTime();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public Integer getId() {

@@ -17,8 +17,6 @@ import com.lfork.blogsystem.data.comment.CommentDataRepository
 import com.lfork.blogsystem.data.comment.CommentListResponse
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
-import com.lfork.blogsystem.utils.TimeUtil
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
@@ -36,14 +34,25 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
 
     val time = ObservableField<String>("")
 
+    lateinit var authorId: String
+
+    var stared = false
+
+    var liked = false
+
     val like = ObservableInt(20)
+
+    var isFollowedAuthor: Boolean? = null
+
+    val followText = ObservableField<String>("Follow")
 
     var likeIcon =
         ObservableField<Drawable>(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_like_black_24dp))
 
     val star = ObservableInt(20)
 
-    var starIcon =   ObservableField<Drawable>(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
+    var starIcon =
+        ObservableField<Drawable>(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
 
 
     val placeDrawableId = ObservableInt(R.drawable.ic_person_black_24dp)
@@ -65,35 +74,87 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
         loadComments()
     }
 
+
+    private fun hideDataIsLoading() {
+        if (comments != null && !TextUtils.isEmpty(time.get()) && isFollowedAuthor != null) {
+            dataIsLoading.set(false)
+            dataLoadError.set(false)
+        }
+    }
+
+    private fun showDataLoadIsError() {
+        dataLoadError.set(true)
+    }
+
+
     private fun loadArticle() {
         val callback = object : DataCallback<ArticleDetailResponse> {
             override fun succeed(data: ArticleDetailResponse) {
 //                time.set(TimeUtil.getStandardTime(Date(data.createTime!!.toLong())))
                 time.set(data.time)
-                star.set((data.starCount?:0))
-                like.set(data.likeCount?:0)
+                star.set((data.starCount ?: 0))
+                stared = data.stared ?: false
+                liked = data.liked ?: false
+                like.set(data.likeCount ?: 0)
                 title.set(data.title)
+                authorId = data.authorId!!
                 portraitUrl.set(data.imageUrl)
+                username.set(data.username)
                 wordCount.set("word count:${data.content?.length}")
-                if (data.authorId == BlogApplication.userId){
+                if (data.authorId == BlogApplication.userId) {
                     userIsAuthor.set(true)
                 }
                 navigator?.showContent(data)
-                if (comments != null) {
-                    dataIsLoading.set(false)
-                    dataLoadError.set(false)
-                }
+                loadFollowStatus()
+                hideDataIsLoading()
             }
 
             override fun failed(code: Int, log: String) {
                 navigator?.showTips(log)
-                dataLoadError.set(true)
+                showDataLoadIsError()
 
             }
         }
         ArticleDataRepository.getArticle(articleId, callback)
     }
 
+    private fun setFollowedStatus() {
+        isFollowedAuthor = true
+        followText.set("Followed")
+    }
+
+    private fun setUnFollowedStatus() {
+        isFollowedAuthor = false
+        followText.set("Follow")
+    }
+
+    private fun loadFollowStatus() {
+
+        if (!BlogApplication.isSignIn) {
+            setUnFollowedStatus()
+            hideDataIsLoading()
+            return
+        }
+
+        val callback = object : DataCallback<Boolean> {
+            override fun succeed(data: Boolean) {
+
+                if (data) {
+                    setFollowedStatus()
+                } else {
+                    setUnFollowedStatus()
+                }
+                hideDataIsLoading()
+            }
+
+            override fun failed(code: Int, log: String) {
+                navigator?.showTips(log)
+            }
+        }
+
+        UserDataRepository.isFollowed(token!!, BlogApplication.userId!!, authorId, callback)
+
+    }
 
     fun addComment(c: Comment) {
         val callback = object : DataCallback<Comment> {
@@ -106,36 +167,57 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
             }
         }
 
-        CommentDataRepository.addComment(BlogApplication.token!!, articleId, c.content!!, callback)
+        CommentDataRepository.addComment(BlogApplication.token!!, c, callback)
     }
 
 
-    fun addSubComment(parent: Comment, c: Comment) {
+    fun addSubComment(position: Int, parent: Comment, c: Comment) {
         val callback = object : DataCallback<Comment> {
             override fun succeed(data: Comment) {
-                data.replyTo = c.replyTo
-
-                commentNavigator?.addSubComment(parent, data)
+                commentNavigator?.addSubComment(position, parent, data)
             }
 
             override fun failed(code: Int, log: String) {
                 navigator?.showTips(log)
             }
         }
-        CommentDataRepository.addSubComment(token!!, parent.id!!, c.content!!, callback)
+        CommentDataRepository.addSubComment(token!!, c, callback)
     }
 
+    fun loadMoreComments() {
 
-    private fun loadComments() {
         val callback = object : DataCallback<CommentListResponse> {
             override fun succeed(data: CommentListResponse) {
+                commentNextPageNumber++
+                comments?.addAll(data.result ?: ArrayList())
+                commentNavigator?.loadMoreComments(data.result ?: ArrayList())
+            }
+
+            override fun failed(code: Int, log: String) {
+                navigator?.showTips(log)
+            }
+        }
+        CommentDataRepository.getComments(
+            commentNextPageNumber,
+            commentNextPageSize,
+            articleId,
+            callback
+        )
+    }
+
+    private fun loadComments() {
+
+        if ((comments?.size ?: 0) > 0) {
+            return
+        }
+
+        val callback = object : DataCallback<CommentListResponse> {
+            override fun succeed(data: CommentListResponse) {
+                commentNextPageNumber++
                 comments = data.result
                 commentNavigator?.refreshComments(data.result!!)
+                hideDataIsLoading()
 
-                if (!TextUtils.isEmpty(time.get())) {
-                    dataIsLoading.set(false)
-                    dataLoadError.set(false)
-                }
             }
 
             override fun failed(code: Int, log: String) {
@@ -151,10 +233,10 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
         )
     }
 
-    fun deleteComment(c: Comment) {
+    fun deleteComment(position: Int, c: Comment) {
         val callback = object : DataCallback<String> {
             override fun succeed(data: String) {
-                commentNavigator?.deleteComment(c)
+                commentNavigator?.deleteComment(position, c)
             }
 
             override fun failed(code: Int, log: String) {
@@ -190,21 +272,70 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     /**
      * 收藏
      */
-    fun starArticle() {
-        val callback = object : DataCallback<String> {
-            override fun succeed(data: String) {
-                star.set(star.get() + 1)
-                starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_stared_green_24dp))
-                commentNavigator?.showTips("Star OK")
+    fun starOrUnStarArticle() {
+        if (stared) {
+            val starCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    star.set(star.get() + 1)
+                    starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_stared_green_24dp))
+//                    commentNavigator?.showTips("Star OK")
+                    stared = true
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+            ArticleDataRepository.starArticle(token!!, articleId, starCallback)
+        } else {
+            val unStarCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    star.set(star.get() - 1)
+                    stared = false
+                    starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
+//                    commentNavigator?.showTips("Star OK")
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
             }
 
-            override fun failed(code: Int, log: String) {
-                navigator?.showTips(log)
-            }
+            ArticleDataRepository.unStarArticle(token!!, articleId, unStarCallback)
         }
-        ArticleDataRepository.starArticle(token!!, articleId, callback)
+
     }
 
+    fun followOrUnFollowAuthor() {
+        if (isFollowedAuthor == true) {
+            val unFollowCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    navigator?.showTips("Unfollowed")
+                    setUnFollowedStatus()
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+
+            UserDataRepository.unFollow(authorId, token!!, unFollowCallback)
+
+        } else {
+            val followCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    navigator?.showTips("Followed")
+                    setFollowedStatus()
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+
+            UserDataRepository.follow(authorId, token!!, followCallback)
+        }
+    }
 
     fun deleteArticle() {
         val callback = object : DataCallback<String> {
@@ -220,24 +351,40 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     }
 
 
-    fun likeArticle() {
-        val callback = object : DataCallback<String> {
-            override fun succeed(data: String) {
-                like.set(like.get() + 1)
-                likeIcon .set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_liked_green_24dp))
-                commentNavigator?.showTips("Like OK")
-            }
+    fun likeOrUnlikeArticle() {
+        if (liked) {
+            val callback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    liked = true
+                    like.set(like.get() + 1)
+                    likeIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_liked_green_24dp))
+//                    commentNavigator?.showTips("Like OK")
+                }
 
-            override fun failed(code: Int, log: String) {
-                navigator?.showTips(log)
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
             }
+            ArticleDataRepository.likeArticle(token!!, articleId, callback)
+
+        } else {
+            val callback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    like.set(like.get() - 1)
+                    liked = false
+                    likeIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_like_black_24dp))
+//                    commentNavigator?.showTips("ULike OK")
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+            ArticleDataRepository.unLikeArticle(token!!, articleId, callback)
+
         }
-        ArticleDataRepository.likeArticle(token!!, articleId, callback)
     }
 
-    fun followAuthor() {
-
-    }
 
     val htmlTestData =
         ObservableField<String>("<html> <body><H1>Hello world</H1><H2>😂\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4></body>   </html>")

@@ -30,7 +30,7 @@ public interface UserArticleService {
      * @param aid
      * @return com.bs.ssh.entity.Article
      **/
-    IndexArticle getArticleById(Integer aid);
+    IndexArticle getArticleById(Integer aid, String uid);
 
     /**
      * 获取作者发布的文章

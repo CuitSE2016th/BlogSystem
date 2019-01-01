@@ -21,6 +21,8 @@ data class Comment(
      */
     var parentId: String? = null,
 
+    var articleId:String?=null,
+
     /**
      * 如果评论本身就是child，那么它就不会再有child了。只有两层评论
      */

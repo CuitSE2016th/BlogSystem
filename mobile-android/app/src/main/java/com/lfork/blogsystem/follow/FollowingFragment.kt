@@ -81,7 +81,6 @@ class FollowingFragment : Fragment() {
         }
 
         UserDataRepository.unFollow(
-            beUnFollowedUser.getAccount(),
             UserDataRepository.userCache.getAccount(),
             BlogApplication.token!!,
             callback)
@@ -101,7 +100,6 @@ class FollowingFragment : Fragment() {
         }
 
         UserDataRepository.unFollow(
-            beFollowedUser.getAccount(),
             UserDataRepository.userCache.getAccount(),
             BlogApplication.token!!,
             callback)

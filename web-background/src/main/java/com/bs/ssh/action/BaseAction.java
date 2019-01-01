@@ -33,7 +33,11 @@ public class BaseAction extends ActionSupport {
     }
 
     public String getUserId(){
-        return this.getUser().getId();
+        try {
+            return this.getUser().getId();
+        }catch (Exception ignore){
+            return null;
+        }
     }
 
     /**

@@ -76,8 +76,22 @@ interface ArticleApi {
     ): Call<Result<String>>
 
     @FormUrlEncoded
+    @POST("user/article/cancelstar")
+    fun unstarArticle(
+        @Header("token") token: String,
+        @Field("aid") articleId: String
+    ): Call<Result<String>>
+
+      @FormUrlEncoded
     @POST("user/article/like")
     fun likeArticle(
+        @Header("token") token: String,
+        @Field("aid") articleId: String
+    ): Call<Result<String>>
+
+    @FormUrlEncoded
+    @POST("user/article/cancellike")
+    fun unlikeArticle(
         @Header("token") token: String,
         @Field("aid") articleId: String
     ): Call<Result<String>>

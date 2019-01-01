@@ -39,12 +39,17 @@ public class AuthFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        String token = getRequestToken((HttpServletRequest) request);
+        String url = ((HttpServletRequest) request).getRequestURI();
+        if(url.equals("/user/article/id") && isBlank(token))
+            return true;
         return false;
     }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         String token = getRequestToken((HttpServletRequest) request);
+
 
         if (this.isBlank(token)) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -86,6 +91,7 @@ public class AuthFilter extends AuthenticatingFilter {
      */
     private String getRequestToken(HttpServletRequest request) {
         String token = request.getHeader("token");
+
 
         if (this.isBlank(token)) {
             token = request.getParameter("token");

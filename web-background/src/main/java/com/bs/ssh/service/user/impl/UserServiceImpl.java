@@ -3,9 +3,12 @@ package com.bs.ssh.service.user.impl;
 import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.dao.FollowDao;
 import com.bs.ssh.dao.RoleDao;
+import com.bs.ssh.entity.Follow;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
+import com.bs.ssh.exception.NoSuchEntityException;
 import com.bs.ssh.service.user.UserService;
 import com.bs.ssh.utils.*;
 
@@ -35,6 +38,8 @@ public class UserServiceImpl implements UserService{
     private final UserDao userDao;
 
     @Resource private RoleDao roleDao;
+
+    @Resource private FollowDao followDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
@@ -313,6 +318,42 @@ public class UserServiceImpl implements UserService{
         pageBean.setResult(articlesNew);
 
         return pageBean;
+    }
+
+    @Override
+    public boolean isFollow(String follower, String following) {
+        return followDao.isFollow(follower, following);
+    }
+
+    @Override
+    public void followUser(String follower, String following) {
+        if(userDao.getUserInfoById(follower) == null ||
+                userDao.getUserInfoById(following) == null)
+            throw new NoSuchEntityException("用户不存在");
+        if(followDao.findOne(
+                "from Follow where followerId=? and followingId=?",
+                follower, following)
+                != null)
+            throw new NoSuchEntityException("已关注用户，请勿重复操作");
+        Follow follow = new Follow();
+        follow.setCreateTime(System.currentTimeMillis());
+        follow.setFollowerId(follower);
+        follow.setFollowingId(following);
+        followDao.insert(follow);
+
+    }
+
+    @Override
+    public void cancelFollow(String follower, String following) {
+        if(userDao.getUserInfoById(follower) == null ||
+                userDao.getUserInfoById(following) == null)
+            throw new NoSuchEntityException("用户不存在");
+        Follow follow = followDao.findOne(
+                "from Follow where followerId=? and followingId=?",
+                follower, following);
+        if(follow == null)
+            throw new NoSuchEntityException("已取消关注，请勿重复操作");
+        followDao.delete(follow);
     }
 
 

@@ -11,6 +11,14 @@ import java.io.File
  * Created by 98620 on 2018/11/15.
  */
 object UserDataRepository : UserDataSource {
+    override fun isFollowed(
+        token: String,
+        followerId: String,
+        beFollowedId: String,
+        callback: DataCallback<Boolean>
+    ) {
+        remoteDataSource.isFollowed(token, followerId, beFollowedId, callback)
+    }
 
 
     private val remoteDataSource = UserRemoteDataSource()
@@ -140,21 +148,21 @@ object UserDataRepository : UserDataSource {
     }
 
     override fun unFollow(
-        beUnFollowedAccount: String,
-        account: String,
+        beUnFollowedId: String,
+
         token: String,
         callback: DataCallback<String>
     ) {
-        remoteDataSource.unFollow(beUnFollowedAccount, account, token, callback)
+        remoteDataSource.unFollow(beUnFollowedId, token, callback)
     }
 
     override fun follow(
-        beFollowedAccount: String,
-        account: String,
+        beFollowedId: String,
+
         token: String,
         callback: DataCallback<String>
     ) {
-        remoteDataSource.follow(beFollowedAccount, account, token, callback)
+        remoteDataSource.follow(beFollowedId,  token, callback)
     }
 
 

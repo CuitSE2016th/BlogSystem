@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.widget.NestedScrollView
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
@@ -14,8 +16,10 @@ import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.BlogApplication.Companion.isSignIn
 import com.lfork.blogsystem.R
 import com.lfork.blogsystem.base.communication.LiveDataBus
+import com.lfork.blogsystem.base.widget.listener.BottomListener
 import com.lfork.blogsystem.data.article.ArticleDetailResponse
 import com.lfork.blogsystem.data.comment.Comment
+import com.lfork.blogsystem.data.user.UserDataRepository
 import com.lfork.blogsystem.databinding.ArticleDetailActBinding
 import com.lfork.blogsystem.login.LoginActivity.Companion.signInFirst
 import com.lfork.blogsystem.utils.ShareUtil
@@ -43,6 +47,8 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
     lateinit var mShowAction: TranslateAnimation
     lateinit var mHiddenAction: TranslateAnimation
 
+    var bottomScrollListener:BottomListener?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -65,6 +71,22 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
             .show(fragment)
             .commit()
 
+        bottomScrollListener = fragment
+
+
+        scroller.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY) {
+            }
+            if (scrollY < oldScrollY) {
+            }
+
+            if (scrollY == 0) {
+            }
+
+            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                bottomScrollListener?.onScrollToBottom()
+            }
+        })
 
         setupButtonClickListener()
         setupWebView()
@@ -101,14 +123,19 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
         }
 
         btn_delete.setOnClickListener {
-            viewModel?.deleteArticle()
+            openDeleteDialog()
         }
 
         btn_publish_comment.setOnClickListener {
             if (!TextUtils.isEmpty(editText_comment_content.text)) {
                 val c = Comment()
-                c.userId = "58059810465"
+                c.createTime = System.currentTimeMillis().toString()
+                c.authorId = UserDataRepository.userCache.id
+                c.userId = UserDataRepository.userCache.id
+                c.username = UserDataRepository.userCache.getUsername()
+                c.portrait = UserDataRepository.userCache.headPortrait
                 c.content = editText_comment_content.text.toString()
+                c.articleId = viewModel?.articleId
                 viewModel?.addComment(c)
                 editor_layout.visibility = View.GONE
                 navigation_layout.visibility = View.VISIBLE
@@ -121,7 +148,7 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
         btn_star.setOnClickListener {
 
             if (isSignIn) {
-                viewModel?.starArticle()
+                viewModel?.starOrUnStarArticle()
             } else {
                 signInFirst(this)
             }
@@ -130,7 +157,7 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
 
         btn_like.setOnClickListener {
             if (isSignIn) {
-                viewModel?.likeArticle()
+                viewModel?.likeOrUnlikeArticle()
             } else {
                 signInFirst(this)
             }
@@ -146,11 +173,35 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
 
         btn_follow.setOnClickListener {
             if (isSignIn) {
-                viewModel?.followAuthor()
+                viewModel?.followOrUnFollowAuthor()
             } else {
                 signInFirst(this)
             }
         }
+    }
+
+    private fun openDeleteDialog() {
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        val builder = AlertDialog.Builder(this)
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setTitle("Confirmation")
+        builder.setMessage("Do you really want to delete it?")
+//
+//        val inputView =TextView(context)
+//        builder.setView(inputView)
+
+//        inputView.setText(viewModel.username.get())
+
+        // Add the buttons
+        builder.setPositiveButton(R.string.ok) { _, id ->
+            viewModel?.deleteArticle()
+        }
+        //do nothing
+        builder.setNegativeButton(R.string.cancel) { dialog, id -> }
+        // 3. Get the AlertDialog from create()
+        val dialog = builder.create()
+        dialog.show()
     }
 
     @SuppressLint("SetJavaScriptEnabled")

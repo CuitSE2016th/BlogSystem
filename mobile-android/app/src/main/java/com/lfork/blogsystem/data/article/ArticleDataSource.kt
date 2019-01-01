@@ -11,11 +11,11 @@ import java.io.File
 interface ArticleDataSource {
     fun starArticle(token: String, articleId: String, callback: DataCallback<String>)
     //
-//    fun unStar()
+    fun unStarArticle(token: String, articleId: String, callback: DataCallback<String>)
 //
     fun likeArticle(token: String, articleId: String, callback: DataCallback<String>)
 //
-//    fun unlike()
+    fun unLikeArticle(token: String, articleId: String, callback: DataCallback<String>)
 //
 //    fun search()
 //

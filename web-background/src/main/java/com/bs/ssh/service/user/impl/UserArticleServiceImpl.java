@@ -5,6 +5,7 @@ import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.bean.PageRequest;
 import com.bs.ssh.bean.UserPlus;
 import com.bs.ssh.dao.ArticleDao;
+import com.bs.ssh.dao.FollowDao;
 import com.bs.ssh.dao.UserDao;
 import com.bs.ssh.entity.*;
 
@@ -34,6 +35,8 @@ public class UserArticleServiceImpl implements UserArticleService{
     @Resource private BaseDao<Like> likeDao;
     @Resource private UserDao userDao;
     @Resource private BaseDao<Object> objectBaseDao;
+    @Resource private BaseDao<Star> starBaseDao;
+    @Resource private BaseDao<Like> likeBaseDao;
 
     @Override
     public PageBean getAllArticle(PageRequest pageRequest) {
@@ -49,7 +52,7 @@ public class UserArticleServiceImpl implements UserArticleService{
     }
 
     @Override
-    public IndexArticle getArticleById(Integer aid) {
+    public IndexArticle getArticleById(Integer aid, String uid) {
         Article article =  articleDao.findOne(
                 "from Article where id=? and status=?", aid, Constants.AUDIT_COMPLETE);
         if(article == null)
@@ -63,7 +66,18 @@ public class UserArticleServiceImpl implements UserArticleService{
                 "select count(*) from Star where articleId=?", aid)).intValue();
         Integer comment = ((Long) objectBaseDao.findOne(
                 "select count(*) from Comment where articleId=?", aid)).intValue();
-        return new IndexArticle(article, user, like, star, comment);
+        IndexArticle indexArticle = new IndexArticle(article, user, like, star, comment);
+        if(uid != null){
+            indexArticle.setLike(
+                    likeBaseDao.findOne("from Like where userId=? and articleId=?",
+                            uid, aid) != null);
+
+            indexArticle.setStared(
+                    starBaseDao.findOne("from Star where userId=? and articleId=?",
+                            uid, aid) != null
+            );
+        }
+        return indexArticle;
     }
 
     @Override

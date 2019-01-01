@@ -14,22 +14,29 @@ import java.io.File
  * Created by 98620 on 2018/11/15.
  */
 class UserRemoteDataSource : UserDataSource {
+    override fun isFollowed(
+        token: String,
+        followerId: String,
+        beFollowedId: String,
+        callback: DataCallback<Boolean>
+    ) {
+        api.isFollowed(followerId,beFollowedId,token).enqueue(HTTPCallBack(callback))
+    }
+
     override fun unFollow(
-        beUnFollowedAccount: String,
-        account: String,
+        beUnFollowedId: String,
         token: String,
         callback: DataCallback<String>
     ) {
-        callback.succeed("UnFollowed")
+        api.unFollow(beUnFollowedId, token).enqueue(HTTPCallBack(callback))
     }
 
     override fun follow(
-        beFollowedAccount: String,
-        account: String,
+        beFollowedId: String,
         token: String,
         callback: DataCallback<String>
     ) {
-        callback.succeed("Followed")
+        api.follow(beFollowedId, token).enqueue(HTTPCallBack(callback))
     }
 
     override fun getFollowings(
@@ -38,12 +45,13 @@ class UserRemoteDataSource : UserDataSource {
         callback: DataCallback<List<User>>
     ) {
         val items = ArrayList<User>(10);
-        for (i in 1..10){
+        for (i in 1..10) {
             val it = User()
             it.phone = "18628904485"
             it.nickname = "the number $i following"
             it.headPortrait = "images/580598104651543672840254.jpg"
-            it.description="the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
+            it.description =
+                    "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
             items.add(it)
         }
         callback.succeed(items)
@@ -54,12 +62,13 @@ class UserRemoteDataSource : UserDataSource {
      */
     override fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>) {
         val items = ArrayList<User>(10);
-        for (i in 1..10){
+        for (i in 1..10) {
             val it = User()
             it.phone = "18628904485"
             it.nickname = "the number $i follower"
             it.headPortrait = "images/580598104651543672840254.jpg"
-            it.description="the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
+            it.description =
+                    "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
             items.add(it)
         }
         callback.succeed(items)
@@ -82,7 +91,7 @@ class UserRemoteDataSource : UserDataSource {
         token: String,
         callback: DataCallback<String>
     ) {
-        val fileBody = RequestBody.create(MediaType.parse("image/*"),pic)
+        val fileBody = RequestBody.create(MediaType.parse("image/*"), pic)
         val photo = MultipartBody.Part.createFormData("pic", pic.name, fileBody)
         api.uploadPortrait(RequestBody.create(null, account), token, photo)
             .enqueue(HTTPCallBack(callback))

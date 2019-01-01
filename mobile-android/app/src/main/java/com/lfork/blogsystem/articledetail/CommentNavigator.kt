@@ -7,11 +7,13 @@ interface CommentNavigator:Navigator {
 
     fun refreshComments(comments:ArrayList<Comment>)
 
+    fun loadMoreComments(comments:ArrayList<Comment>)
+
     fun addComment(c: Comment)
 
-    fun addSubComment(parent: Comment, child: Comment)
+    fun addSubComment(position: Int,parent: Comment, child: Comment)
 
     fun addComments(comments: ArrayList<Comment>)
 
-    fun deleteComment(c:Comment)
+    fun deleteComment(position: Int,c:Comment)
 }
