@@ -71,7 +71,7 @@ public class UserFileServiceImpl implements UserFileService {
     public String uploadAvatar(String uid, File file, String filename) throws IOException {
 
         int pos = filename.lastIndexOf('.');
-        String imageId = "avatar";
+        String imageId = "avatar-" + IDUtils.UserID();
         String suffix = pos == -1 ? "jpg" : filename.substring(pos+1);
 
         String suffix_path = "/" + uid + "/" +

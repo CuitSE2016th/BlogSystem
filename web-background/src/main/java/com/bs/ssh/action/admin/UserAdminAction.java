@@ -5,6 +5,7 @@ import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.service.admin.impl.UserAdminServiceImpl;
+import com.bs.ssh.utils.Constants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.struts2.convention.annotation.Action;
@@ -76,6 +77,12 @@ public class UserAdminAction extends BaseAction {
     @Action("getUsersToPageByPageNo")
     public String getUsersToPageByPageNo(){
 
+        if(validationUserRole() == false){
+            result = JsonBody.fail();
+            result.setMessage("角色出错！");
+            return SUCCESS;
+        }
+
         int pn;
 
         try {
@@ -101,6 +108,18 @@ public class UserAdminAction extends BaseAction {
         result = JsonBody.success();
         result.setData(users);
         return SUCCESS;
+    }
+
+    private boolean validationUserRole() {
+
+        Subject loginuser = SecurityUtils.getSubject();
+        User user = (User) loginuser.getPrincipal();
+        if(user.getRoleId() != Constants.USERADMIN_ROLR_ID){
+            return false;
+        }else{
+            return true;
+        }
+
     }
 
     @Action("deleteUserByUserID")
@@ -145,6 +164,12 @@ public class UserAdminAction extends BaseAction {
 
     @Action("getUserByUserID")
     public String getUserByUserID(){
+
+        if(validationUserRole() == false){
+            result = JsonBody.fail();
+            result.setMessage("角色出错！");
+            return SUCCESS;
+        }
 
         if(identity == null){
             result = JsonBody.fail();

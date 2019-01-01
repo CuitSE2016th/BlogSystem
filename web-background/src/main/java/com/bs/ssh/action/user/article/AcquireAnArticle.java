@@ -36,7 +36,7 @@ public class AcquireAnArticle extends AbstractArticleAction{
     public String execute() {
         try {
             result= JsonBody.success();
-            result.setData(articleService.getArticleById(aid));
+            result.setData(articleService.getArticleById(aid, this.getUserId()));
         }catch (Exception e){
             result = JsonBody.fail();
             result.setData(e.getMessage());

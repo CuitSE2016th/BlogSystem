@@ -3,6 +3,7 @@ package com.bs.ssh.service.user.impl;
 import com.bs.ssh.bean.IndexArticle;
 import com.bs.ssh.bean.JsonBody;
 import com.bs.ssh.bean.PageBean;
+import com.bs.ssh.dao.FollowDao;
 import com.bs.ssh.dao.RoleDao;
 import com.bs.ssh.entity.User;
 import com.bs.ssh.dao.UserDao;
@@ -35,6 +36,8 @@ public class UserServiceImpl implements UserService{
     private final UserDao userDao;
 
     @Resource private RoleDao roleDao;
+
+    @Resource private FollowDao followDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
@@ -313,6 +316,11 @@ public class UserServiceImpl implements UserService{
         pageBean.setResult(articlesNew);
 
         return pageBean;
+    }
+
+    @Override
+    public boolean isFollow(String follower, String following) {
+        return followDao.isFollow(follower, following);
     }
 
 

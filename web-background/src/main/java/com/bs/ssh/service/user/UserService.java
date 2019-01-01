@@ -59,4 +59,6 @@ public interface UserService {
     List<User> getUserFollowedUser(String userId);
 
     PageBean<List> getUserLikeArticles(String userId, Integer pageNo);
+
+    boolean isFollow(String follower, String following);
 }
