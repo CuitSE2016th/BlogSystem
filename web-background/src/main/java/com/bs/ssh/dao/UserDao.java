@@ -53,4 +53,6 @@ public interface UserDao extends BaseDao<User> {
     List<User> getUserFollowedUser(String userId);
 
     int getUserLikeArticlesCount(String userId);
+
+
 }
