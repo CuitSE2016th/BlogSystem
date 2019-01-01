@@ -21,11 +21,15 @@
             <button type="button" class="btn btn-primary btn-block" onclick="find_btn()">发现</button>
         </div>
         <div class="nav_btn">
-            <button type="button" class="btn btn-primary btn-block">关注</button>
+            <button type="button" class="btn btn-primary btn-block" onclick="fllow_btn()">关注</button>
+        </div>
+        <div class="input-group search_input">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">搜索</button>
+            </span>
+            <input type="text" class="form-control" placeholder="输入要查找文章">
         </div>
         <ul class="nav navbar-nav navbar-right nav_ul" id="user_info">
-            <li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-            <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
         </ul>
     </div>
 </nav>
@@ -59,7 +63,6 @@
     })
 </script>
 <script>
-    let user_id=GetQueryString("this_identity");
     let wand=$.cookie('this_token');
     let user_identity=$.cookie('this_id');
     let str1='';
@@ -76,12 +79,14 @@
                     str2='UserInfo.html?this_identity='+user_identity;
                     str1+='<a href="'+str2+'">'
                     str1+='<div class="navbar-header" style="width: 60px; height: 60px;float: left">'
-                    str1+='<img src="'+'http://www.lfork.top/blog/'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
+                    str1+='<img src="'+obj.data.headPortrait+'" style="height: 100%;width: 100%" class="img-circle">'
                     str1+='</div>'
                     str1+='<div style="width: 60px; height: 60px;float: left;line-height: 60px">'
                     str1+= '<span>'+user_identity+'</span>'
                     str1+= '</div>'
                     str1+= '</a>'
+                    str1+='<div class="nav_btn">'
+                    str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="my_btn()">我的</button></div>'
                     str1+='<div class="nav_btn">'
                     str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="btn()">写文章</button></div>'
                     $("#user_info").html(str1);
@@ -93,7 +98,6 @@
             }
         })
     });
-    let wand1='eccaad52d6854162ab834eed12f91fc3';
     $(document).ready(function () {
         let total='';
         $.ajax({
@@ -102,7 +106,7 @@
 
             type: 'post',
 
-            data: {"pn": 1, "ps":5,"token":wand1},//向服务器（接口）传递的参数
+            data: {"pn": 1, "ps":5,},//向服务器（接口）传递的参数
 
             success: function (data) {//服务器（接口）返回来的数据
                 if (data.code == 100) {//如果返回来的信息说明提交的信息为正确的
@@ -110,7 +114,21 @@
                     let datas = data.data.result;
                     let str ='';
                     let str1 ='';
+                    let pattr1=/<img\b.*?(?:\>|\/>){1}/gi;
+                    let pattr2=/\bsrc\b\s*=\s*[\'\"]?([^\'\"]*)[\'\"]?/i;
                     for(let i=0; i<datas.length;i++){
+                        let str2='';
+                        let arr='';
+                        str2 = datas[i].content
+                        if(str2!=null){
+                            arr = str2.match(pattr1);
+                        }
+                        if(arr!=null){
+                            for(index of arr){
+                                console.log(index.match(pattr2));
+                                console.log(arr[1]);
+                            }
+                        }
                         str += '<div class="single_article">'
                         str += '<div class="article_msg">'
                         str +='<a href="articl_detail.html?id='+datas[i].id+'">'
@@ -145,7 +163,6 @@
                         showPageRange: 5,
                         renderPerCall: true,
                         clickCallback: function (currentPage) {
-
                             let str = next_page(currentPage);
                         }
 
@@ -166,13 +183,27 @@
 
             type: 'post',
 
-            data: {"pn": curpage, "ps":5,"token":wand1},//向服务器（接口）传递的参数
+            data: {"pn": curpage,"ps":5},//向服务器（接口）传递的参数
 
             success: function (data) {//服务器（接口）返回来的数据
                 if (data.code == 100) {//如果返回来的信息说明提交的信息为正确的
                     let datas = data.data.result;
                     let str='';
+                    let pattr1=/<img\b.*?(?:\>|\/>){1}/gi;
+                    let pattr2=/\bsrc\b\s*=\s*[\'\"]?([^\'\"]*)[\'\"]?/i;
                     for(let i=0; i<datas.length;i++){
+                        let str2='';
+                        let arr='';
+                        str2 = datas[i].content
+                        if(str2!=null){
+                            arr = str2.match(pattr1);
+                        }
+                        if(arr!=null){
+                            for(index of arr){
+                                index.match(pattr2)
+                            }
+
+                        }
                         str += '<div class="single_article">'
                         str += '<div class="article_msg">'
                         str +='<a href="articl_detail.html?id='+datas[i].id+'">'
@@ -201,9 +232,6 @@
                 }
             }
         });
-    }
-    function find_btn() {
-        window.location.href = 'UserFllow.html';
     }
 </script>
 

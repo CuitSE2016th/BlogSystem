@@ -114,7 +114,7 @@ public class UserArticleServiceImpl implements UserArticleService{
         int count = 0;
         if(!param.equals("")){
             results = articleDao.findAll(pageRequest,
-                    "from Article where status=? and authorId in (" + param + ")", Constants.AUDIT_COMPLETE);
+                    "from Article where status=? and authorId in (" + param + ") order by createTime desc", Constants.AUDIT_COMPLETE);
             count = articleDao.findAll(
                     "from Article where status=? and authorId in (" + param + ")", Constants.AUDIT_COMPLETE)
                     .size();

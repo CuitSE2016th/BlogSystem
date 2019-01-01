@@ -37,16 +37,13 @@
     let E = window.wangEditor;
     let editor = new E('#editor');
     let wand=$.cookie('this_token');
-    editor.customConfig.uploadImgServer = ' http://www.lfork.top/blog/user/article/upload';
-    editor.customConfig.showLinkImg = false;
+    editor.customConfig.uploadImgServer = 'http://www.lfork.top/blog/user/article/upload';
+    editor.customConfig.showLinkImg = true;
     editor.customConfig.uploadImgParams = {
         token: wand
     };
     editor.customConfig.uploadImgParamsWithUrl = true;
     editor.customConfig.uploadFileName = 'image';
-    editor.customConfig.uploadImgHeaders = {
-        'Accept': 'text/x-json'
-    };
     editor.customConfig.uploadImgHooks = {
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果,files 是选择的图片文件,insertImg 是插入图片的函数
         // 图片上传之前触发
@@ -69,9 +66,9 @@
         },
         // （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
         customInsert: function (insertImg,result,editor) {
-            alert(result.data)
-            let url = result.data
-            insertImg(url)
+            var url = result.data;
+            insertImg(url);
+
         }
     };
     editor.create();

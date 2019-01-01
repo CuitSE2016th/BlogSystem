@@ -142,7 +142,7 @@ a, a:hover, a:visited, a:link, a:active {
     height: 150px;
     margin: 0 auto;
     padding-top: 50px;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #eeeeee;
 }
 .fallow_body .fallow_change_body .user_all .user_head{
     width: 80px;

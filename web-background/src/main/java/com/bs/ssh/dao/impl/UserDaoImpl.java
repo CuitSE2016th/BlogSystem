@@ -143,7 +143,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 //                .setFirstResult((pn - 1) * pNum).setMaxResults(pNum).list();
         List list = currentSession.createSQLQuery("SELECT a.*,(SELECT i.`url` FROM image i WHERE a.`id` = i.`aid` LIMIT 1) im_url, \n" +
                 "(SELECT COUNT(*) FROM `like` l WHERE l.`article_id` = a.`id`) like_count, \n" +
-                "(SELECT COUNT(*) FROM `comment` c WHERE c.`article_id` = a.`id`) comm_count FROM article a where a.`status` = 600 ORDER BY a.`create_time` ").setFirstResult((pn - 1) * pNum).setMaxResults(pNum).list();
+                "(SELECT COUNT(*) FROM `comment` c WHERE c.`article_id` = a.`id`) comm_count FROM article a where a.`status` = 600 ORDER BY a.`create_time` DESC ").setFirstResult((pn - 1) * pNum).setMaxResults(pNum).list();
 
         return list;
     }
@@ -152,7 +152,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     public List<User> getUserFollows(String userId) {
 
         List<User> users = (List<User>) getTemplate().
-                find("select u from Follow f left join User u on f.followingId = u.id where f.followerId = ?",
+                find("select u from Follow f left join User u on f.followingId = u.id where f.followerId = ? order by f.createTime desc",
                 userId);
 
         return users;
@@ -203,7 +203,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         List list = currentSession.createSQLQuery( "SELECT a.*,(SELECT i.`url` FROM image i WHERE a.`id` = i.`aid` LIMIT 1) im_url,\n" +
                 "                (SELECT COUNT(*) FROM `like` l WHERE l.`article_id` = a.`id`) like_count,\n" +
                 "                (SELECT COUNT(*) FROM `comment` c WHERE c.`article_id` = a.`id`) comm_count \n" +
-                "                FROM article a, `like` l WHERE a.`id` = l.`article_id` AND l.`user_id` = ? AND a.`status`=600 ORDER BY a.`create_time`")
+                "                FROM article a, `like` l WHERE a.`id` = l.`article_id` AND l.`user_id` = ? AND a.`status`=600 ORDER BY a.`create_time` DESC ")
                 .setParameter(0, userId).setFirstResult((i - 1) * pageNo).setMaxResults(pageNo).list();
 
         return list;
@@ -215,7 +215,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         List list = currentSession.createSQLQuery( "SELECT a.*,(SELECT i.`url` FROM image i WHERE a.`id` = i.`aid` LIMIT 1) im_url,\n" +
                 "                (SELECT COUNT(*) FROM `star` l WHERE l.`article_id` = a.`id`) like_count,\n" +
                 "                (SELECT COUNT(*) FROM `comment` c WHERE c.`article_id` = a.`id`) comm_count \n" +
-                "                FROM article a, `star` l WHERE a.`id` = l.`article_id` AND l.`user_id` = ? AND a.`status`=600 ORDER BY a.`create_time`")
+                "                FROM article a, `star` l WHERE a.`id` = l.`article_id` AND l.`user_id` = ? AND a.`status`=600 ORDER BY a.`create_time` DESC ")
                 .setParameter(0, userId).setFirstResult((i - 1) * pageNo).setMaxResults(pageNo).list();
 
         return list;

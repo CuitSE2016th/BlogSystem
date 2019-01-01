@@ -138,7 +138,7 @@ public class UserCommentServiceImpl implements UserCommentService {
 
 
         objectDao.findAll(request,
-                "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null",
+                "from Comment c join User u on c.authorId = u.id where article_id=? and is_deleted=? and parent_id=null order by c.createTime desc",
                 aid, false)
                 .forEach(o->{
                     Object[] objects = (Object[])o;
