@@ -63,8 +63,8 @@ interface UserDataSource {
 //    fun getFollowings();
 
     //分页，userId,
-    fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>);
+    fun getFollowers(token: String, callback: DataCallback<ArrayList<User>>);
 
-    fun getFollowings(account: String, token: String, callback: DataCallback<List<User>>)
+    fun getFollowings(token: String, callback: DataCallback<ArrayList<User>>)
 
 }

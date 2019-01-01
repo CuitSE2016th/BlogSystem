@@ -16,34 +16,36 @@ class LatestArticlePresenter(private var view: ArticleContract.View?) :
 
 
     override fun refreshArticles() {
-        val cacheUser = UserDataRepository.userCache
-//        ArticleDataRepository.getUsesArticles(
-//            cacheUser.getAccount(),
-//            BlogApplication.token!!,
-//            refreshDataCallBack
-//        )
         ArticleDataRepository.getLatestArticles(1, 10, object : DataCallback<ArticleListResponse> {
             override fun succeed(data: ArticleListResponse) {
                 if (data.result != null)
                     view?.refreshArticles(data.result!!)
                 else {
-                    failed(0,"数据为空")
+                    failed(0, "数据为空")
                 }
             }
 
             override fun failed(code: Int, log: String) {
-              view?.error(log)
+                view?.error(log)
             }
         })
     }
 
     override fun loadMoreArticle(pageNumber: Int) {
-        val cacheUser = UserDataRepository.userCache
-        ArticleDataRepository.loadMoreUsesArticles(
+        ArticleDataRepository.getLatestArticles(
             pageNumber,
-            "test",//cacheUser.getAccount(),
-          "test",//  BlogApplication.token!!,
-            loadMoreDataCallBack
-        )
+            10,
+            object : DataCallback<ArticleListResponse> {
+                override fun succeed(data: ArticleListResponse) {
+                    if (data.result != null)
+                        loadMoreDataCallBack.succeed(data.result!!)
+                    else {
+                        failed(0, "数据为空")
+                    }
+                }
+                override fun failed(code: Int, log: String) {
+                    view?.error(log)
+                }
+            })
     }
 }

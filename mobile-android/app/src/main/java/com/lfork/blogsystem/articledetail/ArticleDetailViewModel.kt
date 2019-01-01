@@ -34,7 +34,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
 
     val time = ObservableField<String>("")
 
-    lateinit var authorId: String
+    var authorId: String?=null
 
     var stared = false
 
@@ -73,6 +73,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
         loadArticle()
         loadComments()
     }
+
 
 
     private fun hideDataIsLoading() {
@@ -114,6 +115,9 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
 
 
     private fun loadArticle() {
+        if (authorId != null) {
+            return
+        }
         val callback = object : DataCallback<ArticleDetailResponse> {
             override fun succeed(data: ArticleDetailResponse) {
 //                time.set(TimeUtil.getStandardTime(Date(data.createTime!!.toLong())))
@@ -186,7 +190,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
             }
         }
 
-        UserDataRepository.isFollowed(token!!, BlogApplication.userId!!, authorId, callback)
+        UserDataRepository.isFollowed(token!!, BlogApplication.userId!!, authorId!!, callback)
 
     }
 
@@ -317,7 +321,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
                 }
             }
 
-            UserDataRepository.unFollow(authorId, token!!, unFollowCallback)
+            UserDataRepository.unFollow(authorId!!, token!!, unFollowCallback)
 
         } else {
             val followCallback = object : DataCallback<String> {
@@ -331,7 +335,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
                 }
             }
 
-            UserDataRepository.follow(authorId, token!!, followCallback)
+            UserDataRepository.follow(authorId!!, token!!, followCallback)
         }
     }
 

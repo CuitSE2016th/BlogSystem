@@ -51,18 +51,16 @@ class FollowingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val callback = object : DataCallback<List<User>> {
-            override fun succeed(data: List<User>) {
-                adapter.refreshItems(data as ArrayList<User>)
+        val callback = object : DataCallback<ArrayList<User>> {
+            override fun succeed(data: ArrayList<User>) {
+                adapter.refreshItems(data)
             }
 
             override fun failed(code: Int, log: String) {
                 ToastUtil.showShort(context, log)
             }
         }
-
         UserDataRepository.getFollowings(
-            UserDataRepository.userCache.getAccount(),
             BlogApplication.token!!,
             callback
         )
@@ -81,7 +79,7 @@ class FollowingFragment : Fragment() {
         }
 
         UserDataRepository.unFollow(
-            UserDataRepository.userCache.getAccount(),
+            beUnFollowedUser.id!!,
             BlogApplication.token!!,
             callback)
 
@@ -99,8 +97,8 @@ class FollowingFragment : Fragment() {
             }
         }
 
-        UserDataRepository.unFollow(
-            UserDataRepository.userCache.getAccount(),
+        UserDataRepository.follow(
+            beFollowedUser.id!!,
             BlogApplication.token!!,
             callback)
 
@@ -133,7 +131,7 @@ class FollowingFragment : Fragment() {
                 R.drawable.ic_person_black_24dp
             )
             //暂时没有description
-            holder.description.text = item.description
+            holder.description.text = item.description?:"The user has no self description."
 
             holder.itemView.setOnClickListener {
                 if (context != null) {
@@ -142,7 +140,7 @@ class FollowingFragment : Fragment() {
             }
 
             if(item.beFollowed){
-                holder.followButton.text = resources.getText(R.string.unfollow)
+                holder.followButton.text = resources.getText(R.string.followed)
             } else {
                 holder.followButton.text = resources.getText(R.string.follow)
             }

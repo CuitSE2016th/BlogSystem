@@ -135,16 +135,15 @@ object UserDataRepository : UserDataSource {
        })
     }
 
-    override fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>) {
-       remoteDataSource.getFollowers(account, token, callback)
+    override fun getFollowers(token: String, callback: DataCallback<ArrayList<User>>) {
+       remoteDataSource.getFollowers(token, callback)
     }
 
     override fun getFollowings(
-        account: String,
         token: String,
-        callback: DataCallback<List<User>>
+        callback: DataCallback<ArrayList<User>>
     ) {
-       remoteDataSource.getFollowings(account, token, callback)
+       remoteDataSource.getFollowings(token, callback)
     }
 
     override fun unFollow(

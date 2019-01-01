@@ -29,8 +29,10 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             root!!.data_container.visibility = View.VISIBLE
             if (articles.size < 1){
                 adapter.showNoMoreData()
+
             } else {
                 adapter.refreshItems(articles)
+                pageNumber++
 
             }
         }
