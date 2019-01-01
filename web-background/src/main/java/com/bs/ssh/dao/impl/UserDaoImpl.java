@@ -180,6 +180,20 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
             return count;
         }
 
+    }
+
+    @Override
+    public int getUserStarArticlesCount(String userId) {
+
+        List<?> list = getTemplate().find("SELECT COUNT(*) FROM Star l, Article a WHERE l.articleId = a.id AND a.status=600 AND l.userId = ?", userId);
+        int count=0;
+
+        if(list.get(0) != null){
+            count = Integer.parseInt(list.get(0).toString());
+            return count;
+        }else{
+            return count;
+        }
 
     }
 
@@ -190,6 +204,18 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
                 "                (SELECT COUNT(*) FROM `like` l WHERE l.`article_id` = a.`id`) like_count,\n" +
                 "                (SELECT COUNT(*) FROM `comment` c WHERE c.`article_id` = a.`id`) comm_count \n" +
                 "                FROM article a, `like` l WHERE a.`id` = l.`article_id` AND l.`user_id` = ? AND a.`status`=600 ORDER BY a.`create_time`")
+                .setParameter(0, userId).setFirstResult((i - 1) * pageNo).setMaxResults(pageNo).list();
+
+        return list;
+    }
+
+    @Override
+    public List getArticleStarforPage(String userId, Integer pageNo, int i) {
+        Session currentSession = this.getTemplate().getSessionFactory().getCurrentSession();
+        List list = currentSession.createSQLQuery( "SELECT a.*,(SELECT i.`url` FROM image i WHERE a.`id` = i.`aid` LIMIT 1) im_url,\n" +
+                "                (SELECT COUNT(*) FROM `star` l WHERE l.`article_id` = a.`id`) like_count,\n" +
+                "                (SELECT COUNT(*) FROM `comment` c WHERE c.`article_id` = a.`id`) comm_count \n" +
+                "                FROM article a, `star` l WHERE a.`id` = l.`article_id` AND l.`user_id` = ? AND a.`status`=600 ORDER BY a.`create_time`")
                 .setParameter(0, userId).setFirstResult((i - 1) * pageNo).setMaxResults(pageNo).list();
 
         return list;

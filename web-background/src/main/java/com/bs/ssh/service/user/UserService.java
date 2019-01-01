@@ -60,6 +60,8 @@ public interface UserService {
 
     PageBean<List> getUserLikeArticles(String userId, Integer pageNo);
 
+    PageBean<List> getUserStarArticles(String userId, Integer pageNo);
+
     boolean isFollow(String follower, String following);
 
     void followUser(String follower, String following);

@@ -321,6 +321,49 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public PageBean<List> getUserStarArticles(String userId, Integer pageNo) {
+
+        PageBean<List> pageBean = new PageBean();
+
+        int count = userDao.getUserStarArticlesCount(userId);
+
+        if(pageNo >= (int)(count / 8)){
+            pageNo= (int)(count / 8);
+        }
+        pageBean.setPageSize(8);
+        pageBean.setRecordCount(count);
+        pageBean.setCurrentPage(pageNo);
+
+        List articleList = userDao.getArticleStarforPage(userId,pageNo, 8);
+
+        List<IndexArticle> articlesNew = new ArrayList<>();
+
+        for (int i = 0; i < articleList.size(); i++) {
+
+            Object[] article = (Object[]) articleList.get(i);
+
+            IndexArticle indexArticle = new IndexArticle();
+            indexArticle.setId((Integer) article[0]);
+            indexArticle.setAuthorId((String) article[1]);
+            indexArticle.setTitle((String) article[2]);
+            indexArticle.setContent((String) article[3]);
+            indexArticle.setStatus(Integer.parseInt(article[4].toString()));
+            indexArticle.setCreateTime(Long.valueOf(article[5].toString()));
+            indexArticle.setImageUrl((String) article[6]);
+            indexArticle.setLikeCount(Integer.parseInt(article[7].toString()));
+            indexArticle.setCommCount(Integer.parseInt(article[8].toString()));
+
+            indexArticle.setTime(DateUtils.getDateStringFromLong(Long.valueOf(article[5].toString())));
+
+            articlesNew.add(indexArticle);
+        }
+
+        pageBean.setResult(articlesNew);
+
+        return pageBean;
+    }
+
+    @Override
     public boolean isFollow(String follower, String following) {
         return followDao.isFollow(follower, following);
     }
