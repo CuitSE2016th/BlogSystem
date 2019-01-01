@@ -40,7 +40,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
 
     var liked = false
 
-    val like = ObservableInt(20)
+    val like = ObservableInt(0)
 
     var isFollowedAuthor: Boolean? = null
 
@@ -49,7 +49,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     var likeIcon =
         ObservableField<Drawable>(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_like_black_24dp))
 
-    val star = ObservableInt(20)
+    val star = ObservableInt(0)
 
     var starIcon =
         ObservableField<Drawable>(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
@@ -66,7 +66,7 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     var comments: ArrayList<Comment>? = null
 
     private var commentNextPageNumber = 1
-    private val commentNextPageSize = 10
+    val commentNextPageSize = 10
 
 
     fun start() {
@@ -86,16 +86,50 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
         dataLoadError.set(true)
     }
 
+    private fun setStaredStatus(increaseNumber:Int=1) {
+        star.set(star.get() + increaseNumber)
+        stared = true
+        starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_stared_green_24dp))
+
+    }
+
+    private fun setUnStaredStatus(decreaseNumber:Int=1) {
+        star.set(star.get() - decreaseNumber)
+        stared = false
+        starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
+    }
+
+    private fun setLikedStatus(increaseNumber:Int=1) {
+        like.set(like.get()+increaseNumber)
+        liked = true
+        likeIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_liked_green_24dp))
+
+    }
+
+    private fun setUnLikedStatus(decreaseNumber:Int=1) {
+        like.set(like.get() - decreaseNumber)
+        liked = false
+        likeIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_like_black_24dp))
+    }
+
 
     private fun loadArticle() {
         val callback = object : DataCallback<ArticleDetailResponse> {
             override fun succeed(data: ArticleDetailResponse) {
 //                time.set(TimeUtil.getStandardTime(Date(data.createTime!!.toLong())))
                 time.set(data.time)
-                star.set((data.starCount ?: 0))
-                stared = data.stared ?: false
-                liked = data.liked ?: false
-                like.set(data.likeCount ?: 0)
+                if (data.stared == true) {
+                    setStaredStatus((data.starCount ?: 0))
+                } else {
+                    setUnStaredStatus(data.starCount ?: 0)
+                }
+
+                if (data.liked == true) {
+                    setLikedStatus(data.likeCount ?: 0)
+                } else {
+                    setUnLikedStatus(data.likeCount ?: 0)
+                }
+
                 title.set(data.title)
                 authorId = data.authorId!!
                 portraitUrl.set(data.imageUrl)
@@ -269,42 +303,6 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
             })
     }
 
-    /**
-     * 收藏
-     */
-    fun starOrUnStarArticle() {
-        if (stared) {
-            val starCallback = object : DataCallback<String> {
-                override fun succeed(data: String) {
-                    star.set(star.get() + 1)
-                    starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_stared_green_24dp))
-//                    commentNavigator?.showTips("Star OK")
-                    stared = true
-                }
-
-                override fun failed(code: Int, log: String) {
-                    navigator?.showTips(log)
-                }
-            }
-            ArticleDataRepository.starArticle(token!!, articleId, starCallback)
-        } else {
-            val unStarCallback = object : DataCallback<String> {
-                override fun succeed(data: String) {
-                    star.set(star.get() - 1)
-                    stared = false
-                    starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
-//                    commentNavigator?.showTips("Star OK")
-                }
-
-                override fun failed(code: Int, log: String) {
-                    navigator?.showTips(log)
-                }
-            }
-
-            ArticleDataRepository.unStarArticle(token!!, articleId, unStarCallback)
-        }
-
-    }
 
     fun followOrUnFollowAuthor() {
         if (isFollowedAuthor == true) {
@@ -350,15 +348,47 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
         ArticleDataRepository.deleteArticle(token!!, articleId, callback)
     }
 
+    /**
+     * 收藏
+     */
+    fun starOrUnStarArticle() {
+        if (!stared) {
+            val starCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
 
+                    setStaredStatus()
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+            ArticleDataRepository.starArticle(token!!, articleId, starCallback)
+        } else {
+            val unStarCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    setUnStaredStatus()
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+
+            ArticleDataRepository.unStarArticle(token!!, articleId, unStarCallback)
+        }
+
+    }
+
+
+    /**
+     * 点赞
+     */
     fun likeOrUnlikeArticle() {
-        if (liked) {
+        if (!liked) {
             val callback = object : DataCallback<String> {
                 override fun succeed(data: String) {
-                    liked = true
-                    like.set(like.get() + 1)
-                    likeIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_liked_green_24dp))
-//                    commentNavigator?.showTips("Like OK")
+                    setLikedStatus()
                 }
 
                 override fun failed(code: Int, log: String) {
@@ -370,10 +400,8 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
         } else {
             val callback = object : DataCallback<String> {
                 override fun succeed(data: String) {
-                    like.set(like.get() - 1)
-                    liked = false
-                    likeIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_like_black_24dp))
-//                    commentNavigator?.showTips("ULike OK")
+
+                    setUnLikedStatus()
                 }
 
                 override fun failed(code: Int, log: String) {
@@ -384,8 +412,4 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
 
         }
     }
-
-
-    val htmlTestData =
-        ObservableField<String>("<html> <body><H1>Hello world</H1><H2>😂\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4></body>   </html>")
 }

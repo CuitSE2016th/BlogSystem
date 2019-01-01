@@ -45,7 +45,7 @@ class CommentFragment : Fragment(), CommentNavigator, BottomListener {
         if (comments.size>0){
             adapter?.loadMoreComments(comments)
         } else{
-            root?.text_no_data_tips?.visibility = View.VISIBLE
+            showNoMoreComments()
         }
 
     }
@@ -82,12 +82,21 @@ class CommentFragment : Fragment(), CommentNavigator, BottomListener {
             if (comments.size > 0) {
                 recycle_comments.visibility = View.VISIBLE
                 adapter?.refreshComments(comments)
+
+                if (comments.size < viewModel?.commentNextPageSize?:10){
+                    showNoMoreComments()
+                }
+
             } else {
                 recycle_comments.visibility = View.GONE
             }
 
         }
 
+    }
+
+    private fun showNoMoreComments(){
+        root?.text_no_data_tips?.visibility = View.VISIBLE
     }
 
     override fun showTips(msg: String?) {
