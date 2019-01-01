@@ -1,25 +1,30 @@
 package com.lfork.blogsystem.articledetail
 
-import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.graphics.drawable.Drawable
+import android.text.TextUtils
 import com.lfork.blogsystem.BlogApplication
-import com.lfork.blogsystem.BlogApplication.Companion.appFixedThreadPool
 import com.lfork.blogsystem.BlogApplication.Companion.token
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.base.viewmodel.BaseViewModel
 import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.ArticleDataRepository
-import com.lfork.blogsystem.data.article.ArticleResponse
+import com.lfork.blogsystem.data.article.ArticleDetailResponse
 import com.lfork.blogsystem.data.comment.Comment
 import com.lfork.blogsystem.data.comment.CommentDataRepository
 import com.lfork.blogsystem.data.comment.CommentListResponse
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
+import com.lfork.blogsystem.utils.TimeUtil
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ArticleDetailViewModel(var articleId: String) : ViewModel() {
+class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     var account: String? = null
 
-    val title = ObservableField<String>("Rational Unified Process")
+    val title = ObservableField<String>("")
 
     val portraitUrl = ObservableField<String>("")
 
@@ -29,17 +34,27 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
 
     val readingNumber = ObservableField<String>("Reading Number:200")
 
-    val time = ObservableField<String>("2018/12/18")
+    val time = ObservableField<String>("")
 
-    val like = ObservableField<String>("Likes(200K)")
+    val like = ObservableInt(20)
 
-    val star = ObservableField<String>("Star(100)")
+    var likeIcon =
+        ObservableField<Drawable>(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_like_black_24dp))
+
+    val star = ObservableInt(20)
+
+    var starIcon =   ObservableField<Drawable>(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
+
 
     val placeDrawableId = ObservableInt(R.drawable.ic_person_black_24dp)
+
+    val userIsAuthor = ObservableBoolean(false)
 
     var navigator: ArticleContentNavigator? = null
 
     var commentNavigator: CommentNavigator? = null
+
+    var comments: ArrayList<Comment>? = null
 
     private var commentNextPageNumber = 1
     private val commentNextPageSize = 10
@@ -51,23 +66,34 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
     }
 
     private fun loadArticle() {
-        val callback = object : DataCallback<ArticleResponse> {
-            override fun succeed(data: ArticleResponse) {
-                time.set(data.createTime)
+        val callback = object : DataCallback<ArticleDetailResponse> {
+            override fun succeed(data: ArticleDetailResponse) {
+//                time.set(TimeUtil.getStandardTime(Date(data.createTime!!.toLong())))
+                time.set(data.time)
+                star.set((data.starCount?:0))
+                like.set(data.likeCount?:0)
                 title.set(data.title)
+                portraitUrl.set(data.imageUrl)
+                wordCount.set("word count:${data.content?.length}")
+                if (data.authorId == BlogApplication.userId){
+                    userIsAuthor.set(true)
+                }
                 navigator?.showContent(data)
+                if (comments != null) {
+                    dataIsLoading.set(false)
+                    dataLoadError.set(false)
+                }
             }
 
             override fun failed(code: Int, log: String) {
                 navigator?.showTips(log)
+                dataLoadError.set(true)
+
             }
         }
         ArticleDataRepository.getArticle(articleId, callback)
     }
 
-    fun refreshComments() {
-
-    }
 
     fun addComment(c: Comment) {
         val callback = object : DataCallback<Comment> {
@@ -96,18 +122,25 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
                 navigator?.showTips(log)
             }
         }
-        CommentDataRepository.addSubComment(token!!,parent.id!!,c.content!!,callback)
+        CommentDataRepository.addSubComment(token!!, parent.id!!, c.content!!, callback)
     }
 
 
     private fun loadComments() {
         val callback = object : DataCallback<CommentListResponse> {
             override fun succeed(data: CommentListResponse) {
+                comments = data.result
                 commentNavigator?.refreshComments(data.result!!)
+
+                if (!TextUtils.isEmpty(time.get())) {
+                    dataIsLoading.set(false)
+                    dataLoadError.set(false)
+                }
             }
 
             override fun failed(code: Int, log: String) {
                 navigator?.showTips(log)
+                dataLoadError.set(true)
             }
         }
         CommentDataRepository.getComments(
@@ -116,6 +149,20 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
             articleId,
             callback
         )
+    }
+
+    fun deleteComment(c: Comment) {
+        val callback = object : DataCallback<String> {
+            override fun succeed(data: String) {
+                commentNavigator?.deleteComment(c)
+            }
+
+            override fun failed(code: Int, log: String) {
+                navigator?.showTips(log)
+            }
+        }
+
+        CommentDataRepository.deleteComment(token!!, c.id!!, callback)
     }
 
     fun refreshUserInfo() {
@@ -140,7 +187,58 @@ class ArticleDetailViewModel(var articleId: String) : ViewModel() {
             })
     }
 
+    /**
+     * 收藏
+     */
+    fun starArticle() {
+        val callback = object : DataCallback<String> {
+            override fun succeed(data: String) {
+                star.set(star.get() + 1)
+                starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_stared_green_24dp))
+                commentNavigator?.showTips("Star OK")
+            }
+
+            override fun failed(code: Int, log: String) {
+                navigator?.showTips(log)
+            }
+        }
+        ArticleDataRepository.starArticle(token!!, articleId, callback)
+    }
+
+
+    fun deleteArticle() {
+        val callback = object : DataCallback<String> {
+            override fun succeed(data: String) {
+                navigator?.showTips("Deleted")
+            }
+
+            override fun failed(code: Int, log: String) {
+                navigator?.showTips(log)
+            }
+        }
+        ArticleDataRepository.deleteArticle(token!!, articleId, callback)
+    }
+
+
+    fun likeArticle() {
+        val callback = object : DataCallback<String> {
+            override fun succeed(data: String) {
+                like.set(like.get() + 1)
+                likeIcon .set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_liked_green_24dp))
+                commentNavigator?.showTips("Like OK")
+            }
+
+            override fun failed(code: Int, log: String) {
+                navigator?.showTips(log)
+            }
+        }
+        ArticleDataRepository.likeArticle(token!!, articleId, callback)
+    }
+
+    fun followAuthor() {
+
+    }
+
     val htmlTestData =
         ObservableField<String>("<html> <body><H1>Hello world</H1><H2>😂\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4><H1>Hello world</H1><H2>\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02</H2><H3>content  contentcontent</H3><H4>中文测试哈哈哈哈</H4></body>   </html>")
-
 }

@@ -23,7 +23,7 @@
             android:id="@+id/editor_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:visibility="visible"
+            tools:visibility="gone"
             android:orientation="vertical"
             tools:context=".articledetail.ArticleDetailActivity">
 
@@ -58,35 +58,145 @@
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
-            tools:visibility="gone"
             android:id="@+id/navigation_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             tools:context=".articledetail.ArticleDetailActivity">
 
 
-            <Button
+            <!--<Button-->
+                <!--android:id="@+id/btn_like"-->
+                <!--style="@style/article_detail_navigation_btns"-->
+                <!--tools:text="Like"-->
+             <!--/>-->
+
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/btn_like"
                 style="@style/article_detail_navigation_btns"
-                tools:text="Like"
-                android:text="@{viewModel.like}" />
+                android:layout_height="match_parent">
 
-            <Button
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    tools:src="@drawable/ic_like_black_24dp"
+                    android:src="@{viewModel.likeIcon}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="top"
+                    android:text="@{String.valueOf(viewModel.like)}"
+                    tools:text="1"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView5"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/btn_star"
                 style="@style/article_detail_navigation_btns"
-                tools:text="Star"
-                android:text="@{viewModel.star}" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@{viewModel.starIcon}"
+                    tools:src="@drawable/ic_star_border_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="top"
+                    android:text="@{String.valueOf(viewModel.star)}"
+                    tools:text="1"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView4"
+                    app:layout_constraintStart_toEndOf="@+id/imageView4"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
 
 
-            <Button
+
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/btn_comment"
                 style="@style/article_detail_navigation_btns"
-                android:text="Comment" />
+                android:layout_height="match_parent">
 
-            <Button
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_comment_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="top"
+                    android:text="1"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView3"
+                    app:layout_constraintStart_toEndOf="@+id/imageView3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/btn_share"
                 style="@style/article_detail_navigation_btns"
-                android:text="Share" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_share_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="top"
+                    android:text="1"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
         </LinearLayout>
 
 

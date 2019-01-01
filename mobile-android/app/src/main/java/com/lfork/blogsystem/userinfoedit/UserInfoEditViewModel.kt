@@ -23,10 +23,11 @@ class UserInfoEditViewModel : UserViewModel() {
     }
 
     fun uploadPortrait(pic: File) {
+
         UserDataRepository.updateUserPortrait(pic,UserDataRepository.userCache.getAccount(), BlogApplication.token!!, object :
-            DataCallback<User> {
-            override fun succeed(data: User) {
-                portraitUrl.set(data.getRealPortraitUrl())
+            DataCallback<String> {
+            override fun succeed(data: String) {
+                portraitUrl.set(data)
                 navigator?.showTips("Portrait Changed")
             }
 

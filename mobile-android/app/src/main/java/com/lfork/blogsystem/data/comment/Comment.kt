@@ -14,6 +14,8 @@ data class Comment(
 
     var portrait: String? = null,
 
+    var authorId:String?=null,
+
     /**
      * 评论依赖所依赖的对象：文章、父评论
      */

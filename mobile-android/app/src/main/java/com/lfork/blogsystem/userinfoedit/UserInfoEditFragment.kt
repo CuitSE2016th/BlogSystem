@@ -27,9 +27,11 @@ import kotlinx.android.synthetic.main.user_infoedit_frag.*
 import java.io.File
 import com.lfork.blogsystem.base.image.ImageTool
 import com.lfork.blogsystem.base.image.ImageTool.cutPicture
+import com.yalantis.ucrop.util.FileUtils
 
 
 class UserInfoEditFragment : Fragment(), Navigator {
+
     private val REQUEST_CODE_CHOOSE = 0
 
     private val REQUEST_CODE_STORAGE_PERMISSION = 1
@@ -190,6 +192,7 @@ class UserInfoEditFragment : Fragment(), Navigator {
         if (pic == null) {
             return
         }
+
 
         ImageBinding.setImageNoCache(user_portrait, pic)
         //调用上传图片的接口 得到图片URL地址 清除本地缓存信息 //显示新头像

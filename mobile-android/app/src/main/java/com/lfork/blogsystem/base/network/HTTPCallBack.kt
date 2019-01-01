@@ -11,7 +11,7 @@ import retrofit2.Response
  *
  *
  */
-class MyRetrofitCallBack<T>(private val generalCallback: DataCallback<T>) : Callback<Result<T>> {
+class HTTPCallBack<T>(private val generalCallback: DataCallback<T>) : Callback<Result<T>> {
     override fun onFailure(call: Call<Result<T>>, t: Throwable) {
         generalCallback.failed(RESPONSE_UNKNOWN_ERROR,"Error：" +t.message)
     }

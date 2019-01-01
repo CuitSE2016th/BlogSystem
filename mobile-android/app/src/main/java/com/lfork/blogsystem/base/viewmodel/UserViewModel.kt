@@ -41,7 +41,7 @@ abstract class UserViewModel(var account: String?) : ViewModel() {
     fun refreshUserInfo() {
         if (account == null)
             account = UserDataRepository.userCache.getAccount()
-        UserDataRepository.refreshUserInfo()
+//        UserDataRepository.refreshUserInfo()
         UserDataRepository.getUserInfo(
             account!!, BlogApplication.token!!,
             object : DataCallback<User> {

@@ -1,7 +1,7 @@
 package com.lfork.blogsystem.data.user.remote
 
 import com.lfork.blogsystem.data.DataCallback
-import com.lfork.blogsystem.base.network.MyRetrofitCallBack
+import com.lfork.blogsystem.base.network.HTTPCallBack
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataSource
 import okhttp3.MediaType
@@ -73,29 +73,29 @@ class UserRemoteDataSource : UserDataSource {
     ) {
 
         api.updateUserInfo(account, token, "" + newUser.nickname, null)
-            .enqueue(MyRetrofitCallBack(callback))
+            .enqueue(HTTPCallBack(callback))
     }
 
     override fun updateUserPortrait(
         pic: File,
         account: String,
         token: String,
-        callback: DataCallback<User>
+        callback: DataCallback<String>
     ) {
         val fileBody = RequestBody.create(MediaType.parse("image/*"),pic)
         val photo = MultipartBody.Part.createFormData("pic", pic.name, fileBody)
         api.uploadPortrait(RequestBody.create(null, account), token, photo)
-            .enqueue(MyRetrofitCallBack(callback))
+            .enqueue(HTTPCallBack(callback))
     }
 
     override fun getUserInfo(account: String, token: String, callback: DataCallback<User>) {
-        api.getUserInfo(account, token).enqueue(MyRetrofitCallBack(callback))
+        api.getUserInfo(account, token).enqueue(HTTPCallBack(callback))
     }
 
     private val api: UserApi = UserApi.create()
 
-    override fun login(account: String, password: String, callback: DataCallback<String>) {
-        api.login(account, password).enqueue(MyRetrofitCallBack(callback))
+    override fun login(account: String, password: String, callback: DataCallback<User>) {
+        api.login(account, password).enqueue(HTTPCallBack(callback))
     }
 
     override fun register(
@@ -104,11 +104,11 @@ class UserRemoteDataSource : UserDataSource {
         verifyCode: String,
         callback: DataCallback<String>
     ) {
-        api.register(account, verifyCode, password).enqueue(MyRetrofitCallBack(callback))
+        api.register(account, verifyCode, password).enqueue(HTTPCallBack(callback))
     }
 
     override fun getVerificationCode(account: String, callback: DataCallback<String>) {
-        api.getVerificationCode(account).enqueue(MyRetrofitCallBack(callback))
+        api.getVerificationCode(account).enqueue(HTTPCallBack(callback))
     }
 
 }

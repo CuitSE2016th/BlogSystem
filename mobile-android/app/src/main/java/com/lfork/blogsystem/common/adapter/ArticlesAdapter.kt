@@ -8,9 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.R
+import com.lfork.blogsystem.RandomTest
 import com.lfork.blogsystem.articledetail.ArticleDetailActivity
 import com.lfork.blogsystem.base.databinding.ImageBinding
 import com.lfork.blogsystem.data.article.Article
+import com.lfork.blogsystem.utils.TimeUtil
 import com.lfork.blogsystem.utils.ToastUtil
 import kotlinx.android.synthetic.main.item_article_widen_style.view.*
 import kotlinx.android.synthetic.main.item_loadmore.view.*
@@ -91,12 +93,14 @@ class ArticlesAdapter :
                 holder.title?.text = item.title
                 ImageBinding.setImage(
                     holder.cover,
-                    item.coverUrl,
+                    item.imageUrl?:RandomTest.getRandomImages(),
                     R.drawable.ic_person_black_24dp
                 )
 //            //暂时没有description
-                holder.abstract?.text = item.abstract
-                holder.editTime?.text = item.createTime
+                holder.abstract?.text = item.abstract?:item.content
+                holder.editTime?.text = TimeUtil.getStandardTime(item.createTime?.toLong())
+                holder.likeNumber?.text="${item.likeCount?:0}"
+                holder.starNumber?.text="${item.starCount?:0}"
 //
                 holder.itemView.setOnClickListener {
                     if (BlogApplication.context != null) {
@@ -142,6 +146,8 @@ class ArticlesAdapter :
         var editTime: TextView? = null
         var cover: ImageView? = null
         var abstract: TextView? = null
+        var starNumber :TextView?=null
+        var likeNumber:TextView?=null
 
         init {
             when (itemType) {
@@ -150,6 +156,8 @@ class ArticlesAdapter :
                     editTime = itemView.edit_time
                     cover = itemView.cover
                     abstract = itemView.article_abstract
+                    starNumber = itemView.text_star_number
+                    likeNumber = itemView.text_like_number
                 }
                 TYPE_HEADER -> {
                 }

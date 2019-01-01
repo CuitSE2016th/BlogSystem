@@ -9,12 +9,13 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_comments"
+        android:background="@drawable/bg_circle_rectangle_frame_black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_comment" />
+        tools:listitem="@layout/item_comment_child" />
 
 </android.support.constraint.ConstraintLayout>

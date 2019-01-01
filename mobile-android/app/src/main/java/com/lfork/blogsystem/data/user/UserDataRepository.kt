@@ -24,19 +24,21 @@ object UserDataRepository : UserDataSource {
     private var userCacheIsDirty = true
 
 
-    override fun login(account: String, password: String, callback: DataCallback<String>) {
+    override fun login(account: String, password: String, callback: DataCallback<User>) {
+
         remoteDataSource.login(account, password, object :
-            DataCallback<String> {
-            override fun succeed(data: String) {
+            DataCallback<User> {
+            override fun succeed(data: User) {
 
                 if (StringValidation.isEmailValid(account)) {
                     userCache.email = account
                 } else {
                     userCache.phone = account
                 }
+                userCache.id = data.id
                 BlogApplication.isSignIn = true
                 updateCoreUserInfo(null)
-                BlogApplication.saveToken(data)
+                BlogApplication.saveToken(data.token!!)
                 callback.succeed(data)
             }
 
@@ -109,12 +111,13 @@ object UserDataRepository : UserDataSource {
         pic: File,
         account: String,
         token: String,
-        callback: DataCallback<User>
+        callback: DataCallback<String>
     ) {
        remoteDataSource.updateUserPortrait(pic, account, token,object :
-           DataCallback<User> {
-           override fun succeed(data: User) {
-               updateCoreUserInfo(data)
+           DataCallback<String> {
+           override fun succeed(data: String) {
+               userCache.headPortrait = data
+               updateCoreUserInfo(null)
                callback.succeed(data)
            }
 
@@ -161,10 +164,11 @@ object UserDataRepository : UserDataSource {
     }
 
 
-    fun initBasicUserInfo(email: String?, phone: String?, nickname: String?) {
+    fun initBasicUserInfo(email: String?, phone: String?, nickname: String?,id:String?) {
         userCache.email = email
         userCache.phone = phone
         userCache.nickname = nickname
+        userCache.id = id
     }
 
     private fun updateCoreUserInfo(data:User?) {
@@ -172,6 +176,10 @@ object UserDataRepository : UserDataSource {
         if(data != null) {
             userCache = data
             userCacheIsDirty = false
+        }
+
+        if (userCache.id != null){
+            BlogApplication.saveId(userCache.id!!)
         }
 
         if (userCache.email != null) {

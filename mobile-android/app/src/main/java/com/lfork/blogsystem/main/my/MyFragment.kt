@@ -81,6 +81,7 @@ class MyFragment : Fragment(), Navigator, View.OnClickListener {
 
 
     private fun registerLoginSucceedListener() {
+//        LiveDataBus.get().with("login_succeed").value = "登录成功";
         LiveDataBus.get()
                 .with("login_succeed", String::class.java)
                 .observe(this, Observer<String> {

@@ -25,7 +25,7 @@ interface UserApi {
     fun login(
         @Field("identity") account: String,
         @Field("password") password: String
-    ): Call<Result<String>>
+    ): Call<Result<User>>
 
 
     /**
@@ -68,7 +68,7 @@ interface UserApi {
         @Part("identity") identity: RequestBody,
         @Header("token") token: String,
         @Part fileBody: MultipartBody.Part
-    ): Call<Result<User>>
+    ): Call<Result<String>>
 
     @FormUrlEncoded
     @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")

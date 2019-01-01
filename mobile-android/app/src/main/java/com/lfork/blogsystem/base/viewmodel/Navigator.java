@@ -11,4 +11,9 @@ public interface Navigator {
 
     void showTips(String msg);
 
+//
+//    void  showDataIsLoading();
+//
+//    void  hideDataIsLoading();
+
 }

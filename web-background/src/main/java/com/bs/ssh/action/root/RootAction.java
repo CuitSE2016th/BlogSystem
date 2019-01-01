@@ -96,8 +96,26 @@ public class RootAction extends BaseAction {
         this.pageNo = pageNo;
     }
 
+    private boolean validationUserRole() {
+
+        Subject loginuser = SecurityUtils.getSubject();
+        User user = (User) loginuser.getPrincipal();
+        if(user.getRoleId() != Constants.ROOT_ROLR_ID){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
     @Action("getUsersToPageByPageNo")
     public String getUsersToPageByPageNo(){
+
+        if(validationUserRole() == false){
+            result = JsonBody.fail();
+            result.setMessage("角色出错！");
+            return SUCCESS;
+        }
 
         int pn;
 
@@ -151,6 +169,14 @@ public class RootAction extends BaseAction {
     * */
     @Action("getUserByIdentity")
     public String getUserByIdentity(){
+
+
+        if(validationUserRole() == false){
+            result = JsonBody.fail();
+            result.setMessage("角色出错！");
+            return SUCCESS;
+        }
+
         if (identity == null){
             result = JsonBody.success();
             result.setMessage("查询全部数据");

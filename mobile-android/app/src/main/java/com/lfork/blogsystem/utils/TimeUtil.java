@@ -1,4 +1,4 @@
-package com.lfork.a98620.lfree.util;
+package com.lfork.blogsystem.utils;
 
 import android.text.format.DateFormat;
 
@@ -15,4 +15,14 @@ public class TimeUtil {
     public static String getBiggestTime(){
         return DateFormat.format("9999-01-02 13:44:44", new Date()).toString();
     }
+
+    public static String getStandardTime(Date date){
+        return DateFormat.format("yyyy/MM/dd HH:mm",date).toString();
+    }
+
+    public static String getStandardTime(Long systemTimeMillis){
+        return DateFormat.format("yyyy/MM/dd HH:mm",new Date(systemTimeMillis)).toString();
+    }
+
+
 }

@@ -56,7 +56,7 @@
 //            holder.title?.text = item.title
 //            ImageBinding.setImage(
 //                holder.cover,
-//                item.coverUrl,
+//                item.imageUrl,
 //                R.drawable.ic_person_black_24dp
 //            )
 ////            //暂时没有description

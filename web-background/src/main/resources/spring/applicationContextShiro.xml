@@ -57,6 +57,7 @@
                 /user/article/id = anon
                 /user/comment/page = anon
                 /user/isExist = anon
+                /user/getArticlePage = anon
                 / = anon
                 <!--/user/article/upload = anon-->
                 /images/** = anon
