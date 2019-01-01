@@ -13,7 +13,7 @@ import com.lfork.blogsystem.data.DataCallback
 import com.lfork.blogsystem.data.article.ArticleDataRepository
 import com.lfork.blogsystem.data.article.ArticleListResponse
 
-class LikeFragment :  ArticlesFragment() {
+class LikeFragment : ArticlesFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,41 +28,21 @@ class LikeFragment :  ArticlesFragment() {
         return root
     }
 
-    inner class LikePresenter(private var view: ArticleContract.View?):ArticlePresenter(view){
+    inner class LikePresenter(private var view: ArticleContract.View?) : ArticlePresenter(view) {
         override fun refreshArticles() {
-            ArticleDataRepository.getFollowingArticles(token!!,1, 10, object :
-                DataCallback<ArticleListResponse> {
-                override fun succeed(data: ArticleListResponse) {
-                    if (data.result != null)
-                        view?.refreshArticles(data.result!!)
-                    else {
-                        failed(0, "数据为空")
-                    }
-                }
-
-                override fun failed(code: Int, log: String) {
-                    view?.error(log)
-                }
-            })
+            ArticleDataRepository.getFollowingArticles(token!!, 1, 10, refreshDataCallBack2)
         }
 
-        override fun loadMoreArticle(pageNumber: Int) {
-            ArticleDataRepository.getFollowingArticles(
-                token!!,
-                pageNumber,
-                10,
-                object : DataCallback<ArticleListResponse> {
-                    override fun succeed(data: ArticleListResponse) {
-                        if (data.result != null)
-                            loadMoreDataCallBack.succeed(data.result!!)
-                        else {
-                            failed(0, "数据为空")
-                        }
-                    }
-                    override fun failed(code: Int, log: String) {
-                        view?.error(log)
-                    }
-                })
+        override fun loadMoreArticle(loadMoreAction: (() -> Unit)?) {
+            super.loadMoreArticle {
+                ArticleDataRepository.getFollowingArticles(
+                    token!!,
+                    nextPage,
+                    10,
+                    loadMoreDataCallBack2
+                )
+            }
+
         }
 
         override fun destroy() {

@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.lfork.blogsystem.common.mvp.ArticlePresenter
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.utils.ToastUtil
 import kotlinx.android.synthetic.main.main_home_latest_article_inner_frag.view.*
-import java.lang.Exception
 
 open class ArticlesFragment: Fragment(),ArticleContract.View {
 
@@ -29,11 +27,8 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             root!!.data_container.visibility = View.VISIBLE
             if (articles.size < 1){
                 adapter.showNoMoreData()
-
             } else {
                 adapter.refreshItems(articles)
-                pageNumber++
-
             }
         }
     }
@@ -44,7 +39,6 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             if (articles.size < 1){
                 adapter.showNoMoreData()
             } else {
-                pageNumber++
                 adapter.addItems(articles)
             }
 
@@ -62,7 +56,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
     }
     lateinit var adapter: ArticlesAdapter
 
-    private var pageNumber = 0
+//    private var pageNumber = 0
 
     open var presenter: ArticlePresenter?=null
 
@@ -82,7 +76,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
         if(!isLoadingMore){
             isLoadingMore = true
             adapter.showIsLoading()
-            presenter?.loadMoreArticle(pageNumber)
+            presenter?.loadMoreArticle()
         }
     }
 
@@ -122,11 +116,6 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
 
         presenter?.refreshArticles()
         return root
-
-    }
-
-    override fun onResume() {
-        super.onResume()
 
     }
 

@@ -24,9 +24,9 @@ interface ArticleContract {
 
         }
 
-        fun loadMoreArticle(pageNumber:Int){
+        fun loadMoreArticle(loadMoreAction: (() -> Unit)? = null)
 
-        }
+
 
         fun destroy(){
 

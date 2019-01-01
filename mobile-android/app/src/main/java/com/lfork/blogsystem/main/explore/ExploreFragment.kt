@@ -22,7 +22,6 @@ class ExploreFragment : ArticlesFragment() {
         fun newInstance() = ExploreFragment()
     }
 
-    private lateinit var viewModel: ExploreViewModel
 
     private lateinit var themeAdapter: ThemesAdapter
 

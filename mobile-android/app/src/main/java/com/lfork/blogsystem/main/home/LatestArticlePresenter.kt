@@ -1,5 +1,6 @@
 package com.lfork.blogsystem.main.home
 
+import com.lfork.blogsystem.BlogApplication
 import com.lfork.blogsystem.common.mvp.ArticleContract
 import com.lfork.blogsystem.common.mvp.ArticlePresenter
 import com.lfork.blogsystem.data.DataCallback
@@ -14,39 +15,13 @@ import com.lfork.blogsystem.data.user.UserDataRepository
 class LatestArticlePresenter(private var view: ArticleContract.View?) :
     ArticlePresenter(view) {
 
-
     override fun refreshArticles() {
-        ArticleDataRepository.getLatestArticles(1, 10, object : DataCallback<ArticleListResponse> {
-            override fun succeed(data: ArticleListResponse) {
-                if (data.result != null)
-                    view?.refreshArticles(data.result!!)
-                else {
-                    failed(0, "数据为空")
-                }
-            }
-
-            override fun failed(code: Int, log: String) {
-                view?.error(log)
-            }
-        })
+        ArticleDataRepository.getLatestArticles(1, 10, refreshDataCallBack2)
     }
 
-    override fun loadMoreArticle(pageNumber: Int) {
-        ArticleDataRepository.getLatestArticles(
-            pageNumber,
-            10,
-            object : DataCallback<ArticleListResponse> {
-                override fun succeed(data: ArticleListResponse) {
-                    if (data.result != null)
-                        loadMoreDataCallBack.succeed(data.result!!)
-                    else {
-                        failed(0, "数据为空")
-                    }
-                }
-                override fun failed(code: Int, log: String) {
-                    view?.error(log)
-                }
-            })
+
+    override fun loadMoreArticle(loadMoreAction: (() -> Unit)?) {
+        super.loadMoreArticle (loadMoreAction)
     }
 
     override fun destroy() {
