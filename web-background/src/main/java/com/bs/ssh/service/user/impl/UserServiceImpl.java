@@ -291,7 +291,7 @@ public class UserServiceImpl implements UserService{
         pageBean.setRecordCount(count);
         pageBean.setCurrentPage(pageNo);
 
-        List articleList = userDao.getArticleforPage(pageNo, 8);
+        List articleList = userDao.getArticleLikeforPage(userId,pageNo, 8);
 
         List<IndexArticle> articlesNew = new ArrayList<>();
 

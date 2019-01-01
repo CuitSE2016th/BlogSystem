@@ -55,4 +55,5 @@ public interface UserDao extends BaseDao<User> {
     int getUserLikeArticlesCount(String userId);
 
 
+    List getArticleLikeforPage(String userId, Integer pageNo, int i);
 }
