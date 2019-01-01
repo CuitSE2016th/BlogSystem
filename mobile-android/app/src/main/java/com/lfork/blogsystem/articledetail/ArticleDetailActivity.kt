@@ -9,7 +9,6 @@ import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
@@ -149,7 +148,7 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
         btn_star.setOnClickListener {
 
             if (isSignIn) {
-                viewModel?.starArticle()
+                viewModel?.starOrUnStarArticle()
             } else {
                 signInFirst(this)
             }
@@ -158,7 +157,7 @@ class ArticleDetailActivity : AppCompatActivity(), ArticleContentNavigator {
 
         btn_like.setOnClickListener {
             if (isSignIn) {
-                viewModel?.likeArticle()
+                viewModel?.likeOrUnlikeArticle()
             } else {
                 signInFirst(this)
             }

@@ -22,6 +22,14 @@ import kotlin.collections.ArrayList
  * @. 2018/12/15
  */
 class ArticleRemoteDataSource : ArticleDataSource {
+    override fun unStarArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        api.unstarArticle(token, articleId).enqueue(HTTPCallBack(callback))
+    }
+
+    override fun unLikeArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        api.unlikeArticle(token, articleId).enqueue(HTTPCallBack(callback))
+    }
+
     override fun starArticle(token: String, articleId: String, callback: DataCallback<String>) {
         api.starArticle(token, articleId).enqueue(HTTPCallBack(callback))
     }

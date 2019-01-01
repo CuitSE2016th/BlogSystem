@@ -9,6 +9,14 @@ import java.io.File
  * Created by 98620 on 2018/12/11.2
  */
 object ArticleDataRepository : ArticleDataSource {
+    override fun unStarArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        remoteDataSource.unStarArticle(token, articleId, callback)
+    }
+
+    override fun unLikeArticle(token: String, articleId: String, callback: DataCallback<String>) {
+        remoteDataSource.unLikeArticle(token, articleId, callback)
+    }
+
     override fun starArticle(token: String, articleId: String, callback: DataCallback<String>) {
         remoteDataSource.starArticle(token, articleId, callback)
     }

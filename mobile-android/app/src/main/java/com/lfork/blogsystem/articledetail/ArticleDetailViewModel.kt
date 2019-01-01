@@ -17,8 +17,6 @@ import com.lfork.blogsystem.data.comment.CommentDataRepository
 import com.lfork.blogsystem.data.comment.CommentListResponse
 import com.lfork.blogsystem.data.user.User
 import com.lfork.blogsystem.data.user.UserDataRepository
-import com.lfork.blogsystem.utils.TimeUtil
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
@@ -35,6 +33,10 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     val readingNumber = ObservableField<String>("Reading Number:200")
 
     val time = ObservableField<String>("")
+
+    var stared = false
+
+    var liked = false
 
     val like = ObservableInt(20)
 
@@ -71,8 +73,11 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
 //                time.set(TimeUtil.getStandardTime(Date(data.createTime!!.toLong())))
                 time.set(data.time)
                 star.set((data.starCount?:0))
+                stared = data.stared?:false
+                liked = data.liked?:false
                 like.set(data.likeCount?:0)
                 title.set(data.title)
+
                 portraitUrl.set(data.imageUrl)
                 wordCount.set("word count:${data.content?.length}")
                 if (data.authorId == BlogApplication.userId){
@@ -214,19 +219,40 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     /**
      * 收藏
      */
-    fun starArticle() {
-        val callback = object : DataCallback<String> {
-            override fun succeed(data: String) {
-                star.set(star.get() + 1)
-                starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_stared_green_24dp))
-                commentNavigator?.showTips("Star OK")
+    fun starOrUnStarArticle() {
+        if (stared){
+            val starCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    star.set(star.get() + 1)
+                    starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_stared_green_24dp))
+//                    commentNavigator?.showTips("Star OK")
+                    stared = true
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+            ArticleDataRepository.starArticle(token!!, articleId, starCallback)
+        } else{
+            val unStarCallback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    star.set(star.get() - 1)
+                    stared = false
+                    starIcon.set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_star_border_black_24dp))
+//                    commentNavigator?.showTips("Star OK")
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
             }
 
-            override fun failed(code: Int, log: String) {
-                navigator?.showTips(log)
-            }
+            ArticleDataRepository.unStarArticle(token!!, articleId, unStarCallback)
         }
-        ArticleDataRepository.starArticle(token!!, articleId, callback)
+
+
+
     }
 
 
@@ -244,19 +270,38 @@ class ArticleDetailViewModel(var articleId: String) : BaseViewModel() {
     }
 
 
-    fun likeArticle() {
-        val callback = object : DataCallback<String> {
-            override fun succeed(data: String) {
-                like.set(like.get() + 1)
-                likeIcon .set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_liked_green_24dp))
-                commentNavigator?.showTips("Like OK")
-            }
+    fun likeOrUnlikeArticle() {
+        if (liked){
+            val callback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    liked = true
+                    like.set(like.get() + 1)
+                    likeIcon .set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_liked_green_24dp))
+//                    commentNavigator?.showTips("Like OK")
+                }
 
-            override fun failed(code: Int, log: String) {
-                navigator?.showTips(log)
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
             }
+            ArticleDataRepository.likeArticle(token!!, articleId, callback)
+
+        } else{
+            val callback = object : DataCallback<String> {
+                override fun succeed(data: String) {
+                    like.set(like.get() - 1)
+                    liked = false
+                    likeIcon .set(BlogApplication.context!!.resources.getDrawable(R.drawable.ic_like_black_24dp))
+//                    commentNavigator?.showTips("ULike OK")
+                }
+
+                override fun failed(code: Int, log: String) {
+                    navigator?.showTips(log)
+                }
+            }
+            ArticleDataRepository.unLikeArticle(token!!, articleId, callback)
+
         }
-        ArticleDataRepository.likeArticle(token!!, articleId, callback)
     }
 
     fun followAuthor() {
