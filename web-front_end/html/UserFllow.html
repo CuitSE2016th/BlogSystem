@@ -104,7 +104,7 @@
             openMatter(1);
             $.ajax({
 
-                url: ' http://localhost:8080/user/getUserFollowedUser',//相对应的esb接口地址
+                url: ' http://www.lfork.top/blog/user/getUserFollowedUser',//相对应的esb接口地址
 
                 type: 'post',
 
@@ -170,7 +170,7 @@
             openMatter(2);
             $.ajax({
 
-                url: ' http://localhost:8080/user/getUserFollows',//相对应的esb接口地址
+                url: ' http://www.lfork.top/blog/user/getUserFollows',//相对应的esb接口地址
 
                 type: 'post',
 
@@ -249,7 +249,7 @@
     let user_identity=$.cookie('this_id');
     $(document).ready(function(){
         $.ajax({
-            url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
+            url: 'http://www.lfork.top/blog/user/getUserInfo',//相对应的esb接口地址
             type: 'post',
             data: {"identity": user_identity,"token":wand},//向服务器（接口）传递的参数
             success: function (data) {//服务器（接口）返回来的数据
@@ -307,7 +307,7 @@
     $().ready(function () {
         $.ajax({
 
-            url: ' http://localhost:8080/user/getUserFollowedUser',//相对应的esb接口地址
+            url: ' http://www.lfork.top/blog/user/getUserFollowedUser',//相对应的esb接口地址
 
             type: 'post',
 

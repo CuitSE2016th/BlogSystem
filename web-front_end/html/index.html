@@ -30,6 +30,8 @@
             <input type="text" class="form-control" placeholder="输入要查找文章">
         </div>
         <ul class="nav navbar-nav navbar-right nav_ul" id="user_info">
+            <li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+            <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
         </ul>
     </div>
 </nav>
@@ -70,7 +72,7 @@
     let str3='';
     $(document).ready(function(){
         $.ajax({
-            url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
+            url: 'http://www.lfork.top/blog/user/getUserInfo',//相对应的esb接口地址
             type: 'post',
             data: {"identity": user_identity,"token":wand},//向服务器（接口）传递的参数
             success: function (data) {//服务器（接口）返回来的数据
@@ -89,6 +91,7 @@
                     str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="my_btn()">我的</button></div>'
                     str1+='<div class="nav_btn">'
                     str1+='<button type="button" class="btn btn-primary btn-block" id="wr_btn" onclick="btn()">写文章</button></div>'
+
                     $("#user_info").html(str1);
                 }else{
                     str3+='<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 注册</a></li>'

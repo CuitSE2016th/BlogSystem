@@ -89,7 +89,7 @@
 
     $(document).ready(function(){
         $.ajax({
-            url: 'http://localhost:8080/user/getUserInfo',//相对应的esb接口地址
+            url: 'http://www.lfork.top/blog/user/getUserInfo',//相对应的esb接口地址
             type: 'post',
             data: {"identity": user_identity,"token":wand},//向服务器（接口）传递的参数
             success: function (data) {//服务器（接口）返回来的数据
@@ -142,7 +142,7 @@
     //获取文章信息
     $(document).ready(function(){
         $.ajax({
-            url: 'http://localhost:8080/blog/user/article/id',//相对应的esb接口地址
+            url: 'http://www.lfork.top/blog/blog/user/article/id',//相对应的esb接口地址
             type: 'post',
             data: {"aid":article_id,"token":wand},//向服务器（接口）传递的参数
             success: function (data) {//服务器（接口）返回来的数据

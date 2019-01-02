@@ -169,7 +169,7 @@
             }else{//以上均符合要求，则调用登录esb接口
                 $.ajax({
 
-                    url:'http://localhost:8080/user/login',//相对应的esb接口地址
+                    url:'http://www.lfork.top/blog/user/login',//相对应的esb接口地址
 
                     type:'post',
 
@@ -239,7 +239,7 @@
         } else {
             $("#register_reminder").empty();
             $.ajax({
-                url: "http://localhost:8080/user/isExist", //请求验证页面
+                url: "http://www.lfork.top/blog/user/isExist", //请求验证页面
                 type: "POST", //请求方式 可换为post 注意验证页面接收方式
                 data: {"emailOrPhone": email}, //取得表文本框数据，作为提交数据
                 success: function (data) { //请求成功时执行操作
@@ -287,7 +287,7 @@
     $("#register_code_get").click(function(){
         let email=$("#register_tel").val();
         $.ajax({
-            url: "http://localhost:8080/user/code", //请求验证页面
+            url: "http://www.lfork.top/blog/user/code", //请求验证页面
             type: "POST", //请求方式 可换为post 注意验证页面接收方式
             data: {"emailOrPhone": email},
             success: function (data) { //请求成功时执行操作
@@ -305,14 +305,13 @@
         let password=$("#register_password").val();
         $.ajax({
 
-            url:'http://localhost:8080/user/register',//相对应的esb接口地址
+            url:'http://www.lfork.top/blog/user/register',//相对应的esb接口地址
 
             type:'post',
 
             data:{"emailOrPhone": email,"emailOrPhoneCode":email_code,"password":password},//向服务器（接口）传递的参数
 
             success:function(data){//服务器（接口）返回来的数据
-                alert(data.code);
                 if(data.code==200){
                     $("#register_reminder").empty();
                     let str1='';
