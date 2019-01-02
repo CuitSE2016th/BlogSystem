@@ -68,12 +68,6 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-    }
-
-
-
 
     private fun setupSubFragIndicator() {
         val magicIndicator = root!!.magicIndicator as MagicIndicator

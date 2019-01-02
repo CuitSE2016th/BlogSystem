@@ -20,7 +20,7 @@ class UserRemoteDataSource : UserDataSource {
         beFollowedId: String,
         callback: DataCallback<Boolean>
     ) {
-        api.isFollowed(followerId,beFollowedId,token).enqueue(HTTPCallBack(callback))
+        api.isFollowed(followerId, beFollowedId, token).enqueue(HTTPCallBack(callback))
     }
 
     override fun unFollow(
@@ -39,39 +39,15 @@ class UserRemoteDataSource : UserDataSource {
         api.follow(beFollowedId, token).enqueue(HTTPCallBack(callback))
     }
 
-    override fun getFollowings(
-        account: String,
-        token: String,
-        callback: DataCallback<List<User>>
-    ) {
-        val items = ArrayList<User>(10);
-        for (i in 1..10) {
-            val it = User()
-            it.phone = "18628904485"
-            it.nickname = "the number $i following"
-            it.headPortrait = "images/580598104651543672840254.jpg"
-            it.description =
-                    "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
-            items.add(it)
-        }
-        callback.succeed(items)
+    override fun getFollowings(token: String, callback: DataCallback<ArrayList<User>>) {
+        api.getFollowings(token).enqueue(HTTPCallBack(callback))
     }
 
     /**
      * 暂时不考虑分页加载
      */
-    override fun getFollowers(account: String, token: String, callback: DataCallback<List<User>>) {
-        val items = ArrayList<User>(10);
-        for (i in 1..10) {
-            val it = User()
-            it.phone = "18628904485"
-            it.nickname = "the number $i follower"
-            it.headPortrait = "images/580598104651543672840254.jpg"
-            it.description =
-                    "the ${i}th description ,length test.big Text test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test.length test"
-            items.add(it)
-        }
-        callback.succeed(items)
+    override fun getFollowers(token: String, callback: DataCallback<ArrayList<User>>) {
+        api.getFollowers(token).enqueue(HTTPCallBack(callback))
     }
 
     override fun updateUserInfo(

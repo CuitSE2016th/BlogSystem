@@ -12,11 +12,14 @@ interface ArticleDataSource {
     fun starArticle(token: String, articleId: String, callback: DataCallback<String>)
     //
     fun unStarArticle(token: String, articleId: String, callback: DataCallback<String>)
-//
+
+    //
     fun likeArticle(token: String, articleId: String, callback: DataCallback<String>)
-//
+
+    //
     fun unLikeArticle(token: String, articleId: String, callback: DataCallback<String>)
-//
+
+    //
 //    fun search()
 //
     fun getArticle(articleId: String, callback: DataCallback<ArticleDetailResponse>)
@@ -28,6 +31,25 @@ interface ArticleDataSource {
         pageSize: Int,
         callback: DataCallback<ArticleListResponse>
     )
+
+    fun getFollowingArticles(
+        token: String, pageNumber: Int, pageSize: Int, callback: DataCallback<ArticleListResponse>
+    )
+
+    fun getLikedArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    )
+
+    fun getStaredArticles(
+        token: String,
+        pageNumber: Int,
+        pageSize: Int,
+        callback: DataCallback<ArticleListResponse>
+    )
+
 
     //
 //    fun getFollowingsArticle()
@@ -49,8 +71,12 @@ interface ArticleDataSource {
     fun uploadArticleImages(token: String, image: File, callback: DataCallback<ArrayList<String>>)
 
     fun uploadArticleImages(token: String, image: File): Result<ArrayList<String>>?
-//
-    fun deleteArticle(token: String, articleId: String, callback: DataCallback<String>)//architecture
+    //
+    fun deleteArticle(
+        token: String,
+        articleId: String,
+        callback: DataCallback<String>
+    )//architecture
 
     fun getUsesArticles(account: String, token: String, callback: DataCallback<List<Article>>)
 

@@ -121,6 +121,17 @@ interface UserApi {
         @Query("token") token: String
     ): Call<Result<User>>
 
+    @GET("user/getUserFollows")
+    fun getFollowers(
+        @Header("token") token: String
+    ): Call<Result<ArrayList<User>>>
+
+
+    @GET("user/getUserFollowedUser")
+    fun getFollowings(
+        @Header("token") token: String
+    ): Call<Result<ArrayList<User>>>
+
     companion object {
         fun create(): UserApi {
             val retrofit = HttpService.getRetrofitInstance()

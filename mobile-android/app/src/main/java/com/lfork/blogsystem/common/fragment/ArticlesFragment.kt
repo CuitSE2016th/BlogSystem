@@ -1,25 +1,24 @@
 package com.lfork.blogsystem.common.fragment
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.lfork.blogsystem.base.communication.LiveDataBus
 import com.lfork.blogsystem.common.adapter.ArticlesAdapter
 import com.lfork.blogsystem.common.mvp.ArticleContract
 import com.lfork.blogsystem.common.mvp.ArticlePresenter
 import com.lfork.blogsystem.data.article.Article
 import com.lfork.blogsystem.utils.ToastUtil
 import kotlinx.android.synthetic.main.main_home_latest_article_inner_frag.view.*
-import java.lang.Exception
 
 open class ArticlesFragment: Fragment(),ArticleContract.View {
 
-    @Volatile
     var isLoadingMore = false
 
     override fun refreshArticles(articles: ArrayList<Article>) {
@@ -31,7 +30,6 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
                 adapter.showNoMoreData()
             } else {
                 adapter.refreshItems(articles)
-
             }
         }
     }
@@ -42,7 +40,6 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
             if (articles.size < 1){
                 adapter.showNoMoreData()
             } else {
-                pageNumber++
                 adapter.addItems(articles)
             }
 
@@ -60,7 +57,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
     }
     lateinit var adapter: ArticlesAdapter
 
-    private var pageNumber = 0
+//    private var pageNumber = 0
 
     open var presenter: ArticlePresenter?=null
 
@@ -80,7 +77,7 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
         if(!isLoadingMore){
             isLoadingMore = true
             adapter.showIsLoading()
-            presenter?.loadMoreArticle(pageNumber)
+            presenter?.loadMoreArticle()
         }
     }
 
@@ -119,12 +116,14 @@ open class ArticlesFragment: Fragment(),ArticleContract.View {
         }
 
         presenter?.refreshArticles()
+
+
+        LiveDataBus.get()
+            .with("article_deleted", Int::class.java)
+            .observe(this, Observer<Int> {
+                adapter.notifyItemRemoved(it?:0)
+            })
         return root
-
-    }
-
-    override fun onResume() {
-        super.onResume()
 
     }
 

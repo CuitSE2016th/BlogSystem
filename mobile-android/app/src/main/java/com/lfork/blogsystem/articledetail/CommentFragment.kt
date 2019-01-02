@@ -45,7 +45,7 @@ class CommentFragment : Fragment(), CommentNavigator, BottomListener {
         if (comments.size>0){
             adapter?.loadMoreComments(comments)
         } else{
-            root?.text_no_data_tips?.visibility = View.VISIBLE
+            showNoMoreComments()
         }
 
     }
@@ -82,12 +82,21 @@ class CommentFragment : Fragment(), CommentNavigator, BottomListener {
             if (comments.size > 0) {
                 recycle_comments.visibility = View.VISIBLE
                 adapter?.refreshComments(comments)
+
+                if (comments.size < viewModel?.commentNextPageSize?:10){
+                    showNoMoreComments()
+                }
+
             } else {
                 recycle_comments.visibility = View.GONE
             }
 
         }
 
+    }
+
+    private fun showNoMoreComments(){
+        root?.text_no_data_tips?.visibility = View.VISIBLE
     }
 
     override fun showTips(msg: String?) {
@@ -157,7 +166,6 @@ class CommentFragment : Fragment(), CommentNavigator, BottomListener {
                 c.replyTo = parent.username
                 c.createTime = System.currentTimeMillis().toString()
                 c.parentId = parent.id
-                c.authorId = UserDataRepository.userCache.id
                 c.userId = UserDataRepository.userCache.id
                 c.username = UserDataRepository.userCache.getUsername()
                 c.portrait = UserDataRepository.userCache.headPortrait
@@ -225,7 +233,7 @@ class CommentFragment : Fragment(), CommentNavigator, BottomListener {
                 openReplyDialog(position, item)
             }
 
-            if ((item.authorId != null && (item.authorId == BlogApplication.userId)) || item.portrait==UserDataRepository.userCache.headPortrait){
+            if ((item.userId != null && (item.userId == BlogApplication.userId)) || item.portrait==UserDataRepository.userCache.headPortrait){
                 holder.btnDelete.visibility = View.VISIBLE
                 holder.btnDelete.setOnClickListener {
                     viewModel?.deleteComment(position,item)

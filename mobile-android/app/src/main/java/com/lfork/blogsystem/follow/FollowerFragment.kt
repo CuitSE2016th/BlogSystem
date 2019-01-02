@@ -52,9 +52,9 @@ class FollowerFragment : Fragment() {
         super.onResume()
         //加载数据
 
-        val dataHandler = object:DataCallback<List<User>>{
-            override fun succeed(data: List<User>) {
-               adapter.refreshItems(data as ArrayList<User>)
+        val callback = object:DataCallback<ArrayList<User>>{
+            override fun succeed(data: ArrayList<User>) {
+               adapter.refreshItems(data)
             }
 
             override fun failed(code: Int, log: String) {
@@ -62,7 +62,7 @@ class FollowerFragment : Fragment() {
             }
         }
 
-        UserDataRepository.getFollowers(UserDataRepository.userCache.getAccount(), BlogApplication.token!!, dataHandler)
+        UserDataRepository.getFollowers(BlogApplication.token!!, callback)
 
     }
 
@@ -89,7 +89,7 @@ class FollowerFragment : Fragment() {
                 R.drawable.ic_person_black_24dp
             )
             //暂时没有description
-            holder.description.text = item.description
+            holder.description.text = item.description?:"The user has no self description."
 
             holder.itemView.setOnClickListener {
                 if (context != null) {

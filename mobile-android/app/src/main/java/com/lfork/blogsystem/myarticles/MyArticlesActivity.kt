@@ -44,7 +44,6 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
         if (articles.size < 1){
             adapter.showNoMoreData()
         } else {
-            pageNumber++
             adapter.addItems(articles)
         }
 
@@ -63,7 +62,6 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
 
     private lateinit var adapter: ArticlesAdapter
 
-    private var pageNumber = 0
 
     private lateinit var presenter: MyArticlePresenter
 
@@ -75,7 +73,7 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
             //判断是否能向上滑动
             if (!recycle_articles.canScrollVertically(1) && adapter.canLoadMore()) {
                 adapter.showIsLoading()
-                presenter.loadMoreArticle(pageNumber)
+                presenter.loadMoreArticle()
             }
         }
     }
@@ -102,9 +100,9 @@ class MyArticlesActivity : AppCompatActivity(), ArticleContract.View {
             presenter.refreshArticles() }
 
         LiveDataBus.get()
-            .with("article_deleted", String::class.java)
-            .observe(this, Observer<String> {
-                presenter.refreshArticles()
+            .with("article_deleted", Int::class.java)
+            .observe(this, Observer<Int> {
+                adapter.notifyItemRemoved(it?:0)
             })
 
     }

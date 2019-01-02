@@ -49,7 +49,6 @@ class LatestArticleFragment : ArticlesFragment() {
          */
         if (root == null) {
             root = inflater.inflate(R.layout.main_home_latest_article_inner_frag, container, false)
-            presenter = LatestArticlePresenter(this)
             super.onCreateView(inflater, container, savedInstanceState)
             setupBanner()
         }

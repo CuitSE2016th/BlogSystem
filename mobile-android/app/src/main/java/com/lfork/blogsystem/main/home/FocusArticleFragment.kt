@@ -17,6 +17,7 @@ class FocusArticleFragment : ArticlesFragment() {
     ): View? {
         if (root == null) {
             root = inflater.inflate(R.layout.main_home_focus_article_inner_frag, container, false)
+            presenter = FocusArticlePresenter(this)
             super.onCreateView(inflater, container, savedInstanceState)
         }
         // Inflate the layout for this fragment

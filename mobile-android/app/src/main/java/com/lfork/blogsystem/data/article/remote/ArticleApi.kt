@@ -39,15 +39,33 @@ interface ArticleApi {
 
     @GET("user/article/follow")
     fun getFollowingArticles(
+        @Header("token")token:String,
         @Query("pn") pageNumber: Int,
         @Query("ps") pageSize: Int
     ): Call<Result<ArticleListResponse>>
+
+    @GET("user/getUserStarArticles")
+    fun getLikesArticles(
+        @Header("token")token:String,
+        @Query("pageNo") pageNumber: Int,
+        @Query("ps") pageSize: Int
+    ): Call<Result<ArticleListResponse>>
+
+
+    @GET("user/getUserLikeArticles")
+    fun getStaredArticles(
+        @Header("token")token:String,
+        @Query("pageNo") pageNumber: Int,
+        @Query("ps") pageSize: Int
+    ): Call<Result<ArticleListResponse>>
+
 
     @GET("user/article/id")
     fun getArticle(
         @Header("token") token: String?,
         @Query("aid") articleId: String
     ): Call<Result<ArticleDetailResponse>>
+
 
     //http://localhost:8080/user/article/myself
 

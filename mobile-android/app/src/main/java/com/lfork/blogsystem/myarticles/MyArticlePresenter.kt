@@ -15,13 +15,8 @@ class MyArticlePresenter(private var view: ArticleContract.View?) :
     ArticlePresenter(view) {
 
 
-
-    var nextPage = 1
-
-    var pageSize = 10
-
     override fun refreshArticles() {
-        if (isRefreshing){
+        if (isRefreshing) {
             return
         }
         isRefreshing = true
@@ -55,25 +50,15 @@ class MyArticlePresenter(private var view: ArticleContract.View?) :
             })
     }
 
-    override fun loadMoreArticle(pageNumber: Int) {
-        ArticleDataRepository.getMyArticles(
-            BlogApplication.token!!,
-            nextPage,
-            pageSize,
-            object : DataCallback<ArticleListResponse> {
-                override fun succeed(data: ArticleListResponse) {
-                    val articles = data.result
-                    if (articles == null) {
-                        failed(0, "数据为空")
-                        return
-                    }
-                    nextPage++
-                    view?.displayMoreArticles(articles)
-                }
-
-                override fun failed(code: Int, log: String) {
-                    view?.error(log)
-                }
-            })
+    override fun loadMoreArticle(loadMoreAction: (() -> Unit)?) {
+        super.loadMoreArticle {
+            ArticleDataRepository.getMyArticles(
+                BlogApplication.token!!,
+                nextPage,
+                pageSize,
+                loadMoreDataCallBack2
+            )
+        }
     }
+
 }
